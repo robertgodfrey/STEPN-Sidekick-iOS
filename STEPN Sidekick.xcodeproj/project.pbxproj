@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9828A0C9FE00141A54 /* Constants.swift */; };
+		D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9A28A0D04B00141A54 /* Shoe.swift */; };
+		D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */; };
+		D4C13BB128A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */; };
+		D4C13BB228A1DCF800141A54 /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */; };
+		D4C13BB828A1E8D800141A54 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */; };
+		D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */; };
+		D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */; };
+		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
 		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
 		D4FFE3C5289F04A200D7E82B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ContentView.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
@@ -36,6 +45,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D4C13B9828A0C9FE00141A54 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D4C13B9A28A0D04B00141A54 /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
+		D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Italic.ttf"; sourceTree = "<group>"; };
+		D4C13BB328A1E76200141A54 /* STEPN-Sidekick-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "STEPN-Sidekick-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
 		D4FFE3C4289F04A200D7E82B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +94,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D4C13B9C28A1D8A800141A54 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */,
+				D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */,
+				D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */,
+				D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */,
+				D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */,
+				D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */,
+				D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		D4FFE3B6289F04A200D7E82B = {
 			isa = PBXGroup;
 			children = (
@@ -98,12 +131,16 @@
 		D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */ = {
 			isa = PBXGroup;
 			children = (
+				D4C13BB328A1E76200141A54 /* STEPN-Sidekick-Info.plist */,
+				D4C13B9C28A1D8A800141A54 /* Fonts */,
 				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
 				D4FFE3C4289F04A200D7E82B /* ContentView.swift */,
 				D4FFE3C6289F04A400D7E82B /* Assets.xcassets */,
 				D4FFE3CB289F04A400D7E82B /* Persistence.swift */,
 				D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */,
 				D4FFE3C8289F04A400D7E82B /* Preview Content */,
+				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
+				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
 			);
 			path = "STEPN Sidekick";
 			sourceTree = "<group>";
@@ -237,8 +274,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */,
 				D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */,
+				D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */,
+				D4C13BB828A1E8D800141A54 /* Roboto-Medium.ttf in Resources */,
+				D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */,
+				D4C13BB128A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf in Resources */,
+				D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */,
 				D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */,
+				D4C13BB228A1DCF800141A54 /* RobotoCondensed-Italic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +307,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
+				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4FFE3CC289F04A400D7E82B /* Persistence.swift in Sources */,
 				D4FFE3C5289F04A200D7E82B /* ContentView.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
@@ -410,6 +456,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -428,11 +475,13 @@
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,11 +506,13 @@
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
