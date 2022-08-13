@@ -34,7 +34,6 @@ struct ActivitySettings: View {
     @State private var energyString = "0.0"
             
     var body: some View {
-      
         VStack {
             if startSpeedTracker {
                 SpeedTracker()
