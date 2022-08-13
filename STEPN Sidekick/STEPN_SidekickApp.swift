@@ -13,7 +13,7 @@ struct STEPN_SidekickApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ActivitySettings()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

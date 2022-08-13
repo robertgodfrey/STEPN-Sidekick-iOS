@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
 		D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9828A0C9FE00141A54 /* Constants.swift */; };
 		D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9A28A0D04B00141A54 /* Shoe.swift */; };
 		D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */; };
@@ -17,7 +18,7 @@
 		D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */; };
 		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
 		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
-		D4FFE3C5289F04A200D7E82B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ContentView.swift */; };
+		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
 		D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */; };
 		D4FFE3CC289F04A400D7E82B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3CB289F04A400D7E82B /* Persistence.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
 		D4C13B9828A0C9FE00141A54 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D4C13B9A28A0D04B00141A54 /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
@@ -57,7 +59,7 @@
 		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
-		D4FFE3C4289F04A200D7E82B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
 		D4FFE3C6289F04A400D7E82B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D4FFE3CB289F04A400D7E82B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -134,13 +136,14 @@
 				D4C13BB328A1E76200141A54 /* STEPN-Sidekick-Info.plist */,
 				D4C13B9C28A1D8A800141A54 /* Fonts */,
 				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
-				D4FFE3C4289F04A200D7E82B /* ContentView.swift */,
+				D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */,
 				D4FFE3C6289F04A400D7E82B /* Assets.xcassets */,
 				D4FFE3CB289F04A400D7E82B /* Persistence.swift */,
 				D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */,
 				D4FFE3C8289F04A400D7E82B /* Preview Content */,
 				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
 				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
+				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
 			);
 			path = "STEPN Sidekick";
 			sourceTree = "<group>";
@@ -310,9 +313,10 @@
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4FFE3CC289F04A400D7E82B /* Persistence.swift in Sources */,
-				D4FFE3C5289F04A200D7E82B /* ContentView.swift in Sources */,
+				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
+				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
