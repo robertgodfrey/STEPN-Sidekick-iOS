@@ -13,15 +13,15 @@ import Foundation
 struct Shoe {
     private let title: String
     // V probs don't need this one V
-    private let imageSource: Int
-    private let numFeet: Int
+    private let imageResource: String
+    private let footResource: String
     private var minSpeed: Float
     private var maxSpeed: Float
     
-    init(title: String, imageSource: Int, numFeet: Int, minSpeed: Float, maxSpeed: Float) {
+    init(title: String, imageResource: String, footResource: String, minSpeed: Float, maxSpeed: Float) {
         self.title = title
-        self.imageSource = imageSource
-        self.numFeet = numFeet
+        self.imageResource = imageResource
+        self.footResource = footResource
         self.minSpeed = minSpeed
         self.maxSpeed = maxSpeed
     }
@@ -30,12 +30,12 @@ struct Shoe {
         return title
     }
     
-    func getImageSource() -> Int {
-        return imageSource
+    func getImageResource() -> String {
+        return imageResource
     }
         
-    func getNumFeet() -> Int {
-        return numFeet
+    func getFootResource() -> String {
+        return footResource
     }
     
     func getMinSpeed() -> Float {

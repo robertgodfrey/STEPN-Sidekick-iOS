@@ -17,4 +17,4 @@ let walker: Int = 0
 let jogger: Int = 1
 let runner: Int = 2
 let trainer: Int = 3
-let custom: Int = 4
+let customShoe: Int = 4

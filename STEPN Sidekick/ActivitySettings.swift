@@ -29,11 +29,19 @@ struct ActivitySettings: View {
     @State private var firstTime: Bool = true
     @State private var savedAppVersion: Float = 1.0
     
+    // delete?
     @State private var minSpeedString = "1.0"
     @State private var maxSpeedString = "6.0"
     @State private var energyString = "0.0"
     
-    @State private var shoes: [Shoe] = []
+    // TODO load custom values for custom shoe
+    @State private var shoes: [Shoe] = [
+        Shoe(title: "Walker  ", imageResource: "shoe_walker", footResource: "footprint", minSpeed: 1.0, maxSpeed: 6.0),
+        Shoe(title: "Jogger ", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: 4.0, maxSpeed: 10.0),
+        Shoe(title: "Runner", imageResource: "shoe_runner", footResource: "footprint", minSpeed: 8.0, maxSpeed: 20.0),
+        Shoe(title: "Trainer  ", imageResource: "shoe_trainer", footResource: "trainer_t", minSpeed: 1.0, maxSpeed: 20.0),
+        Shoe(title: "Custom  ", imageResource: "shoe_custom", footResource: "trainer_t", minSpeed: 0, maxSpeed: 0)
+    ]
                 
     var body: some View {
                 
@@ -63,13 +71,13 @@ struct ActivitySettings: View {
                                             .cornerRadius(/*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                                             .overlay(
                                                 HStack(spacing: 2) {
-                                                    Image("footprint")
+                                                    Image(shoes[shoeTypeIterator].getFootResource())
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
                                                         .frame(minWidth: 10, idealWidth: 16, maxWidth: 16, minHeight: 10, idealHeight: 16, maxHeight: 16)
                                                         .padding(.bottom, 26)
                                                     
-                                                    Text("Walker   ")
+                                                    Text(shoes[shoeTypeIterator].getTitle())
                                                         .font(Font.custom(fontButtons, size: 16))
                                                         .foregroundColor(Color("Almost Black"))
                                                         .padding(.bottom, 26)
@@ -80,9 +88,7 @@ struct ActivitySettings: View {
                                                     Circle()
                                                         .fill(Color("Almost Black"))
                                                         .frame(width: 46, height: 36)
-                                                        .padding(.top, 22)
-                                                        .padding(.trailing, 18)
-                                                        .padding([.leading, .bottom], 10)
+                                                        .padding([.leading, .top], 2)
 
                                                     
                                                     Button(action: {
@@ -93,21 +99,19 @@ struct ActivitySettings: View {
                                                             .strokeBorder(Color("Almost Black"), lineWidth: 1)
                                                             .background(Circle().fill(Color("Help Button Orange")))
                                                             .frame(width: 46, height: 36)
-                                                            .padding([.top, .trailing], 20)
-                                                            .padding([.leading, .bottom], 10)
+                                                            .padding()
                                                     }
                                                     
                                                     Text("?")
                                                         .font(Font.custom(fontTitles, size: 16))
                                                         .foregroundColor(Color("Almost Black"))
-                                                        .padding(.top, 20)
-                                                        .padding(.trailing, 20)
-                                                        .padding([.leading, .bottom], 10)
-
-                                                    
-                                                }, alignment: .topTrailing)
+                                                }
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 294),
+                                                alignment: .top)
+                                            
                                         
-                                        Image("shoe_walker")
+                                        Image(shoes[shoeTypeIterator].getImageResource())
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(minWidth: 140, idealWidth: 168, maxWidth: 168, minHeight: 140, idealHeight: 168, maxHeight: 168)
@@ -116,15 +120,25 @@ struct ActivitySettings: View {
                                         
                                         HStack(spacing: 200) {
                                             Button(action: {
-                                                print("left button")
+                                                if shoeTypeIterator == walker {
+                                                    shoeTypeIterator = customShoe
+                                                } else {
+                                                    shoeTypeIterator -= 1
+                                                }
                                             }) {
-                                                
+                                                Rectangle()
+                                                    .fill(Color.clear)
                                             }.frame(width: 80, height: 100)
                                             
                                             Button(action: {
-                                                print("right button")
+                                                if shoeTypeIterator == customShoe {
+                                                    shoeTypeIterator = walker
+                                                } else {
+                                                    shoeTypeIterator += 1
+                                                }
                                             }) {
-                                                
+                                                Rectangle()
+                                                    .fill(Color.clear)
                                             }.frame(width: 80, height: 100)
                                         }
                                     }
@@ -441,9 +455,6 @@ struct ActivitySettings: View {
              //   }
             }
         }
-        .onAppear() {
-            initShoes()
-        }
         
     }
     
@@ -461,15 +472,7 @@ struct ActivitySettings: View {
         }
         return buttonText
     }
-    
-    func initShoes() {
-        shoes.append(Shoe(title: "Walker", imageSource: 0, numFeet: 1, minSpeed: 1.0, maxSpeed: 6.0))
-        shoes.append(Shoe(title: "Jogger", imageSource: 1, numFeet: 2, minSpeed: 4.0, maxSpeed: 10.0))
-        shoes.append(Shoe(title: "Runner", imageSource: 2, numFeet: 3, minSpeed: 8.0, maxSpeed: 20.0))
-        shoes.append(Shoe(title: "Trainer", imageSource: 3, numFeet: 4, minSpeed: 1.0, maxSpeed: 20.0))
-        shoes.append(Shoe(title: "Custom", imageSource: 4, numFeet: 0, minSpeed: customMinSpeed, maxSpeed: customMaxSpeed))
-    }
-    
+        
 }
 
 struct MainButtons: ButtonStyle {
