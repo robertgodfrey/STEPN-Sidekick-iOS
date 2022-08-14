@@ -2,8 +2,22 @@
 //  ContentView.swift
 //  STEPN Sidekick
 //
-//  Created by Rob Godfrey on 8/6/22.
+//  App start screen. Allows user to select a type of shoe from a list of default or
+//  enter custom stats. User enters energy they want to spend and whether or not they
+//  want to enable voice updates and the ten-second countdown timer. Starts the
+//  SpeedTracker activity.
 //
+//  Created by Rob Godfrey
+//  Last updated 14 Aug 22
+//
+
+// TODO
+//    - persistance
+//    - ads, eventually
+//    - help dialogs
+//    - nav bar (obvi)
+//    - set max energy (so screen doesn't shift down)
+
 
 import SwiftUI
 
@@ -32,15 +46,15 @@ struct ActivitySettings: View {
     // delete?
     @State private var minSpeedString = "1.0"
     @State private var maxSpeedString = "6.0"
-    @State private var energyString = "0.0"
+    @State private var energyString = ""
     
     // TODO load custom values for custom shoe
     @State private var shoes: [Shoe] = [
-        Shoe(title: "Walker  ", imageResource: "shoe_walker", footResource: "footprint", minSpeed: 1.0, maxSpeed: 6.0),
-        Shoe(title: "Jogger ", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: 4.0, maxSpeed: 10.0),
+        Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: 1.0, maxSpeed: 6.0),
+        Shoe(title: "Jogger", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: 4.0, maxSpeed: 10.0),
         Shoe(title: "Runner", imageResource: "shoe_runner", footResource: "footprint", minSpeed: 8.0, maxSpeed: 20.0),
-        Shoe(title: "Trainer  ", imageResource: "shoe_trainer", footResource: "trainer_t", minSpeed: 1.0, maxSpeed: 20.0),
-        Shoe(title: "Custom  ", imageResource: "shoe_custom", footResource: "trainer_t", minSpeed: 0, maxSpeed: 0)
+        Shoe(title: "Trainer", imageResource: "shoe_trainer", footResource: "trainer_t", minSpeed: 1.0, maxSpeed: 20.0),
+        Shoe(title: "Custom", imageResource: "shoe_custom", footResource: "bolt", minSpeed: 0, maxSpeed: 0)
     ]
                 
     var body: some View {
@@ -66,16 +80,29 @@ struct ActivitySettings: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .padding(12)
-                                            .frame(minWidth: 380, maxWidth: 420, minHeight: 240, idealHeight: 260, maxHeight: 260)
+                                            .frame(minWidth: 380, maxWidth: 420, minHeight: 240, maxHeight: 260)
                                             .background(Color("Light Green"))
                                             .cornerRadius(/*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                                             .overlay(
-                                                HStack(spacing: 2) {
+                                                HStack(spacing: 0) {
+                                                    Image("footprint")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: shoeTypeIterator == runner ? 10 : 0, height: 16)
+                                                        .padding(.bottom, 26)
+                                                    
+                                                    Image("footprint")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: shoeTypeIterator == runner || shoeTypeIterator == jogger ? 10 : 0, height: 16)
+                                                        .padding(.bottom, 26)
+                                                    
                                                     Image(shoes[shoeTypeIterator].getFootResource())
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
-                                                        .frame(minWidth: 10, idealWidth: 16, maxWidth: 16, minHeight: 10, idealHeight: 16, maxHeight: 16)
+                                                        .frame(minWidth: 10, maxWidth: (shoeTypeIterator == trainer ? 16 : 10), minHeight: 10, maxHeight: 16)
                                                         .padding(.bottom, 26)
+                                                        .padding(.trailing, 4)
                                                     
                                                     Text(shoes[shoeTypeIterator].getTitle())
                                                         .font(Font.custom(fontButtons, size: 16))
@@ -114,7 +141,7 @@ struct ActivitySettings: View {
                                         Image(shoes[shoeTypeIterator].getImageResource())
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(minWidth: 140, idealWidth: 168, maxWidth: 168, minHeight: 140, idealHeight: 168, maxHeight: 168)
+                                            .frame(minWidth: 140, maxWidth: 168, minHeight: 140, maxHeight: 168)
                                             .padding(.trailing, 4)
                                             .padding(.bottom, 28)
                                         
@@ -125,6 +152,9 @@ struct ActivitySettings: View {
                                                 } else {
                                                     shoeTypeIterator -= 1
                                                 }
+                                            
+                                                minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
+                                                maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
                                             }) {
                                                 Rectangle()
                                                     .fill(Color.clear)
@@ -136,6 +166,9 @@ struct ActivitySettings: View {
                                                 } else {
                                                     shoeTypeIterator += 1
                                                 }
+                                                
+                                                minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
+                                                maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
                                             }) {
                                                 Rectangle()
                                                     .fill(Color.clear)
@@ -173,7 +206,7 @@ struct ActivitySettings: View {
                                                         .padding([.top, .leading], 5)
                                                     
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color("Button Disabled"))
+                                                        .foregroundColor(shoeTypeIterator == customShoe ? .white : Color("Button Disabled"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 8)
@@ -197,6 +230,7 @@ struct ActivitySettings: View {
                                                         .onReceive(minSpeedString.publisher.collect()) {
                                                             self.minSpeedString = String($0.prefix(4))
                                                         }
+                                                        .disabled(shoeTypeIterator != customShoe)
                                                 }
                                                 
                                             }
@@ -214,7 +248,7 @@ struct ActivitySettings: View {
                                                         .padding([.top, .leading], 5)
                                                     
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color("Button Disabled"))
+                                                        .foregroundColor(shoeTypeIterator == customShoe ? .white : Color("Button Disabled"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 8)
@@ -238,7 +272,8 @@ struct ActivitySettings: View {
                                                         .onReceive(maxSpeedString.publisher.collect()) {
                                                             self.maxSpeedString = String($0.prefix(4))
                                                         }
-
+                                                        .disabled(shoeTypeIterator != customShoe)
+                                                    
                                                 }
                                                 
                                             }
@@ -318,10 +353,10 @@ struct ActivitySettings: View {
                                                         }
                                                 }
                                                 
-                                                Text("(0 mins 30 sec)")
+                                                Text(getMinString(energy: Float(energyString) ?? 0.0))
                                                     .font(Font.custom(fontButtons, size: 16))
                                                     .foregroundColor(Color("Gandalf"))
-                                            }.frame(minWidth: 150, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
+                                            }.frame(minWidth: 150, maxWidth: 161, minHeight: 100, maxHeight: 200, alignment: .top)
 
                                         }
                                         
@@ -472,7 +507,27 @@ struct ActivitySettings: View {
         }
         return buttonText
     }
+    
+    func getMinString(energy: Float) -> String {
+        var energyInMins: Int = Int(energy * 5)
+        var minString: String
         
+        if energyInMins == 0 {
+            minString = "(0 mins)"
+        } else if energyInMins < 60 {
+            minString = "(\(energyInMins) " + (energyInMins < 2 ? "min 30 sec)" : "mins 30 sec)")
+        } else {
+            let hours: Int = Int(floor(Double(energyInMins) / 60.0))
+            minString = "(\(hours) " + (hours < 2 ? "hour" : "hours")
+            energyInMins = energyInMins - (hours * 60)
+            if energyInMins > 0 {
+                minString += " \(energyInMins) " + (energyInMins < 2 ? "min 30 sec)" : "mins 30 sec)")
+            } else {
+                minString += " 30 sec)"
+            }
+        }
+        return minString
+    }
 }
 
 struct MainButtons: ButtonStyle {
