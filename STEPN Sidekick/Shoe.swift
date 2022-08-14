@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct shoe {
+struct Shoe {
     private let title: String
     // V probs don't need this one V
     private let imageSource: Int

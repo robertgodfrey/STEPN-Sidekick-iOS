@@ -32,13 +32,17 @@ struct ActivitySettings: View {
     @State private var minSpeedString = "1.0"
     @State private var maxSpeedString = "6.0"
     @State private var energyString = "0.0"
-            
+    
+    @State private var shoes: [Shoe] = []
+                
     var body: some View {
+                
         VStack {
             if startSpeedTracker {
                 SpeedTracker()
+
             } else {
-                NavigationView {
+                //NavigationView {
                     ZStack(alignment: .top) {
                         Color("Background Almost White")
                                     
@@ -71,6 +75,37 @@ struct ActivitySettings: View {
                                                         .padding(.bottom, 26)
                                             
                                             }, alignment: .bottom)
+                                            .overlay(
+                                                ZStack {
+                                                    Circle()
+                                                        .fill(Color("Almost Black"))
+                                                        .frame(width: 46, height: 36)
+                                                        .padding(.top, 22)
+                                                        .padding(.trailing, 18)
+                                                        .padding([.leading, .bottom], 10)
+
+                                                    
+                                                    Button(action: {
+                                                        print("help me")
+
+                                                    }) {
+                                                        Circle()
+                                                            .strokeBorder(Color("Almost Black"), lineWidth: 1)
+                                                            .background(Circle().fill(Color("Help Button Orange")))
+                                                            .frame(width: 46, height: 36)
+                                                            .padding([.top, .trailing], 20)
+                                                            .padding([.leading, .bottom], 10)
+                                                    }
+                                                    
+                                                    Text("?")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .padding(.top, 20)
+                                                        .padding(.trailing, 20)
+                                                        .padding([.leading, .bottom], 10)
+
+                                                    
+                                                }, alignment: .topTrailing)
                                         
                                         Image("shoe_walker")
                                             .resizable()
@@ -78,295 +113,336 @@ struct ActivitySettings: View {
                                             .frame(minWidth: 140, idealWidth: 168, maxWidth: 168, minHeight: 140, idealHeight: 168, maxHeight: 168)
                                             .padding(.trailing, 4)
                                             .padding(.bottom, 28)
-                                    }
-
-                                }
-                                                    
-                                Text("SETTINGS")
-                                    .font(Font.custom(fontTitles, size: 28))
-                                    .padding(12)
-                                
-                                HStack(spacing: 6) {
-                                    VStack(spacing: 0){
-                                        Text("Minimum Speed")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
                                         
-                                        ZStack {
-
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
-                                                .padding([.top, .leading], 5)
-                                            
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Button Disabled"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1.4)
-                                                    )
-
-                                            Text("km/h")
-                                                .padding(.trailing, 12)
-                                                .padding(.top, 4)
-                                                .font(Font.custom(fontTitles, size: 15))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
-                                            
-                                            TextField("0.0", text: $minSpeedString)
-                                                .padding(.trailing, 6)
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .font(Font.custom(fontTitles, size: 22))
-                                                .multilineTextAlignment(.center)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
-                                        }
-                                        
-                                    }
-                                    
-                                    VStack(spacing: 0) {
-                                        Text("Maximum Speed")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .padding([.top, .leading], 5)
-                                            
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Button Disabled"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1.4)
-                                                )
-                                            
-                                            Text("km/h")
-                                                .padding(.trailing, 12)
-                                                .padding(.top, 4)
-                                                .font(Font.custom(fontTitles, size: 15))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
-
-                                            TextField("0.0", text: $maxSpeedString)
-                                                .padding(.trailing, 6)
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .font(Font.custom(fontTitles, size: 22))
-                                                .multilineTextAlignment(.center)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .keyboardType(.decimalPad)
-
-                                        }
-                                        
-                                    }
-                                }
-                                
-                                HStack(spacing: 9) {
-                                    VStack(spacing: 0) {
-                                        Text("Countdown Timer")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                            .padding(.top, 5.0)
-                                        
-                                        ZStack {
-                                        
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .padding([.top, .leading], 5)
-                                            
+                                        HStack(spacing: 200) {
                                             Button(action: {
-                                                tenSecondTimer = !tenSecondTimer
-                                                print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
+                                                print("left button")
                                             }) {
-                                                Text(tenSecondTimer == true ? "ENABLED" : "DISABLED")
-                                                    .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-
-                                            }
-                                                .buttonStyle(MainButtons(enabled: tenSecondTimer,
-                                                    tapAction: {
-                                                        tenSecondTimer = !tenSecondTimer
-                                                        print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
-                                                    }
-                                                ))
-                                                .font(Font.custom(fontButtons, size: 20))
-                                        }
-                                    }
-                                    .frame(minWidth: 154, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
-                                                        
-                                    VStack(spacing: 0) {
-                                        Text("Energy to Spend")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                            .padding(.top, 5.0)
-                                        
-                                        ZStack {
-
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Energy Blue Border"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .padding([.top, .leading], 5)
+                                                
+                                            }.frame(width: 80, height: 100)
                                             
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Energy Blue"))
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Energy Blue Border"), lineWidth: 1.4)
-                                                )
-                                            
-                                            Image("energy_bolt")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.trailing, 28)
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 20, maxHeight: 24, alignment: .trailing)
-                                        
-                                            TextField("0.0", text: $energyString)
-                                                .padding(.trailing, 6)
-                                                .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                                .font(Font.custom(fontTitles, size: 22))
-                                                .multilineTextAlignment(.center)
-                                                .foregroundColor(Color("Almost Black"))
-                                        }
-                                        
-                                        Text("(0 mins 30 sec)")
-                                            .font(Font.custom(fontButtons, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                    }.frame(minWidth: 150, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
-
-                                }
-                                
-                                Text("VOICE UPDATES")
-                                    .font(Font.custom(fontTitles, size: 24))
-                                    .padding(12)
-                                
-                                HStack(spacing: 4) {
-                                    VStack(spacing: 0) {
-                                        Text("Speed")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                .padding([.top, .leading], 5)
-                                        
-                                        
                                             Button(action: {
-                                                if voiceAlertsSpeedType == speedAlertsBoth {
-                                                    voiceAlertsSpeedType = speedAlertsDisabled
-                                                } else {
-                                                    voiceAlertsSpeedType += 1
-                                                }
-                                                print("Speed alerts button changed")
-                                            }, label: {
-                                                Text(voiceSpeedText())
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            })
-                                            .buttonStyle(MainButtons(enabled: voiceAlertsSpeedType != 0,
-                                                tapAction: {
-                                                    if voiceAlertsSpeedType == speedAlertsBoth {
-                                                        voiceAlertsSpeedType = speedAlertsDisabled
-                                                    } else {
-                                                        voiceAlertsSpeedType += 1
-                                                    }
-                                                    print("Speed alerts button changed")
-                                                }
-                                            ))
-                                            .font(Font.custom(fontButtons, size: 17))
-                                        }
-                                    }
-                        
-                                
-                                    VStack(spacing: 0) {
-                                        Text("Time")
-                                            .font(Font.custom(fontHeaders, size: 15))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                .padding([.top, .leading], 5)
-                                        
-                                            Button(action: {
-                                                voiceAlertsTime = !voiceAlertsTime
-                                                print("Time alerts button switched")
+                                                print("right button")
                                             }) {
-                                                Text(voiceAlertsTime == true ? "ENABLED" : "DISABLED")
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-
-                                            }
-                                            .buttonStyle(MainButtons(enabled: voiceAlertsTime,
-                                                    tapAction: {
-                                                        voiceAlertsTime = !voiceAlertsTime
-                                                        print("Time alerts button switched")
-                                                    }
-                                                ))
-                                                .font(Font.custom(fontButtons, size: 17))
+                                                
+                                            }.frame(width: 80, height: 100)
                                         }
                                     }
-                                    
-                                    VStack(spacing: 0){
-                                        Text("1 min / 30 sec")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                .padding([.top, .leading], 5)
 
-
-                                            Button(action: {
-                                                voiceAlertsMinThirty = !voiceAlertsMinThirty
-                                                print("1 min / 30 sec button switched")
-                                            }) {
-                                                Text(voiceAlertsMinThirty == true ? "ENABLED" : "DISABLED")
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            }
-                                                .buttonStyle(MainButtons(enabled: voiceAlertsMinThirty,
-                                                    tapAction: {
-                                                        voiceAlertsMinThirty = !voiceAlertsMinThirty
-                                                        print("1 min / 30 sec button switched")
-                                                    }))
-                                                .font(Font.custom(fontButtons, size: 17))
-                                        }
-                                    }
                                 }
                                 
                                 ZStack {
-                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                        .foregroundColor(Color("Almost Black"))
-                                        .frame(minWidth: 165, maxWidth: 165, minHeight: 50, maxHeight: 50)
-                                        .padding(.top, 8)
-                                        .padding(.leading, 6)
                                     
                                     Button(action: {
-                                        self.startSpeedTracker = true
-                                    } ) {
-                                        Text("START")
-                                            .frame(width: 165, height: 50)
-
+                                        UIApplication.shared.hideKeyboard()
+                                    }) {
+                                        Color("Background Almost White")
                                     }
-                                        .buttonStyle(StartButton(tapAction: {
-                                            self.startSpeedTracker = true
-                                        }))
-                                        .font(Font.custom(fontButtons, size: 25))
                                     
-                                }.padding(.vertical, 38)
+                            
+                                    VStack(spacing: 0) {
+                                        Text("SETTINGS")
+                                            .font(Font.custom(fontTitles, size: 28))
+                                            .padding(12)
+                                        
+                                        HStack(spacing: 6) {
+                                            VStack(spacing: 0){
+                                                Text("Minimum Speed")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                
+                                                ZStack {
+
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
+                                                        .padding([.top, .leading], 5)
+                                                    
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Button Disabled"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 8)
+                                                                .stroke(Color("Almost Black"), lineWidth: 1.4)
+                                                            )
+
+                                                    Text("km/h")
+                                                        .padding(.trailing, 12)
+                                                        .padding(.top, 4)
+                                                        .font(Font.custom(fontTitles, size: 15))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
+                                                    
+                                                    TextField("0.0", text: $minSpeedString)
+                                                        .padding(.trailing, 6)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .font(Font.custom(fontTitles, size: 22))
+                                                        .multilineTextAlignment(.center)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                                        .onReceive(minSpeedString.publisher.collect()) {
+                                                            self.minSpeedString = String($0.prefix(4))
+                                                        }
+                                                }
+                                                
+                                            }
+                                            
+                                            VStack(spacing: 0) {
+                                                Text("Maximum Speed")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                
+                                                ZStack {
+
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .padding([.top, .leading], 5)
+                                                    
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Button Disabled"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 8)
+                                                                .stroke(Color("Almost Black"), lineWidth: 1.4)
+                                                        )
+                                                    
+                                                    Text("km/h")
+                                                        .padding(.trailing, 12)
+                                                        .padding(.top, 4)
+                                                        .font(Font.custom(fontTitles, size: 15))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
+
+                                                    TextField("0.0", text: $maxSpeedString)
+                                                        .padding(.trailing, 6)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .font(Font.custom(fontTitles, size: 22))
+                                                        .multilineTextAlignment(.center)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .keyboardType(.decimalPad)
+                                                        .onReceive(maxSpeedString.publisher.collect()) {
+                                                            self.maxSpeedString = String($0.prefix(4))
+                                                        }
+
+                                                }
+                                                
+                                            }
+                                        }
+                                        
+                                        HStack(spacing: 9) {
+                                            VStack(spacing: 0) {
+                                                Text("Countdown Timer")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                    .padding(.top, 5.0)
+                                                
+                                                ZStack {
+                                                
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .padding([.top, .leading], 5)
+                                                    
+                                                    Button(action: {
+                                                        tenSecondTimer = !tenSecondTimer
+                                                        UIApplication.shared.hideKeyboard()
+                                                        print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
+                                                    }) {
+                                                        Text(tenSecondTimer == true ? "ENABLED" : "DISABLED")
+                                                            .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+
+                                                    }
+                                                        .buttonStyle(MainButtons(enabled: tenSecondTimer,
+                                                            tapAction: {
+                                                                tenSecondTimer = !tenSecondTimer
+                                                                UIApplication.shared.hideKeyboard()
+                                                                print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
+                                                            }
+                                                        ))
+                                                        .font(Font.custom(fontButtons, size: 20))
+                                                }
+                                            }
+                                            .frame(minWidth: 154, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
+                                                                
+                                            VStack(spacing: 0) {
+                                                Text("Energy to Spend")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                    .padding(.top, 5.0)
+                                                
+                                                ZStack {
+
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Energy Blue Border"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .padding([.top, .leading], 5)
+                                                    
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Energy Blue"))
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 8)
+                                                                .stroke(Color("Energy Blue Border"), lineWidth: 1.4)
+                                                        )
+                                                    
+                                                    Image("energy_bolt")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .padding(.trailing, 28)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 20, maxHeight: 24, alignment: .trailing)
+                                                
+                                                    TextField("0.0", text: $energyString)
+                                                        .padding(.trailing, 6)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                                        .font(Font.custom(fontTitles, size: 22))
+                                                        .multilineTextAlignment(.center)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .keyboardType(.decimalPad)
+                                                        .onReceive(energyString.publisher.collect()) {
+                                                            self.energyString = String($0.prefix(4))
+                                                        }
+                                                }
+                                                
+                                                Text("(0 mins 30 sec)")
+                                                    .font(Font.custom(fontButtons, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                            }.frame(minWidth: 150, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
+
+                                        }
+                                        
+                                        Text("VOICE UPDATES")
+                                            .font(Font.custom(fontTitles, size: 24))
+                                            .padding(12)
+                                        
+                                        HStack(spacing: 4) {
+                                            VStack(spacing: 0) {
+                                                Text("Speed")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                        .padding([.top, .leading], 5)
+                                                
+                                                
+                                                    Button(action: {
+                                                        if voiceAlertsSpeedType == speedAlertsBoth {
+                                                            voiceAlertsSpeedType = speedAlertsDisabled
+                                                        } else {
+                                                            voiceAlertsSpeedType += 1
+                                                        }
+                                                        print("Speed alerts button changed")
+                                                    }, label: {
+                                                        Text(voiceSpeedText())
+                                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                    })
+                                                    .buttonStyle(MainButtons(enabled: voiceAlertsSpeedType != 0,
+                                                        tapAction: {
+                                                            if voiceAlertsSpeedType == speedAlertsBoth {
+                                                                voiceAlertsSpeedType = speedAlertsDisabled
+                                                            } else {
+                                                                voiceAlertsSpeedType += 1
+                                                            }
+                                                            print("Speed alerts button changed")
+                                                        }
+                                                    ))
+                                                    .font(Font.custom(fontButtons, size: 17))
+                                                }
+                                            }
+                                
+                                        
+                                            VStack(spacing: 0) {
+                                                Text("Time")
+                                                    .font(Font.custom(fontHeaders, size: 15))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                        .padding([.top, .leading], 5)
+                                                
+                                                    Button(action: {
+                                                        voiceAlertsTime = !voiceAlertsTime
+                                                        print("Time alerts button switched")
+                                                    }) {
+                                                        Text(voiceAlertsTime == true ? "ENABLED" : "DISABLED")
+                                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+
+                                                    }
+                                                    .buttonStyle(MainButtons(enabled: voiceAlertsTime,
+                                                            tapAction: {
+                                                                voiceAlertsTime = !voiceAlertsTime
+                                                                print("Time alerts button switched")
+                                                            }
+                                                        ))
+                                                        .font(Font.custom(fontButtons, size: 17))
+                                                }
+                                            }
+                                            
+                                            VStack(spacing: 0){
+                                                Text("1 min / 30 sec")
+                                                    .font(Font.custom(fontHeaders, size: 16))
+                                                    .foregroundColor(Color("Gandalf"))
+                                                
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                        .padding([.top, .leading], 5)
+
+
+                                                    Button(action: {
+                                                        voiceAlertsMinThirty = !voiceAlertsMinThirty
+                                                        print("1 min / 30 sec button switched")
+                                                    }) {
+                                                        Text(voiceAlertsMinThirty == true ? "ENABLED" : "DISABLED")
+                                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                    }
+                                                        .buttonStyle(MainButtons(enabled: voiceAlertsMinThirty,
+                                                            tapAction: {
+                                                                voiceAlertsMinThirty = !voiceAlertsMinThirty
+                                                                print("1 min / 30 sec button switched")
+                                                            }))
+                                                        .font(Font.custom(fontButtons, size: 17))
+                                                }
+                                            }
+                                        }
+                                        
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(minWidth: 165, maxWidth: 165, minHeight: 50, maxHeight: 50)
+                                                .padding(.top, 8)
+                                                .padding(.leading, 6)
+                                            
+                                            Button(action: {
+                                                self.startSpeedTracker = true
+                                            } ) {
+                                                Text("START")
+                                                    .frame(width: 165, height: 50)
+
+                                            }
+                                                .buttonStyle(StartButton(tapAction: {
+                                                    self.startSpeedTracker = true
+                                                }))
+                                                .font(Font.custom(fontButtons, size: 25))
+                                            
+                                        }.padding(.vertical, 38)
+                                    }
+                                }
                             }
-                    
                         }
+                        
                     }.ignoresSafeArea()
-                }
+             //   }
             }
+        }
+        .onAppear() {
+            initShoes()
         }
         
     }
@@ -385,6 +461,15 @@ struct ActivitySettings: View {
         }
         return buttonText
     }
+    
+    func initShoes() {
+        shoes.append(Shoe(title: "Walker", imageSource: 0, numFeet: 1, minSpeed: 1.0, maxSpeed: 6.0))
+        shoes.append(Shoe(title: "Jogger", imageSource: 1, numFeet: 2, minSpeed: 4.0, maxSpeed: 10.0))
+        shoes.append(Shoe(title: "Runner", imageSource: 2, numFeet: 3, minSpeed: 8.0, maxSpeed: 20.0))
+        shoes.append(Shoe(title: "Trainer", imageSource: 3, numFeet: 4, minSpeed: 1.0, maxSpeed: 20.0))
+        shoes.append(Shoe(title: "Custom", imageSource: 4, numFeet: 0, minSpeed: customMinSpeed, maxSpeed: customMaxSpeed))
+    }
+    
 }
 
 struct MainButtons: ButtonStyle {
@@ -451,7 +536,14 @@ struct StartButton: ButtonStyle {
     }
 
 }
-  
+
+#if canImport(UIKit)
+extension UIApplication {
+    func hideKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
