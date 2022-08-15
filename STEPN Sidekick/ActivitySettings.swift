@@ -29,6 +29,7 @@ private let speedAlertsBoth: Int = 3
 
 struct ActivitySettings: View {
     
+    @State var noEnergyAlert: Bool = false
     @State var startSpeedTracker: Bool = false
     
     // TODO change all these bad boys to load saved values
@@ -61,7 +62,7 @@ struct ActivitySettings: View {
                 
         VStack {
             if startSpeedTracker {
-                SpeedTracker(timeRemaining: energy * 5 * 60)
+                SpeedTracker(timeRemaining: energy)
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -479,15 +480,28 @@ struct ActivitySettings: View {
                                                     shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
                                                     shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
                                                 }
-                                                energy = Double(energyString) ?? 0.2
-                                                self.startSpeedTracker = true
+                                                if Double(energyString) ?? 0 == 0 {
+                                                    noEnergyAlert = true
+                                                } else {
+                                                    energy = Double(energyString) ?? 0.2
+                                                    self.startSpeedTracker = true
+                                                }
                                             } ) {
                                                 Text("START")
                                                     .frame(width: 165, height: 50)
 
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
-                                                    self.startSpeedTracker = true
+                                                    if shoeTypeIterator == customShoe {
+                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
+                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
+                                                    }
+                                                    if Double(energyString) ?? 0 == 0 {
+                                                        noEnergyAlert = true
+                                                    } else {
+                                                        energy = Double(energyString) ?? 0.2
+                                                        self.startSpeedTracker = true
+                                                    }
                                                 }))
                                                 .font(Font.custom(fontButtons, size: 25))
                                             
@@ -498,10 +512,13 @@ struct ActivitySettings: View {
                         }
                         
                     }.ignoresSafeArea()
-             //   }
+                
+             // nav view closing bracket  }
             }
         }
-        
+        .alert(isPresented: $noEnergyAlert) {
+            Alert(title: Text("Check Energy"), message: Text("Energy must be greater than 0"), dismissButton: .default(Text("Okay")))
+        }
     }
     
     func voiceSpeedText() -> String {
@@ -600,8 +617,6 @@ struct StartButton: ButtonStyle {
                     }
                 )
         }
-        
-            
     }
 
 }

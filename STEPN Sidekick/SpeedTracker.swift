@@ -123,7 +123,7 @@ struct SpeedTracker: View {
                     Text("Time Remaining:")
                         .font(Font.custom(fontHeaders, size: 16))
                         .foregroundColor(Color("Energy Blue"))
-                    Text(String(Int(timeRemaining)))
+                    Text(timeFormatted())
                         .font(Font.custom("RobotoCondensed-Bold", size: 92))
                         .foregroundColor(Color("Energy Blue"))
 
@@ -170,10 +170,25 @@ struct SpeedTracker: View {
                 }
             })
     }
+    
+    func timeFormatted() -> String {
+        var timeString: String = ""
+        
+        if timeRemaining >= 3600 {
+            timeString += String(Int(timeRemaining / 3600)) + ":"
+        }
+        
+        let minutes = Int(timeRemaining) / 60 % 60
+        let seconds = Int(timeRemaining) % 60
+        
+        timeString += String(format:"%02i:%02i", minutes, seconds)
+        
+        return timeString
+    }
 }
 
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
-        SpeedTracker(timeRemaining: 10.0)
+        SpeedTracker(timeRemaining: 69)
     }
 }
