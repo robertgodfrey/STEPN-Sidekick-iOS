@@ -61,8 +61,7 @@ struct ActivitySettings: View {
                 
         VStack {
             if startSpeedTracker {
-                SpeedTracker()
-
+                SpeedTracker(timeRemaining: energy * 5 * 60)
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -147,6 +146,11 @@ struct ActivitySettings: View {
                                         
                                         HStack(spacing: 200) {
                                             Button(action: {
+                                                if shoeTypeIterator == customShoe {
+                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
+                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
+                                                }
+                                                
                                                 if shoeTypeIterator == walker {
                                                     shoeTypeIterator = customShoe
                                                 } else {
@@ -162,6 +166,8 @@ struct ActivitySettings: View {
                                             
                                             Button(action: {
                                                 if shoeTypeIterator == customShoe {
+                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
+                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
                                                     shoeTypeIterator = walker
                                                 } else {
                                                     shoeTypeIterator += 1
@@ -469,6 +475,11 @@ struct ActivitySettings: View {
                                                 .padding(.leading, 6)
                                             
                                             Button(action: {
+                                                if shoeTypeIterator == customShoe {
+                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
+                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
+                                                }
+                                                energy = Double(energyString) ?? 0.2
                                                 self.startSpeedTracker = true
                                             } ) {
                                                 Text("START")

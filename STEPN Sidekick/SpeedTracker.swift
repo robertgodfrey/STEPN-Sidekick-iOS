@@ -2,12 +2,20 @@
 //  SpeedTracker.swift
 //  STEPN Sidekick
 //
-//  Created by Rob Godfrey on 8/13/22.
+//  Displays current/average speed, time/energy remaining, GPS signal strength
+//
+//  Created by Rob Godfrey
+//  Last updated 14 Aug 22
 //
 
 import SwiftUI
 
 struct SpeedTracker: View {
+    
+    @State private var isActive: Bool = true
+    @State var timeRemaining: CGFloat
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
+    
     var body: some View {
         ZStack(alignment: .top) {
             Color("Speed Tracker Background")
@@ -27,7 +35,7 @@ struct SpeedTracker: View {
                                 .foregroundColor(Color("Energy Blue"))
                                 .frame(height: 25)
                             Text("0.0")
-                                .font(Font.custom(fontTitles, size: 20))
+                                .font(Font.custom(fontTitles, size: 18))
                                 .foregroundColor(Color("Energy Blue"))
                         }.padding(.leading, 25)
                         
@@ -40,7 +48,7 @@ struct SpeedTracker: View {
                             
                             HStack(spacing: 7) {
                                 Text("GPS")
-                                    .font(Font.custom(fontTitles, size: 20))
+                                    .font(Font.custom(fontTitles, size: 18))
                                     .foregroundColor(.white)
                                 
                                 HStack(alignment: .bottom, spacing: 2) {
@@ -115,36 +123,57 @@ struct SpeedTracker: View {
                     Text("Time Remaining:")
                         .font(Font.custom(fontHeaders, size: 16))
                         .foregroundColor(Color("Energy Blue"))
-                    Text("00:00")
+                    Text(String(Int(timeRemaining)))
                         .font(Font.custom("RobotoCondensed-Bold", size: 92))
                         .foregroundColor(Color("Energy Blue"))
 
                 }
                                 
                 HStack(spacing: 45){
-                    Text("-5")
-                        .font(Font.custom("Roboto-Black", size: 35))
-                        .foregroundColor(Color.white)
-                    Button(action: { }) {
+                    Button(action: {
+                        timeRemaining -= 5
+                    }) {
+                        Text("-5")
+                            .font(Font.custom("Roboto-Black", size: 35))
+                            .foregroundColor(Color.white)
+                    }
+                    
+                    Button(action: {
+                        isActive.toggle()
+                    }) {
                         Image("button_pause")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .padding(12)
                             .frame(width: 110, height: 110)
                     }
-
-                    Text("+5")
-                        .font(Font.custom("Roboto-Black", size: 35))
-                        .foregroundColor(Color.white)
+                    
+                    Button(action: {
+                        timeRemaining += 5
+                    }) {
+                        Text("+5")
+                            .font(Font.custom("Roboto-Black", size: 35))
+                            .foregroundColor(Color.white)
+                    }
                     
                 }.padding(.vertical, 60)
             }
         }.ignoresSafeArea()
+            .onReceive(timer, perform: { _ in
+                guard isActive else { return }
+                
+                if timeRemaining > 0 {
+                    timeRemaining -= 1
+                } else {
+                    isActive = false
+                    timeRemaining = 0
+                }
+            })
     }
 }
 
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
-        SpeedTracker()
+        SpeedTracker(timeRemaining: 10.0)
     }
 }
