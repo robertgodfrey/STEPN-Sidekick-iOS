@@ -14,19 +14,21 @@ struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
     
-    @State var shoeType: Int
-    @State var minSpeed: Float
-    @State var maxSpeed: Float
-    @State var energy: Float
-    @State var tenSecondTimer: Bool
-    @State var voiceAlertsCurrentSpeed: Bool
-    @State var voiceAlertsAvgSpeed: Bool
-    @State var voiceAlertsTime: Bool
-    @State var voiceAlertsMinuteThirty: Bool
+    let shoeType: String
+    let minSpeed: Float
+    let maxSpeed: Float
+    let energy: Float
+    let tenSecondTimer: Bool
+    let voiceAlertsCurrentSpeed: Bool
+    let voiceAlertsAvgSpeed: Bool
+    let voiceAlertsTime: Bool
+    let voiceAlertsMinuteThirty: Bool
     
     @State private var returnToSettings: Bool = false
     @State private var currentSpeed: Double = 0
     @State private var gpsAccuracy: Double = 0
+    @State private var avgSpeeds = [Float](repeating: 0, count: 300)
+    @State private var justPlayed: Bool = false
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
     @State private var timeRemaining: Int = 0
@@ -37,11 +39,11 @@ struct SpeedTracker: View {
         timeRemaining = Int(energy * 5 * 60)
         
         return Group {
-            if locationManager.userLocation == nil {
+        /*    if locationManager.userLocation == nil {
                 LocationRequestView()
             } else if (returnToSettings) {
                 ActivitySettings()
-            } else {
+            } else { */
                 ZStack(alignment: .top) {
                     Color("Speed Tracker Background")
                     
@@ -58,8 +60,8 @@ struct SpeedTracker: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .foregroundColor(Color("Energy Blue"))
-                                        .frame(height: 25)
-                                    Text("0.0")
+                                        .frame(height: 18)
+                                    Text(String(energy))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Energy Blue"))
                                 }.padding(.leading, 25)
@@ -78,13 +80,13 @@ struct SpeedTracker: View {
                                         
                                         HStack(alignment: .bottom, spacing: 2) {
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(Color("Gandalf"))
+                                                .foregroundColor(gpsAccuracy >= 40 ? Color("Gandalf") : Color(.green))
                                                 .frame(width: 5, height: 10)
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(Color("Gandalf"))
+                                                .foregroundColor(gpsAccuracy >= 20 ? Color("Gandalf") : Color(.green))
                                                 .frame(width: 5, height: 15)
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(Color("Gandalf"))
+                                                .foregroundColor(gpsAccuracy >= 10 ? Color("Gandalf") : Color(.green))
                                                 .frame(width: 5, height: 20)
                                         }
                                     }
@@ -95,19 +97,20 @@ struct SpeedTracker: View {
                             
                             VStack(spacing: 2) {
                                 HStack(spacing: 6) {
+                                    // TODO add mo feet
                                     Image("footprint")
                                         .renderingMode(.template)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .foregroundColor(.white)
                                         .frame(height: 17)
-                                    Text("Walker")
+                                    Text(shoeType)
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(.white)
                                         .padding(.top, 2)
                                 }
                                 
-                                Text("1.0 - 6.0 km/h")
+                                Text("\(Double(round((minSpeed * 10) / 10))) - \(round(maxSpeed * 10) / 10) km/h")
                                     .font(Font.custom(fontHeaders, size: 18))
                                     .foregroundColor(.white)
                             }.padding(.top, 30)
@@ -115,7 +118,7 @@ struct SpeedTracker: View {
                         
                         HStack(spacing: 50) {
                             VStack(spacing: 0) {
-                                Text("Current Speed")
+                                Text("Current Speed:")
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
@@ -129,11 +132,11 @@ struct SpeedTracker: View {
                             }
                             
                             VStack(spacing: 0) {
-                                Text(fiveMinAvgSpeed())
+                                Text("5-Min Average:")
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
-                                Text("0.0")
+                                Text(fiveMinAvgSpeed())
                                     .font(Font.custom("Roboto-BlackItalic", size: 90))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
@@ -190,13 +193,16 @@ struct SpeedTracker: View {
                         guard isActive else { return }
                         
                         if timeRemaining > 0 {
+                            // modify energy
+                            // voice alerts
+                            // speed alerts
                             timeRemaining -= 1
                         } else {
                             isActive = false
                             timeRemaining = 0
                         }
                     })
-            }
+            //}
         }
     }
         
@@ -207,18 +213,18 @@ struct SpeedTracker: View {
     }
     
     func fiveMinAvgSpeed() -> String {
-        return ""
+        return "0.0"
     }
     
     func timeFormatted() -> String {
         var timeString: String = ""
         
-        if energy >= 3600 {
-            timeString += String(Int(energy / 3600)) + ":"
+        if timeRemaining >= 3600 {
+            timeString += String(Int(timeRemaining / 3600)) + ":"
         }
         
-        let minutes = Int(energy) / 60 % 60
-        let seconds = Int(energy) % 60
+        let minutes = Int(timeRemaining) / 60 % 60
+        let seconds = Int(timeRemaining) % 60
         
         timeString += String(format:"%02i:%02i", minutes, seconds)
         
@@ -229,10 +235,10 @@ struct SpeedTracker: View {
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
         SpeedTracker(
-            shoeType: jogger,
-            minSpeed: 1.0,
-            maxSpeed: 6.0,
-            energy: 420,
+            shoeType: "Runner",
+            minSpeed: 8.0,
+            maxSpeed: 20.0,
+            energy: 2,
             tenSecondTimer: true,
             voiceAlertsCurrentSpeed: true,
             voiceAlertsAvgSpeed: true,

@@ -37,7 +37,7 @@ struct ActivitySettings: View {
     @State private var voiceAlertsSpeedType: Int = speedAlertsBoth
     @State private var voiceAlertsTime: Bool = true
     @State private var voiceAlertsMinThirty: Bool = true
-    @State private var energy: Double = 2.0
+    @State private var energy: Float = 2.0
     @State private var shoeTypeIterator: Int = walker
     @State private var customMinSpeed: Float = 0
     @State private var customMaxSpeed: Float = 0
@@ -63,15 +63,17 @@ struct ActivitySettings: View {
         VStack {
             if startSpeedTracker {
                 SpeedTracker(
-                    shoeType: shoeTypeIterator,
-                    minSpeed: 1.0,
-                    maxSpeed: 6.0,
-                    energy: 420,
-                    tenSecondTimer: true,
-                    voiceAlertsCurrentSpeed: true,
-                    voiceAlertsAvgSpeed: true,
-                    voiceAlertsTime: true,
-                    voiceAlertsMinuteThirty: true)
+                    shoeType: shoes[shoeTypeIterator].getTitle(),
+                    minSpeed: shoes[shoeTypeIterator].getMinSpeed(),
+                    maxSpeed: shoes[shoeTypeIterator].getMaxSpeed(),
+                    energy: energy,
+                    tenSecondTimer: tenSecondTimer,
+                    voiceAlertsCurrentSpeed:
+                        (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                    voiceAlertsAvgSpeed:
+                        (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                    voiceAlertsTime: voiceAlertsTime,
+                    voiceAlertsMinuteThirty: voiceAlertsMinThirty)
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -521,7 +523,7 @@ struct ActivitySettings: View {
                                                 if Double(energyString) ?? 0 == 0 {
                                                     noEnergyAlert = true
                                                 } else {
-                                                    energy = Double(energyString) ?? 0.2
+                                                    energy = Float(energyString) ?? 0.2
                                                     self.startSpeedTracker = true
                                                 }
                                                 
@@ -538,7 +540,7 @@ struct ActivitySettings: View {
                                                     if Double(energyString) ?? 0 == 0 {
                                                         noEnergyAlert = true
                                                     } else {
-                                                        energy = Double(energyString) ?? 0.2
+                                                        energy = Float(energyString) ?? 0.2
                                                         self.startSpeedTracker = true
                                                     }
                                                 }))
