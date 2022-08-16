@@ -80,7 +80,7 @@ struct ActivitySettings: View {
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .padding(12)
-                                            .frame(minWidth: 380, maxWidth: 420, minHeight: 240, maxHeight: 260)
+                                            .frame(minWidth: 140, maxWidth: 420, minHeight: 100, maxHeight: 300)
                                             .background(Color("Light Green"))
                                             .cornerRadius(/*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
                                             .overlay(
@@ -111,37 +111,36 @@ struct ActivitySettings: View {
                                             
                                             }, alignment: .bottom)
                                             .overlay(
-                                                ZStack {
+
+                                            ZStack {
+                                                Circle()
+                                                    .fill(Color("Almost Black"))
+                                                    .frame(width: 46, height: 36)
+                                                    .padding([.leading, .top], 2)
+
+                                                
+                                                Button(action: {
+                                                    print("help me")
+
+                                                }) {
                                                     Circle()
-                                                        .fill(Color("Almost Black"))
+                                                        .strokeBorder(Color("Almost Black"), lineWidth: 1)
+                                                        .background(Circle().fill(Color("Help Button Orange")))
                                                         .frame(width: 46, height: 36)
-                                                        .padding([.leading, .top], 2)
-
-                                                    
-                                                    Button(action: {
-                                                        print("help me")
-
-                                                    }) {
-                                                        Circle()
-                                                            .strokeBorder(Color("Almost Black"), lineWidth: 1)
-                                                            .background(Circle().fill(Color("Help Button Orange")))
-                                                            .frame(width: 46, height: 36)
-                                                            .padding()
-                                                    }
-                                                    
-                                                    Text("?")
-                                                        .font(Font.custom(fontTitles, size: 16))
-                                                        .foregroundColor(Color("Almost Black"))
+                                                        .padding()
                                                 }
-                                                    .padding(.top, 4)
-                                                    .padding(.leading, 294),
-                                                alignment: .top)
+                                                
+                                                Text("?")
+                                                    .font(Font.custom(fontTitles, size: 16))
+                                                    .foregroundColor(Color("Almost Black"))
+                                            }
+                                                .padding(.top, 4)
+                                                .padding(.trailing, 4), alignment: .topTrailing)
                                             
-                                        
                                         Image(shoes[shoeTypeIterator].getImageResource())
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .frame(minWidth: 140, maxWidth: 168, minHeight: 140, maxHeight: 168)
+                                            .frame(minWidth: 120, maxWidth: 168, minHeight: 120, maxHeight: 168)
                                             .padding(.trailing, 4)
                                             .padding(.bottom, 28)
                                         
@@ -181,7 +180,7 @@ struct ActivitySettings: View {
                                                     .fill(Color.clear)
                                             }.frame(width: 80, height: 100)
                                         }
-                                    }
+                                    }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
 
                                 }
                                 
@@ -199,7 +198,9 @@ struct ActivitySettings: View {
                                             .font(Font.custom(fontTitles, size: 28))
                                             .padding(12)
                                         
-                                        HStack(spacing: 6) {
+                                        HStack(spacing: 0) {
+                                            Spacer()
+                                        
                                             VStack(spacing: 0){
                                                 Text("Minimum Speed")
                                                     .font(Font.custom(fontHeaders, size: 16))
@@ -239,8 +240,8 @@ struct ActivitySettings: View {
                                                         }
                                                         .disabled(shoeTypeIterator != customShoe)
                                                 }
-                                                
                                             }
+                                            Spacer()
                                             
                                             VStack(spacing: 0) {
                                                 Text("Maximum Speed")
@@ -284,9 +285,14 @@ struct ActivitySettings: View {
                                                 }
                                                 
                                             }
-                                        }
+                                            
+                                            Spacer()
+
+                                        }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                                         
-                                        HStack(spacing: 9) {
+                                        HStack(spacing: 0) {
+                                            Spacer()
+                                        
                                             VStack(spacing: 0) {
                                                 Text("Countdown Timer")
                                                     .font(Font.custom(fontHeaders, size: 16))
@@ -319,8 +325,10 @@ struct ActivitySettings: View {
                                                         .font(Font.custom(fontButtons, size: 20))
                                                 }
                                             }
-                                            .frame(minWidth: 154, maxWidth: 161, minHeight: 100, maxHeight: 160, alignment: .top)
-                                                                
+                                            .frame(height: 100, alignment: .top)
+                                                    
+                                            Spacer()
+                                            
                                             VStack(spacing: 0) {
                                                 Text("Energy to Spend")
                                                     .font(Font.custom(fontHeaders, size: 16))
@@ -363,9 +371,11 @@ struct ActivitySettings: View {
                                                 Text(getMinString(energy: Float(energyString) ?? 0.0))
                                                     .font(Font.custom(fontButtons, size: 16))
                                                     .foregroundColor(Color("Gandalf"))
-                                            }.frame(minWidth: 150, maxWidth: 161, minHeight: 100, maxHeight: 200, alignment: .top)
+                                            }.frame(height: 100, alignment: .top)
 
-                                        }
+                                            Spacer()
+                                            
+                                        }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                                         
                                         Text("VOICE UPDATES")
                                             .font(Font.custom(fontTitles, size: 24))
@@ -512,6 +522,8 @@ struct ActivitySettings: View {
                         }
                         
                     }.ignoresSafeArea()
+                    .padding(.horizontal, -38)
+                    .frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                 
              // nav view closing bracket  }
             }
