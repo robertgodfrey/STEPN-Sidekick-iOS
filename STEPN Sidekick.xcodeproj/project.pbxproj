@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D44EB96628AB692700656977 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44EB96528AB692700656977 /* Persistence.swift */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
 		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
 		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
@@ -23,7 +24,6 @@
 		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
 		D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */; };
-		D4FFE3CC289F04A400D7E82B /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3CB289F04A400D7E82B /* Persistence.swift */; };
 		D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */; };
 		D4FFE3D9289F04A400D7E82B /* STEPN_SidekickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3D8289F04A400D7E82B /* STEPN_SidekickTests.swift */; };
 		D4FFE3E3289F04A400D7E82B /* STEPN_SidekickUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3E2289F04A400D7E82B /* STEPN_SidekickUITests.swift */; };
@@ -48,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D44EB96528AB692700656977 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
@@ -66,7 +67,6 @@
 		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
 		D4FFE3C6289F04A400D7E82B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		D4FFE3CB289F04A400D7E82B /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D4FFE3CE289F04A400D7E82B /* STEPN_Sidekick.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STEPN_Sidekick.xcdatamodel; sourceTree = "<group>"; };
 		D4FFE3D4289F04A400D7E82B /* STEPN SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "STEPN SidekickTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3D8289F04A400D7E82B /* STEPN_SidekickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickTests.swift; sourceTree = "<group>"; };
@@ -142,11 +142,11 @@
 				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
 				D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */,
 				D4FFE3C6289F04A400D7E82B /* Assets.xcassets */,
-				D4FFE3CB289F04A400D7E82B /* Persistence.swift */,
 				D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */,
 				D4FFE3C8289F04A400D7E82B /* Preview Content */,
 				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
 				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
+				D44EB96528AB692700656977 /* Persistence.swift */,
 				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
@@ -316,10 +316,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D44EB96628AB692700656977 /* Persistence.swift in Sources */,
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
-				D4FFE3CC289F04A400D7E82B /* Persistence.swift in Sources */,
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
@@ -489,6 +489,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -521,6 +522,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

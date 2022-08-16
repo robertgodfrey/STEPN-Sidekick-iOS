@@ -8,52 +8,58 @@
 import SwiftUI
 
 struct LocationRequestView: View {
+    @State var returnToSettings: Bool = false
+
     var body: some View {
         ZStack {
-            Color(.systemBlue).ignoresSafeArea()
-            
-            VStack {
-                Image(systemName: "location.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 100, height: 100)
+            if (returnToSettings) {
+                ActivitySettings()
+            } else {
+                Color(.systemBlue).ignoresSafeArea()
                 
-                Text("This app requires precise background location permissions to give speed alerts while running in the background.")
-                    .font(Font.custom("Roboto-Medium", size: 18))
-                    .multilineTextAlignment(.center)
-                    .padding(30)
-                
-                Text("Turn on now?")
-                    .font(Font.custom("Roboto-Medium", size: 20))
-                    .padding(.vertical, 20)
-                
-                HStack(spacing: 20) {
-                    Button(action: {
-                        print("no location permissions")
-                    }) {
-                        Text ("Cancel")
-                            .font(Font.custom("Roboto-Medium", size: 18))
-                            .foregroundColor(Color.white)
-                    }
-                    .frame(minWidth: 60, maxWidth: 80, minHeight: 40)
-                    .padding(.horizontal, 20)
-                    .background(Color.red)
-                    .clipShape(Capsule())
+                VStack {
+                    Image(systemName: "location.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
                     
-                    Button(action: {
-                        LocationManager.shared.requestLocation()
-                    }) {
-                        Text ("Okay")
-                            .font(Font.custom("Roboto-Medium", size: 18))
-                            .foregroundColor(Color(.systemBlue))
+                    Text("This app requires precise background location permissions to track speed while running in the background.")
+                        .multilineTextAlignment(.center)
+                        .padding(30)
+                    
+                    Text("Turn on now?")
+                        .padding(.vertical, 20)
+                    
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            print("no location permissions")
+                            returnToSettings = true
+                        }) {
+                            Text ("Cancel")
+                                .font(Font.custom("Roboto-Medium", size: 18))
+                                .foregroundColor(Color.white)
+                        }
+                        .frame(minWidth: 60, maxWidth: 80, minHeight: 40)
+                        .padding(.horizontal, 20)
+                        .background(Color.red)
+                        .clipShape(Capsule())
+                        
+                        Button(action: {
+                            LocationManager.shared.requestLocation()
+                            print("requestin")
+                        }) {
+                            Text ("Okay")
+                                .font(Font.custom("Roboto-Medium", size: 18))
+                                .foregroundColor(Color(.systemBlue))
+                        }
+                        .frame(minWidth: 60, maxWidth: 80, minHeight: 40)
+                        .padding(.horizontal, 20)
+                        .background(Color.white)
+                        .clipShape(Capsule())
                     }
-                    .frame(minWidth: 60, maxWidth: 80, minHeight: 40)
-                    .padding(.horizontal, 20)
-                    .background(Color.white)
-                    .clipShape(Capsule())
-                }
-                
-            }.foregroundColor(.white)
+                    
+                }.foregroundColor(.white)
+            }
 
         }
     }

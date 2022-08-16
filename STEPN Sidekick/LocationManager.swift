@@ -15,6 +15,8 @@ class LocationManager: NSObject, ObservableObject {
     override init() {
         super.init()
         manager.delegate = self
+        manager.requestAlwaysAuthorization()
+        manager.allowsBackgroundLocationUpdates = true
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.startUpdatingLocation()
     }

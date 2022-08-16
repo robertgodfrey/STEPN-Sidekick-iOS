@@ -29,8 +29,8 @@ private let speedAlertsBoth: Int = 3
 
 struct ActivitySettings: View {
     
-    @State var noEnergyAlert: Bool = false
-    @State var startSpeedTracker: Bool = false
+    @State private var noEnergyAlert: Bool = false
+    @State private var startSpeedTracker: Bool = false
     
     // TODO change all these bad boys to load saved values
     @State private var tenSecondTimer: Bool = true
@@ -62,126 +62,143 @@ struct ActivitySettings: View {
                 
         VStack {
             if startSpeedTracker {
-                SpeedTracker(timeRemaining: energy)
+                SpeedTracker(
+                    shoeType: shoeTypeIterator,
+                    minSpeed: 1.0,
+                    maxSpeed: 6.0,
+                    energy: 420,
+                    tenSecondTimer: true,
+                    voiceAlertsCurrentSpeed: true,
+                    voiceAlertsAvgSpeed: true,
+                    voiceAlertsTime: true,
+                    voiceAlertsMinuteThirty: true)
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
                         Color("Background Almost White")
+                        VStack(spacing: 0){
+                            Rectangle()
+                                .foregroundColor(Color("Light Green"))
+                                .frame(width: UIScreen.main.bounds.width, height: 30)
                                     
                         ScrollView {
-                            VStack(spacing: 0){
-                                VStack(spacing: 0) {
+                                
+                                ZStack {
                                     Rectangle()
                                         .foregroundColor(Color("Light Green"))
-                                        .frame(minWidth: 380, maxWidth: 420, minHeight: 30, maxHeight: 50)
+                                        .frame(width: UIScreen.main.bounds.width)
+                                        .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
                                     
-                                    ZStack {
-                                        Image("main_box")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .padding(12)
-                                            .frame(minWidth: 140, maxWidth: 420, minHeight: 100, maxHeight: 300)
-                                            .background(Color("Light Green"))
-                                            .cornerRadius(/*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                            .overlay(
-                                                HStack(spacing: 0) {
-                                                    Image("footprint")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: shoeTypeIterator == runner ? 10 : 0, height: 16)
-                                                        .padding(.bottom, 26)
-                                                    
-                                                    Image("footprint")
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(width: shoeTypeIterator == runner || shoeTypeIterator == jogger ? 10 : 0, height: 16)
-                                                        .padding(.bottom, 26)
-                                                    
-                                                    Image(shoes[shoeTypeIterator].getFootResource())
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(minWidth: 10, maxWidth: (shoeTypeIterator == trainer ? 16 : 10), minHeight: 10, maxHeight: 16)
-                                                        .padding(.bottom, 26)
-                                                        .padding(.trailing, 4)
-                                                    
-                                                    Text(shoes[shoeTypeIterator].getTitle())
-                                                        .font(Font.custom(fontButtons, size: 16))
-                                                        .foregroundColor(Color("Almost Black"))
-                                                        .padding(.bottom, 26)
+                                    VStack(spacing: 0) {
+                                        ZStack {
                                             
-                                            }, alignment: .bottom)
-                                            .overlay(
+                                            Image("main_box")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .padding(12)
+                                                .frame(minWidth: 140, maxWidth: 420, minHeight: 100, maxHeight: 300)
+                                                .background(Color("Light Green"))
+                                                .cornerRadius(/*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                                .overlay(
+                                                    HStack(spacing: 0) {
+                                                        Image("footprint")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: shoeTypeIterator == runner ? 10 : 0, height: 16)
+                                                            .padding(.bottom, 26)
+                                                        
+                                                        Image("footprint")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: shoeTypeIterator == runner || shoeTypeIterator == jogger ? 10 : 0, height: 16)
+                                                            .padding(.bottom, 26)
+                                                        
+                                                        Image(shoes[shoeTypeIterator].getFootResource())
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(minWidth: 10, maxWidth: (shoeTypeIterator == trainer ? 16 : 10), minHeight: 10, maxHeight: 16)
+                                                            .padding(.bottom, 26)
+                                                            .padding(.trailing, 4)
+                                                        
+                                                        Text(shoes[shoeTypeIterator].getTitle())
+                                                            .font(Font.custom(fontButtons, size: 16))
+                                                            .foregroundColor(Color("Almost Black"))
+                                                            .padding(.bottom, 26)
+                                                
+                                                }, alignment: .bottom)
+                                                .overlay(
 
-                                            ZStack {
-                                                Circle()
-                                                    .fill(Color("Almost Black"))
-                                                    .frame(width: 46, height: 36)
-                                                    .padding([.leading, .top], 2)
+                                                ZStack {
+                                                    Circle()
+                                                        .fill(Color("Almost Black"))
+                                                        .frame(width: 46, height: 36)
+                                                        .padding([.leading, .top], 2)
 
+                                                    
+                                                    Button(action: {
+                                                        print("help me")
+
+                                                    }) {
+                                                        Circle()
+                                                            .strokeBorder(Color("Almost Black"), lineWidth: 1)
+                                                            .background(Circle().fill(Color("Help Button Orange")))
+                                                            .frame(width: 46, height: 36)
+                                                            .padding()
+                                                    }
+                                                    
+                                                    Text("?")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                }
+                                                    .padding(.top, 4)
+                                                    .padding(.trailing, 8), alignment: .topTrailing)
+                                                
+                                            Image(shoes[shoeTypeIterator].getImageResource())
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(minWidth: 120, maxWidth: 168, minHeight: 120, maxHeight: 168)
+                                                .padding(.trailing, 4)
+                                                .padding(.bottom, 28)
+                                            
+                                            HStack(spacing: 200) {
+                                                Button(action: {
+                                                    if shoeTypeIterator == customShoe {
+                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                    }
+                                                    
+                                                    if shoeTypeIterator == walker {
+                                                        shoeTypeIterator = customShoe
+                                                    } else {
+                                                        shoeTypeIterator -= 1
+                                                    }
+                                                
+                                                    minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
+                                                    maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
+                                                }) {
+                                                    Rectangle()
+                                                        .fill(Color.clear)
+                                                }.frame(width: 80, height: 100)
                                                 
                                                 Button(action: {
-                                                    print("help me")
-
+                                                    if shoeTypeIterator == customShoe {
+                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                        shoeTypeIterator = walker
+                                                    } else {
+                                                        shoeTypeIterator += 1
+                                                    }
+                                                    
+                                                    minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
+                                                    maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
                                                 }) {
-                                                    Circle()
-                                                        .strokeBorder(Color("Almost Black"), lineWidth: 1)
-                                                        .background(Circle().fill(Color("Help Button Orange")))
-                                                        .frame(width: 46, height: 36)
-                                                        .padding()
-                                                }
-                                                
-                                                Text("?")
-                                                    .font(Font.custom(fontTitles, size: 16))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    Rectangle()
+                                                        .fill(Color.clear)
+                                                }.frame(width: 80, height: 100)
                                             }
-                                                .padding(.top, 4)
-                                                .padding(.trailing, 4), alignment: .topTrailing)
-                                            
-                                        Image(shoes[shoeTypeIterator].getImageResource())
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(minWidth: 120, maxWidth: 168, minHeight: 120, maxHeight: 168)
-                                            .padding(.trailing, 4)
-                                            .padding(.bottom, 28)
-                                        
-                                        HStack(spacing: 200) {
-                                            Button(action: {
-                                                if shoeTypeIterator == customShoe {
-                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
-                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
-                                                }
-                                                
-                                                if shoeTypeIterator == walker {
-                                                    shoeTypeIterator = customShoe
-                                                } else {
-                                                    shoeTypeIterator -= 1
-                                                }
-                                            
-                                                minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
-                                                maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
-                                            }) {
-                                                Rectangle()
-                                                    .fill(Color.clear)
-                                            }.frame(width: 80, height: 100)
-                                            
-                                            Button(action: {
-                                                if shoeTypeIterator == customShoe {
-                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
-                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
-                                                    shoeTypeIterator = walker
-                                                } else {
-                                                    shoeTypeIterator += 1
-                                                }
-                                                
-                                                minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
-                                                maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
-                                            }) {
-                                                Rectangle()
-                                                    .fill(Color.clear)
-                                            }.frame(width: 80, height: 100)
-                                        }
-                                    }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
+                                        }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
 
+                                    }
                                 }
                                 
                                 ZStack {
@@ -210,12 +227,12 @@ struct ActivitySettings: View {
 
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                                         .foregroundColor(Color("Almost Black"))
-                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .padding([.top, .leading], 5)
                                                     
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
                                                         .foregroundColor(shoeTypeIterator == customShoe ? .white : Color("Button Disabled"))
-                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 48, maxHeight: 48)
+                                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 8)
                                                                 .stroke(Color("Almost Black"), lineWidth: 1.4)
@@ -288,7 +305,7 @@ struct ActivitySettings: View {
                                             
                                             Spacer()
 
-                                        }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
+                                        }.frame(width: UIScreen.main.bounds.width-20, height: 78, alignment: .center)
                                         
                                         HStack(spacing: 0) {
                                             Spacer()
@@ -325,8 +342,7 @@ struct ActivitySettings: View {
                                                         .font(Font.custom(fontButtons, size: 20))
                                                 }
                                             }
-                                            .frame(height: 100, alignment: .top)
-                                                    
+                                            
                                             Spacer()
                                             
                                             VStack(spacing: 0) {
@@ -367,14 +383,26 @@ struct ActivitySettings: View {
                                                             self.energyString = String($0.prefix(4))
                                                         }
                                                 }
-                                                
-                                                Text(getMinString(energy: Float(energyString) ?? 0.0))
-                                                    .font(Font.custom(fontButtons, size: 16))
-                                                    .foregroundColor(Color("Gandalf"))
-                                            }.frame(height: 100, alignment: .top)
+                                            }
 
                                             Spacer()
                                             
+                                        }.frame(width: UIScreen.main.bounds.width-20, height: 78, alignment: .center)
+                                        
+                                        HStack(spacing: 0) {
+                                            Spacer()
+
+                                            Rectangle()
+                                                .frame(minWidth: 150, maxWidth: 157, maxHeight: 0)
+                                            
+                                            Spacer()
+                                            
+                                            Text(getMinString(energy: Float(energyString) ?? 0.0))
+                                                .font(Font.custom(fontButtons, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                                .frame(minWidth: 150, maxWidth: 160)
+                                            
+                                            Spacer()
                                         }.frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                                         
                                         Text("VOICE UPDATES")
@@ -487,8 +515,8 @@ struct ActivitySettings: View {
                                             
                                             Button(action: {
                                                 if shoeTypeIterator == customShoe {
-                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
-                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
+                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
+                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
                                                 }
                                                 if Double(energyString) ?? 0 == 0 {
                                                     noEnergyAlert = true
@@ -496,6 +524,7 @@ struct ActivitySettings: View {
                                                     energy = Double(energyString) ?? 0.2
                                                     self.startSpeedTracker = true
                                                 }
+                                                
                                             } ) {
                                                 Text("START")
                                                     .frame(width: 165, height: 50)
@@ -503,8 +532,8 @@ struct ActivitySettings: View {
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
                                                     if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 1.0)
-                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 6.0)
+                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
                                                     }
                                                     if Double(energyString) ?? 0 == 0 {
                                                         noEnergyAlert = true
@@ -641,8 +670,25 @@ extension UIApplication {
 }
 #endif
 
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
+}
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ActivitySettings()
+    }
+}
+
+struct RoundedCorner: Shape {
+
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }

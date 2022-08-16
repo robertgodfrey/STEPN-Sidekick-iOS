@@ -14,14 +14,33 @@ struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
     
-    @State private var isActive: Bool = true
-    @State var timeRemaining: CGFloat
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
+    @State var shoeType: Int
+    @State var minSpeed: Float
+    @State var maxSpeed: Float
+    @State var energy: Float
+    @State var tenSecondTimer: Bool
+    @State var voiceAlertsCurrentSpeed: Bool
+    @State var voiceAlertsAvgSpeed: Bool
+    @State var voiceAlertsTime: Bool
+    @State var voiceAlertsMinuteThirty: Bool
     
+    @State private var returnToSettings: Bool = false
+    @State private var currentSpeed: Double = 0
+    @State private var gpsAccuracy: Double = 0
+    
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
+    @State private var timeRemaining: Int = 0
+    @State var isActive: Bool = true
+
     var body: some View {
-        Group {
+        setLocationData()
+        timeRemaining = Int(energy * 5 * 60)
+        
+        return Group {
             if locationManager.userLocation == nil {
                 LocationRequestView()
+            } else if (returnToSettings) {
+                ActivitySettings()
             } else {
                 ZStack(alignment: .top) {
                     Color("Speed Tracker Background")
@@ -100,7 +119,7 @@ struct SpeedTracker: View {
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
-                                Text("0.0")
+                                Text(currentSpeed < 1 ? "0.0" : String(currentSpeed))
                                     .font(Font.custom("Roboto-BlackItalic", size: 90))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
@@ -110,7 +129,7 @@ struct SpeedTracker: View {
                             }
                             
                             VStack(spacing: 0) {
-                                Text("5-Min Average")
+                                Text(fiveMinAvgSpeed())
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
@@ -134,7 +153,7 @@ struct SpeedTracker: View {
                                 .foregroundColor(Color("Energy Blue"))
 
                         }
-                                        
+                                                                
                         HStack(spacing: 45){
                             Button(action: {
                                 timeRemaining -= 5
@@ -146,6 +165,7 @@ struct SpeedTracker: View {
                             
                             Button(action: {
                                 isActive.toggle()
+                                // returnToSettings = true
                             }) {
                                 Image("button_pause")
                                     .resizable()
@@ -162,7 +182,8 @@ struct SpeedTracker: View {
                                     .foregroundColor(Color.white)
                             }
                             
-                        }.padding(.vertical, 60)
+                        }
+                        
                     }
                 }.ignoresSafeArea()
                     .onReceive(timer, perform: { _ in
@@ -179,17 +200,25 @@ struct SpeedTracker: View {
         }
     }
         
-        
+    func setLocationData() {
+        let currentLocation = locationManager.userLocation
+        gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0
+        currentSpeed = Double(round((currentLocation?.speed ?? 0) * 36) / 10)
+    }
+    
+    func fiveMinAvgSpeed() -> String {
+        return ""
+    }
     
     func timeFormatted() -> String {
         var timeString: String = ""
         
-        if timeRemaining >= 3600 {
-            timeString += String(Int(timeRemaining / 3600)) + ":"
+        if energy >= 3600 {
+            timeString += String(Int(energy / 3600)) + ":"
         }
         
-        let minutes = Int(timeRemaining) / 60 % 60
-        let seconds = Int(timeRemaining) % 60
+        let minutes = Int(energy) / 60 % 60
+        let seconds = Int(energy) % 60
         
         timeString += String(format:"%02i:%02i", minutes, seconds)
         
@@ -199,6 +228,15 @@ struct SpeedTracker: View {
 
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
-        SpeedTracker(timeRemaining: 6009)
+        SpeedTracker(
+            shoeType: jogger,
+            minSpeed: 1.0,
+            maxSpeed: 6.0,
+            energy: 420,
+            tenSecondTimer: true,
+            voiceAlertsCurrentSpeed: true,
+            voiceAlertsAvgSpeed: true,
+            voiceAlertsTime: true,
+            voiceAlertsMinuteThirty: true)
     }
 }
