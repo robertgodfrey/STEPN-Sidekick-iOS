@@ -5,7 +5,7 @@
 //  Displays current/average speed, time/energy remaining, GPS signal strength
 //
 //  Created by Rob Godfrey
-//  Last updated 14 Aug 22
+//  Last updated 16 Aug 22
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ struct SpeedTracker: View {
     let shoeType: String
     let minSpeed: Double
     let maxSpeed: Double
-    let energy: Float
+    @State var energy: Double
     let tenSecondTimer: Bool
     let voiceAlertsCurrentSpeed: Bool
     let voiceAlertsAvgSpeed: Bool
@@ -37,16 +37,20 @@ struct SpeedTracker: View {
     @State private var firstFive: Bool = true
     @State private var justPlayed: Bool = false
     
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() 
     @State private var timeRemaining: Int = 0
+    @State private var originalTime: Int = 0
     @State var isActive: Bool = true
-
+        
     var body: some View {
         
         if locationManager.userLocation == nil {
             LocationManager.shared.requestLocation()
         }
         let currentLocation = locationManager.userLocation
+
+        let window = UIApplication.shared.windows.first
+        let topPadding = window?.safeAreaInsets.top ?? 0
         
         return Group {
             if (returnToSettings) {
@@ -57,9 +61,11 @@ struct SpeedTracker: View {
                     
                     VStack(spacing: 40) {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                            Rectangle()
                                 .foregroundColor(Color("Speed Tracker Foreground"))
-                                .frame(minWidth: 380, maxWidth: 420, minHeight: 100, maxHeight: 120)
+                                .frame(minWidth: 380, maxWidth: 420, minHeight: 10, maxHeight: topPadding + 70)
+                                .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
+
                             
                             HStack {
                                 HStack(spacing: 4) {
@@ -98,10 +104,11 @@ struct SpeedTracker: View {
                                                 .frame(width: 5, height: 20)
                                         }
                                     }
-                                }.padding(.trailing, 15)
+                                }
+                                .padding(.trailing, 15)
                             }
-                                .padding(.top, 24)
-                                .frame(maxWidth: .infinity)
+                            .padding(.top, topPadding - 16)
+                            .frame(maxWidth: .infinity)
                             
                             VStack(spacing: 2) {
                                 HStack(spacing: 6) {
@@ -121,7 +128,7 @@ struct SpeedTracker: View {
                                 Text("\(String(minSpeed)) - \(String(maxSpeed)) km/h")
                                     .font(Font.custom(fontHeaders, size: 18))
                                     .foregroundColor(.white)
-                            }.padding(.top, 30)
+                            }.padding(.top, topPadding - 12)
                         }
                         
                         HStack(spacing: 0) {
@@ -133,10 +140,10 @@ struct SpeedTracker: View {
                                     .foregroundColor(Color.white)
                                 
                                 Text(currentSpeed < 1 ? "0.0" : String(currentSpeed))
-                                    .font(Font.custom("Roboto-BlackItalic", size: 90))
+                                    .font(Font.custom("Roboto-BlackItalic", size: 80))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
-                                    .font(Font.custom("Roboto-BlackItalic", size: 46))
+                                    .font(Font.custom("Roboto-BlackItalic", size: 40))
                                     .foregroundColor(Color.white)
                             }
                             
@@ -148,12 +155,11 @@ struct SpeedTracker: View {
                                     .foregroundColor(Color.white)
                                 
                                 Text(String(currentAvgSpeed))
-                                    .font(Font.custom("Roboto-BlackItalic", size: 90))
+                                    .font(Font.custom("Roboto-BlackItalic", size: 80))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
-                                    .font(Font.custom("Roboto-BlackItalic", size: 46))
+                                    .font(Font.custom("Roboto-BlackItalic", size: 40))
                                     .foregroundColor(Color.white)
-
                             }
                             
                             Spacer()
@@ -166,47 +172,74 @@ struct SpeedTracker: View {
                             Text(timeFormatted())
                                 .font(Font.custom("RobotoCondensed-Bold", size: 92))
                                 .foregroundColor(Color("Energy Blue"))
-
-                        }
-                                                                
-                        HStack(spacing: 45){
-                            Button(action: {
-                                timeRemaining -= 5
-                            }) {
-                                Text("-5")
-                                    .font(Font.custom("Roboto-Black", size: 35))
-                                    .foregroundColor(Color.white)
-                            }
-                            
-                            Button(action: {
-                                isActive.toggle()
-                                // change buttons
-                                //      start: isActive.toggle()
-                                //      stop: returnToSettings = true
-                            }) {
-                                Image("button_pause")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .padding(12)
-                                    .frame(width: 110, height: 110)
-                            }
-                            
-                            Button(action: {
-                                timeRemaining += 5
-                            }) {
-                                Text("+5")
-                                    .font(Font.custom("Roboto-Black", size: 35))
-                                    .foregroundColor(Color.white)
-                            }
-                            
                         }
                         
+                        ZStack {
+                            
+                            HStack(spacing: 30) {
+                                Button(action: {
+                                    returnToSettings = true
+                                }) {
+                                    Image("button_stop")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(12)
+                                        .frame(width: 110, height: 110)
+                                        .opacity(isActive ? 0 : 1)
+                                }.disabled(isActive ? true : false)
+
+                                
+                                Button(action: {
+                                    isActive.toggle()
+                                }) {
+                                    Image("button_play")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(12)
+                                        .frame(width: 110, height: 110)
+                                        .opacity(isActive ? 0 : 1)
+                                }.disabled(isActive ? true : false)
+                            }
+                                                                
+                            HStack(spacing: 45){
+                                Button(action: {
+                                    timeRemaining -= 5
+                                }) {
+                                    Text("-5")
+                                        .font(Font.custom("Roboto-Black", size: 35))
+                                        .foregroundColor(Color.white)
+                                        .opacity(isActive ? 1 : 0)
+                                }.disabled(isActive ? false : true)
+                                
+                                Button(action: {
+                                    isActive.toggle()
+                                }) {
+                                    Image("button_pause")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(12)
+                                        .frame(width: 110, height: 110)
+                                        .opacity(isActive ? 1 : 0)
+                                }.disabled(isActive ? false : true)
+                                
+                                Button(action: {
+                                    timeRemaining += 5
+                                }) {
+                                    Text("+5")
+                                        .font(Font.custom("Roboto-Black", size: 35))
+                                        .foregroundColor(Color.white)
+                                        .opacity(isActive ? 1 : 0)
+                                }.disabled(isActive ? false : true)
+                            }
+                        }
                     }
                 }.ignoresSafeArea()
                     .onReceive(timer, perform: { _ in
                         guard isActive else { return }
                         
                         if timeRemaining > 0 {
+                            
+                            // MARK: GPS Accuracy
                             
                             gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
                             
@@ -219,6 +252,8 @@ struct SpeedTracker: View {
                             } else {
                                 gpsBars = 1
                             }
+                            
+                            // MARK: Current and average speeds
                             
                             currentSpeed = Double(round((currentLocation?.speed ?? 0.0) * 36) / 10)
                             
@@ -247,10 +282,20 @@ struct SpeedTracker: View {
                             if currentAvgSpeed < 0 {
                                 currentAvgSpeed = 0.0
                             }
+                            
+                            // MARK: Modify energy count
+                            
+                            if timeRemaining % 60 == 0 && timeRemaining != originalTime {
+                                energy -= 0.2
+                            }
+                            
+                            // MARK: Voice updates speed
+                            
+                            // MARK: Voice updates time
+                            
+                            // MARK: Speed alarm
                            
-                            // modify energy
-                            // voice alerts
-                            // speed alerts
+
                             timeRemaining -= 1
                         } else {
                             isActive = false
@@ -259,7 +304,8 @@ struct SpeedTracker: View {
                     })
             }
         }.onAppear() {
-            timeRemaining = Int(energy * 5 * 60)
+            originalTime = Int(energy * 5 * 60)
+            timeRemaining = originalTime + 30
         }
     }
     
@@ -296,6 +342,8 @@ struct SpeedTracker: View {
     }
 }
 
+
+// TODO: delete?
 extension Double {
     func roundem() -> Double {
         return (self * 10.0).rounded() / 10.0
