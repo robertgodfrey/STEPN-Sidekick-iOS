@@ -165,8 +165,8 @@ struct ActivitySettings: View {
                                             HStack(spacing: 200) {
                                                 Button(action: {
                                                     if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
                                                     }
                                                     
                                                     if shoeTypeIterator == walker {
@@ -184,8 +184,8 @@ struct ActivitySettings: View {
                                                 
                                                 Button(action: {
                                                     if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
                                                         shoeTypeIterator = walker
                                                     } else {
                                                         shoeTypeIterator += 1
@@ -517,8 +517,8 @@ struct ActivitySettings: View {
                                             
                                             Button(action: {
                                                 if shoeTypeIterator == customShoe {
-                                                    shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
-                                                    shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                    shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
+                                                    shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
                                                 }
                                                 if Double(energyString) ?? 0 == 0 {
                                                     noEnergyAlert = true
@@ -534,8 +534,8 @@ struct ActivitySettings: View {
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
                                                     if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Float(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Float(maxSpeedString) ?? 0)
+                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
+                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
                                                     }
                                                     if Double(energyString) ?? 0 == 0 {
                                                         noEnergyAlert = true

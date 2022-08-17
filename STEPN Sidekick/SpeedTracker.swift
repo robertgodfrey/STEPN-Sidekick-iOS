@@ -15,8 +15,8 @@ struct SpeedTracker: View {
     @ObservedObject var locationManager = LocationManager.shared
     
     let shoeType: String
-    let minSpeed: Float
-    let maxSpeed: Float
+    let minSpeed: Double
+    let maxSpeed: Double
     let energy: Float
     let tenSecondTimer: Bool
     let voiceAlertsCurrentSpeed: Bool
@@ -27,7 +27,14 @@ struct SpeedTracker: View {
     @State private var returnToSettings: Bool = false
     @State private var currentSpeed: Double = 0
     @State private var gpsAccuracy: Double = 0
+    @State private var gpsBars: Int = 0
+    
+    // average speed stuff
+    @State private var currentAvgSpeed: Double = 0
     @State private var avgSpeeds = [Float](repeating: 0, count: 300)
+    @State private var avgSpeedCounter: Int = 0
+    @State private var speedSum: Double = 0
+    @State private var firstFive: Bool = true
     @State private var justPlayed: Bool = false
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // .main is running on main thread, need to change this
@@ -35,15 +42,16 @@ struct SpeedTracker: View {
     @State var isActive: Bool = true
 
     var body: some View {
-        setLocationData()
-        timeRemaining = Int(energy * 5 * 60)
+        
+        if locationManager.userLocation == nil {
+            LocationManager.shared.requestLocation()
+        }
+        let currentLocation = locationManager.userLocation
         
         return Group {
-        /*    if locationManager.userLocation == nil {
-                LocationRequestView()
-            } else if (returnToSettings) {
+            if (returnToSettings) {
                 ActivitySettings()
-            } else { */
+            } else {
                 ZStack(alignment: .top) {
                     Color("Speed Tracker Background")
                     
@@ -80,13 +88,13 @@ struct SpeedTracker: View {
                                         
                                         HStack(alignment: .bottom, spacing: 2) {
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(gpsAccuracy >= 40 ? Color("Gandalf") : Color(.green))
+                                                .foregroundColor(Color(getGpsAccuracyColor()))
                                                 .frame(width: 5, height: 10)
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(gpsAccuracy >= 20 ? Color("Gandalf") : Color(.green))
+                                                .foregroundColor(gpsBars > 1 ? Color(getGpsAccuracyColor()) : Color("Gandalf"))
                                                 .frame(width: 5, height: 15)
                                             RoundedRectangle(cornerRadius: 5, style: .continuous)
-                                                .foregroundColor(gpsAccuracy >= 10 ? Color("Gandalf") : Color(.green))
+                                                .foregroundColor(gpsBars > 2 ? Color(getGpsAccuracyColor()) : Color("Gandalf"))
                                                 .frame(width: 5, height: 20)
                                         }
                                     }
@@ -110,13 +118,15 @@ struct SpeedTracker: View {
                                         .padding(.top, 2)
                                 }
                                 
-                                Text("\(Double(round((minSpeed * 10) / 10))) - \(round(maxSpeed * 10) / 10) km/h")
+                                Text("\(String(minSpeed)) - \(String(maxSpeed)) km/h")
                                     .font(Font.custom(fontHeaders, size: 18))
                                     .foregroundColor(.white)
                             }.padding(.top, 30)
                         }
                         
-                        HStack(spacing: 50) {
+                        HStack(spacing: 0) {
+                            Spacer()
+                            
                             VStack(spacing: 0) {
                                 Text("Current Speed:")
                                     .font(Font.custom(fontHeaders, size: 16))
@@ -128,15 +138,16 @@ struct SpeedTracker: View {
                                 Text("km/h")
                                     .font(Font.custom("Roboto-BlackItalic", size: 46))
                                     .foregroundColor(Color.white)
-
                             }
+                            
+                            Spacer()
                             
                             VStack(spacing: 0) {
                                 Text("5-Min Average:")
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
-                                Text(fiveMinAvgSpeed())
+                                Text(String(currentAvgSpeed))
                                     .font(Font.custom("Roboto-BlackItalic", size: 90))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
@@ -145,6 +156,7 @@ struct SpeedTracker: View {
 
                             }
                             
+                            Spacer()
                         }
                         
                         VStack(spacing: 0) {
@@ -168,7 +180,9 @@ struct SpeedTracker: View {
                             
                             Button(action: {
                                 isActive.toggle()
-                                // returnToSettings = true
+                                // change buttons
+                                //      start: isActive.toggle()
+                                //      stop: returnToSettings = true
                             }) {
                                 Image("button_pause")
                                     .resizable()
@@ -193,6 +207,47 @@ struct SpeedTracker: View {
                         guard isActive else { return }
                         
                         if timeRemaining > 0 {
+                            
+                            gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
+                            
+                            if gpsAccuracy == 0 {
+                                gpsBars = 0
+                            } else if gpsAccuracy < 15 {
+                                gpsBars = 3
+                            } else if gpsAccuracy < 25 {
+                                gpsBars = 2
+                            } else {
+                                gpsBars = 1
+                            }
+                            
+                            currentSpeed = Double(round((currentLocation?.speed ?? 0.0) * 36) / 10)
+                            
+                            if avgSpeedCounter < 60 * 5 {
+                                if firstFive {
+                                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                                    speedSum += Double(avgSpeeds[avgSpeedCounter])
+                                    avgSpeedCounter += 1
+                                    currentAvgSpeed = Double(round(speedSum / Double(avgSpeedCounter) * 10) / 10)
+                                } else {
+                                    speedSum -= Double(avgSpeeds[avgSpeedCounter])
+                                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                                    speedSum += Double(avgSpeeds[avgSpeedCounter])
+                                    currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                                    avgSpeedCounter += 1
+                                }
+                            } else {
+                                speedSum -= Double(avgSpeeds[0])
+                                avgSpeeds[0] = Float(currentSpeed)
+                                speedSum += Double(avgSpeeds[0])
+                                currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                                avgSpeedCounter = 1
+                                firstFive = false
+                            }
+                            
+                            if currentAvgSpeed < 0 {
+                                currentAvgSpeed = 0.0
+                            }
+                           
                             // modify energy
                             // voice alerts
                             // speed alerts
@@ -202,20 +257,29 @@ struct SpeedTracker: View {
                             timeRemaining = 0
                         }
                     })
-            //}
+            }
+        }.onAppear() {
+            timeRemaining = Int(energy * 5 * 60)
         }
     }
+    
+    func getGpsAccuracyColor() -> String {
+        var color: String = ""
         
-    func setLocationData() {
-        let currentLocation = locationManager.userLocation
-        gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0
-        currentSpeed = Double(round((currentLocation?.speed ?? 0) * 36) / 10)
+        switch gpsBars {
+        case 1:
+            color = "Gps Red"
+        case 2:
+            color = "Gps Yellow"
+        case 3:
+            color = "Gps Green"
+        default:
+            color = "Gandalf"
+        }
+        
+        return color
     }
-    
-    func fiveMinAvgSpeed() -> String {
-        return "0.0"
-    }
-    
+        
     func timeFormatted() -> String {
         var timeString: String = ""
         
@@ -229,6 +293,12 @@ struct SpeedTracker: View {
         timeString += String(format:"%02i:%02i", minutes, seconds)
         
         return timeString
+    }
+}
+
+extension Double {
+    func roundem() -> Double {
+        return (self * 10.0).rounded() / 10.0
     }
 }
 
