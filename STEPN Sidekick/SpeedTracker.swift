@@ -10,6 +10,7 @@
 
 import SwiftUI
 
+
 struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
@@ -294,6 +295,25 @@ struct SpeedTracker: View {
                             // MARK: Voice updates time
                             
                             // MARK: Speed alarm
+                            
+                            if currentSpeed < minSpeed || currentSpeed > maxSpeed {
+                                if !justPlayed {
+                                    if currentSpeed < minSpeed {
+                                        // low-pitched alert
+                                        
+                                        // TODO: add new sound file to project
+                                        
+                                        SoundManager.instance.playSound(sound: .alert_sound)
+                                    } else {
+                                        // high-pitched alert
+                                        SoundManager.instance.playSound(sound: .alert_sound)
+                                    }
+                                    justPlayed = true
+                                    print("playin!")
+                                } else {
+                                    justPlayed = false
+                                }
+                            }
                            
 
                             timeRemaining -= 1
