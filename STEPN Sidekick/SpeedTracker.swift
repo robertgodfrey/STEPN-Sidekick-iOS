@@ -204,7 +204,7 @@ struct SpeedTracker: View {
                                 }.disabled(isActive ? true : false)
                             }
                                                                 
-                            HStack(spacing: 45){
+                            HStack(spacing: 20){
                                 Button(action: {
                                     timeRemaining -= 5
                                 }) {
@@ -212,7 +212,9 @@ struct SpeedTracker: View {
                                         .font(Font.custom("Roboto-Black", size: 35))
                                         .foregroundColor(Color.white)
                                         .opacity(isActive ? 1 : 0)
+                                        .padding()
                                 }.disabled(isActive ? false : true)
+                                
                                 
                                 Button(action: {
                                     isActive.toggle()
@@ -233,6 +235,7 @@ struct SpeedTracker: View {
                                         .font(Font.custom("Roboto-Black", size: 35))
                                         .foregroundColor(Color.white)
                                         .opacity(isActive ? 1 : 0)
+                                        .padding()
                                 }.disabled(isActive ? false : true)
                             }
                         }
@@ -280,10 +283,10 @@ struct SpeedTracker: View {
                                         
                                         // TODO: add new sound file to project
                                         
-                                        // SoundManager.instance.playSound(sound: .alert_sound)
+                                        // GSAudio.sharedInstance.playSound(sound: .alert_sound)
                                     } else {
                                         // high-pitched alert
-                                        // SoundManager.instance.playSound(sound: .alert_sound)
+                                        // GSAudio.sharedInstance.playSound(sound: .alert_sound)
                                     }
                                     justPlayed = true
                                     print("playin!")
@@ -293,8 +296,8 @@ struct SpeedTracker: View {
                             }
                             
                             // MARK: Modify energy count
-                            if timeRemaining % 60 == 0 && timeRemaining != originalTime {
-                                energy = round((energy - 0.2) * 10) / 10
+                            if timeRemaining % 60 == 0 {
+                                energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
                             }
                             
                             // MARK: GPS Accuracy
@@ -328,11 +331,11 @@ struct SpeedTracker: View {
                             // MARK: 1 min / 30 sec voice alert
                             if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
                                 if timeRemaining == 60 {
-                                    SoundManager.instance.playSound(sound: .one_minute_remaining)
+                                    GSAudio.sharedInstance.playSound(sound: .one_minute_remaining)
                                 }
                                 
                                 if timeRemaining == 30 {
-                                    SoundManager.instance.playSound(sound: .thirty_seconds_remaining)
+                                    GSAudio.sharedInstance.playSound(sound: .thirty_seconds_remaining)
                                 }
                             }
                             
@@ -348,17 +351,16 @@ struct SpeedTracker: View {
                     })
             }
         }.onAppear() {
-            originalTime = Int(energy * 5 * 60)
-            timeRemaining = originalTime + 30
+            timeRemaining = Int(energy * 5 * 60) + 30
         }
     }
     
     func playVoiceTime() async {
-        var minConversion: Int = timeRemaining * 60
+        var minConversion: Int = timeRemaining / 60 + 1
         var hourMillis: Double = 0
         
         // skips if time (somehow) greater than 3 hrs
-        if minConversion < 179 {
+        if minConversion < 180 {
             GSAudio.sharedInstance.playSound(sound: .time_remaining)
             
             do {
@@ -390,52 +392,65 @@ struct SpeedTracker: View {
                     
                     try await Task.sleep(nanoseconds: UInt64(500 * Double(NSEC_PER_MSEC)))
                 }
-                
-                var minMillis: Double = 290
+                                
+                print("mins remaining: \(minConversion)")
                 switch minConversion {
                 case 5:
                     GSAudio.sharedInstance.playSound(sound: .five)
-                    minMillis += 100
+                    try await Task.sleep(nanoseconds: UInt64(390 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 10:
                     GSAudio.sharedInstance.playSound(sound: .ten)
+                    try await Task.sleep(nanoseconds: UInt64(290 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 15:
                     GSAudio.sharedInstance.playSound(sound: .fifteen)
-                    minMillis += 200
+                    try await Task.sleep(nanoseconds: UInt64(490 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 20:
                     GSAudio.sharedInstance.playSound(sound: .twenty)
-                    minMillis += 35
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 25:
                     GSAudio.sharedInstance.playSound(sound: .twenty)
-                    try await Task.sleep(nanoseconds: UInt64(389 * Double(NSEC_PER_MSEC)))
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
                     GSAudio.sharedInstance.playSound(sound: .five_mid)
+                    try await Task.sleep(nanoseconds: UInt64(290 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 30:
                     GSAudio.sharedInstance.playSound(sound: .thirty)
-                    minMillis += 50
+                    try await Task.sleep(nanoseconds: UInt64(340 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 35:
                     GSAudio.sharedInstance.playSound(sound: .thirty)
-                    try await Task.sleep(nanoseconds: UInt64(389 * Double(NSEC_PER_MSEC)))
+                    try await Task.sleep(nanoseconds: UInt64(340 * Double(NSEC_PER_MSEC)))
                     GSAudio.sharedInstance.playSound(sound: .five_mid)
+                    try await Task.sleep(nanoseconds: UInt64(290 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 40:
                     GSAudio.sharedInstance.playSound(sound: .forty)
-                    minMillis += 35
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 45:
                     GSAudio.sharedInstance.playSound(sound: .forty)
-                    try await Task.sleep(nanoseconds: UInt64(389 * Double(NSEC_PER_MSEC)))
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
                     GSAudio.sharedInstance.playSound(sound: .five_mid)
+                    try await Task.sleep(nanoseconds: UInt64(290 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 50:
                     GSAudio.sharedInstance.playSound(sound: .fifty)
-                    minMillis += 35
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
                 case 55:
                     GSAudio.sharedInstance.playSound(sound: .fifty)
-                    try await Task.sleep(nanoseconds: UInt64(389 * Double(NSEC_PER_MSEC)))
+                    try await Task.sleep(nanoseconds: UInt64(325 * Double(NSEC_PER_MSEC)))
                     GSAudio.sharedInstance.playSound(sound: .five_mid)
+                    try await Task.sleep(nanoseconds: UInt64(290 * Double(NSEC_PER_MSEC)))
+                    GSAudio.sharedInstance.playSound(sound: .minutes)
+                    
                 default:
                     break
                 }
-
-                try await Task.sleep(nanoseconds: UInt64(minMillis * Double(NSEC_PER_MSEC)))
-                
-                GSAudio.sharedInstance.playSound(sound: .minutes)
                 
                 try await Task.sleep(nanoseconds: UInt64(1000 * Double(NSEC_PER_MSEC)))
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D40A24A028ACC05100D3A478 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40A249F28ACC05100D3A478 /* SoundManager.swift */; };
 		D40A24CB28ACC25D00D3A478 /* six.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A228ACC25200D3A478 /* six.mp3 */; };
 		D40A24CC28ACC25D00D3A478 /* twenty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A328ACC25200D3A478 /* twenty.mp3 */; };
 		D40A24CD28ACC25D00D3A478 /* thirty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A428ACC25300D3A478 /* thirty.mp3 */; };
@@ -91,7 +90,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D40A249F28ACC05100D3A478 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		D40A24A228ACC25200D3A478 /* six.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = six.mp3; sourceTree = "<group>"; };
 		D40A24A328ACC25200D3A478 /* twenty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = twenty.mp3; sourceTree = "<group>"; };
 		D40A24A428ACC25300D3A478 /* thirty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = thirty.mp3; sourceTree = "<group>"; };
@@ -285,7 +283,6 @@
 				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
-				D40A249F28ACC05100D3A478 /* SoundManager.swift */,
 				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
 			);
 			path = "STEPN Sidekick";
@@ -504,7 +501,6 @@
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
 				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
 				D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */,
-				D40A24A028ACC05100D3A478 /* SoundManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
