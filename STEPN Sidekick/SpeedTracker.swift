@@ -243,22 +243,7 @@ struct SpeedTracker: View {
                         
                         if timeRemaining > 0 {
                             
-                            // MARK: GPS Accuracy
-                            
-                            gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
-                            
-                            if gpsAccuracy == 0 {
-                                gpsBars = 0
-                            } else if gpsAccuracy < 15 {
-                                gpsBars = 3
-                            } else if gpsAccuracy < 25 {
-                                gpsBars = 2
-                            } else {
-                                gpsBars = 1
-                            }
-                            
-                            // MARK: Current and average speeds
-                            
+                            // MARK: Update current and average speeds
                             currentSpeed = Double(round((currentLocation?.speed ?? 0.0) * 36) / 10)
                             
                             if avgSpeedCounter < 60 * 5 {
@@ -287,21 +272,7 @@ struct SpeedTracker: View {
                                 currentAvgSpeed = 0.0
                             }
                             
-                            // MARK: Modify energy count
-                            
-                            if timeRemaining % 60 == 0 && timeRemaining != originalTime {
-                                energy = round((energy - 0.2) * 10) / 10
-                            }
-                            
-                            // MARK: Voice updates speed
-                            
-                            // MARK: Voice updates time
-                            if timeRemaining % 3000 == 0 &&
-                                (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) &&
-                                timeRemaining != originalTime {
-                            }
                             // MARK: Speed alarm
-                            
                             if currentSpeed < minSpeed || currentSpeed > maxSpeed {
                                 if !justPlayed {
                                     if currentSpeed < minSpeed {
@@ -320,7 +291,52 @@ struct SpeedTracker: View {
                                     justPlayed = false
                                 }
                             }
-                           
+                            
+                            // MARK: Modify energy count
+                            if timeRemaining % 60 == 0 && timeRemaining != originalTime {
+                                energy = round((energy - 0.2) * 10) / 10
+                            }
+                            
+                            // MARK: GPS Accuracy
+                            gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
+                            
+                            if gpsAccuracy == 0 {
+                                gpsBars = 0
+                            } else if gpsAccuracy < 15 {
+                                gpsBars = 3
+                            } else if gpsAccuracy < 25 {
+                                gpsBars = 2
+                            } else {
+                                gpsBars = 1
+                            }
+                            
+                            // MARK: Voice updates
+                            if timeRemaining % 300 == 0 &&
+                                (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
+                                
+                                if voiceAlertsTime {
+                                    playVoiceTime()
+                                } else if voiceAlertsCurrentSpeed {
+                                    playVoiceCurrentSpeed()
+                                } else {
+                                    playVoiceAvgSpeed()
+                                }
+                            }
+                            
+                            // MARK: 1 min / 30 sec voice alert
+                            if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
+                                if timeRemaining == 60 {
+                                    SoundManager.instance.playSound(sound: .one_minute_remaining)
+                                }
+                                
+                                if timeRemaining == 30 {
+                                    SoundManager.instance.playSound(sound: .thirty_seconds_remaining)
+                                }
+                            }
+                            
+                            if timeRemaining == 3 {
+                                threeSecondCountdown()
+                            }
 
                             timeRemaining -= 1
                         } else {
@@ -333,6 +349,43 @@ struct SpeedTracker: View {
             originalTime = Int(energy * 5 * 60)
             timeRemaining = originalTime + 30
         }
+    }
+    
+    func playVoiceTime() {
+        // skips if time (somehow) greater than 3 hrs
+        if timeRemaining < 10800 {
+            print("voice time remaining")
+            SoundManager.instance.playSound(sound: .time_remaining)
+            
+            // MARK: Stopping point
+            
+            // two hour range
+            if timeRemaining >= 120 * 60 {
+                if timeRemaining == 120 * 60 {
+                    SoundManager.instance.playSound(sound: .two_hours_end)
+                } else {
+                    SoundManager.instance.playSound(sound: .two_hours)
+                }
+            }
+        }
+        
+        if voiceAlertsCurrentSpeed {
+            playVoiceCurrentSpeed()
+        } else if voiceAlertsAvgSpeed {
+            playVoiceAvgSpeed()
+        }
+    }
+    
+    func playVoiceCurrentSpeed() {
+        
+    }
+    
+    func playVoiceAvgSpeed() {
+        
+    }
+    
+    func threeSecondCountdown() {
+        
     }
     
     func getGpsAccuracyColor() -> String {
@@ -365,14 +418,6 @@ struct SpeedTracker: View {
         timeString += String(format:"%02i:%02i", minutes, seconds)
         
         return timeString
-    }
-}
-
-
-// TODO: delete?
-extension Double {
-    func roundem() -> Double {
-        return (self * 10.0).rounded() / 10.0
     }
 }
 

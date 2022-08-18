@@ -11,12 +11,13 @@
 //  Last updated 14 Aug 22
 //
 
-// TODO
+//  TODO: deez
 //    - persistance
 //    - ads, eventually
 //    - help dialogs
 //    - nav bar (obvi)
 //    - set max energy (so screen doesn't shift down)
+//    - energy box light up when selected 
 
 import SwiftUI
 
