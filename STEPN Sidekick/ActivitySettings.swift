@@ -16,8 +16,8 @@
 //    - ads, eventually
 //    - help dialogs
 //    - nav bar (obvi)
-//    - set max energy (so screen doesn't shift down)
-//    - energy box light up when selected 
+//    - set max energy (so screen doesn't shift down w/ large energy)
+//    - remove all print statements
 
 import SwiftUI
 
@@ -31,6 +31,7 @@ struct ActivitySettings: View {
     
     @State private var noEnergyAlert: Bool = false
     @State private var startSpeedTracker: Bool = false
+    @State private var energySelected: Bool = false
     
     // TODO change all these bad boys to load saved values
     @State private var tenSecondTimer: Bool = true
@@ -49,7 +50,7 @@ struct ActivitySettings: View {
     @State private var maxSpeedString = "6.0"
     @State private var energyString = ""
     
-    // TODO load custom values for custom shoe
+    // TODO: load custom values for custom shoe
     @State private var shoes: [Shoe] = [
         Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: 1.0, maxSpeed: 6.0),
         Shoe(title: "Jogger", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: 4.0, maxSpeed: 10.0),
@@ -361,7 +362,7 @@ struct ActivitySettings: View {
                                                         .padding([.top, .leading], 5)
                                                     
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color("Energy Blue"))
+                                                        .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .overlay(
                                                             RoundedRectangle(cornerRadius: 8)
@@ -374,7 +375,12 @@ struct ActivitySettings: View {
                                                         .padding(.trailing, 28)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 20, maxHeight: 24, alignment: .trailing)
                                                 
-                                                    TextField("0.0", text: $energyString)
+                                                    TextField("0.0", text: $energyString, onEditingChanged: { (editingChanged) in
+                                                        if editingChanged {
+                                                            energySelected = true
+                                                        } else {
+                                                            energySelected = false                                                                   }
+                                                        })
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
@@ -384,6 +390,7 @@ struct ActivitySettings: View {
                                                         .onReceive(energyString.publisher.collect()) {
                                                             self.energyString = String($0.prefix(4))
                                                         }
+                                                        
                                                 }
                                             }
 
@@ -430,6 +437,7 @@ struct ActivitySettings: View {
                                                         } else {
                                                             voiceAlertsSpeedType += 1
                                                         }
+                                                        UIApplication.shared.hideKeyboard()
                                                         print("Speed alerts button changed")
                                                     }, label: {
                                                         Text(voiceSpeedText())
@@ -443,6 +451,7 @@ struct ActivitySettings: View {
                                                                 voiceAlertsSpeedType += 1
                                                             }
                                                             print("Speed alerts button changed")
+                                                            UIApplication.shared.hideKeyboard()
                                                         }
                                                     ))
                                                     .font(Font.custom(fontButtons, size: 17))
@@ -464,6 +473,7 @@ struct ActivitySettings: View {
                                                     Button(action: {
                                                         voiceAlertsTime = !voiceAlertsTime
                                                         print("Time alerts button switched")
+                                                        UIApplication.shared.hideKeyboard()
                                                     }) {
                                                         Text(voiceAlertsTime == true ? "ENABLED" : "DISABLED")
                                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -473,6 +483,7 @@ struct ActivitySettings: View {
                                                             tapAction: {
                                                                 voiceAlertsTime = !voiceAlertsTime
                                                                 print("Time alerts button switched")
+                                                                UIApplication.shared.hideKeyboard()
                                                             }
                                                         ))
                                                         .font(Font.custom(fontButtons, size: 17))
@@ -494,6 +505,7 @@ struct ActivitySettings: View {
                                                     Button(action: {
                                                         voiceAlertsMinThirty = !voiceAlertsMinThirty
                                                         print("1 min / 30 sec button switched")
+                                                        UIApplication.shared.hideKeyboard()
                                                     }) {
                                                         Text(voiceAlertsMinThirty == true ? "ENABLED" : "DISABLED")
                                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -502,6 +514,7 @@ struct ActivitySettings: View {
                                                             tapAction: {
                                                                 voiceAlertsMinThirty = !voiceAlertsMinThirty
                                                                 print("1 min / 30 sec button switched")
+                                                                UIApplication.shared.hideKeyboard()
                                                             }))
                                                         .font(Font.custom(fontButtons, size: 17))
                                                 }
