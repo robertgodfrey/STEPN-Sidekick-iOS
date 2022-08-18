@@ -7,11 +7,11 @@
 
 import Foundation
 import AVKit
-// import AVFoundation
 
 class SoundManager {
     
     static let instance = SoundManager()
+    var playing: Bool = true
     var player: AVAudioPlayer?
     
     enum SoundOption: String {
@@ -79,4 +79,9 @@ class SoundManager {
             print("error playing sound... \(error.localizedDescription)")
         }
     }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        playing = false
+    }
 }
+

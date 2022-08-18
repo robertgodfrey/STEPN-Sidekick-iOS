@@ -62,6 +62,7 @@
 		D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */; };
 		D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */; };
 		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
+		D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */; };
 		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
 		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
@@ -146,6 +147,7 @@
 		D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
 		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
 		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
 				D40A249F28ACC05100D3A478 /* SoundManager.swift */,
+				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
 			);
 			path = "STEPN Sidekick";
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				D44EB96628AB692700656977 /* Persistence.swift in Sources */,
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
+				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
 				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
