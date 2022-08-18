@@ -9,7 +9,7 @@
 //
 
 import SwiftUI
-
+import AVFoundation
 
 struct SpeedTracker: View {
     
@@ -49,10 +49,11 @@ struct SpeedTracker: View {
             LocationManager.shared.requestLocation()
         }
         let currentLocation = locationManager.userLocation
-
+    
+        // to find safe area
         let window = UIApplication.shared.windows.first
         let topPadding = window?.safeAreaInsets.top ?? 0
-        
+                
         return Group {
             if (returnToSettings) {
                 ActivitySettings()
@@ -171,7 +172,7 @@ struct SpeedTracker: View {
                                 .font(Font.custom(fontHeaders, size: 16))
                                 .foregroundColor(Color("Energy Blue"))
                             Text(timeFormatted())
-                                .font(Font.custom("RobotoCondensed-Bold", size: 92))
+                                .font(Font.custom("RobotoCondensed-Bold", size: 86))
                                 .foregroundColor(Color("Energy Blue"))
                         }
                         
@@ -192,6 +193,7 @@ struct SpeedTracker: View {
                                 
                                 Button(action: {
                                     isActive.toggle()
+                                    locationManager.resumeLocationUpdates()
                                 }) {
                                     Image("button_play")
                                         .resizable()
@@ -214,6 +216,7 @@ struct SpeedTracker: View {
                                 
                                 Button(action: {
                                     isActive.toggle()
+                                    locationManager.stopLocationUpdates()
                                 }) {
                                     Image("button_pause")
                                         .resizable()
@@ -287,13 +290,16 @@ struct SpeedTracker: View {
                             // MARK: Modify energy count
                             
                             if timeRemaining % 60 == 0 && timeRemaining != originalTime {
-                                energy -= 0.2
+                                energy = round((energy - 0.2) * 10) / 10
                             }
                             
                             // MARK: Voice updates speed
                             
                             // MARK: Voice updates time
-                            
+                            if timeRemaining % 3000 == 0 &&
+                                (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) &&
+                                timeRemaining != originalTime {
+                            }
                             // MARK: Speed alarm
                             
                             if currentSpeed < minSpeed || currentSpeed > maxSpeed {
@@ -374,7 +380,7 @@ struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
         SpeedTracker(
             shoeType: "Runner",
-            minSpeed: 8.0,
+            minSpeed: -2.0,
             maxSpeed: 20.0,
             energy: 2,
             tenSecondTimer: true,

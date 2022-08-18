@@ -18,7 +18,6 @@
 //    - nav bar (obvi)
 //    - set max energy (so screen doesn't shift down)
 
-
 import SwiftUI
 
 // for speed voice alerts
