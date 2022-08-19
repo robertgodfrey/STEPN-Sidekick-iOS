@@ -62,6 +62,7 @@
 		D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */; };
 		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
 		D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */; };
+		D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */; };
 		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
 		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
@@ -146,6 +147,7 @@
 		D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
 		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
+		D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound_slow.mp3; sourceTree = "<group>"; };
 		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
 		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				D40A24B628ACC25800D3A478 /* fifteen.mp3 */,
 				D40A24AC28ACC25500D3A478 /* fifty.mp3 */,
 				D40A24C628ACC25C00D3A478 /* five_mid.mp3 */,
+				D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */,
 				D40A24A828ACC25400D3A478 /* five.mp3 */,
 				D40A24C428ACC25C00D3A478 /* forty.mp3 */,
 				D40A24B928ACC25900D3A478 /* four.mp3 */,
@@ -435,6 +438,7 @@
 				D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */,
 				D40A24E428ACC25D00D3A478 /* current_speed.mp3 in Resources */,
 				D40A24D428ACC25D00D3A478 /* eighteen.mp3 in Resources */,
+				D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */,
 				D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */,
 				D40A24D528ACC25D00D3A478 /* fifty.mp3 in Resources */,
 				D4C13BB828A1E8D800141A54 /* Roboto-Medium.ttf in Resources */,
