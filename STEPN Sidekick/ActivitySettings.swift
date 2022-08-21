@@ -16,6 +16,7 @@
 //    - ads, eventually
 //    - help dialogs
 //    - nav bar (obvi)
+//    - notification 
 //    - set max energy (so screen doesn't shift down w/ large energy)
 //    - remove all print statements
 

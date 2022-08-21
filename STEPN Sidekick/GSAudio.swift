@@ -21,6 +21,7 @@ class GSAudio: NSObject, AVAudioPlayerDelegate {
     
     enum SoundOption: String {
         case alert_sound
+        case alert_sound_slow
         case avg_speed
         case current_speed
         case eight
@@ -67,6 +68,12 @@ class GSAudio: NSObject, AVAudioPlayerDelegate {
 
         guard let bundle = Bundle.main.path(forResource: sound.rawValue, ofType: "mp3") else { return }
         let soundFileNameURL = URL(fileURLWithPath: bundle)
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback,  mode: .default, options: .mixWithOthers)
+        } catch let error {
+            print("RUH ROH! \(error.localizedDescription)")
+        }
 
         if let player = players[soundFileNameURL] { //player for sound has been found
 
@@ -105,7 +112,7 @@ class GSAudio: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-
+    /* TODO: delete, probably
     func playSounds(sounds: [SoundOption]) {
         for sound in sounds {
             playSound(sound: sound)
@@ -117,7 +124,7 @@ class GSAudio: NSObject, AVAudioPlayerDelegate {
             playSound(sound: sound)
         }
     }
-    /* TODO: delete, probably
+    
     func playSounds(soundFileNames: [String], withDelay: Double) { //withDelay is in seconds
         for (index, soundFileName) in soundFileNames.enumerated() {
             let delay = withDelay * Double(index)

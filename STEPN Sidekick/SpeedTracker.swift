@@ -2,7 +2,8 @@
 //  SpeedTracker.swift
 //  STEPN Sidekick
 //
-//  Displays current/average speed, time/energy remaining, GPS signal strength
+//  Gets user's speed every second and plays alarm sound if speed is outside specified range.
+//  Displays current/average speed, time/energy remaining, and GPS signal strength
 //
 //  Created by Rob Godfrey
 //  Last updated 16 Aug 22
@@ -10,9 +11,10 @@
 
 import SwiftUI
 import AVFoundation
+import UserNotifications
 
 struct SpeedTracker: View {
-    
+    @Environment(\.scenePhase) var scenePhase
     @ObservedObject var locationManager = LocationManager.shared
     
     let shoeType: String
@@ -40,8 +42,8 @@ struct SpeedTracker: View {
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() 
     @State private var timeRemaining: Int = 0
-    @State private var originalTime: Int = 0
-    @State var isActive: Bool = true
+    @State private var isActive: Bool = true
+    @State private var notificationActive: Bool = false
         
     var body: some View {
         
@@ -49,11 +51,11 @@ struct SpeedTracker: View {
             LocationManager.shared.requestLocation()
         }
         let currentLocation = locationManager.userLocation
-    
+                    
         // to find safe area
         let window = UIApplication.shared.windows.first
         let topPadding = window?.safeAreaInsets.top ?? 0
-                
+                    
         return Group {
             if (returnToSettings) {
                 ActivitySettings()
@@ -141,7 +143,7 @@ struct SpeedTracker: View {
                                     .font(Font.custom(fontHeaders, size: 16))
                                     .foregroundColor(Color.white)
                                 
-                                Text(currentSpeed < 1 ? "0.0" : String(currentSpeed))
+                                Text(String(currentSpeed))
                                     .font(Font.custom("Roboto-BlackItalic", size: 80))
                                     .foregroundColor(Color.white)
                                 Text("km/h")
@@ -241,121 +243,143 @@ struct SpeedTracker: View {
                         }
                     }
                 }.ignoresSafeArea()
-                    .onReceive(timer, perform: { _ in
-                        guard isActive else { return }
-                        
-                        if timeRemaining > 0 {
-                            
-                            // MARK: Update current and average speeds
-                            currentSpeed = Double(round((currentLocation?.speed ?? 0.0) * 36) / 10)
-                            
-                            if avgSpeedCounter < 60 * 5 {
-                                if firstFive {
-                                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
-                                    speedSum += Double(avgSpeeds[avgSpeedCounter])
-                                    avgSpeedCounter += 1
-                                    currentAvgSpeed = Double(round(speedSum / Double(avgSpeedCounter) * 10) / 10)
-                                } else {
-                                    speedSum -= Double(avgSpeeds[avgSpeedCounter])
-                                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
-                                    speedSum += Double(avgSpeeds[avgSpeedCounter])
-                                    currentAvgSpeed = Double(round(speedSum / 30) / 10)
-                                    avgSpeedCounter += 1
-                                }
-                            } else {
-                                speedSum -= Double(avgSpeeds[0])
-                                avgSpeeds[0] = Float(currentSpeed)
-                                speedSum += Double(avgSpeeds[0])
-                                currentAvgSpeed = Double(round(speedSum / 30) / 10)
-                                avgSpeedCounter = 1
-                                firstFive = false
-                            }
-                            
-                            if currentAvgSpeed < 0 {
-                                currentAvgSpeed = 0.0
-                            }
-                            
-                            // MARK: Speed alarm
-                            if currentSpeed < minSpeed || currentSpeed > maxSpeed {
-                                if !justPlayed {
-                                    if currentSpeed < minSpeed {
-                                        // low-pitched alert
-                                        // GSAudio.sharedInstance.playSound(sound: .alert_sound_slow)
-                                    } else {
-                                        // high-pitched alert
-                                        // GSAudio.sharedInstance.playSound(sound: .alert_sound)
-                                    }
-                                    justPlayed = true
-                                    print("playin!")
-                                } else {
-                                    justPlayed = false
-                                }
-                            }
-                            
-                            // MARK: Modify energy count
-                            if timeRemaining % 60 == 0 {
-                                energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
-                            }
-                            
-                            // MARK: GPS Accuracy
-                            gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
-                            
-                            if gpsAccuracy == 0 {
-                                gpsBars = 0
-                            } else if gpsAccuracy < 15 {
-                                gpsBars = 3
-                            } else if gpsAccuracy < 25 {
-                                gpsBars = 2
-                            } else {
-                                gpsBars = 1
-                            }
-                            
-                            // MARK: Voice updates
-                            if timeRemaining % 300 == 0 &&
-                                (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
-                                
-                                if voiceAlertsTime {
-                                    Task {
-                                        await playVoiceTime()
-                                    }
-                                } else if voiceAlertsCurrentSpeed {
-                                    Task {
-                                        await playVoiceCurrentSpeed()
-                                    }
-                                } else {
-                                    Task {
-                                        await playVoiceAvgSpeed()
-
-                                    }
-                                }
-                            }
-                            
-                            // MARK: 1 min / 30 sec voice alert
-                            if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
-                                if timeRemaining == 60 {
-                                    GSAudio.sharedInstance.playSound(sound: .one_minute_remaining)
-                                }
-                                
-                                if timeRemaining == 30 {
-                                    GSAudio.sharedInstance.playSound(sound: .thirty_seconds_remaining)
-                                }
-                            }
-                            
-                            if timeRemaining == 3 {
-                                Task {
-                                    await threeSecondCountdown()
-                                }
-                            }
-
-                            timeRemaining -= 1
-                        } else {
-                            isActive = false
-                            timeRemaining = 0
-                        }
-                    })
+                    
             }
         }.onAppear() {
             timeRemaining = Int(energy * 5 * 60) + 30
+        }
+        .onReceive(timer, perform: { _ in
+            guard isActive else { return }
+            
+            if timeRemaining > 0 {
+                
+                // MARK: Update current and average speeds
+                currentSpeed = Double(round((currentLocation?.speed ?? 0.0) * 36) / 10)
+                
+                if avgSpeedCounter < 60 * 5 {
+                    if firstFive {
+                        avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                        speedSum += Double(avgSpeeds[avgSpeedCounter])
+                        avgSpeedCounter += 1
+                        currentAvgSpeed = Double(round(speedSum / Double(avgSpeedCounter) * 10) / 10)
+                    } else {
+                        speedSum -= Double(avgSpeeds[avgSpeedCounter])
+                        avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                        speedSum += Double(avgSpeeds[avgSpeedCounter])
+                        currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                        avgSpeedCounter += 1
+                    }
+                } else {
+                    speedSum -= Double(avgSpeeds[0])
+                    avgSpeeds[0] = Float(currentSpeed)
+                    speedSum += Double(avgSpeeds[0])
+                    currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                    avgSpeedCounter = 1
+                    firstFive = false
+                }
+                
+                if currentSpeed < 1 {
+                    currentSpeed = 0.0
+                }
+                if currentAvgSpeed < 0 {
+                    currentAvgSpeed = 0.0
+                }
+                
+                // MARK: Speed alarm
+                if currentSpeed < minSpeed || currentSpeed > maxSpeed {
+                    if !justPlayed {
+                        if currentSpeed < minSpeed {
+                            // low-pitched alert
+                             GSAudio.sharedInstance.playSound(sound: .alert_sound_slow)
+                        } else {
+                            // high-pitched alert
+                             GSAudio.sharedInstance.playSound(sound: .alert_sound)
+                        }
+                        justPlayed = true
+                    } else {
+                        justPlayed = false
+                    }
+                }
+                
+                // MARK: Modify energy count
+                if timeRemaining % 60 == 0 {
+                    energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
+                }
+                
+                // MARK: GPS Accuracy
+                gpsAccuracy = currentLocation?.horizontalAccuracy ?? 0.0
+                
+                if gpsAccuracy == 0 {
+                    gpsBars = 0
+                } else if gpsAccuracy < 15 {
+                    gpsBars = 3
+                } else if gpsAccuracy < 25 {
+                    gpsBars = 2
+                } else {
+                    gpsBars = 1
+                }
+                
+                // MARK: Voice updates
+                if timeRemaining % 300 == 0 &&
+                    (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
+                    
+                    if voiceAlertsTime {
+                        Task {
+                            await playVoiceTime()
+                        }
+                    } else if voiceAlertsCurrentSpeed {
+                        Task {
+                            await playVoiceCurrentSpeed()
+                        }
+                    } else {
+                        Task {
+                            await playVoiceAvgSpeed()
+
+                        }
+                    }
+                }
+                
+                // MARK: 1 min / 30 sec voice alert
+                if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
+                    if timeRemaining == 60 {
+                        GSAudio.sharedInstance.playSound(sound: .one_minute_remaining)
+                    }
+                    
+                    if timeRemaining == 30 {
+                        GSAudio.sharedInstance.playSound(sound: .thirty_seconds_remaining)
+                    }
+                }
+                
+                if timeRemaining == 3 {
+                    Task {
+                        await threeSecondCountdown()
+                    }
+                }
+            
+                timeRemaining -= 1
+            } else {
+                isActive = false
+                timeRemaining = 0
+                notificationActive = false
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            }
+        })
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .background {
+                if !notificationActive && isActive {
+                    UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                    UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+                    print("addin")
+                    notificationActive = true
+                    addNotification()
+                }
+            } else {
+                print("no notification")
+                notificationActive = false
+                UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            }
         }
     }
     
@@ -367,6 +391,10 @@ struct SpeedTracker: View {
         // skips if time (somehow) greater than 3 hrs
         if minConversion < 180 {
             GSAudio.sharedInstance.playSound(sound: .time_remaining)
+            
+            if !isActive {
+                return
+            }
             
             do {
                 try await Task.sleep(nanoseconds: UInt64(1150 * Double(NSEC_PER_MSEC)))
@@ -397,8 +425,11 @@ struct SpeedTracker: View {
                     
                     try await Task.sleep(nanoseconds: UInt64(500 * Double(NSEC_PER_MSEC)))
                 }
+                
+                if !isActive {
+                    return
+                }
                                 
-                print("mins remaining: \(minConversion)")
                 switch minConversion {
                 case 5:
                     GSAudio.sharedInstance.playSound(sound: .five)
@@ -459,7 +490,10 @@ struct SpeedTracker: View {
                 
                 try await Task.sleep(nanoseconds: UInt64(1000 * Double(NSEC_PER_MSEC)))
 
-
+                if !isActive {
+                    return
+                }
+                
                 if voiceAlertsCurrentSpeed {
                     await playVoiceCurrentSpeed()
                 } else if voiceAlertsAvgSpeed {
@@ -478,10 +512,20 @@ struct SpeedTracker: View {
             
             do {
                 try await Task.sleep(nanoseconds: UInt64(1100 * Double(NSEC_PER_MSEC)))
+                
+                if !isActive {
+                    return
+                }
+                
                 await needForSpeed(speed: currentSpeed)
                 
                 if voiceAlertsAvgSpeed {
                     try await Task.sleep(nanoseconds: UInt64(2000 * Double(NSEC_PER_MSEC)))
+                    
+                    if !isActive {
+                        return
+                    }
+                    
                     await playVoiceAvgSpeed()
                 }
             } catch {
@@ -495,6 +539,11 @@ struct SpeedTracker: View {
             
             do {
                 try await Task.sleep(nanoseconds: UInt64(1500 * Double(NSEC_PER_MSEC)))
+                
+                if !isActive {
+                    return
+                }
+                
                 await needForSpeed(speed: currentAvgSpeed)
             } catch {
                 print("can't sleep bruh")
@@ -580,6 +629,10 @@ struct SpeedTracker: View {
                 try await Task.sleep(nanoseconds: UInt64(630 * Double(NSEC_PER_MSEC)))
             }
             
+            if !isActive {
+                return
+            }
+            
             if speedOne <= 20 {
                 GSAudio.sharedInstance.playSound(sound: .point)
                 try await Task.sleep(nanoseconds: UInt64(250 * Double(NSEC_PER_MSEC)))
@@ -617,6 +670,11 @@ struct SpeedTracker: View {
                         try await Task.sleep(nanoseconds: UInt64(430 * Double(NSEC_PER_MSEC)))
                 }
             }
+            
+            if !isActive {
+                return
+            }
+            
             GSAudio.sharedInstance.playSound(sound: .kilo_per_hour)
 
         } catch {
@@ -659,6 +717,39 @@ struct SpeedTracker: View {
         timeString += String(format:"%02i:%02i", minutes, seconds)
         
         return timeString
+    }
+    
+    // MARK: Notifications
+    func addNotification() {
+        
+        let center = UNUserNotificationCenter.current()
+
+        let addRequest = {
+            let content = UNMutableNotificationContent()
+            content.title = "STEPN Sidekick"
+            content.body = "Timer active, updating speed in background"
+        
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+
+            let request = UNNotificationRequest(identifier: "oneAndOnly", content: content, trigger: trigger)
+            center.add(request)
+            print("notification active")
+            
+        }
+        
+        center.getNotificationSettings { settings in
+            if settings.authorizationStatus == .authorized {
+                addRequest()
+            } else {
+                center.requestAuthorization(options: [.alert, .badge]) { success, error in
+                    if success {
+                        addRequest()
+                    } else if let error = error {
+                        print("error :( \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
     }
 }
 
