@@ -15,10 +15,10 @@ struct Shoe {
     // V probs don't need this one V
     private let imageResource: String
     private let footResource: String
-    private var minSpeed: Double
-    private var maxSpeed: Double
+    private let minSpeed: String
+    private let maxSpeed: String
     
-    init(title: String, imageResource: String, footResource: String, minSpeed: Double, maxSpeed: Double) {
+    init(title: String, imageResource: String, footResource: String, minSpeed: String, maxSpeed: String) {
         self.title = title
         self.imageResource = imageResource
         self.footResource = footResource
@@ -38,19 +38,11 @@ struct Shoe {
         return footResource
     }
     
-    func getMinSpeed() -> Double {
+    func getMinSpeed() -> String {
         return minSpeed
     }
     
-    mutating func setMinSpeed(_ minSpeed: Double) {
-        self.minSpeed = minSpeed
-    }
-    
-    func getMaxSpeed() -> Double {
+    func getMaxSpeed() -> String {
         return maxSpeed
-    }
-    
-    mutating func setMaxSpeed(_ maxSpeed: Double) {
-        self.maxSpeed = maxSpeed
     }
 }

@@ -115,14 +115,29 @@ struct SpeedTracker: View {
                             .frame(maxWidth: .infinity)
                             
                             VStack(spacing: 2) {
-                                HStack(spacing: 6) {
-                                    // TODO add mo feet
+                                HStack(spacing: 0) {
                                     Image("footprint")
                                         .renderingMode(.template)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .foregroundColor(.white)
-                                        .frame(height: 17)
+                                        .frame(width: shoeType == "Runner" ? 10 : 0, height: 17)
+                                    
+                                    Image("footprint")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(.white)
+                                        .frame(width: shoeType == "Runner" || shoeType == "Jogger" ? 10 : 0, height: 17)
+                                    
+                                    Image(getShoeResource())
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(.white)
+                                        .frame(minWidth: 10, maxWidth: (shoeType == "Trainer" ? 16 : 10), minHeight: 10, maxHeight: 17)
+                                        .padding(.trailing, 4)
+                                    
                                     Text(shoeType)
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(.white)
@@ -374,13 +389,29 @@ struct SpeedTracker: View {
                     notificationActive = true
                     addNotification()
                 }
-            } else {
+            } else if newPhase == .active {
                 print("no notification")
                 notificationActive = false
                 UNUserNotificationCenter.current().removeAllDeliveredNotifications()
                 UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
             }
         }
+    }
+    
+    // returns footprint, trainer t, or bolt
+    func getShoeResource() -> String {
+        var resourceName: String
+        
+        switch shoeType {
+        case "Trainer" :
+            resourceName = "trainer_t"
+        case "Custom" :
+            resourceName = "bolt"
+        default:
+            resourceName = "footprint"
+        }
+        
+        return resourceName
     }
     
     // MARK: Time remaining voice func
@@ -727,7 +758,7 @@ struct SpeedTracker: View {
         let addRequest = {
             let content = UNMutableNotificationContent()
             content.title = "STEPN Sidekick"
-            content.body = "Timer active, updating speed in background"
+            content.body = "Actively updating speed in background"
         
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
 
@@ -756,7 +787,7 @@ struct SpeedTracker: View {
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
         SpeedTracker(
-            shoeType: "Runner",
+            shoeType: "Jogger",
             minSpeed: -2.0,
             maxSpeed: 20.0,
             energy: 2,

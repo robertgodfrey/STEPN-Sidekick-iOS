@@ -11,12 +11,10 @@
 //  Last updated 14 Aug 22
 //
 
-//  TODO: deez
-//    - persistance
+//  TODO: add lock screen widget for iOS 16
 //    - ads, eventually
 //    - help dialogs
 //    - nav bar (obvi)
-//    - notification 
 //    - set max energy (so screen doesn't shift down w/ large energy)
 //    - remove all print statements
 
@@ -30,45 +28,46 @@ private let speedAlertsBoth: Int = 3
 
 struct ActivitySettings: View {
     
+    // loaded from user defaults
+    @AppStorage("savedAppVersion") private var savedAppVersion: Double = 1.0
+    @AppStorage("tenSecondTimer") private var tenSecondTimer: Bool = true
+    @AppStorage("voiceAlertsSpeedType") private var voiceAlertsSpeedType: Int = speedAlertsBoth
+    @AppStorage("voiceAlertsTime") private var voiceAlertsTime: Bool = true
+    @AppStorage("voiceAlertsMinThirty") private var voiceAlertsMinThirty: Bool = true
+    @AppStorage("energy") private var energy: String = ""
+    @AppStorage("shoeTypeIterator") private var shoeTypeIterator: Int = walker
+    @AppStorage("customMinSpeed") private var customMinSpeed: String = ""
+    @AppStorage("customMaxSpeed") private var customMaxSpeed: String = ""
+    @AppStorage("firstTime") private var firstTime: Bool = true
+    
+    @State private var minSpeedString = ""
+    @State private var maxSpeedString = ""
+    
     @State private var noEnergyAlert: Bool = false
     @State private var startSpeedTracker: Bool = false
     @State private var energySelected: Bool = false
-    
-    // TODO change all these bad boys to load saved values
-    @State private var tenSecondTimer: Bool = true
-    @State private var voiceAlertsSpeedType: Int = speedAlertsBoth
-    @State private var voiceAlertsTime: Bool = true
-    @State private var voiceAlertsMinThirty: Bool = true
-    @State private var energy: Double = 2.0
-    @State private var shoeTypeIterator: Int = walker
-    @State private var customMinSpeed: Float = 0
-    @State private var customMaxSpeed: Float = 0
-    @State private var firstTime: Bool = true
-    @State private var savedAppVersion: Float = 1.0
-    
-    // delete?
-    @State private var minSpeedString = "1.0"
-    @State private var maxSpeedString = "6.0"
-    @State private var energyString = ""
-    
-    // TODO: load custom values for custom shoe
+            
     @State private var shoes: [Shoe] = [
-        Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: 1.0, maxSpeed: 6.0),
-        Shoe(title: "Jogger", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: 4.0, maxSpeed: 10.0),
-        Shoe(title: "Runner", imageResource: "shoe_runner", footResource: "footprint", minSpeed: 8.0, maxSpeed: 20.0),
-        Shoe(title: "Trainer", imageResource: "shoe_trainer", footResource: "trainer_t", minSpeed: 1.0, maxSpeed: 20.0),
-        Shoe(title: "Custom", imageResource: "shoe_custom", footResource: "bolt", minSpeed: 0, maxSpeed: 0)
+        Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: "1.0", maxSpeed: "6.0"),
+        Shoe(title: "Jogger", imageResource: "shoe_jogger", footResource: "footprint", minSpeed: "4.0", maxSpeed: "10.0"),
+        Shoe(title: "Runner", imageResource: "shoe_runner", footResource: "footprint", minSpeed: "8.0", maxSpeed: "20.0"),
+        Shoe(title: "Trainer", imageResource: "shoe_trainer", footResource: "trainer_t", minSpeed: "1.0", maxSpeed: "20.0"),
+        Shoe(title: "Custom", imageResource: "shoe_custom", footResource: "bolt", minSpeed: "", maxSpeed: "")
     ]
-                
+    
+    init() {
+        _minSpeedString = State(initialValue: shoes[shoeTypeIterator].getMinSpeed())
+        _maxSpeedString = State(initialValue: shoes[shoeTypeIterator].getMaxSpeed())
+    }
+    
     var body: some View {
-                
         VStack {
             if startSpeedTracker {
                 SpeedTracker(
                     shoeType: shoes[shoeTypeIterator].getTitle(),
-                    minSpeed: shoes[shoeTypeIterator].getMinSpeed(),
-                    maxSpeed: shoes[shoeTypeIterator].getMaxSpeed(),
-                    energy: energy,
+                    minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
+                    maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
+                    energy: Double(energy) ?? 0.2,
                     tenSecondTimer: tenSecondTimer,
                     voiceAlertsCurrentSpeed:
                         (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
@@ -166,19 +165,13 @@ struct ActivitySettings: View {
                                             
                                             HStack(spacing: 200) {
                                                 Button(action: {
-                                                    if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
-                                                    }
-                                                    
                                                     if shoeTypeIterator == walker {
                                                         shoeTypeIterator = customShoe
                                                     } else {
                                                         shoeTypeIterator -= 1
                                                     }
-                                                
-                                                    minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
-                                                    maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
+                                                    minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
+                                                    maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
@@ -186,15 +179,12 @@ struct ActivitySettings: View {
                                                 
                                                 Button(action: {
                                                     if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
                                                         shoeTypeIterator = walker
                                                     } else {
                                                         shoeTypeIterator += 1
                                                     }
-                                                    
-                                                    minSpeedString = (shoes[shoeTypeIterator].getMinSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMinSpeed()))
-                                                    maxSpeedString = (shoes[shoeTypeIterator].getMaxSpeed() == 0 ? "" : String(shoes[shoeTypeIterator].getMaxSpeed()))
+                                                    minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
+                                                    maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
@@ -249,7 +239,7 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
                                                     
-                                                    TextField("0.0", text: $minSpeedString)
+                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMinSpeed : $minSpeedString))
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
@@ -291,7 +281,7 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
 
-                                                    TextField("0.0", text: $maxSpeedString)
+                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMaxSpeed : $maxSpeedString))
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
@@ -376,7 +366,7 @@ struct ActivitySettings: View {
                                                         .padding(.trailing, 28)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 20, maxHeight: 24, alignment: .trailing)
                                                 
-                                                    TextField("0.0", text: $energyString, onEditingChanged: { (editingChanged) in
+                                                    TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
                                                         if editingChanged {
                                                             energySelected = true
                                                         } else {
@@ -388,10 +378,9 @@ struct ActivitySettings: View {
                                                         .multilineTextAlignment(.center)
                                                         .foregroundColor(Color("Almost Black"))
                                                         .keyboardType(.decimalPad)
-                                                        .onReceive(energyString.publisher.collect()) {
-                                                            self.energyString = String($0.prefix(4))
+                                                        .onReceive(energy.publisher.collect()) {
+                                                            self.energy = String($0.prefix(4))
                                                         }
-                                                        
                                                 }
                                             }
 
@@ -407,7 +396,7 @@ struct ActivitySettings: View {
                                             
                                             Spacer()
                                             
-                                            Text(getMinString(energy: Double(energyString) ?? 0.0))
+                                            Text(getMinString(energy: Double(energy) ?? 0.0))
                                                 .font(Font.custom(fontButtons, size: 16))
                                                 .foregroundColor(Color("Gandalf"))
                                                 .frame(minWidth: 150, maxWidth: 160)
@@ -530,14 +519,9 @@ struct ActivitySettings: View {
                                                 .padding(.leading, 6)
                                             
                                             Button(action: {
-                                                if shoeTypeIterator == customShoe {
-                                                    shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
-                                                    shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
-                                                }
-                                                if Double(energyString) ?? 0 == 0 {
+                                                if Double(energy) ?? 0 == 0 {
                                                     noEnergyAlert = true
                                                 } else {
-                                                    energy = Double(energyString) ?? 0.2
                                                     self.startSpeedTracker = true
                                                 }
                                                 
@@ -547,14 +531,9 @@ struct ActivitySettings: View {
 
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
-                                                    if shoeTypeIterator == customShoe {
-                                                        shoes[customShoe].setMinSpeed(Double(minSpeedString) ?? 0)
-                                                        shoes[customShoe].setMaxSpeed(Double(maxSpeedString) ?? 0)
-                                                    }
-                                                    if Double(energyString) ?? 0 == 0 {
+                                                    if Double(energy) ?? 0 == 0 {
                                                         noEnergyAlert = true
                                                     } else {
-                                                        energy = Double(energyString) ?? 0.2
                                                         self.startSpeedTracker = true
                                                     }
                                                 }))
@@ -644,7 +623,6 @@ struct MainButtons: ButtonStyle {
         }
             
     }
-
 }
 
 struct StartButton: ButtonStyle {
