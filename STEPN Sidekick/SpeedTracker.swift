@@ -59,6 +59,7 @@ struct SpeedTracker: View {
         return Group {
             if (returnToSettings) {
                 ActivitySettings()
+                    
             } else {
                 ZStack(alignment: .top) {
                     Color("Speed Tracker Background")
@@ -206,12 +207,14 @@ struct SpeedTracker: View {
                                 .padding(.leading, 10)
                             
                             Button(action: {
-                                returnToSettings = true
+                                withAnimation {
+                                    returnToSettings = true
+                                }
                             }) {
                                 Image("button_stop")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 90, height: 110)
+                                    .frame(width: 86, height: 110)
                                     .opacity(isActive ? 0 : 1)
                             }.disabled(isActive ? true : false)
                             .contentShape(Rectangle())
@@ -224,7 +227,7 @@ struct SpeedTracker: View {
                                 Image("button_pause")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 90, height: 110)
+                                    .frame(width: 86, height: 110)
                                     //.opacity(isActive ? 1 : 0)
                             }.disabled(isActive ? false : true)
                                 .frame(height: isActive ? nil : 0)
@@ -236,7 +239,7 @@ struct SpeedTracker: View {
                                 Image("button_play")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 90, height: 110)
+                                    .frame(width: 86, height: 110)
                                     .opacity(isActive ? 0 : 1)
                             }.disabled(isActive ? true : false)
                             

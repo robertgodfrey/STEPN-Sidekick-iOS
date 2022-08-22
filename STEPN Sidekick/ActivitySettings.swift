@@ -16,7 +16,7 @@
 //    - countdown timer :')
 //    - nav bar (obvi)
 //    - remove all print statements
-//    - welcome dialog
+//    - make view for location perms/notifications
 
 import SwiftUI
 
@@ -81,6 +81,7 @@ struct ActivitySettings: View {
                             (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
                         voiceAlertsTime: voiceAlertsTime,
                         voiceAlertsMinuteThirty: voiceAlertsMinThirty)
+                    .transition(.move(edge: .bottom))
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -145,7 +146,6 @@ struct ActivitySettings: View {
 
                                                     
                                                     Button(action: {
-                                                        print("help me")
                                                         withAnimation(.linear(duration: 0.05)) {
                                                             halp = true
                                                         }
@@ -550,14 +550,18 @@ struct ActivitySettings: View {
                                                 .padding(.leading, 6)
                                             
                                             Button(action: {
-                                                startin()
+                                                withAnimation(.easeIn(duration: 0.2)) {
+                                                    startin()
+                                                }
                                             } ) {
                                                 Text("START")
                                                     .frame(width: 165, height: 50)
 
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
-                                                    startin()
+                                                    withAnimation(.easeIn(duration: 0.2)) {
+                                                        startin()
+                                                    }
                                                 }))
                                                 .font(Font.custom(fontButtons, size: 25))
                                             
@@ -574,6 +578,11 @@ struct ActivitySettings: View {
                 if halp {
                     GeometryReader { _ in
                         Popup(show: $halp, circles: $helperCircles)
+                    }
+                }
+                if firstTime {
+                    GeometryReader { _ in
+                        Welcome(show: $firstTime, halp: $halp, circles: $helperCircles)
                     }
                 }
                 // nav bar }
@@ -772,7 +781,7 @@ struct Popup: View {
     @Binding var circles: Bool
     @State private var pageNum: Int = 1
     @State private var nextButton: String = "NEXT"
-    @State private var details: String = "Use the arrows to select a shoe. You can use one of the default shoes or you can select \"Custom\" to input custom speeeds. The app will play a warning sound if your current speed falls outside of the speed range that you choose."
+    @State private var details: String = "Use the arrows to select a shoe. You can use one of the default shoes or you can select \"Custom\" to input custom speeds. The app will play a warning sound if your current speed falls outside of the speed range that you choose."
     @State private var topPadding: CGFloat = 370
     @State private var bottomPadding: CGFloat = 0
     
@@ -784,7 +793,6 @@ struct Popup: View {
                 .padding(.top, topPadding)
                 .padding(.bottom, bottomPadding)
     
-            
             VStack(alignment: .leading) {
                 Text("\(pageNum)/5")
                     .font(Font.custom(fontTitles, size: 16))
@@ -792,8 +800,8 @@ struct Popup: View {
                     .multilineTextAlignment(.leading)
                 
                 Text(details)
-                    .font(Font.custom("Roboto-Medium", size: 16))
-                    .foregroundColor(Color("Gandalf"))
+                    .font(Font.custom("Roboto-Regular", size: 17))
+                    .foregroundColor(Color("Almost Black"))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 2)
                     .padding(.bottom, 10)
@@ -859,7 +867,7 @@ struct Popup: View {
                                 }
                             }
                             ))
-                            .font(Font.custom(fontButtons, size: 17))
+                            .font(Font.custom(fontButtons, size: 19))
                     }
                 }
             }   .padding(20)
@@ -868,7 +876,68 @@ struct Popup: View {
                 .cornerRadius(15)
                 .padding(.top, topPadding)
                 .padding(.bottom, bottomPadding)
-                .transition(.move(edge: .bottom))
+        }.ignoresSafeArea()
+    }
+}
+
+struct Welcome: View {
+    
+    @Binding var show: Bool
+    @Binding var halp: Bool
+    @Binding var circles: Bool
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.clear, .black, .clear]), startPoint: .top, endPoint: .bottom)
+                .opacity(0.5)
+                .frame(maxHeight: 400)
+                .padding(.top, 100)
+    
+            
+            VStack {
+                Text("WELCOME!")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Gandalf"))
+                
+                Text("Please view these brief instructions before getting started.")
+                    .font(Font.custom("Roboto-Regular", size: 16))
+                    .foregroundColor(Color("Almost Black"))
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 2)
+                    .padding(.bottom, 10)
+                
+                HStack {
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                            .foregroundColor(Color("Almost Black"))
+                            .frame(minWidth: 90, maxWidth: 95, minHeight: 32, maxHeight: 32)
+                            .padding(.top, 4)
+                            .padding(.leading, 4)
+                        
+                        Button(action: {
+                            show = false
+                            halp = true
+                        }, label: {
+                            Text("START")
+                                .frame(minWidth: 90, maxWidth: 95, minHeight: 32, maxHeight: 32)
+                        })
+                            .buttonStyle(StartButton(tapAction: {
+                                show = false
+                                halp = true
+                                circles = true
+                            }
+                            ))
+                            .font(Font.custom(fontButtons, size: 17))
+                    }
+                }
+            }   .padding(20)
+                .frame(maxWidth: 310)
+                .background(Color.white)
+                .cornerRadius(15)
+                .padding(.top, 100)
         }.ignoresSafeArea()
     }
 }

@@ -48,7 +48,7 @@
 		D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C828ACC25D00D3A478 /* nine.mp3 */; };
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
-		D472352028B31163004B157F /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D472351F28B31163004B157F /* SwiftUIView.swift */; };
+		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
 		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
 		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
@@ -132,7 +132,7 @@
 		D40A24C828ACC25D00D3A478 /* nine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nine.mp3; sourceTree = "<group>"; };
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
-		D472351F28B31163004B157F /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
@@ -238,6 +238,7 @@
 		D4C13B9C28A1D8A800141A54 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D472352128B34F30004B157F /* Roboto-Regular.ttf */,
 				D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */,
 				D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */,
 				D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */,
@@ -286,7 +287,6 @@
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
 				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
-				D472351F28B31163004B157F /* SwiftUIView.swift */,
 			);
 			path = "STEPN Sidekick";
 			sourceTree = "<group>";
@@ -430,6 +430,7 @@
 				D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */,
 				D40A24D928ACC25D00D3A478 /* start_sound.mp3 in Resources */,
 				D40A24D228ACC25D00D3A478 /* fourteen.mp3 in Resources */,
+				D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */,
 				D40A24D628ACC25D00D3A478 /* one_minute_remaining.mp3 in Resources */,
 				D40A24CB28ACC25D00D3A478 /* six.mp3 in Resources */,
 				D40A24D728ACC25D00D3A478 /* sevn.mp3 in Resources */,
@@ -499,7 +500,6 @@
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
 				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
-				D472352028B31163004B157F /* SwiftUIView.swift in Sources */,
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
