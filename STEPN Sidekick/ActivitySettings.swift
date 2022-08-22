@@ -13,10 +13,10 @@
 
 //  TODO: add lock screen widget for iOS 16
 //    - ads, eventually
-//    - help dialogs
+//    - countdown timer :')
 //    - nav bar (obvi)
-//    - set max energy (so screen doesn't shift down w/ large energy)
 //    - remove all print statements
+//    - welcome dialog
 
 import SwiftUI
 
@@ -43,9 +43,15 @@ struct ActivitySettings: View {
     @State private var minSpeedString = ""
     @State private var maxSpeedString = ""
     
-    @State private var noEnergyAlert: Bool = false
     @State private var startSpeedTracker: Bool = false
     @State private var energySelected: Bool = false
+    @State private var houstonWeHaveAProblem: Bool = false  // alert
+    @State private var halp: Bool = false   // help dialogs
+    @State private var helperCircles: Bool = false
+    @State private var biggah: Bool = false
+    
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
             
     @State private var shoes: [Shoe] = [
         Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: "1.0", maxSpeed: "6.0"),
@@ -61,20 +67,20 @@ struct ActivitySettings: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             if startSpeedTracker {
-                SpeedTracker(
-                    shoeType: shoes[shoeTypeIterator].getTitle(),
-                    minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
-                    maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
-                    energy: Double(energy) ?? 0.2,
-                    tenSecondTimer: tenSecondTimer,
-                    voiceAlertsCurrentSpeed:
-                        (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
-                    voiceAlertsAvgSpeed:
-                        (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
-                    voiceAlertsTime: voiceAlertsTime,
-                    voiceAlertsMinuteThirty: voiceAlertsMinThirty)
+                    SpeedTracker(
+                        shoeType: shoes[shoeTypeIterator].getTitle(),
+                        minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
+                        maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
+                        energy: Double(energy) ?? 0.2,
+                        tenSecondTimer: tenSecondTimer,
+                        voiceAlertsCurrentSpeed:
+                            (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                        voiceAlertsAvgSpeed:
+                            (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                        voiceAlertsTime: voiceAlertsTime,
+                        voiceAlertsMinuteThirty: voiceAlertsMinThirty)
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -140,7 +146,15 @@ struct ActivitySettings: View {
                                                     
                                                     Button(action: {
                                                         print("help me")
-
+                                                        withAnimation(.linear(duration: 0.05)) {
+                                                            halp = true
+                                                        }
+                                                        withAnimation {
+                                                            helperCircles = true
+                                                        }
+                                                        Task {
+                                                            await delayCircles()
+                                                        }
                                                     }) {
                                                         Circle()
                                                             .strokeBorder(Color("Almost Black"), lineWidth: 1)
@@ -162,6 +176,19 @@ struct ActivitySettings: View {
                                                 .frame(minWidth: 120, maxWidth: 168, minHeight: 120, maxHeight: 168)
                                                 .padding(.trailing, 4)
                                                 .padding(.bottom, 28)
+                                            
+                                            HStack(spacing: 160) {
+                                                Circle()
+                                                    .foregroundColor(.yellow)
+                                                    .opacity(0.4)
+                                                    .scaleEffect(biggah ? 1.2 : 1)
+                                                
+                                                Circle()
+                                                    .foregroundColor(.yellow)
+                                                    .opacity(0.4)
+                                                    .scaleEffect(biggah ? 1.2 : 1)
+                                            }.padding(.bottom, 20)
+                                                .opacity(helperCircles ? 1 : 0)
                                             
                                             HStack(spacing: 200) {
                                                 Button(action: {
@@ -379,7 +406,11 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .keyboardType(.decimalPad)
                                                         .onReceive(energy.publisher.collect()) {
+                                        
                                                             self.energy = String($0.prefix(4))
+                                                            if Double(energy) ?? 0 > 25 {
+                                                                energy = "25"
+                                                            }
                                                         }
                                                 }
                                             }
@@ -519,23 +550,14 @@ struct ActivitySettings: View {
                                                 .padding(.leading, 6)
                                             
                                             Button(action: {
-                                                if Double(energy) ?? 0 == 0 {
-                                                    noEnergyAlert = true
-                                                } else {
-                                                    self.startSpeedTracker = true
-                                                }
-                                                
+                                                startin()
                                             } ) {
                                                 Text("START")
                                                     .frame(width: 165, height: 50)
 
                                             }
                                                 .buttonStyle(StartButton(tapAction: {
-                                                    if Double(energy) ?? 0 == 0 {
-                                                        noEnergyAlert = true
-                                                    } else {
-                                                        self.startSpeedTracker = true
-                                                    }
+                                                    startin()
                                                 }))
                                                 .font(Font.custom(fontButtons, size: 25))
                                             
@@ -549,11 +571,46 @@ struct ActivitySettings: View {
                     .padding(.horizontal, -38)
                     .frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                 
-             // nav view closing bracket  }
+                if halp {
+                    GeometryReader { _ in
+                        Popup(show: $halp, circles: $helperCircles)
+                    }
+                }
+                // nav bar }
             }
         }
-        .alert(isPresented: $noEnergyAlert) {
-            Alert(title: Text("Check Energy"), message: Text("Energy must be greater than 0"), dismissButton: .default(Text("Okay")))
+        .alert(isPresented: $houstonWeHaveAProblem) {
+            Alert(title: Text(alertTitle),
+                  message: Text(alertMessage),
+                  dismissButton: .default(Text("Okay")))
+        }
+    }
+    
+    func startin() {
+        if Double(energy) ?? 0 == 0
+            || Int((Double(energy) ?? 0) * 10) % 2 != 0
+            || shoeTypeIterator == customShoe &&
+                (Double(customMinSpeed) ?? 0 < 1 || Double(customMaxSpeed) ?? 0 < (Double(customMinSpeed) ?? 0) + 1) {
+            
+            if Double(energy) ?? 0 == 0 {
+                alertTitle = "Check Energy"
+                alertMessage = "Energy must be greater than 0"
+            } else if Int((Double(energy) ?? 0) * 10) % 2 != 0 {
+                alertTitle = "Check Energy"
+                alertMessage = "Energy must be a mutliple of 0.2"
+            } else if Double(customMinSpeed) ?? 0 < 1 {
+                alertTitle = "Check Min Speed"
+                alertMessage = "Minimum speed must be at least 1.0 km/h"
+            } else if Double(customMaxSpeed) ?? 0 < (Double(customMinSpeed) ?? 0) + 1 {
+                    alertTitle = "Check Custom Speeds"
+                    alertMessage = "Maximum speed must be at least 1.0 km/h greater than minimum speed"
+            } else {
+                alertTitle = "Check Inputs"
+                alertMessage = "Inputs must be greater than 0"
+            }
+            houstonWeHaveAProblem = true
+        } else {
+            self.startSpeedTracker = true
         }
     }
     
@@ -591,6 +648,28 @@ struct ActivitySettings: View {
             }
         }
         return minString
+    }
+    
+    func delayCircles() async {
+        for _ in 1...10 {
+            if !halp {
+                break
+            }
+            withAnimation(.linear(duration: 1)) {
+                biggah = true
+            }
+            try? await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
+            if !halp {
+                break
+            }
+            withAnimation(.linear(duration: 1)) {
+                biggah = false
+            }
+            try? await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
+        }
+        withAnimation {
+            helperCircles = false
+        }
     }
 }
 
@@ -684,5 +763,112 @@ struct RoundedCorner: Shape {
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
+    }
+}
+
+struct Popup: View {
+    
+    @Binding var show: Bool
+    @Binding var circles: Bool
+    @State private var pageNum: Int = 1
+    @State private var nextButton: String = "NEXT"
+    @State private var details: String = "Use the arrows to select a shoe. You can use one of the default shoes or you can select \"Custom\" to input custom speeeds. The app will play a warning sound if your current speed falls outside of the speed range that you choose."
+    @State private var topPadding: CGFloat = 370
+    @State private var bottomPadding: CGFloat = 0
+    
+    var body: some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.clear, .black, .clear]), startPoint: .top, endPoint: .bottom)
+                .opacity(0.5)
+                .frame(maxHeight: 400)
+                .padding(.top, topPadding)
+                .padding(.bottom, bottomPadding)
+    
+            
+            VStack(alignment: .leading) {
+                Text("\(pageNum)/5")
+                    .font(Font.custom(fontTitles, size: 16))
+                    .foregroundColor(Color("Gandalf"))
+                    .multilineTextAlignment(.leading)
+                
+                Text(details)
+                    .font(Font.custom("Roboto-Medium", size: 16))
+                    .foregroundColor(Color("Gandalf"))
+                    .multilineTextAlignment(.leading)
+                    .padding(.top, 2)
+                    .padding(.bottom, 10)
+                
+                HStack {
+                    Button(action: {
+                        print("skippin")
+                        withAnimation(.linear(duration: 0.5)) {
+                            show = false
+                        }
+                    }, label: {
+                        Text("SKIP >")
+                    })
+                    .font(Font.custom(fontHeaders, size: 14))
+                    .opacity(pageNum == 5 ? 0 : 1)
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                            .foregroundColor(Color("Almost Black"))
+                            .frame(minWidth: 90, maxWidth: 95, minHeight: 32, maxHeight: 32)
+                            .padding(.top, 4)
+                            .padding(.leading, 4)
+                        
+                        Button(action: {
+                            print("Next button pressed")
+                        }, label: {
+                            Text(nextButton)
+                                .frame(minWidth: 90, maxWidth: 95, minHeight: 32, maxHeight: 32)
+                        })
+                            .buttonStyle(StartButton(tapAction: {
+                                print("Next button pressed")
+                                switch pageNum {
+                                case 1:
+                                    withAnimation {
+                                        details = "Enter the amount of energy you wish to spend. The amount of time required to spend the energy will be displayed below."
+                                        circles = false
+                                        topPadding = 100
+                                        pageNum += 1
+                                    }
+                                case 2:
+                                    withAnimation {
+                                        details = "Select whether or not the ten-second countdown timer is enabled. If enabled, this timer givers you GPS time to sync and gives you time to switch to the STEPN app to start your activity. If disabled, the app will start the activity timer immediately."
+                                        topPadding = 80
+                                        pageNum += 1
+                                    }
+                                case 3:
+                                    withAnimation {
+                                        details = "Select whether or not voice updates are enabled. The \"Speed\" and \"Time\" alerts will sound every five minutes, updating you with the amount of time remaining and information about your speed. The \"1 min / 30 sec\" alert gives a warning when you have one minute remaining and another warning at thirty seconds."
+                                        pageNum += 1
+                                        topPadding = 150
+                                    }
+                                case 4:
+                                    withAnimation {
+                                        details = "Press the start button to start your activity. Happy earning!"
+                                        pageNum += 1
+                                        nextButton = "GO"
+                                        topPadding = 150
+                                    }
+                                default:
+                                    show = false
+                                }
+                            }
+                            ))
+                            .font(Font.custom(fontButtons, size: 17))
+                    }
+                }
+            }   .padding(20)
+                .frame(maxWidth: 310)
+                .background(Color.white)
+                .cornerRadius(15)
+                .padding(.top, topPadding)
+                .padding(.bottom, bottomPadding)
+                .transition(.move(edge: .bottom))
+        }.ignoresSafeArea()
     }
 }

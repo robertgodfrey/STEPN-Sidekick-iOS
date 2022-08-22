@@ -192,69 +192,64 @@ struct SpeedTracker: View {
                                 .font(Font.custom("RobotoCondensed-Bold", size: 86))
                                 .foregroundColor(Color("Energy Blue"))
                         }
-                        
-                        ZStack {
+                    
+                        HStack(spacing: -5){
+                            Button(action: {
+                                timeRemaining -= 5
+                            }) {
+                                Text("-5")
+                                    .font(Font.custom("Roboto-Black", size: 35))
+                                    .foregroundColor(Color.white)
+                                    //.opacity(isActive ? 1 : 0)
+                            }.disabled(isActive ? false : true)
+                                .frame(height: isActive ? 110 : 0)
+                                .padding(.leading, 10)
                             
-                            HStack(spacing: 30) {
-                                Button(action: {
-                                    returnToSettings = true
-                                }) {
-                                    Image("button_stop")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(12)
-                                        .frame(width: 110, height: 110)
-                                        .opacity(isActive ? 0 : 1)
-                                }.disabled(isActive ? true : false)
-
-                                
-                                Button(action: {
-                                    isActive.toggle()
-                                    locationManager.resumeLocationUpdates()
-                                }) {
-                                    Image("button_play")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(12)
-                                        .frame(width: 110, height: 110)
-                                        .opacity(isActive ? 0 : 1)
-                                }.disabled(isActive ? true : false)
-                            }
-                                                                
-                            HStack(spacing: 20){
-                                Button(action: {
-                                    timeRemaining -= 5
-                                }) {
-                                    Text("-5")
-                                        .font(Font.custom("Roboto-Black", size: 35))
-                                        .foregroundColor(Color.white)
-                                        .opacity(isActive ? 1 : 0)
-                                        .padding()
-                                }.disabled(isActive ? false : true)
-                                
-                                
-                                Button(action: {
-                                    isActive.toggle()
-                                    locationManager.stopLocationUpdates()
-                                }) {
-                                    Image("button_pause")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(12)
-                                        .frame(width: 110, height: 110)
-                                        .opacity(isActive ? 1 : 0)
-                                }.disabled(isActive ? false : true)
-                                
-                                Button(action: {
-                                    timeRemaining += 5
-                                }) {
-                                    Text("+5")
-                                        .font(Font.custom("Roboto-Black", size: 35))
-                                        .foregroundColor(Color.white)
-                                        .opacity(isActive ? 1 : 0)
-                                        .padding()
-                                }.disabled(isActive ? false : true)
-                            }
+                            Button(action: {
+                                returnToSettings = true
+                            }) {
+                                Image("button_stop")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 90, height: 110)
+                                    .opacity(isActive ? 0 : 1)
+                            }.disabled(isActive ? true : false)
+                            .contentShape(Rectangle())
+                            
+                            
+                            Button(action: {
+                                isActive.toggle()
+                                locationManager.stopLocationUpdates()
+                            }) {
+                                Image("button_pause")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 90, height: 110)
+                                    //.opacity(isActive ? 1 : 0)
+                            }.disabled(isActive ? false : true)
+                                .frame(height: isActive ? nil : 0)
+                            
+                            Button(action: {
+                                isActive.toggle()
+                                locationManager.resumeLocationUpdates()
+                            }) {
+                                Image("button_play")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 90, height: 110)
+                                    .opacity(isActive ? 0 : 1)
+                            }.disabled(isActive ? true : false)
+                            
+                            Button(action: {
+                                timeRemaining += 5
+                            }) {
+                                Text("+5")
+                                    .font(Font.custom("Roboto-Black", size: 35))
+                                    .foregroundColor(Color.white)
+                                    //.opacity(isActive ? 1 : 0)
+                            }.disabled(isActive ? false : true)
+                                .frame(height: isActive ? 110 : 0)
+                                .padding(.trailing, 10)
                         }
                     }
                 }.ignoresSafeArea()
@@ -791,10 +786,10 @@ struct SpeedTracker_Previews: PreviewProvider {
             minSpeed: -2.0,
             maxSpeed: 20.0,
             energy: 2,
-            tenSecondTimer: true,
-            voiceAlertsCurrentSpeed: true,
-            voiceAlertsAvgSpeed: true,
-            voiceAlertsTime: true,
-            voiceAlertsMinuteThirty: true)
+            tenSecondTimer: false,
+            voiceAlertsCurrentSpeed: false,
+            voiceAlertsAvgSpeed: false,
+            voiceAlertsTime: false,
+            voiceAlertsMinuteThirty: false)
     }
 }
