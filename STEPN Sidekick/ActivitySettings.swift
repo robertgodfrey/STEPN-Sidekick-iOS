@@ -8,7 +8,7 @@
 //  SpeedTracker activity.
 //
 //  Created by Rob Godfrey
-//  Last updated 14 Aug 22
+//  Last updated 22 Aug 22
 //
 
 //  TODO: add lock screen widget for iOS 16
@@ -16,7 +16,7 @@
 //    - countdown timer :')
 //    - nav bar (obvi)
 //    - remove all print statements
-//    - make view for location perms/notifications
+//    - make view for location perms/notifications.... also relook location updates (?)
 
 import SwiftUI
 
@@ -44,6 +44,8 @@ struct ActivitySettings: View {
     @State private var maxSpeedString = ""
     
     @State private var startSpeedTracker: Bool = false
+    @State private var startLocationRequest: Bool = false
+    
     @State private var energySelected: Bool = false
     @State private var houstonWeHaveAProblem: Bool = false  // alert
     @State private var halp: Bool = false   // help dialogs
@@ -69,19 +71,21 @@ struct ActivitySettings: View {
     var body: some View {
         ZStack {
             if startSpeedTracker {
-                    SpeedTracker(
-                        shoeType: shoes[shoeTypeIterator].getTitle(),
-                        minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
-                        maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
-                        energy: Double(energy) ?? 0.2,
-                        tenSecondTimer: tenSecondTimer,
-                        voiceAlertsCurrentSpeed:
-                            (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
-                        voiceAlertsAvgSpeed:
-                            (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
-                        voiceAlertsTime: voiceAlertsTime,
-                        voiceAlertsMinuteThirty: voiceAlertsMinThirty)
+                SpeedTracker(
+                    shoeType: shoes[shoeTypeIterator].getTitle(),
+                    minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
+                    maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
+                    energy: Double(energy) ?? 0.2,
+                    tenSecondTimer: tenSecondTimer,
+                    voiceAlertsCurrentSpeed:
+                        (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                    voiceAlertsAvgSpeed:
+                        (voiceAlertsSpeedType == speedAlertsAverage || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
+                    voiceAlertsTime: voiceAlertsTime,
+                    voiceAlertsMinuteThirty: voiceAlertsMinThirty)
                     .transition(.move(edge: .bottom))
+            } else if startLocationRequest {
+                LocationRequestView()
             } else {
                 //NavigationView {
                     ZStack(alignment: .top) {
@@ -135,7 +139,7 @@ struct ActivitySettings: View {
                                                             .foregroundColor(Color("Almost Black"))
                                                             .padding(.bottom, 26)
                                                 
-                                                }, alignment: .bottom)
+                                                    }, alignment: .bottom)
                                                 .overlay(
 
                                                 ZStack {
@@ -572,6 +576,7 @@ struct ActivitySettings: View {
                         }
                         
                     }.ignoresSafeArea()
+                    .preferredColorScheme(.light)
                     .padding(.horizontal, -38)
                     .frame(width: UIScreen.main.bounds.width-20, alignment: .center)
                 
@@ -619,7 +624,15 @@ struct ActivitySettings: View {
             }
             houstonWeHaveAProblem = true
         } else {
-            self.startSpeedTracker = true
+            @ObservedObject var locationManager = LocationManager.shared
+            
+            locationManager.checkAuth()
+            
+            if !locationManager.authorizedAlways {
+                self.startLocationRequest = true
+            } else {
+                self.startSpeedTracker = true
+            }
         }
     }
     
@@ -808,9 +821,9 @@ struct Popup: View {
                 
                 HStack {
                     Button(action: {
-                        print("skippin")
                         withAnimation(.linear(duration: 0.5)) {
                             show = false
+                            circles = false
                         }
                     }, label: {
                         Text("SKIP >")
@@ -900,7 +913,7 @@ struct Welcome: View {
                     .foregroundColor(Color("Gandalf"))
                 
                 Text("Please view these brief instructions before getting started.")
-                    .font(Font.custom("Roboto-Regular", size: 16))
+                    .font(Font.custom("Roboto-Regular", size: 17))
                     .foregroundColor(Color("Almost Black"))
                     .multilineTextAlignment(.leading)
                     .padding(.top, 2)
@@ -930,7 +943,7 @@ struct Welcome: View {
                                 circles = true
                             }
                             ))
-                            .font(Font.custom(fontButtons, size: 17))
+                            .font(Font.custom(fontButtons, size: 19))
                     }
                 }
             }   .padding(20)

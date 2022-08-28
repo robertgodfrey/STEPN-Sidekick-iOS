@@ -11,14 +11,14 @@ class LocationManager: NSObject, ObservableObject {
     private let manager = CLLocationManager()
     @Published var userLocation: CLLocation?
     static let shared = LocationManager()
+    var authorizedAlways = false
     
     override init() {
         super.init()
         manager.delegate = self
-        manager.requestAlwaysAuthorization()
         manager.allowsBackgroundLocationUpdates = true
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.startUpdatingLocation()
+        checkAuth()
     }
     
     func requestLocation() {
@@ -31,6 +31,14 @@ class LocationManager: NSObject, ObservableObject {
     
     func resumeLocationUpdates() {
         manager.startUpdatingLocation()
+    }
+    
+    func checkAuth() {
+        if manager.authorizationStatus == .authorizedAlways {
+            authorizedAlways = true
+        } else {
+            authorizedAlways = false
+        }
     }
 }
 
@@ -45,7 +53,7 @@ extension LocationManager: CLLocationManagerDelegate {
         case .denied:
             print("uh oh spaghettis: denied")
         case .authorizedAlways:
-            print("uh oh spaghettis: auth always")
+            print("auth always")
         case .authorizedWhenInUse:
             print("uh oh spaghettis: auth when in use")
         @unknown default:

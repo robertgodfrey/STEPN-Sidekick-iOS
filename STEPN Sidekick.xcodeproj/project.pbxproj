@@ -49,6 +49,7 @@
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
+		D472352428B38B1D004B157F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D472352328B38B1D004B157F /* LaunchScreen.storyboard */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
 		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
 		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
@@ -133,6 +134,7 @@
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		D472352328B38B1D004B157F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
 				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
+				D472352328B38B1D004B157F /* LaunchScreen.storyboard */,
 			);
 			path = "STEPN Sidekick";
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */,
 				D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */,
 				D40A24E128ACC25D00D3A478 /* time_remaining.mp3 in Resources */,
+				D472352428B38B1D004B157F /* LaunchScreen.storyboard in Resources */,
 				D40A24E328ACC25D00D3A478 /* two_hours.mp3 in Resources */,
 				D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */,
 				D40A24E728ACC25D00D3A478 /* two.mp3 in Resources */,

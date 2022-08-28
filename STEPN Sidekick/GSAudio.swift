@@ -4,7 +4,8 @@
 //
 //  Adpated from class created by Olivier Wilkinson and updated for Swift 4 by Makalele
 //
-//  Created by Rob Godfrey on 8/18/22.
+//  Created by Rob Godfrey
+//  Last updated 27 Aug 22
 //
 
 import Foundation
@@ -112,39 +113,10 @@ class GSAudio: NSObject, AVAudioPlayerDelegate {
         }
     }
 
-    /* TODO: delete, probably
-    func playSounds(sounds: [SoundOption]) {
-        for sound in sounds {
-            playSound(sound: sound)
-        }
-    }
-
-    func playSounds(sounds: SoundOption...) {
-        for sound in sounds {
-            playSound(sound: sound)
-        }
-    }
-    
-    func playSounds(soundFileNames: [String], withDelay: Double) { //withDelay is in seconds
-        for (index, soundFileName) in soundFileNames.enumerated() {
-            let delay = withDelay * Double(index)
-            let _ = Timer.scheduledTimer(timeInterval: delay, target: self, selector: #selector(playSoundNotification(_:)), userInfo: ["fileName": soundFileName], repeats: false)
-        }
-    }
-
-
-    @objc func playSoundNotification(_ notification: NSNotification) {
-        if let sound = notification.userInfo?["fileName"] as? String {
-            playSound(sound: sound)
-        }
-    }
-     */
-
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if let index = duplicatePlayers.firstIndex(of: player) {
             duplicatePlayers.remove(at: index)
         }
-        print("stopped!")
     }
 
 }
