@@ -11,7 +11,7 @@ import SwiftUI
 struct STEPN_SidekickApp: App {
     var body: some Scene {
         WindowGroup {
-            ActivitySettings()
+            MainViewStarter()
         }
     }
 }

@@ -15,7 +15,8 @@ import AVFoundation
 struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
-    
+    @Binding var hideTab: Bool
+
     let shoeType: String
     let minSpeed: Double
     let maxSpeed: Double
@@ -47,7 +48,7 @@ struct SpeedTracker: View {
     var body: some View {
         
         if returnToSettings {
-            ActivitySettings()
+            ActivitySettings(hideTab: $hideTab)
         } else {
             ZStack(alignment: .top) {
                 
@@ -272,6 +273,9 @@ struct SpeedTracker: View {
             }.ignoresSafeArea()
                 .preferredColorScheme(.dark)
                 .onAppear() {
+                    withAnimation(.easeIn) {
+                        hideTab = true
+                    }
                     locationManager.resumeLocationUpdates()
                     if tenSecondTimer {
                         timeRemaining = 10
@@ -787,6 +791,7 @@ struct SpeedTracker: View {
 struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
         SpeedTracker(
+            hideTab: .constant(true),
             shoeType: "Jogger",
             minSpeed: -2.0,
             maxSpeed: 20.0,

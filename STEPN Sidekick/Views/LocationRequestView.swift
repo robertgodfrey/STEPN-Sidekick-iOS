@@ -17,11 +17,12 @@ struct LocationRequestView: View {
     @AppStorage("requestedLocationPerms") private var requestedPerms: Bool = false
 
     @State var returnToSettings: Bool = false
+    @Binding var hideTab: Bool
     
     var body: some View {
         ZStack {
             if returnToSettings {
-                ActivitySettings()
+                ActivitySettings(hideTab: $hideTab)
             } else {
                 Color(.systemBlue).ignoresSafeArea()
                 
@@ -39,7 +40,7 @@ struct LocationRequestView: View {
                         .font(Font.custom("Roboto-Regular", size: 17))
                         .padding(.horizontal, 30)
                     
-                    Text(requestedPerms ? "Please turn on precise background location permissions in Settings (required for speed updates while app is running in the background)." :
+                    Text(requestedPerms ? "Please allow location permissions in your phone's settings. Change access to 'Always' to recieve speed updates while the app is running in the background. Feel free to turn these permissions off when not using the speed tracker." :
                             "Please allow background permissions so that speed can be updated while the app is running in the background.")
                         .multilineTextAlignment(.center)
                         .font(Font.custom("Roboto-Regular", size: 17))
@@ -101,12 +102,14 @@ struct LocationRequestView: View {
 
             }
 
+        }.onAppear() {
+            hideTab = true
         }
     }
 }
 
 struct LocationRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationRequestView()
+        LocationRequestView(hideTab: .constant(true))
     }
 }

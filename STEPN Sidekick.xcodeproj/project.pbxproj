@@ -48,6 +48,9 @@
 		D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C828ACC25D00D3A478 /* nine.mp3 */; };
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
+		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
+		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
+		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D472352428B38B1D004B157F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D472352328B38B1D004B157F /* LaunchScreen.storyboard */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
@@ -133,6 +136,9 @@
 		D40A24C828ACC25D00D3A478 /* nine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nine.mp3; sourceTree = "<group>"; };
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
+		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D472352328B38B1D004B157F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -237,6 +243,29 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		D441B53028BB1C6200D819EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D441B53628BB2F1400D819EA /* MainViewStarter.swift */,
+				D441B53228BB1D0100D819EA /* MainView.swift */,
+				D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */,
+				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
+				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
+				D441B53428BB296C00D819EA /* CustomTabBar.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D441B53128BB1C8200D819EA /* Brains */ = {
+			isa = PBXGroup;
+			children = (
+				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
+				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
+				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
+			);
+			path = Brains;
+			sourceTree = "<group>";
+		};
 		D4C13B9C28A1D8A800141A54 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,15 +308,11 @@
 				D40A24A128ACC23A00D3A478 /* Sounds */,
 				D4C13B9C28A1D8A800141A54 /* Fonts */,
 				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
-				D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */,
 				D4FFE3C6289F04A400D7E82B /* Assets.xcassets */,
 				D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */,
 				D4FFE3C8289F04A400D7E82B /* Preview Content */,
-				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
-				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
-				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
-				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
-				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
+				D441B53028BB1C6200D819EA /* Views */,
+				D441B53128BB1C8200D819EA /* Brains */,
 				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
 				D472352328B38B1D004B157F /* LaunchScreen.storyboard */,
 			);
@@ -503,7 +528,10 @@
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
+				D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */,
+				D441B53328BB1D0100D819EA /* MainView.swift in Sources */,
 				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
+				D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */,
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
@@ -677,6 +705,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
@@ -710,6 +739,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
