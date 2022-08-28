@@ -20,7 +20,7 @@ struct SpeedTracker: View {
     let minSpeed: Double
     let maxSpeed: Double
     @State var energy: Double
-    var tenSecondTimer: Bool
+    @State var tenSecondTimer: Bool
     let voiceAlertsCurrentSpeed: Bool
     let voiceAlertsAvgSpeed: Bool
     let voiceAlertsTime: Bool
@@ -42,6 +42,7 @@ struct SpeedTracker: View {
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 0
     @State private var isActive: Bool = true
+    @State private var smol: Bool = false
             
     var body: some View {
         
@@ -139,119 +140,183 @@ struct SpeedTracker: View {
                         }.padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) - 12)
                     }
                     
-                    HStack(spacing: 0) {
-                        Spacer()
-                        
-                        VStack(spacing: 0) {
-                            Text("Current Speed:")
-                                .font(Font.custom(fontHeaders, size: 16))
-                                .foregroundColor(Color.white)
+                    ZStack(alignment: .top) {
+                        // MARK: Main view
+                        VStack(spacing: 40) {
+                            HStack(spacing: 0) {
+                                Spacer()
+                                
+                                VStack(spacing: 0) {
+                                    Text("Current Speed:")
+                                        .font(Font.custom(fontHeaders, size: 16))
+                                        .foregroundColor(Color.white)
+                                    
+                                    Text(String(currentSpeed))
+                                        .font(Font.custom("Roboto-BlackItalic", size: 80))
+                                        .foregroundColor(Color.white)
+                                    Text("km/h")
+                                        .font(Font.custom("Roboto-BlackItalic", size: 40))
+                                        .foregroundColor(Color.white)
+                                }
+                                
+                                Spacer()
+                                
+                                VStack(spacing: 0) {
+                                    Text("5-Min Average:")
+                                        .font(Font.custom(fontHeaders, size: 16))
+                                        .foregroundColor(Color.white)
+                                    
+                                    Text(String(currentAvgSpeed))
+                                        .font(Font.custom("Roboto-BlackItalic", size: 80))
+                                        .foregroundColor(Color.white)
+                                    Text("km/h")
+                                        .font(Font.custom("Roboto-BlackItalic", size: 40))
+                                        .foregroundColor(Color.white)
+                                }
+                                
+                                Spacer()
+                            }.opacity(tenSecondTimer ? 0 : 1)
                             
-                            Text(String(currentSpeed))
-                                .font(Font.custom("Roboto-BlackItalic", size: 80))
-                                .foregroundColor(Color.white)
-                            Text("km/h")
-                                .font(Font.custom("Roboto-BlackItalic", size: 40))
-                                .foregroundColor(Color.white)
+                            VStack(spacing: 0) {
+                                Text("Time Remaining:")
+                                    .font(Font.custom(fontHeaders, size: 16))
+                                    .foregroundColor(Color("Energy Blue"))
+                                Text(timeFormatted())
+                                    .font(Font.custom("RobotoCondensed-Bold", size: 86))
+                                    .foregroundColor(Color("Energy Blue"))
+                            }.opacity(tenSecondTimer ? 0 : 1)
+                        
+                            HStack(spacing: -5){
+                                Button(action: {
+                                    timeRemaining -= 5
+                                }) {
+                                    Text("-5")
+                                        .font(Font.custom("Roboto-Black", size: 35))
+                                        .foregroundColor(Color.white)
+                                }.disabled(isActive ? false : true)
+                                    .frame(height: isActive ? 110 : 0)
+                                    .padding(.leading, 10)
+                                    .opacity(tenSecondTimer ? 0 : 1)
+                                
+                                Button(action: {
+                                    timer.upstream.connect().cancel()
+                                    returnToSettings = true
+                                }) {
+                                    Image("button_stop")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 86, height: 110)
+                                        .opacity(isActive ? 0 : 1)
+                                }.disabled(isActive ? true : false)
+                                    .contentShape(Rectangle())
+                               
+                                Button(action: {
+                                    if tenSecondTimer {
+                                        returnToSettings = true
+                                    } else {
+                                        isActive.toggle()
+                                        locationManager.stopLocationUpdates()
+                                    }
+                                }) {
+                                    Image(tenSecondTimer ? "button_stop" : "button_pause")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 86, height: 110)
+                                }.disabled(isActive ? false : true)
+                                    .frame(height: isActive ? nil : 0)
+                                
+                                Button(action: {
+                                    isActive.toggle()
+                                    locationManager.resumeLocationUpdates()
+                                }) {
+                                    Image("button_play")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 86, height: 110)
+                                        .opacity(isActive ? 0 : 1)
+                                }.disabled(isActive ? true : false)
+                                
+                                Button(action: {
+                                    timeRemaining += 5
+                                }) {
+                                    Text("+5")
+                                        .font(Font.custom("Roboto-Black", size: 35))
+                                        .foregroundColor(Color.white)
+                                }.disabled(isActive ? false : true)
+                                    .frame(height: isActive ? 110 : 0)
+                                    .padding(.trailing, 10)
+                                    .opacity(tenSecondTimer ? 0 : 1)
+                            }
                         }
                         
-                        Spacer()
-                        
-                        VStack(spacing: 0) {
-                            Text("5-Min Average:")
-                                .font(Font.custom(fontHeaders, size: 16))
-                                .foregroundColor(Color.white)
+                        // MARK: Countdown view
+                        VStack {
+                            ZStack {
+                                Image("stopwatch")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 280, height: 300)
+                                
+                                Text(countdownTime())
+                                    .font(Font.custom("Roboto-Black", size: 130))
+                                    .foregroundColor(Color("Energy Blue"))
+                                    .padding(.top, 40)
+                                    .scaleEffect(smol ? 0.8 : 1.0, anchor: .center)
+                            }
                             
-                            Text(String(currentAvgSpeed))
-                                .font(Font.custom("Roboto-BlackItalic", size: 80))
-                                .foregroundColor(Color.white)
-                            Text("km/h")
-                                .font(Font.custom("Roboto-BlackItalic", size: 40))
-                                .foregroundColor(Color.white)
-                        }
+                            Spacer()
+                        }.opacity(tenSecondTimer ? 1 : 0)
                         
-                        Spacer()
-                    }
-                    
-                    VStack(spacing: 0) {
-                        Text("Time Remaining:")
-                            .font(Font.custom(fontHeaders, size: 16))
-                            .foregroundColor(Color("Energy Blue"))
-                        Text(timeFormatted())
-                            .font(Font.custom("RobotoCondensed-Bold", size: 86))
-                            .foregroundColor(Color("Energy Blue"))
-                    }
-                
-                    HStack(spacing: -5){
-                        Button(action: {
-                            timeRemaining -= 5
-                        }) {
-                            Text("-5")
-                                .font(Font.custom("Roboto-Black", size: 35))
-                                .foregroundColor(Color.white)
-                        }.disabled(isActive ? false : true)
-                            .frame(height: isActive ? 110 : 0)
-                            .padding(.leading, 10)
-                        
-                        Button(action: {
-                            timer.upstream.connect().cancel()
-                            returnToSettings = true
-                        }) {
-                            Image("button_stop")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 86, height: 110)
-                                .opacity(isActive ? 0 : 1)
-                        }.disabled(isActive ? true : false)
-                        .contentShape(Rectangle())
-                        
-                        
-                        Button(action: {
-                            isActive.toggle()
-                            locationManager.stopLocationUpdates()
-                        }) {
-                            Image("button_pause")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 86, height: 110)
-                        }.disabled(isActive ? false : true)
-                            .frame(height: isActive ? nil : 0)
-                        
-                        Button(action: {
-                            isActive.toggle()
-                            locationManager.resumeLocationUpdates()
-                        }) {
-                            Image("button_play")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 86, height: 110)
-                                .opacity(isActive ? 0 : 1)
-                        }.disabled(isActive ? true : false)
-                        
-                        Button(action: {
-                            timeRemaining += 5
-                        }) {
-                            Text("+5")
-                                .font(Font.custom("Roboto-Black", size: 35))
-                                .foregroundColor(Color.white)
-                        }.disabled(isActive ? false : true)
-                            .frame(height: isActive ? 110 : 0)
-                            .padding(.trailing, 10)
                     }
                 }
             }.ignoresSafeArea()
                 .preferredColorScheme(.dark)
                 .onAppear() {
                     locationManager.resumeLocationUpdates()
-                    timeRemaining = Int(energy * 5 * 60) + 30
                     if tenSecondTimer {
-                        timeRemaining += 10
+                        timeRemaining = 10
+                    } else {
+                        timeRemaining = Int(energy * 5 * 60) + 30
+                    }
+                    // to animate '10' on ten-second timer
+                    smol = false
+                    withAnimation(.easeInOut(duration: 1)) {
+                        smol = true
                     }
                 }
                 .onReceive(timer, perform: { _ in
                     guard isActive else { return }
+                                        
+                    // MARK: GPS Accuracy
+                    gpsAccuracy = locationManager.userLocation?.horizontalAccuracy ?? 0.0
                     
-                    if timeRemaining > 0 {
+                    if gpsAccuracy == 0 {
+                        gpsBars = 0
+                    } else if gpsAccuracy < 15 {
+                        gpsBars = 3
+                    } else if gpsAccuracy < 25 {
+                        gpsBars = 2
+                    } else {
+                        gpsBars = 1
+                    }
+                    
+                    if tenSecondTimer {
+                        smol = false
+                        withAnimation(.easeInOut(duration: 1)) {
+                            smol = true
+                        }
+                        if timeRemaining == 3 {
+                            Task {
+                                await threeSecondCountdown()
+                            }
+                        }
+                        if timeRemaining == 0 {
+                            timeRemaining = Int(energy * 5 * 60) + 30
+                            tenSecondTimer = false
+                        }
+                        timeRemaining -= 1
+                        
+                    } else if timeRemaining > 0 {
                         
                         // MARK: Update current and average speeds
                         currentSpeed = Double(round((locationManager.userLocation?.speed ?? 0.0) * 36) / 10)
@@ -305,20 +370,7 @@ struct SpeedTracker: View {
                         if timeRemaining % 60 == 0 {
                             energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
                         }
-                        
-                        // MARK: GPS Accuracy
-                        gpsAccuracy = locationManager.userLocation?.horizontalAccuracy ?? 0.0
-                        
-                        if gpsAccuracy == 0 {
-                            gpsBars = 0
-                        } else if gpsAccuracy < 15 {
-                            gpsBars = 3
-                        } else if gpsAccuracy < 25 {
-                            gpsBars = 2
-                        } else {
-                            gpsBars = 1
-                        }
-                        
+                                                
                         // MARK: Voice updates
                         if timeRemaining % 300 == 0 &&
                             (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
@@ -355,8 +407,8 @@ struct SpeedTracker: View {
                                 await threeSecondCountdown()
                             }
                         }
-                    
                         timeRemaining -= 1
+                        
                     } else {
                         isActive = false
                         timeRemaining = 0
@@ -711,6 +763,10 @@ struct SpeedTracker: View {
         
         return color
     }
+    
+    func countdownTime() -> String {
+        return String(format: "%02i", timeRemaining)
+    }
         
     func timeFormatted() -> String {
         var timeString: String = ""
@@ -735,7 +791,7 @@ struct SpeedTracker_Previews: PreviewProvider {
             minSpeed: -2.0,
             maxSpeed: 20.0,
             energy: 2,
-            tenSecondTimer: false,
+            tenSecondTimer: true,
             voiceAlertsCurrentSpeed: false,
             voiceAlertsAvgSpeed: false,
             voiceAlertsTime: false,
