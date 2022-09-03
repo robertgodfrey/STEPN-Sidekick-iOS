@@ -3,13 +3,10 @@
 //  STEPN Sidekick
 //
 //  Created by Rob Godfrey
-//  Last updated 27 Aug 22
+//  Last updated 3 Sep 22
 //
 //  TODO: add lock screen widget for iOS 16
-//    - ads, eventually
-//    - nav bar (obvi)
 //    - remove all print statements
-//    - might need to change bottom edge in each view, check later (12:50 of video)
 
 import SwiftUI
 
@@ -28,11 +25,11 @@ struct MainView: View {
         TabView(selection: $currentTab) {
             ActivitySettings(hideTab: $hideTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.3))
+                .background(Color.white)
                 .tag("Activity")
-            Text("Info")
+            About(hideTab: $hideTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black.opacity(0.3))
+                .background(Color("Light Green"))
                 .tag("Info")
         }
         .overlay(

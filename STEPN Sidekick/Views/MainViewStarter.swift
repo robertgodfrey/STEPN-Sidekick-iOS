@@ -1,5 +1,5 @@
 //
-//  TempView.swift
+//  MainViewStarter.swift
 //  STEPN Sidekick
 //
 //  Created by Rob Godfrey on 8/27/22.

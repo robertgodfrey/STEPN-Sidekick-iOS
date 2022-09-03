@@ -5,7 +5,7 @@
 //  View to let user know why location permissions are needed and how they will be used.
 //
 //  Created by Rob Godfrey
-//  Last updated 22 Aug 22
+//  Last updated 3 Sep 22
 //
 
 import SwiftUI
@@ -34,18 +34,13 @@ struct LocationRequestView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 100, height: 150)
-                    
-                    Text("This app requires precise location permissions to accurately track speed.")
+                                    
+                    Text(requestedPerms ? "Precise location permissions are required to accurately track speed. Please turn on location permissions in your phone's settings.\n(Settings -> Privacy -> Location Services -> STEPN Sidekick" :
+                            "This app requires precise location permissions to accurately track speed.")
                         .multilineTextAlignment(.center)
                         .font(Font.custom("Roboto-Regular", size: 17))
                         .padding(.horizontal, 30)
-                    
-                    Text(requestedPerms ? "Please allow location permissions in your phone's settings. Change access to 'Always' to recieve speed updates while the app is running in the background. Feel free to turn these permissions off when not using the speed tracker." :
-                            "Please allow background permissions so that speed can be updated while the app is running in the background.")
-                        .multilineTextAlignment(.center)
-                        .font(Font.custom("Roboto-Regular", size: 17))
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 20)
+                        .padding(.bottom, 20)
                     
                     Text("Turn on now?")
                         .font(Font.custom("Roboto-Medium", size: 17))
@@ -55,7 +50,6 @@ struct LocationRequestView: View {
                         Button(action: {
                             print("no location permissions")
                             returnToSettings = true
-                            requestedPerms = true
                         }) {
                             Text ("Cancel")
                                 .font(Font.custom("Roboto-Medium", size: 19))
@@ -84,7 +78,7 @@ struct LocationRequestView: View {
                                 requestedPerms = true
                             }
                         }) {
-                            Text ("Okay")
+                            Text (requestedPerms ? "Settings" : "Okay")
                                 .font(Font.custom("Roboto-Medium", size: 19))
                                 .foregroundColor(Color(.systemBlue))
                         }

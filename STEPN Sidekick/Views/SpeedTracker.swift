@@ -6,7 +6,7 @@
 //  Displays current/average speed, time/energy remaining, and GPS signal strength
 //
 //  Created by Rob Godfrey
-//  Last updated 16 Aug 22
+//  Last updated 3 Sep 22
 //
 
 import SwiftUI
@@ -42,6 +42,7 @@ struct SpeedTracker: View {
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 0
+    @State private var endDate: Date? = nil
     @State private var isActive: Bool = true
     @State private var smol: Bool = false
             
@@ -213,6 +214,7 @@ struct SpeedTracker: View {
                                
                                 Button(action: {
                                     if tenSecondTimer {
+                                        timer.upstream.connect().cancel()
                                         returnToSettings = true
                                     } else {
                                         isActive.toggle()
@@ -280,8 +282,10 @@ struct SpeedTracker: View {
                     if tenSecondTimer {
                         timeRemaining = 10
                     } else {
+                        GSAudio.sharedInstance.playSound(sound: .start_sound)
                         timeRemaining = Int(energy * 5 * 60) + 30
                     }
+                    endDate = Date(timeIntervalSinceNow: TimeInterval(timeRemaining))
                     // to animate '10' on ten-second timer
                     smol = false
                     withAnimation(.easeInOut(duration: 1)) {
@@ -290,135 +294,7 @@ struct SpeedTracker: View {
                 }
                 .onReceive(timer, perform: { _ in
                     guard isActive else { return }
-                                        
-                    // MARK: GPS Accuracy
-                    gpsAccuracy = locationManager.userLocation?.horizontalAccuracy ?? 0.0
-                    
-                    if gpsAccuracy == 0 {
-                        gpsBars = 0
-                    } else if gpsAccuracy < 15 {
-                        gpsBars = 3
-                    } else if gpsAccuracy < 25 {
-                        gpsBars = 2
-                    } else {
-                        gpsBars = 1
-                    }
-                    
-                    if tenSecondTimer {
-                        smol = false
-                        withAnimation(.easeInOut(duration: 1)) {
-                            smol = true
-                        }
-                        if timeRemaining == 3 {
-                            Task {
-                                await threeSecondCountdown()
-                            }
-                        }
-                        if timeRemaining == 0 {
-                            timeRemaining = Int(energy * 5 * 60) + 30
-                            tenSecondTimer = false
-                        }
-                        timeRemaining -= 1
-                        
-                    } else if timeRemaining > 0 {
-                        
-                        // MARK: Update current and average speeds
-                        currentSpeed = Double(round((locationManager.userLocation?.speed ?? 0.0) * 36) / 10)
-                        
-                        if avgSpeedCounter < 60 * 5 {
-                            if firstFive {
-                                avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
-                                speedSum += Double(avgSpeeds[avgSpeedCounter])
-                                avgSpeedCounter += 1
-                                currentAvgSpeed = Double(round(speedSum / Double(avgSpeedCounter) * 10) / 10)
-                            } else {
-                                speedSum -= Double(avgSpeeds[avgSpeedCounter])
-                                avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
-                                speedSum += Double(avgSpeeds[avgSpeedCounter])
-                                currentAvgSpeed = Double(round(speedSum / 30) / 10)
-                                avgSpeedCounter += 1
-                            }
-                        } else {
-                            speedSum -= Double(avgSpeeds[0])
-                            avgSpeeds[0] = Float(currentSpeed)
-                            speedSum += Double(avgSpeeds[0])
-                            currentAvgSpeed = Double(round(speedSum / 30) / 10)
-                            avgSpeedCounter = 1
-                            firstFive = false
-                        }
-                        
-                        if currentSpeed < 1 {
-                            currentSpeed = 0.0
-                        }
-                        if currentAvgSpeed < 0 {
-                            currentAvgSpeed = 0.0
-                        }
-                        
-                        // MARK: Speed alarm
-                        if currentSpeed < minSpeed || currentSpeed > maxSpeed {
-                            if !justPlayed {
-                                if currentSpeed < minSpeed {
-                                    // low-pitched alert
-                                     GSAudio.sharedInstance.playSound(sound: .alert_sound_slow)
-                                } else {
-                                    // high-pitched alert
-                                     GSAudio.sharedInstance.playSound(sound: .alert_sound)
-                                }
-                                justPlayed = true
-                            } else {
-                                justPlayed = false
-                            }
-                        }
-                        
-                        // MARK: Modify energy count
-                        if timeRemaining % 60 == 0 {
-                            energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
-                        }
-                                                
-                        // MARK: Voice updates
-                        if timeRemaining % 300 == 0 &&
-                            (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
-                            
-                            if voiceAlertsTime {
-                                Task {
-                                    await playVoiceTime()
-                                }
-                            } else if voiceAlertsCurrentSpeed {
-                                Task {
-                                    await playVoiceCurrentSpeed()
-                                }
-                            } else {
-                                Task {
-                                    await playVoiceAvgSpeed()
-
-                                }
-                            }
-                        }
-                        
-                        // MARK: 1 min / 30 sec voice alert
-                        if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
-                            if timeRemaining == 60 {
-                                GSAudio.sharedInstance.playSound(sound: .one_minute_remaining)
-                            }
-                            
-                            if timeRemaining == 30 {
-                                GSAudio.sharedInstance.playSound(sound: .thirty_seconds_remaining)
-                            }
-                        }
-                        
-                        if timeRemaining == 4 {
-                            Task {
-                                await threeSecondCountdown()
-                            }
-                        }
-                        timeRemaining -= 1
-                        
-                    } else {
-                        isActive = false
-                        timeRemaining = 0
-                        timer.upstream.connect().cancel()
-                        returnToSettings = true
-                    }
+                    updateTimer()
                 })
         }
     }
@@ -437,6 +313,143 @@ struct SpeedTracker: View {
         }
         
         return resourceName
+    }
+    
+    func updateTimer() {
+        guard let endDate = endDate else { return}
+        timeRemaining = max(0, Int(endDate.timeIntervalSinceNow.rounded()))
+        if endDate.timeIntervalSinceNow <= 0 {
+            timer.upstream.connect().cancel()
+            print("stop")
+        }
+        
+        // MARK: GPS Accuracy
+        gpsAccuracy = locationManager.userLocation?.horizontalAccuracy ?? 0.0
+        
+        if gpsAccuracy == 0 {
+            gpsBars = 0
+        } else if gpsAccuracy < 15 {
+            gpsBars = 3
+        } else if gpsAccuracy < 25 {
+            gpsBars = 2
+        } else {
+            gpsBars = 1
+        }
+        
+        if tenSecondTimer {
+            smol = false
+            withAnimation(.easeInOut(duration: 1)) {
+                smol = true
+            }
+            if timeRemaining == 4 {
+                Task {
+                    await threeSecondCountdown()
+                }
+            }
+            if timeRemaining == 1 {
+                timeRemaining = Int(energy * 5 * 60) + 31
+                tenSecondTimer = false
+            }
+            
+        } else if timeRemaining > 0 {
+            
+            // MARK: Update current and average speeds
+            currentSpeed = Double(round((locationManager.userLocation?.speed ?? 0.0) * 36) / 10)
+            
+            if avgSpeedCounter < 60 * 5 {
+                if firstFive {
+                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                    speedSum += Double(avgSpeeds[avgSpeedCounter])
+                    avgSpeedCounter += 1
+                    currentAvgSpeed = Double(round(speedSum / Double(avgSpeedCounter) * 10) / 10)
+                } else {
+                    speedSum -= Double(avgSpeeds[avgSpeedCounter])
+                    avgSpeeds[avgSpeedCounter] = Float(currentSpeed)
+                    speedSum += Double(avgSpeeds[avgSpeedCounter])
+                    currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                    avgSpeedCounter += 1
+                }
+            } else {
+                speedSum -= Double(avgSpeeds[0])
+                avgSpeeds[0] = Float(currentSpeed)
+                speedSum += Double(avgSpeeds[0])
+                currentAvgSpeed = Double(round(speedSum / 30) / 10)
+                avgSpeedCounter = 1
+                firstFive = false
+            }
+            
+            if currentSpeed < 1 {
+                currentSpeed = 0.0
+            }
+            if currentAvgSpeed < 0 {
+                currentAvgSpeed = 0.0
+            }
+            
+            // MARK: Speed alarm
+            if currentSpeed < minSpeed || currentSpeed > maxSpeed {
+                if !justPlayed {
+                    if currentSpeed < minSpeed {
+                        // low-pitched alert
+                         GSAudio.sharedInstance.playSound(sound: .alert_sound_slow)
+                    } else {
+                        // high-pitched alert
+                         GSAudio.sharedInstance.playSound(sound: .alert_sound)
+                    }
+                    justPlayed = true
+                } else {
+                    justPlayed = false
+                }
+            }
+            
+            // MARK: Modify energy count
+            if timeRemaining % 60 == 0 {
+                energy = round(Double(timeRemaining) / 60 / 5 * 10) / 10
+            }
+                                    
+            // MARK: Voice updates
+            if timeRemaining % 300 == 0 &&
+                (voiceAlertsTime || voiceAlertsCurrentSpeed || voiceAlertsAvgSpeed) {
+                
+                if voiceAlertsTime {
+                    Task {
+                        await playVoiceTime()
+                    }
+                } else if voiceAlertsCurrentSpeed {
+                    Task {
+                        await playVoiceCurrentSpeed()
+                    }
+                } else {
+                    Task {
+                        await playVoiceAvgSpeed()
+
+                    }
+                }
+            }
+            
+            // MARK: 1 min / 30 sec voice alert
+            if (timeRemaining == 60 || timeRemaining == 30) && voiceAlertsMinuteThirty {
+                if timeRemaining == 60 {
+                    GSAudio.sharedInstance.playSound(sound: .one_minute_remaining)
+                }
+                
+                if timeRemaining == 30 {
+                    GSAudio.sharedInstance.playSound(sound: .thirty_seconds_remaining)
+                }
+            }
+            
+            if timeRemaining == 4 {
+                Task {
+                    await threeSecondCountdown()
+                }
+            }
+            timeRemaining -= 1
+            
+        } else {
+            isActive = false
+            timeRemaining = 0
+            timer.upstream.connect().cancel()
+            returnToSettings = true
+        }
     }
     
     // MARK: Time remaining voice func

@@ -2,7 +2,9 @@
 //  LocationManager.swift
 //  STEPN Sidekick
 //
-//  Created by Rob Godfrey on 8/15/22.
+//  Created by Rob Godfrey
+//
+//  Last updated 3 Sep 22
 //
 
 import CoreLocation
@@ -11,7 +13,7 @@ class LocationManager: NSObject, ObservableObject {
     private let manager = CLLocationManager()
     @Published var userLocation: CLLocation?
     static let shared = LocationManager()
-    var authorizedAlways = false
+    var authorizedLocation = false
     
     override init() {
         super.init()
@@ -22,7 +24,7 @@ class LocationManager: NSObject, ObservableObject {
     }
     
     func requestLocation() {
-        manager.requestAlwaysAuthorization()
+        manager.requestWhenInUseAuthorization()
     }
     
     func stopLocationUpdates() {
@@ -34,10 +36,10 @@ class LocationManager: NSObject, ObservableObject {
     }
     
     func checkAuth() {
-        if manager.authorizationStatus == .authorizedAlways {
-            authorizedAlways = true
+        if manager.authorizationStatus == .authorizedWhenInUse {
+            authorizedLocation = true
         } else {
-            authorizedAlways = false
+            authorizedLocation = false
         }
     }
 }

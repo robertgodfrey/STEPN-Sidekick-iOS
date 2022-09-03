@@ -51,6 +51,7 @@
 		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
 		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
 		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
+		D441B53928BB77CB00D819EA /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53828BB77CB00D819EA /* About.swift */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D472352428B38B1D004B157F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D472352328B38B1D004B157F /* LaunchScreen.storyboard */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
@@ -139,6 +140,7 @@
 		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
+		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D472352328B38B1D004B157F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
 				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
 				D441B53428BB296C00D819EA /* CustomTabBar.swift */,
+				D441B53828BB77CB00D819EA /* About.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
+				D441B53928BB77CB00D819EA /* About.swift in Sources */,
 				D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */,
 				D441B53328BB1D0100D819EA /* MainView.swift in Sources */,
 				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
@@ -700,8 +704,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -734,8 +737,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise background location permissions - this is needed for speed alerts while the app runs in the background.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
