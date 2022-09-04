@@ -191,6 +191,7 @@ struct ActivitySettings: View {
                                                     .scaleEffect(biggah ? 1.2 : 1)
                                             }.padding(.bottom, 20)
                                                 .opacity(helperCircles ? 1 : 0)
+                                                .frame(maxWidth: 430)
                                             
                                             HStack(spacing: 200) {
                                                 Button(action: {
@@ -581,7 +582,7 @@ struct ActivitySettings: View {
                                         .padding(.top, 38)
                                         .padding(.bottom, 85)
                                     }
-                                }
+                                }.frame(maxWidth: 500)
                             }
                             .overlay(
                                 GeometryReader { proxy -> Color in

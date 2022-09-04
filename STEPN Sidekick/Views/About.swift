@@ -33,6 +33,7 @@ struct About: View {
                             .offset(x: 5, y: 5)
                             .padding(.top, 4)
                             .padding(.horizontal, 18)
+                            .frame(maxWidth: 500)
 
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .foregroundColor(.white)
@@ -42,6 +43,7 @@ struct About: View {
                                 )
                             .padding(.horizontal, 18)
                             .padding(.top, 4)
+                            .frame(maxWidth: 500)
                         
                         VStack(spacing: 8) {
                             Text(" ABOUT ")
@@ -53,6 +55,7 @@ struct About: View {
                                 .font(Font.custom("Roboto-Medium", size: 17))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color("Almost Black"))
+                                .frame(maxWidth: 400)
                             
                             HStack {
                                 Text("NOTES")
@@ -104,10 +107,12 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 15))
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Color("Almost Black"))
+                                    .padding(.top, 20)
                                 
                                 Text("sidekickfeedback@gmail.com")
                                     .font(Font.custom("Roboto-Medium", size: 15))
-                                
+                                    .padding(.top, 10)
+                                /*
                                 Text("If you enjoy the app, please consider supporting!")
                                     .font(Font.custom("Roboto-Regular", size: 15))
                                     .multilineTextAlignment(.center)
@@ -120,15 +125,16 @@ struct About: View {
                                         .frame(height: 36)
                                         .padding(.vertical, 10)
                                 }
+                                */
                                 
                                 Text("v 1.0")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
-                                    .padding(.bottom, 30)
+                                    .padding(.vertical, 20)
                             }.frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .padding(.top, 10)
 
                         }.padding(.horizontal, 30)
+                            .frame(maxWidth: 400)
                         
                     }.padding(.bottom, 40)
                     .overlay(
