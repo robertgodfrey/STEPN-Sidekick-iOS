@@ -12,10 +12,14 @@
 import SwiftUI
 import AVFoundation
 
+
 struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
     @Binding var hideTab: Bool
+    
+    @StateObject private var timerVm = ViewModel()
+    @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     let shoeType: String
     let minSpeed: Double
@@ -40,7 +44,6 @@ struct SpeedTracker: View {
     @State private var firstFive: Bool = true
     @State private var justPlayed: Bool = false
     
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State private var timeRemaining: Int = 0
     @State private var endDate: Date? = nil
     @State private var isActive: Bool = true
@@ -61,7 +64,6 @@ struct SpeedTracker: View {
                             .foregroundColor(Color("Speed Tracker Foreground"))
                             .frame(minWidth: 380, maxWidth: 420, minHeight: 10, maxHeight: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 70)
                             .cornerRadius(25, corners: [.bottomLeft, .bottomRight])
-
                         
                         HStack {
                             HStack(spacing: 4) {
@@ -190,7 +192,11 @@ struct SpeedTracker: View {
                         
                             HStack(spacing: -5){
                                 Button(action: {
-                                    timeRemaining -= 5
+                                    if timeRemaining >= 5 {
+                                        timeRemaining -= 5
+                                    } else {
+                                        timeRemaining = 0
+                                    }
                                 }) {
                                     Text("-5")
                                         .font(Font.custom("Roboto-Black", size: 35))
@@ -201,7 +207,6 @@ struct SpeedTracker: View {
                                     .opacity(tenSecondTimer ? 0 : 1)
                                 
                                 Button(action: {
-                                    timer.upstream.connect().cancel()
                                     returnToSettings = true
                                 }) {
                                     Image("button_stop")
@@ -213,13 +218,17 @@ struct SpeedTracker: View {
                                     .contentShape(Rectangle())
                                
                                 Button(action: {
+                                    
+                                    timer.upstream.connect().cancel()
+                                    timerVm.stop()
+                                    locationManager.stopLocationUpdates()
+                                    
                                     if tenSecondTimer {
-                                        timer.upstream.connect().cancel()
                                         returnToSettings = true
                                     } else {
                                         isActive.toggle()
-                                        locationManager.stopLocationUpdates()
                                     }
+                                    
                                 }) {
                                     Image(tenSecondTimer ? "button_stop" : "button_pause")
                                         .resizable()
@@ -230,6 +239,8 @@ struct SpeedTracker: View {
                                 
                                 Button(action: {
                                     isActive.toggle()
+                                    timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+                                    timerVm.start(seconds: timeRemaining)
                                     locationManager.resumeLocationUpdates()
                                 }) {
                                     Image("button_play")
@@ -278,14 +289,17 @@ struct SpeedTracker: View {
                     withAnimation(.easeIn) {
                         hideTab = true
                     }
+                    
                     locationManager.resumeLocationUpdates()
+                    
                     if tenSecondTimer {
                         timeRemaining = 10
                     } else {
                         GSAudio.sharedInstance.playSound(sound: .start_sound)
                         timeRemaining = Int(energy * 5 * 60) + 30
                     }
-                    endDate = Date(timeIntervalSinceNow: TimeInterval(timeRemaining))
+                    
+                    timerVm.start(seconds: timeRemaining)
                     // to animate '10' on ten-second timer
                     smol = false
                     withAnimation(.easeInOut(duration: 1)) {
@@ -293,7 +307,7 @@ struct SpeedTracker: View {
                     }
                 }
                 .onReceive(timer, perform: { _ in
-                    guard isActive else { return }
+                    timerVm.updateCountdown()
                     updateTimer()
                 })
         }
@@ -316,12 +330,6 @@ struct SpeedTracker: View {
     }
     
     func updateTimer() {
-        guard let endDate = endDate else { return}
-        timeRemaining = max(0, Int(endDate.timeIntervalSinceNow.rounded()))
-        if endDate.timeIntervalSinceNow <= 0 {
-            timer.upstream.connect().cancel()
-            print("stop")
-        }
         
         // MARK: GPS Accuracy
         gpsAccuracy = locationManager.userLocation?.horizontalAccuracy ?? 0.0
@@ -348,8 +356,12 @@ struct SpeedTracker: View {
             }
             if timeRemaining == 1 {
                 timeRemaining = Int(energy * 5 * 60) + 31
+                timerVm.stop()
+                timerVm.start(seconds: timeRemaining)
                 tenSecondTimer = false
             }
+            
+            timeRemaining -= 1
             
         } else if timeRemaining > 0 {
             
@@ -442,12 +454,15 @@ struct SpeedTracker: View {
                     await threeSecondCountdown()
                 }
             }
+            
             timeRemaining -= 1
             
         } else {
             isActive = false
             timeRemaining = 0
             timer.upstream.connect().cancel()
+            timerVm.stop()
+            locationManager.stopLocationUpdates()
             returnToSettings = true
         }
     }

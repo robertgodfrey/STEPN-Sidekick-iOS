@@ -84,8 +84,10 @@ struct ActivitySettings: View {
                     voiceAlertsTime: voiceAlertsTime,
                     voiceAlertsMinuteThirty: voiceAlertsMinThirty)
                     .transition(.move(edge: .bottom))
+                
             } else if startLocationRequest {
                 LocationRequestView(hideTab: $hideTab)
+                
             } else {
                 ZStack(alignment: .top) {
                     Color("Background Almost White")
@@ -226,6 +228,9 @@ struct ActivitySettings: View {
                                     
                                     Button(action: {
                                         UIApplication.shared.hideKeyboard()
+                                        withAnimation(.easeOut .speed(1.5)) {
+                                            hideTab = false
+                                        }
                                     }) {
                                         Color("Background Almost White")
                                     }
@@ -396,6 +401,9 @@ struct ActivitySettings: View {
                                                     TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
                                                         if editingChanged {
                                                             energySelected = true
+                                                            withAnimation(.easeOut .speed(1.5)) {
+                                                                hideTab = true
+                                                            }
                                                         } else {
                                                             energySelected = false                                                                   }
                                                         })
@@ -406,12 +414,16 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .keyboardType(.decimalPad)
                                                         .onReceive(energy.publisher.collect()) {
-                                        
                                                             self.energy = String($0.prefix(4))
                                                             if Double(energy) ?? 0 > 25 {
                                                                 energy = "25"
                                                             }
                                                         }
+                                                        .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification)) { obj in
+                                                                        if let textField = obj.object as? UITextField {
+                                                                            textField.selectedTextRange = textField.textRange(from: textField.beginningOfDocument, to: textField.endOfDocument)
+                                                                        }
+                                                                    }
                                                 }
                                             }
 
@@ -618,7 +630,6 @@ struct ActivitySettings: View {
                         Welcome(show: $firstTime, halp: $halp, circles: $helperCircles)
                     }
                 }
-                // nav bar }
             }
         }
         .alert(isPresented: $houstonWeHaveAProblem) {
