@@ -57,6 +57,7 @@
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
 		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
 		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
+		D4B82C8E28D07BD3004A80EB /* Optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B82C8D28D07BD3004A80EB /* Optimizer.swift */; };
 		D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9828A0C9FE00141A54 /* Constants.swift */; };
 		D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9A28A0D04B00141A54 /* Shoe.swift */; };
 		D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */; };
@@ -147,6 +148,7 @@
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
+		D4B82C8D28D07BD3004A80EB /* Optimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optimizer.swift; sourceTree = "<group>"; };
 		D4C13B9828A0C9FE00141A54 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D4C13B9A28A0D04B00141A54 /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
 		D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
 				D441B53428BB296C00D819EA /* CustomTabBar.swift */,
 				D441B53828BB77CB00D819EA /* About.swift */,
+				D4B82C8D28D07BD3004A80EB /* Optimizer.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
+				D4B82C8E28D07BD3004A80EB /* Optimizer.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
 				D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */,
@@ -702,7 +706,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
@@ -735,7 +739,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;

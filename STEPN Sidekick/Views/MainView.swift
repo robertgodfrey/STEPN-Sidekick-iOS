@@ -3,10 +3,12 @@
 //  STEPN Sidekick
 //
 //  Created by Rob Godfrey
-//  Last updated 3 Sep 22
+//
+//  Last updated 12 Sep 22
+//
 //
 //  TODO: add lock screen widget for iOS 16
-//    - remove all print statements
+//
 
 import SwiftUI
 
@@ -27,6 +29,10 @@ struct MainView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.white)
                 .tag("Activity")
+            Optimizer(hideTab: $hideTab)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.white)
+                .tag("Optimizer")
             About(hideTab: $hideTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color("Light Green"))

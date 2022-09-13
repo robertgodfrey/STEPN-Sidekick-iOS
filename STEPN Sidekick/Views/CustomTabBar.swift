@@ -14,7 +14,7 @@ struct CustomTabBar: View {
     var body: some View {
         HStack(spacing: 0) {
             // tab buttons
-            ForEach(["Activity", "Info"],id: \.self) { image in
+            ForEach(["Activity", "Optimizer", "Info"],id: \.self) { image in
                 TabButton(image: image, currentTab: $currentTab)
             }
         }   .padding(.top, 20)

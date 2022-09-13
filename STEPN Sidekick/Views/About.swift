@@ -56,6 +56,7 @@ struct About: View {
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color("Almost Black"))
                                 .frame(maxWidth: 400)
+                                .padding(.horizontal, 10)
                             
                             HStack {
                                 Text("NOTES")
@@ -107,11 +108,10 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 15))
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Color("Almost Black"))
-                                    .padding(.top, 20)
+                                    .padding(20)
                                 
                                 Text("sidekickfeedback@gmail.com")
                                     .font(Font.custom("Roboto-Medium", size: 15))
-                                    .padding(.top, 10)
                                 /*
                                 Text("If you enjoy the app, please consider supporting!")
                                     .font(Font.custom("Roboto-Regular", size: 15))
@@ -127,7 +127,7 @@ struct About: View {
                                 }
                                 */
                                 
-                                Text("v 1.0")
+                                Text("v 1.1")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)
