@@ -13,10 +13,18 @@
 import SwiftUI
 
 struct Optimizer: View {
+    let common: Int = 0
+    let uncommon: Int = 1
+    let rare: Int = 2
+    let epic: Int = 3
+    
     @Binding var hideTab: Bool
     
     @State var offset: CGFloat = 0
     @State var lastOffset: CGFloat = 0
+    
+    @State var shoeRarity: Int = 2
+    @State var shoeType: Int = 0
     
     @State var shoeName: String = ""
     @State var energyString: String = ""
@@ -58,15 +66,15 @@ struct Optimizer: View {
                                 // MARK: Shoe + gems
                                 ZStack{
                                     Circle()
-                                        .foregroundColor(Color(hex: "fcfcfc"))
+                                        .foregroundColor(Color(hex: outerCircleColor))
                                         .frame(height: 190)
                                     
                                     Circle()
-                                        .foregroundColor(Color(hex: "f7f7f7"))
+                                        .foregroundColor(Color(hex: middleCircleColor))
                                         .frame(width: 150)
                                     
                                     Circle()
-                                        .foregroundColor(Color(hex: "ebebeb"))
+                                        .foregroundColor(Color(hex: innerCircleColor))
                                         .frame(width: 110)
                                     
                                     Image("shoe_walker")
@@ -87,13 +95,13 @@ struct Optimizer: View {
                                                     .frame(width: 46, height: 46)
                                                     .padding(.top, 4)
                                                     .padding(.leading, 2)
-                                                
+                                            
                                                 Image("gem_socket_gray_0")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(width: 46, height: 46)
                                                 
-                                                Image("gem_lock")
+                                                Image(shoeLevel >= 5 ? "gem_plus" : "gem_lock")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .padding(.top, 2)
@@ -122,7 +130,7 @@ struct Optimizer: View {
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(width: 46, height: 46)
 
-                                                Image("gem_lock")
+                                                Image(shoeLevel >= 10 ? "gem_plus" : "gem_lock")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .padding(.top, 2)
@@ -151,7 +159,7 @@ struct Optimizer: View {
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(width: 46, height: 46)
 
-                                                Image("gem_lock")
+                                                Image(shoeLevel >= 15 ? "gem_plus" : "gem_lock")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .padding(.top, 2)
@@ -180,7 +188,7 @@ struct Optimizer: View {
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(width: 46, height: 46)
 
-                                                Image("gem_lock")
+                                                Image(shoeLevel >= 20 ? "gem_plus" : "gem_lock")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .padding(.top, 2)
@@ -203,7 +211,7 @@ struct Optimizer: View {
                                         .padding(.leading, 4)
                                     
                                     RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                        .foregroundColor(Color(hex: "e9e9e9"))
+                                        .foregroundColor(Color(hex: labelHexColor))
                                         .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
                                         .overlay(RoundedRectangle(cornerRadius: 25)
                                             .stroke(Color("Almost Black"), lineWidth: 1.4))
@@ -213,7 +221,7 @@ struct Optimizer: View {
                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                         .font(Font.custom(fontTitles, size: 16))
                                         .multilineTextAlignment(.center)
-                                        .foregroundColor(Color("Almost Black"))
+                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                     
                                 }.padding(.top, -10)
                                 
@@ -263,21 +271,32 @@ struct Optimizer: View {
                                                 .padding([.bottom, .trailing], -3)
                                         
                                             Button(action: {
-                                                // action goes here
                                                 UIApplication.shared.hideKeyboard()
+                                                if shoeRarity == 3 {
+                                                    shoeRarity = 0
+                                                } else {
+                                                    shoeRarity += 1
+                                                }
                                             }, label: {
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color(hex: "e9e9e9"))
+                                                        .foregroundColor(Color(hex: labelHexColor))
                                                         .frame(height: 36)
                                                         .overlay(RoundedRectangle(cornerRadius: 8)
                                                             .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                     
-                                                    Text("Common")
+                                                    Text(rarityString)
                                                         .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                        .foregroundColor(Color("Almost Black"))
+                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                                 }
-                                            })
+                                            }).buttonStyle(OptimizerButtons(tapAction: {
+                                                UIApplication.shared.hideKeyboard()
+                                                if shoeRarity == 3 {
+                                                    shoeRarity = 0
+                                                } else {
+                                                    shoeRarity += 1
+                                                }
+                                            }))
                                             .font(Font.custom(fontButtons, size: 17))
                                         }
                                     }
@@ -301,16 +320,18 @@ struct Optimizer: View {
                                             }, label: {
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color(hex: "e9e9e9"))
+                                                        .foregroundColor(Color(hex: labelHexColor))
                                                         .frame(height: 36)
                                                         .overlay(RoundedRectangle(cornerRadius: 8)
                                                             .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                     
                                                     Text("Walker")
                                                         .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                        .foregroundColor(Color("Almost Black"))
+                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                                 }
-                                            })
+                                            }).buttonStyle(OptimizerButtons(tapAction: {
+                                                // action goes here too! :D
+                                            }))
                                             .font(Font.custom(fontButtons, size: 17))
                                         }
                                     }
@@ -343,7 +364,7 @@ struct Optimizer: View {
                                             TextField("0.0", text: $energyString)
                                                 .padding(.trailing, 6)
                                                 .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                .font(Font.custom(fontTitles, size: 18))
+                                                .font(Font.custom(fontTitles, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
@@ -953,6 +974,71 @@ struct Optimizer: View {
         .preferredColorScheme(.light)
         .background(Color("Light Green"))
     }
+    
+    var innerCircleColor: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "7bc799"
+        case rare:
+            return "7ac4e1"
+        case epic:
+            return "b98fd9"
+        default:
+            return "ebebeb"
+        }
+    }
+    
+    var middleCircleColor: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "cae9d9"
+        case rare:
+            return "cce8f4"
+        case epic:
+            return "e4d4f1"
+        default:
+            return "f7f7f7"
+        }
+    }
+    
+    var outerCircleColor: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "ecf7f1"
+        case rare:
+            return "ecf7fb"
+        case epic:
+            return "f5eff9"
+        default:
+            return "fcfcfc"
+        }
+    }
+    
+    var labelHexColor: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "48b073"
+        case rare:
+            return "45acd5"
+        case epic:
+            return "9d62cc"
+        default:
+            return "e9e9e9"
+        }
+    }
+    
+    var rarityString: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "Uncommon"
+        case rare:
+            return "Rare"
+        case epic:
+            return "Epic"
+        default:
+            return "Common"
+        }
+    }
 }
 
 struct Optimizer_Previews: PreviewProvider {
@@ -1022,7 +1108,29 @@ struct CustomSlider: View {
     }
 }
 
+struct OptimizerButtons: ButtonStyle {
+    @State private var isLongPressing = false
+    let tapAction: (()->())
+    
+    func makeBody(configuration: Configuration) -> some View {
 
+        ZStack {
+            configuration.label
+                .offset(x: isLongPressing ? 2 : 0, y: isLongPressing ? 2 : 0)
+                .onLongPressGesture(minimumDuration: 1.0, pressing: { isPressing in
+                    withAnimation(.easeInOut(duration: 0.0)) {
+                        isLongPressing = isPressing
+                    }
+                }, perform: { })
+                .simultaneousGesture(
+                  TapGesture()
+                    .onEnded { _ in
+                        tapAction()
+                    }
+                )
+        }
+    }
+}
 
 extension Color {
     init(hex: String) {
