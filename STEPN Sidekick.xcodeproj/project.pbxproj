@@ -54,6 +54,7 @@
 		D441B53928BB77CB00D819EA /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53828BB77CB00D819EA /* About.swift */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D472352428B38B1D004B157F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D472352328B38B1D004B157F /* LaunchScreen.storyboard */; };
+		D482731328DCD96700ADC0ED /* Gem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D482731228DCD96700ADC0ED /* Gem.swift */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
 		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
 		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
@@ -145,6 +146,7 @@
 		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D472352328B38B1D004B157F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D482731228DCD96700ADC0ED /* Gem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gem.swift; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
 				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
 				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
+				D482731228DCD96700ADC0ED /* Gem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
+				D482731328DCD96700ADC0ED /* Gem.swift in Sources */,
 				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
 				D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */,
 			);

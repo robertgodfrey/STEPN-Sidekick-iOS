@@ -2,7 +2,7 @@
 //  Constants.swift
 //  STEPN Sidekick
 //
-//  Created by Rob Godfrey on 8/7/22.
+//  Last updated 22 Sep 22
 //
 
 import Foundation
@@ -18,3 +18,9 @@ let jogger: Int = 1
 let runner: Int = 2
 let trainer: Int = 3
 let customShoe: Int = 4
+
+// gem stuff
+let eff: Int = 0
+let luck: Int = 1
+let comf: Int = 2
+let res: Int = 3
