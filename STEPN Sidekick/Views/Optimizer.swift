@@ -202,7 +202,7 @@ struct Optimizer: View {
                                     Image("arrow_left")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(height: 20)
+                                        .frame(height: 18)
                                         .padding(.horizontal, 10)
                                     
                                     Text("")
@@ -223,14 +223,14 @@ struct Optimizer: View {
                                     Image("arrow_right")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(height: 20)
+                                        .frame(height: 18)
                                         .padding(.horizontal, 10)
                                 }.padding(5)
                                     .padding(.bottom, 5)
                                 
                                 HStack(spacing: 5) {
                                     // MARK: Rarity stack
-                                    VStack(spacing: 0) {
+                                    VStack(spacing: 1) {
                                         Text("Rarity")
                                             .font(Font.custom(fontHeaders, size: 16))
                                             .foregroundColor(Color("Gandalf"))
@@ -263,7 +263,7 @@ struct Optimizer: View {
                                     }
                                     
                                     // MARK: Type stack
-                                    VStack(spacing: 0) {
+                                    VStack(spacing: 1) {
                                         Text("Type")
                                             .font(Font.custom(fontHeaders, size: 16))
                                             .foregroundColor(Color("Gandalf"))
@@ -296,7 +296,7 @@ struct Optimizer: View {
                                     }
                                     
                                     // MARK: Energy stack
-                                    VStack(spacing: 0) {
+                                    VStack(spacing: 1) {
                                         Text("100% Energy")
                                             .font(Font.custom(fontHeaders, size: 16))
                                             .foregroundColor(Color("Gandalf"))
@@ -333,10 +333,9 @@ struct Optimizer: View {
                                     .frame(maxWidth: 400)
                                 
                                 ZStack {
-                                    // TODO: create custom slider view
-                                    Slider(value: $shoeLevel, in: 1...30)
+                                    CustomSlider(value: $shoeLevel)
                                         .padding(.horizontal, 40)
-                                        .frame(maxWidth: 400)
+                                        .frame(maxWidth: 400, maxHeight: 30)
                                     
                                     HStack {
                                         Text("Level 1")
@@ -391,7 +390,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("0.0", text: $baseEffString)
+                                            TextField("1 - 10", text: $baseEffString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -399,7 +398,7 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                             
                                             Text("0.0")
-                                                .font(Font.custom(fontTitles, size: 22))
+                                                .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .frame(width: 90)
@@ -413,7 +412,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("-")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -422,7 +421,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("+")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -445,7 +444,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
 
-                                            TextField("0.0", text: $baseLuckString)
+                                            TextField("1 - 10", text: $baseEffString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -453,7 +452,7 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                             
                                             Text("0.0")
-                                                .font(Font.custom(fontTitles, size: 22))
+                                                .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .frame(width: 90)
@@ -467,7 +466,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("-")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -476,7 +475,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("+")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -499,7 +498,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("0.0", text: $baseComfString)
+                                            TextField("1 - 10", text: $baseComfString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -507,7 +506,7 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                             
                                             Text("0.0")
-                                                .font(Font.custom(fontTitles, size: 22))
+                                                .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .frame(width: 90)
@@ -521,7 +520,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("-")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -530,7 +529,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("+")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -553,7 +552,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("0.0", text: $baseResString)
+                                            TextField("1 - 10", text: $baseResString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -561,7 +560,7 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                             
                                             Text("0.0")
-                                                .font(Font.custom(fontTitles, size: 22))
+                                                .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .frame(width: 90)
@@ -575,7 +574,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("-")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -584,7 +583,7 @@ struct Optimizer: View {
                                                 // action goes here
                                             }, label: {
                                                 Text("+")
-                                                    .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                    .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color("Almost Black"))
                                                     .frame(width: 50, height: 40)
                                             })
@@ -592,7 +591,7 @@ struct Optimizer: View {
                                             .frame(maxWidth: 440)
                                     }
                                     
-                                    HStack {
+                                    HStack(spacing: 4) {
                                         Spacer()
                                         
                                         Text("Points Available: ")
@@ -604,7 +603,8 @@ struct Optimizer: View {
                                             .foregroundColor(Color("Gandalf"))
                                             .padding(.trailing, 5)
                                         
-                                    }.frame(minWidth: 300, maxWidth: 315)
+                                    }.frame(minWidth: 295, maxWidth: 310, minHeight: 20)
+                                        .padding(.bottom, 10)
                                 }
                                 
                                 // MARK: Optimize buttons
@@ -646,11 +646,11 @@ struct Optimizer: View {
                                                                      
                                     }
                                 }.frame(minWidth: 300, maxWidth: 315)
-                                    .padding(.vertical, 20)
+                                    .padding(.vertical, 10)
                                 
                                 // MARK: Calculated totals
-                                VStack {
-                                    HStack {
+                                VStack(spacing: 15) {
+                                    HStack(spacing: 6) {
                                         Text("Est. GST / Daily Limit:")
                                             .font(Font.custom(fontHeaders, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -677,7 +677,7 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
-                                    HStack {
+                                    HStack(spacing: 6) {
                                         Text("Durability Loss:")
                                             .font(Font.custom(fontHeaders, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -691,7 +691,7 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
-                                    HStack {
+                                    HStack(spacing: 6) {
                                         Text("Repair Cost:")
                                             .font(Font.custom(fontHeaders, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -710,7 +710,7 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
-                                    HStack {
+                                    HStack(spacing: 6) {
                                         Text("HP Loss:")
                                             .font(Font.custom(fontHeaders, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -724,7 +724,7 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
-                                    HStack {
+                                    HStack(spacing: 6) {
                                         Text("Restoration Cost:")
                                             .font(Font.custom(fontHeaders, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -757,7 +757,7 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
-                                    HStack {
+                                    HStack(spacing: 6) {
                                         Text("Total Income:")
                                             .font(Font.custom(fontTitles, size: 18))
                                             .foregroundColor(Color("Almost Black"))
@@ -798,7 +798,7 @@ struct Optimizer: View {
                                             .font(Font.custom(fontHeaders, size: 16))
                                             .foregroundColor(Color("Gandalf"))
                                     }.padding(.horizontal, 40)
-                                        .frame(maxWidth: 400, minHeight: 30, maxHeight: 30)
+                                        .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                     
                                     // MARK: Mystery box chances
                                     Text("Mystery Box Chance")
@@ -886,9 +886,9 @@ struct Optimizer: View {
                                             .font(Font.custom(fontTitles, size: 14))
                                             .foregroundColor(Color("Gandalf"))
                                             .padding(.top, 20)
-                                            .padding(.bottom, 30)
+                                            .padding(.bottom, 40)
                                     }
-                                }
+                                }.padding(.top, 16)
                             }
                         }
                         
@@ -896,8 +896,8 @@ struct Optimizer: View {
                             .font(Font.custom(fontHeaders, size: 16))
                             .foregroundColor(Color("Gandalf"))
                             .multilineTextAlignment(.center)
-                            .padding(.top, 16)
-                            .padding(.bottom, 40)
+                            .padding(.top, 24)
+                            .padding(.bottom, 60)
                     }.overlay(
                     GeometryReader { proxy -> Color in
                         let minY = proxy.frame(in: .global).minY
@@ -939,6 +939,69 @@ struct Optimizer_Previews: PreviewProvider {
         Optimizer(hideTab: .constant(false))
     }
 }
+
+// dope-ass custom slider struct (courtesy of https://swdevnotes.com/swift/2021/how-to-customise-the-slider-in-swiftui/)
+struct CustomSlider: View {
+    @Binding var value: Double
+    
+    @State var lastCoordinateValue: CGFloat = 0.0
+    var sliderRange: ClosedRange<Double> = 1...100
+    
+    var body: some View {
+        GeometryReader { gr in
+            let thumbSize = gr.size.height * 0.8
+            let radius = gr.size.height * 0.5
+            let minValue = gr.size.width * 0.015
+            let maxValue = (gr.size.width * 0.98) - thumbSize
+            
+            let scaleFactor = (maxValue - minValue) / (sliderRange.upperBound - sliderRange.lowerBound)
+            let lower = sliderRange.lowerBound
+            let sliderVal = (self.value - lower) * scaleFactor + minValue
+            
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundColor(Color.white)
+                    .frame(width: gr.size.width, height: gr.size.height * 0.95)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(Color("Almost Black"), lineWidth: 1)
+                        )
+                HStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Color("Button Green"))
+                    .frame(width: sliderVal + 10, height: 20)
+                    .padding(.leading, 5)
+                    Spacer()
+                }.clipShape(RoundedRectangle(cornerRadius: radius))
+                HStack {
+                    Circle()
+                        .foregroundColor(Color(hex: "5FF3C0"))
+                        .frame(width: thumbSize, height: thumbSize)
+                        .offset(x: sliderVal)
+                        .gesture(
+                            DragGesture(minimumDistance: 0)
+                                .onChanged { v in
+                                    if (abs(v.translation.width) < 0.1) {
+                                        self.lastCoordinateValue = sliderVal
+                                    }
+                                    if v.translation.width > 0 {
+                                        let nextCoordinateValue = min(maxValue, self.lastCoordinateValue + v.translation.width)
+                                        self.value = ((nextCoordinateValue - minValue) / scaleFactor)  + lower
+                                    } else {
+                                        let nextCoordinateValue = max(minValue, self.lastCoordinateValue + v.translation.width)
+                                        self.value = ((nextCoordinateValue - minValue) / scaleFactor) + lower
+                                    }
+                                    
+                                }
+                        )
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+
 
 extension Color {
     init(hex: String) {
