@@ -45,7 +45,7 @@ struct TabButton: View {
                 .renderingMode(.template)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 25)
                 .foregroundColor(Color("Almost Black"))
                 .frame(maxWidth: .infinity)
                 .background(

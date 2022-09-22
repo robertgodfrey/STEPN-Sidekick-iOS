@@ -37,555 +37,871 @@ struct Optimizer: View {
                     ZStack {
                         Color("Light Green")
                         
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .foregroundColor(Color("Almost Black"))
-                            .offset(x: 5, y: 5)
-                            .padding(.top, 4)
-                            .padding(.horizontal, 18)
-                            .frame(maxWidth: 500)
-
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .foregroundColor(.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color("Almost Black"), lineWidth: 2)
-                                )
-                            .padding(.horizontal, 18)
-                            .padding(.top, 4)
-                            .frame(maxWidth: 500)                    
-                                             
-                        VStack(spacing: 0){
+                        VStack {
                             
-                            // MARK: Shoe + gems
-                            ZStack{
-                                Circle()
-                                    .foregroundColor(Color(hex: "fcfcfc"))
-                                    .frame(height: 190)
-                                
-                                Circle()
-                                    .foregroundColor(Color(hex: "f7f7f7"))
-                                    .frame(width: 150)
-                                
-                                Circle()
-                                    .foregroundColor(Color(hex: "ebebeb"))
-                                    .frame(width: 110)
-                                
-                                Image("shoe_walker")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 180)
-                                
-                            }.padding(.vertical, 30)
-                                .overlay(
-                                    HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                                .padding(.top, 2)
-                                                .padding(.leading, 1)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                            
-                                            //Image("") gem/luck/plus goes here
-                                            
-                                        }.padding(.top, 30)
-                                            .padding(.leading, 45)
-                                        
-                                    }, alignment: .topLeading
-                                )
-                                .overlay(
-                                    HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                                .padding(.top, 2)
-                                                .padding(.leading, 1)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                            
-                                            //Image("")
-                                            
-                                        }.padding(.top, 30)
-                                            .padding(.trailing, 45)
-                                        
-                                    }, alignment: .topTrailing
-                                )
-                                .overlay(
-                                    HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                                .padding(.top, 2)
-                                                .padding(.leading, 1)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                            
-                                            //Image("")
-                                            
-                                        }.padding(.bottom, 12)
-                                            .padding(.leading, 45)
-                                        
-                                    }, alignment: .bottomLeading
-                                )
-                                .overlay(
-                                    HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                                .padding(.top, 2)
-                                                .padding(.leading, 1)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 42, height: 42)
-                                            
-                                            //Image("")
-                                            
-                                        }.padding(.bottom, 12)
-                                            .padding(.trailing, 45)
-                                        
-                                    }, alignment: .bottomTrailing
-                                )
-                            
-                            // MARK: Shoe name
                             ZStack {
-                                RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
                                     .foregroundColor(Color("Almost Black"))
-                                    .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
+                                    .offset(x: 5, y: 5)
                                     .padding(.top, 4)
-                                    .padding(.leading, 4)
-                                
-                                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                    .foregroundColor(Color(hex: "e9e9e9"))
-                                    .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
-                                    .overlay(RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color("Almost Black"), lineWidth: 1))
-                                
-                                TextField("Shoe Name", text: $shoeName)
-                                    .padding(.trailing, 6)
-                                    .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                    .font(Font.custom(fontTitles, size: 16))
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                            }.padding(.top, -10)
-                            
-                            // MARK: Shoe selector
-                            HStack(spacing: 20) {
-                                Image("arrow_left")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 20)
-                                
-                                Text("1")
-                                    .font(Font.custom(fontHeaders, size: 15))
-                                    .foregroundColor(Color("Gandalf"))
-                                
-                                Text("2")
-                                    .font(Font.custom(fontTitles, size: 17))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Text("3")
-                                    .font(Font.custom(fontHeaders, size: 15))
-                                    .foregroundColor(Color("Gandalf"))
-                                
-                                Image("arrow_right")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 20)
-                            }.padding(5)
-                            
-                            HStack(spacing: 0) {
-                                // MARK: Rarity stack
-                                VStack(spacing: 0) {
-                                    Text("Rarity")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .padding([.top, .leading], 5)
-                                    
-                                        Button(action: {
-                                            // action goes here
-                                            UIApplication.shared.hideKeyboard()
-                                        }, label: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: "e9e9e9"))
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1))
-                                                
-                                                Text("Common")
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                    .foregroundColor(Color("Almost Black"))
-                                            }
-                                        })
-                                        .font(Font.custom(fontButtons, size: 17))
-                                    }
-                                }
-                                
-                                // MARK: Type stack
-                                VStack(spacing: 0) {
-                                    Text("Type")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .padding([.top, .leading], 5)
-                                    
-                                        Button(action: {
-                                            // action goes here
-                                            UIApplication.shared.hideKeyboard()
-                                        }, label: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: "e9e9e9"))
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1))
-                                                
-                                                Text("Walker")
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                    .foregroundColor(Color("Almost Black"))
-                                            }
-                                        })
-                                        .font(Font.custom(fontButtons, size: 17))
-                                    }
-                                }
-                                
-                                // MARK: Energy stack
-                                VStack(spacing: 0) {
-                                    Text("100% Energy")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Energy Blue Border"))
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .padding([.top, .leading], 5)
-                                     
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Energy Blue"))  // TODO: or energy blue lighter
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .overlay(RoundedRectangle(cornerRadius: 8)
-                                                .stroke(Color("Energy Blue Border"), lineWidth: 1))
+                                    .padding(.horizontal, 18)
+                                    .frame(maxWidth: 500)
+
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .foregroundColor(.white)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color("Almost Black"), lineWidth: 2)
+                                        )
+                                    .padding(.horizontal, 18)
+                                    .padding(.top, 4)
+                                    .frame(maxWidth: 500)
+                                                     
+                                VStack(spacing: 0){
+                                                    
+                                    // MARK: Shoe + gems
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(Color(hex: "fcfcfc"))
+                                            .frame(height: 190)
                                         
-                                        Image("energy_bolt")
+                                        Circle()
+                                            .foregroundColor(Color(hex: "f7f7f7"))
+                                            .frame(width: 150)
+                                        
+                                        Circle()
+                                            .foregroundColor(Color(hex: "ebebeb"))
+                                            .frame(width: 110)
+                                        
+                                        Image("shoe_walker")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                            .padding(.trailing, 14)
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
+                                            .frame(width: 180)
                                         
-                                        TextField("0.0", text: $energyString)
+                                    }.padding(.vertical, 30)
+                                        .padding(.top, 15)
+                                        .overlay(
+                                            HStack {
+                                                ZStack {
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .renderingMode(.template)
+                                                        .foregroundColor(Color("Gem Socket Shadow"))
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                        .padding(.top, 2)
+                                                        .padding(.leading, 1)
+                                                    
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                    
+                                                    //Image("") gem/luck/plus goes here
+                                                    
+                                                }.padding(.top, 30)
+                                                    .padding(.leading, 45)
+                                                
+                                            }, alignment: .topLeading
+                                        )
+                                        .overlay(
+                                            HStack {
+                                                ZStack {
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .renderingMode(.template)
+                                                        .foregroundColor(Color("Gem Socket Shadow"))
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                        .padding(.top, 2)
+                                                        .padding(.leading, 1)
+                                                    
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                    
+                                                    //Image("")
+                                                    
+                                                }.padding(.top, 30)
+                                                    .padding(.trailing, 45)
+                                                
+                                            }, alignment: .topTrailing
+                                        )
+                                        .overlay(
+                                            HStack {
+                                                ZStack {
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .renderingMode(.template)
+                                                        .foregroundColor(Color("Gem Socket Shadow"))
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                        .padding(.top, 2)
+                                                        .padding(.leading, 1)
+                                                    
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                    
+                                                    //Image("")
+                                                    
+                                                }.padding(.bottom, 12)
+                                                    .padding(.leading, 45)
+                                                
+                                            }, alignment: .bottomLeading
+                                        )
+                                        .overlay(
+                                            HStack {
+                                                ZStack {
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .renderingMode(.template)
+                                                        .foregroundColor(Color("Gem Socket Shadow"))
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                        .padding(.top, 2)
+                                                        .padding(.leading, 1)
+                                                    
+                                                    Image("gem_socket_gray_0")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 42, height: 42)
+                                                    
+                                                    //Image("")
+                                                    
+                                                }.padding(.bottom, 12)
+                                                    .padding(.trailing, 45)
+                                                
+                                            }, alignment: .bottomTrailing
+                                        )
+                                        .frame(maxWidth: 400)
+                                    
+                                    // MARK: Shoe name
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                            .foregroundColor(Color("Almost Black"))
+                                            .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
+                                            .padding(.top, 4)
+                                            .padding(.leading, 4)
+                                        
+                                        RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                            .foregroundColor(Color(hex: "e9e9e9"))
+                                            .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
+                                            .overlay(RoundedRectangle(cornerRadius: 25)
+                                                .stroke(Color("Almost Black"), lineWidth: 1))
+                                        
+                                        TextField("Shoe Name", text: $shoeName)
                                             .padding(.trailing, 6)
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .font(Font.custom(fontTitles, size: 18))
+                                            .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                            .font(Font.custom(fontTitles, size: 16))
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                        
+                                    }.padding(.top, -10)
+                                    
+                                    // MARK: Shoe selector
+                                    HStack(spacing: 20) {
+                                        Image("arrow_left")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 20)
+                                        
+                                        Text("1")
+                                            .font(Font.custom(fontHeaders, size: 15))
+                                            .foregroundColor(Color("Gandalf"))
+                                        
+                                        Text("2")
+                                            .font(Font.custom(fontTitles, size: 17))
+                                            .foregroundColor(Color("Almost Black"))
+                                        
+                                        Text("3")
+                                            .font(Font.custom(fontHeaders, size: 15))
+                                            .foregroundColor(Color("Gandalf"))
+                                        
+                                        Image("arrow_right")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 20)
+                                    }.padding(5)
+                                    
+                                    HStack(spacing: 5) {
+                                        // MARK: Rarity stack
+                                        VStack(spacing: 0) {
+                                            Text("Rarity")
+                                                .font(Font.custom(fontHeaders, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                            
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(height: 36)
+                                                    .padding([.top, .leading], 2)
+                                                    .padding([.bottom, .trailing], -3)
+                                            
+                                                Button(action: {
+                                                    // action goes here
+                                                    UIApplication.shared.hideKeyboard()
+                                                }, label: {
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                            .foregroundColor(Color(hex: "e9e9e9"))
+                                                            .frame(height: 36)
+                                                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                                                .stroke(Color("Almost Black"), lineWidth: 1))
+                                                        
+                                                        Text("Common")
+                                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                            .foregroundColor(Color("Almost Black"))
+                                                    }
+                                                })
+                                                .font(Font.custom(fontButtons, size: 17))
+                                            }
+                                        }
+                                        
+                                        // MARK: Type stack
+                                        VStack(spacing: 0) {
+                                            Text("Type")
+                                                .font(Font.custom(fontHeaders, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                            
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(height: 36)
+                                                    .padding([.top, .leading], 2)
+                                                    .padding([.bottom, .trailing], -3)
+                                            
+                                                Button(action: {
+                                                    // action goes here
+                                                    UIApplication.shared.hideKeyboard()
+                                                }, label: {
+                                                    ZStack {
+                                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                            .foregroundColor(Color(hex: "e9e9e9"))
+                                                            .frame(height: 36)
+                                                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                                                .stroke(Color("Almost Black"), lineWidth: 1))
+                                                        
+                                                        Text("Walker")
+                                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                            .foregroundColor(Color("Almost Black"))
+                                                    }
+                                                })
+                                                .font(Font.custom(fontButtons, size: 17))
+                                            }
+                                        }
+                                        
+                                        // MARK: Energy stack
+                                        VStack(spacing: 0) {
+                                            Text("100% Energy")
+                                                .font(Font.custom(fontHeaders, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                            
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .foregroundColor(Color("Energy Blue Border"))
+                                                    .frame(height: 36)
+                                                    .padding([.top, .leading], 2)
+                                                    .padding([.bottom, .trailing], -3)
+                                             
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .foregroundColor(Color("Energy Blue"))  // TODO: or energy blue lighter
+                                                    .frame(height: 36)
+                                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color("Energy Blue Border"), lineWidth: 1))
+                                                
+                                                Image("energy_bolt")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .padding(.trailing, 14)
+                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
+                                                
+                                                TextField("0.0", text: $energyString)
+                                                    .padding(.trailing, 6)
+                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                    .font(Font.custom(fontTitles, size: 18))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                            }
+                                        }
+                                    }.padding(.horizontal, 40)
+                                        .frame(maxWidth: 400)
+                                    
+                                    ZStack {
+                                        // TODO: create custom slider view
+                                        Slider(value: $shoeLevel, in: 1...30)
+                                            .padding(.horizontal, 40)
+                                            .frame(maxWidth: 400)
+                                        
+                                        HStack {
+                                            Text("Level 1")
+                                                .font(Font.custom(fontTitles, size: 15))
+                                                .foregroundColor(Color("Almost Black"))
+                                                .padding(.leading, 20)
+                                                
+                                            Spacer()
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400)
+                                        
+                                    }.padding(.vertical, 10)
+                                        .padding(.top, 10)
+                                    
+                                    // MARK: Titles
+                                    HStack(alignment: .bottom) {
+                                        Text("Attributes")
+                                            .font(Font.custom(fontTitles, size: 23))
+                                            .foregroundColor(Color("Almost Black"))
+                                        
+                                        Spacer()
+                                        
+                                        Text("Base")
+                                            .font(Font.custom(fontTitles, size: 16))
+                                            .foregroundColor(Color("Almost Black"))
+                                            .padding(.horizontal, 30)
+                                                                            
+                                        VStack(spacing: 20) {
+                                            Text("Total")
+                                                .font(Font.custom(fontTitles, size: 16))
+                                                .foregroundColor(Color("Almost Black"))
+                                                .padding(.horizontal, 30)
+                                        }
+                                    }.padding(.vertical, 15)
+                                        .padding(.horizontal, 40)
+                                        .frame(maxWidth: 400)
+                                    
+                                    // MARK: Attributes
+                                    VStack {
+                                        ZStack {
+                                            HStack {
+                                                HStack {
+                                                    Image("gem_symbol_efficiency")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 20, height: 20)
+                                                    
+                                                    Text("Efficiency")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                }
+                                                
+                                                Spacer()
+                                                
+                                                TextField("0.0", text: $baseEffString)
+                                                    .font(Font.custom(fontHeaders, size: 20))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .keyboardType(.decimalPad)
+                                                    .frame(width: 95)
+                                                
+                                                Text("0.0")
+                                                    .font(Font.custom(fontTitles, size: 22))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(width: 90)
+                                            }.padding(.horizontal, 40)
+                                                .frame(maxWidth: 400)
+                                            
+                                            HStack(spacing: 30) {
+                                                Spacer()
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("-")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("+")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                            }.padding(.horizontal, 20)
+                                                .frame(maxWidth: 440)
+                                        }
+                                            
+                                        ZStack {
+                                            HStack {
+                                                HStack {
+                                                    Image("gem_symbol_luck")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 20, height: 20)
+                                                    
+                                                    Text("Luck")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                }
+                                                
+                                                Spacer()
+
+                                                TextField("0.0", text: $baseLuckString)
+                                                    .font(Font.custom(fontHeaders, size: 20))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .keyboardType(.decimalPad)
+                                                    .frame(width: 95)
+                                                
+                                                Text("0.0")
+                                                    .font(Font.custom(fontTitles, size: 22))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(width: 90)
+                                            }.padding(.horizontal, 40)
+                                                .frame(maxWidth: 400)
+                                            
+                                            HStack(spacing: 30) {
+                                                Spacer()
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("-")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("+")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                            }.padding(.horizontal, 20)
+                                                .frame(maxWidth: 440)
+                                        }
+                                        
+                                        ZStack {
+                                            HStack {
+                                                HStack {
+                                                    Image("gem_symbol_comfort")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 20, height: 20)
+                                                    
+                                                    Text("Comfort")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                }
+                                                
+                                                Spacer()
+                                                
+                                                TextField("0.0", text: $baseComfString)
+                                                    .font(Font.custom(fontHeaders, size: 20))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .keyboardType(.decimalPad)
+                                                    .frame(width: 95)
+                                                
+                                                Text("0.0")
+                                                    .font(Font.custom(fontTitles, size: 22))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(width: 90)
+                                            }.padding(.horizontal, 40)
+                                                .frame(maxWidth: 400)
+                                            
+                                            HStack(spacing: 30) {
+                                                Spacer()
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("-")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("+")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                            }.padding(.horizontal, 20)
+                                                .frame(maxWidth: 440)
+                                        }
+                                        
+                                        ZStack {
+                                            HStack {
+                                                HStack {
+                                                    Image("gem_symbol_res")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(width: 20, height: 20)
+                                                    
+                                                    Text("Resilience")
+                                                        .font(Font.custom(fontTitles, size: 16))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                }
+                                                
+                                                Spacer()
+                                                
+                                                TextField("0.0", text: $baseResString)
+                                                    .font(Font.custom(fontHeaders, size: 20))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .keyboardType(.decimalPad)
+                                                    .frame(width: 95)
+                                                
+                                                Text("0.0")
+                                                    .font(Font.custom(fontTitles, size: 22))
+                                                    .multilineTextAlignment(.center)
+                                                    .foregroundColor(Color("Almost Black"))
+                                                    .frame(width: 90)
+                                            }.padding(.horizontal, 40)
+                                                .frame(maxWidth: 400)
+                                            
+                                            HStack(spacing: 30) {
+                                                Spacer()
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("-")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 28))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                                
+                                                Button(action: {
+                                                    // action goes here
+                                                }, label: {
+                                                    Text("+")
+                                                        .font(Font.custom("RobotoCondensed-Bold", size: 22))
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .frame(width: 50, height: 40)
+                                                })
+                                            }.padding(.horizontal, 20)
+                                                .frame(maxWidth: 440)
+                                        }
+                                        
+                                        HStack {
+                                            Spacer()
+                                            
+                                            Text("Points Available: ")
+                                                .font(Font.custom(fontHeaders, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                                .padding(.trailing, 5)
+                                            
+                                        }.frame(minWidth: 300, maxWidth: 315)
+                                    }
+                                    
+                                    // MARK: Optimize buttons
+                                    HStack(spacing: 5) {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
+                                                .padding(.top, 6)
+                                                .padding(.leading, 6)
+                                            
+                                            Button(action: {
+                                                // action
+                                            }, label: {
+                                                Text("OPTIMIZE GST")
+                                                    .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
+                                            })
+                                                .buttonStyle(StartButton(tapAction: {
+                                                    // action
+                                                })).font(Font.custom(fontButtons, size: 18))
+                                                                         
+                                        }
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
+                                                .padding(.top, 6)
+                                                .padding(.leading, 6)
+                                            
+                                            Button(action: {
+                                                // action
+                                            }, label: {
+                                                Text("OPTIMIZE LUCK")
+                                                    .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
+                                            })
+                                                .buttonStyle(StartButton(tapAction: {
+                                                    // action
+                                                })).font(Font.custom(fontButtons, size: 18))
+                                                                         
+                                        }
+                                    }.frame(minWidth: 300, maxWidth: 315)
+                                        .padding(.vertical, 20)
+                                    
+                                    // MARK: Calculated totals
+                                    VStack {
+                                        HStack {
+                                            Text("Est. GST / Daily Limit:")
+                                                .font(Font.custom(fontHeaders, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0.0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Text("/")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("logo_gst")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        HStack {
+                                            Text("Durability Loss:")
+                                                .font(Font.custom(fontHeaders, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        HStack {
+                                            Text("Repair Cost:")
+                                                .font(Font.custom(fontHeaders, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("logo_gst")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        HStack {
+                                            Text("HP Loss:")
+                                                .font(Font.custom(fontHeaders, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        HStack {
+                                            Text("Restoration Cost:")
+                                                .font(Font.custom(fontHeaders, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("gem_comf_level1")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                            Text("+")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                                .padding(.horizontal, 5)
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("logo_gst")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        HStack {
+                                            Text("Total Income:")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Spacer()
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("logo_gst")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                            Text("-")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                                .padding(.horizontal, 5)
+                                            
+                                            Text("0")
+                                                .font(Font.custom(fontTitles, size: 18))
+                                                .foregroundColor(Color("Almost Black"))
+                                            
+                                            Image("gem_comf_level1")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 20, height: 20)
+                                            
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                        
+                                        
+                                        HStack {
+                                            Spacer()
+                                            
+                                            Text("More Details")
+                                                .font(Font.custom(fontHeaders, size: 16))
+                                                .foregroundColor(Color("Gandalf"))
+                                        }.padding(.horizontal, 40)
+                                            .frame(maxWidth: 400, minHeight: 30, maxHeight: 30)
+                                        
+                                        // MARK: Mystery box chances
+                                        Text("Mystery Box Chance")
+                                            .font(Font.custom(fontTitles, size: 20))
+                                            .foregroundColor(Color("Almost Black"))
+                                        
+                                        VStack {
+                                            HStack {
+                                                Image("mb1")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+                                                
+                                                Image("mb2")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+
+                                                Image("mb3")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+
+                                                Spacer()
+
+                                                Image("mb4")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+
+                                                Image("mb5")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+
+                                                
+                                            }.padding(.horizontal, 40)
+                                                .padding(.top, 5)
+                                                .frame(maxWidth: 400)
+                                            
+                                            HStack {
+                                                Image("mb6")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+                                                
+                                                Image("mb7")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+
+                                                Image("mb8")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+
+                                                Spacer()
+
+                                                Image("mb9")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+                                                
+                                                Spacer()
+
+                                                Image("mb10")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 54, height: 54)
+
+                                            }.padding(.horizontal, 40)
+                                                .frame(maxWidth: 400)
+                                            
+                                            Text("Reset Values")
+                                                .font(Font.custom(fontTitles, size: 14))
+                                                .foregroundColor(Color("Gandalf"))
+                                                .padding(.top, 20)
+                                                .padding(.bottom, 30)
+                                        }
                                     }
                                 }
                             }
                             
-                            ZStack {
-                                // TODO: create custom slider view
-                                Slider(value: $shoeLevel, in: 1...30)
-                                    .frame(minWidth: 300, maxWidth: 315, minHeight: 20, maxHeight: 20)
-                                
-                                HStack {
-                                    Text("Level 1")
-                                        .font(Font.custom(fontTitles, size: 15))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .padding(.leading, 40)
-                                        
-                                    Spacer()
-                                }
-                                
-                            }.padding(.vertical, 10)
-                                .padding(.top, 10)
-                            
-                            // MARK: Titles
-                            HStack(alignment: .bottom) {
-                                Text("Attributes")
-                                    .font(Font.custom(fontTitles, size: 23))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Spacer()
-                                
-                                Text("Base")
-                                    .font(Font.custom(fontTitles, size: 16))
-                                    .foregroundColor(Color("Almost Black"))
-                                    .padding(.horizontal, 30)
-                                                                    
-                                VStack(spacing: 20) {
-                                    Text("Total")
-                                        .font(Font.custom(fontTitles, size: 16))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .padding(.horizontal, 30)
-                                }
-                            }.frame(minWidth: 300, maxWidth: 315)
-                                .padding(.vertical, 15)
-                            
-                            VStack {
-                                ZStack {
-                                    HStack {
-                                        HStack {
-                                            Image("gem_symbol_efficiency")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 20, height: 20)
-                                            
-                                            Text("Efficiency")
-                                                .font(Font.custom(fontTitles, size: 16))
-                                                .foregroundColor(Color("Almost Black"))
-                                        }
-                                        
-                                        Spacer()
-                                        
-                                        TextField("0.0", text: $baseEffString)
-                                            .font(Font.custom(fontHeaders, size: 19))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(.decimalPad)
-                                            .frame(width: 95)
-                                        
-                                        Text("0.0")
-                                            .font(Font.custom(fontTitles, size: 22))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(width: 90)
-                                    }.frame(minWidth: 300, maxWidth: 315)
-                                    
-                                    HStack(spacing: 30) {
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("-")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 28))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("+")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 22))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                    }.frame(minWidth: 340, maxWidth: 355)
-                                }
-                                    
-                                ZStack {
-                                    HStack {
-                                        HStack {
-                                            Image("gem_symbol_luck")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 20, height: 20)
-                                            
-                                            Text("Luck")
-                                                .font(Font.custom(fontTitles, size: 16))
-                                                .foregroundColor(Color("Almost Black"))
-                                        }
-                                        
-                                        Spacer()
-
-                                        TextField("0.0", text: $baseLuckString)
-                                            .font(Font.custom(fontHeaders, size: 19))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(.decimalPad)
-                                            .frame(width: 95)
-                                        
-                                        Text("0.0")
-                                            .font(Font.custom(fontTitles, size: 22))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(width: 90)
-                                    }.frame(minWidth: 300, maxWidth: 315)
-                                    
-                                    HStack(spacing: 30) {
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("-")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 28))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("+")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 22))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                    }.frame(minWidth: 340, maxWidth: 355)
-                                }
-                                
-                                ZStack {
-                                    HStack {
-                                        HStack {
-                                            Image("gem_symbol_comfort")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 20, height: 20)
-                                            
-                                            Text("Comfort")
-                                                .font(Font.custom(fontTitles, size: 16))
-                                                .foregroundColor(Color("Almost Black"))
-                                        }
-                                        
-                                        Spacer()
-                                        
-                                        TextField("0.0", text: $baseComfString)
-                                            .font(Font.custom(fontHeaders, size: 19))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(.decimalPad)
-                                            .frame(width: 95)
-                                        
-                                        Text("0.0")
-                                            .font(Font.custom(fontTitles, size: 22))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(width: 90)
-                                    }.frame(minWidth: 300, maxWidth: 315)
-                                    
-                                    HStack(spacing: 30) {
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("-")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 28))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("+")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 22))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                    }.frame(minWidth: 340, maxWidth: 355)
-                                }
-                                
-                                ZStack {
-                                    HStack {
-                                        HStack {
-                                            Image("gem_symbol_res")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 20, height: 20)
-                                            
-                                            Text("Resilience")
-                                                .font(Font.custom(fontTitles, size: 16))
-                                                .foregroundColor(Color("Almost Black"))
-                                        }
-                                        
-                                        Spacer()
-                                        
-                                        TextField("0.0", text: $baseResString)
-                                            .font(Font.custom(fontHeaders, size: 19))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(.decimalPad)
-                                            .frame(width: 85)
-                                        
-                                        Text("0.0")
-                                            .font(Font.custom(fontTitles, size: 22))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(width: 95)
-                                    }.frame(minWidth: 300, maxWidth: 315)
-                                    
-                                    HStack(spacing: 30) {
-                                        Spacer()
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("-")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 28))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                        
-                                        Button(action: {
-                                            // action goes here
-                                        }, label: {
-                                            Text("+")
-                                                .font(Font.custom("RobotoCondensed-Bold", size: 22))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(width: 50, height: 40)
-                                        })
-                                    }.frame(minWidth: 340, maxWidth: 355)
-                                }
-                                
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text("Points Avaiable: ")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    Text("0")
-                                        .font(Font.custom(fontTitles, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                        .padding(.trailing, 5)
-                                    
-                                }.frame(minWidth: 300, maxWidth: 315)
-                            }
+                            Text("Based on unofficial STEPN community data.\nActual results may vary.")
+                                .font(Font.custom(fontHeaders, size: 16))
+                                .foregroundColor(Color("Gandalf"))
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 16)
+                                .padding(.bottom, 40)
                         }
                         
-                    }.padding(.bottom, 40)
+                        
+                        
+                    }.padding(.bottom, 100)
                     .overlay(
                         GeometryReader { proxy -> Color in
                             let minY = proxy.frame(in: .global).minY
