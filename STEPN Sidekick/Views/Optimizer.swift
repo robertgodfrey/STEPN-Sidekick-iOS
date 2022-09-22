@@ -84,16 +84,21 @@ struct Optimizer: View {
                                                     .renderingMode(.template)
                                                     .foregroundColor(Color("Gem Socket Shadow"))
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                    .padding(.top, 2)
-                                                    .padding(.leading, 1)
+                                                    .frame(width: 46, height: 46)
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 2)
                                                 
                                                 Image("gem_socket_gray_0")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
+                                                    .frame(width: 46, height: 46)
                                                 
-                                                //Image("") gem/luck/plus goes here
+                                                Image("gem_lock")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .padding(.top, 2)
+                                                    .padding(.bottom, 2)
+                                                    .frame(height: 32)
                                                 
                                             }.padding(.top, 30)
                                                 .padding(.leading, 45)
@@ -108,16 +113,21 @@ struct Optimizer: View {
                                                     .renderingMode(.template)
                                                     .foregroundColor(Color("Gem Socket Shadow"))
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                    .padding(.top, 2)
-                                                    .padding(.leading, 1)
+                                                    .frame(width: 46, height: 46)
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 2)
                                                 
                                                 Image("gem_socket_gray_0")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                
-                                                //Image("")
+                                                    .frame(width: 46, height: 46)
+
+                                                Image("gem_lock")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .padding(.top, 2)
+                                                    .padding(.bottom, 2)
+                                                    .frame(height: 32)
                                                 
                                             }.padding(.top, 30)
                                                 .padding(.trailing, 45)
@@ -132,16 +142,21 @@ struct Optimizer: View {
                                                     .renderingMode(.template)
                                                     .foregroundColor(Color("Gem Socket Shadow"))
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                    .padding(.top, 2)
-                                                    .padding(.leading, 1)
+                                                    .frame(width: 46, height: 46)
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 2)
                                                 
                                                 Image("gem_socket_gray_0")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                
-                                                //Image("")
+                                                    .frame(width: 46, height: 46)
+
+                                                Image("gem_lock")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .padding(.top, 2)
+                                                    .padding(.bottom, 2)
+                                                    .frame(height: 32)
                                                 
                                             }.padding(.bottom, 12)
                                                 .padding(.leading, 45)
@@ -156,16 +171,21 @@ struct Optimizer: View {
                                                     .renderingMode(.template)
                                                     .foregroundColor(Color("Gem Socket Shadow"))
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                    .padding(.top, 2)
-                                                    .padding(.leading, 1)
+                                                    .frame(width: 46, height: 46)
+                                                    .padding(.top, 4)
+                                                    .padding(.leading, 2)
                                                 
                                                 Image("gem_socket_gray_0")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: 42, height: 42)
-                                                
-                                                //Image("")
+                                                    .frame(width: 46, height: 46)
+
+                                                Image("gem_lock")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .padding(.top, 2)
+                                                    .padding(.bottom, 2)
+                                                    .frame(height: 32)
                                                 
                                             }.padding(.bottom, 12)
                                                 .padding(.trailing, 45)
@@ -179,14 +199,14 @@ struct Optimizer: View {
                                     RoundedRectangle(cornerRadius: 25, style: .continuous)
                                         .foregroundColor(Color("Almost Black"))
                                         .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
-                                        .padding(.top, 4)
+                                        .padding(.top, 6)
                                         .padding(.leading, 4)
                                     
                                     RoundedRectangle(cornerRadius: 25, style: .continuous)
                                         .foregroundColor(Color(hex: "e9e9e9"))
                                         .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
                                         .overlay(RoundedRectangle(cornerRadius: 25)
-                                            .stroke(Color("Almost Black"), lineWidth: 1))
+                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
                                     
                                     TextField("Shoe Name", text: $shoeName)
                                         .padding(.trailing, 6)
@@ -251,7 +271,7 @@ struct Optimizer: View {
                                                         .foregroundColor(Color(hex: "e9e9e9"))
                                                         .frame(height: 36)
                                                         .overlay(RoundedRectangle(cornerRadius: 8)
-                                                            .stroke(Color("Almost Black"), lineWidth: 1))
+                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                     
                                                     Text("Common")
                                                         .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -284,7 +304,7 @@ struct Optimizer: View {
                                                         .foregroundColor(Color(hex: "e9e9e9"))
                                                         .frame(height: 36)
                                                         .overlay(RoundedRectangle(cornerRadius: 8)
-                                                            .stroke(Color("Almost Black"), lineWidth: 1))
+                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                     
                                                     Text("Walker")
                                                         .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -312,7 +332,7 @@ struct Optimizer: View {
                                                 .foregroundColor(Color("Energy Blue"))  // TODO: or energy blue lighter
                                                 .frame(height: 36)
                                                 .overlay(RoundedRectangle(cornerRadius: 8)
-                                                    .stroke(Color("Energy Blue Border"), lineWidth: 1))
+                                                    .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
                                             
                                             Image("energy_bolt")
                                                 .resizable()
@@ -332,13 +352,14 @@ struct Optimizer: View {
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400)
                                 
+                                // MARK: Level slider
                                 ZStack {
                                     CustomSlider(value: $shoeLevel)
                                         .padding(.horizontal, 40)
                                         .frame(maxWidth: 400, maxHeight: 30)
                                     
                                     HStack {
-                                        Text("Level 1")
+                                        Text("Level " + String(Int(shoeLevel)))
                                             .font(Font.custom(fontTitles, size: 15))
                                             .foregroundColor(Color("Almost Black"))
                                             .padding(.leading, 20)
@@ -945,7 +966,7 @@ struct CustomSlider: View {
     @Binding var value: Double
     
     @State var lastCoordinateValue: CGFloat = 0.0
-    var sliderRange: ClosedRange<Double> = 1...100
+    var sliderRange: ClosedRange<Double> = 1...30
     
     var body: some View {
         GeometryReader { gr in
