@@ -731,6 +731,13 @@ struct ActivitySettings: View {
             helperCircles = false
         }
     }
+    
+    func clearFocus() {
+        UIApplication.shared.hideKeyboard()
+        withAnimation(.easeOut .speed(1.5)) {
+            hideTab = false
+        }
+    }
 }
 
 struct MainButtons: ButtonStyle {
