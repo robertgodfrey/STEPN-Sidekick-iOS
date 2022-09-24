@@ -23,7 +23,7 @@ struct Optimizer: View {
     @State var offset: CGFloat = 0
     @State var lastOffset: CGFloat = 0
     
-    @State var shoeRarity: Int = 2
+    @State var shoeRarity: Int = 0
     @State var shoeType: Int = 0
     
     @State var shoeName: String = ""
@@ -33,6 +33,9 @@ struct Optimizer: View {
     @State var baseLuckString: String = ""
     @State var baseComfString: String = ""
     @State var baseResString: String = ""
+
+    @State private var popCircles: Bool = false
+    @State private var popShoe: Bool = false
 
     var body: some View {
             VStack(spacing: 0) {
@@ -53,6 +56,9 @@ struct Optimizer: View {
 
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .foregroundColor(.white)
+                                .onTapGesture(perform: {
+                                    clearFocus()
+                                })
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
                                         .stroke(Color("Almost Black"), lineWidth: 2)
@@ -68,19 +74,23 @@ struct Optimizer: View {
                                     Circle()
                                         .foregroundColor(Color(hex: outerCircleColor))
                                         .frame(height: 190)
+                                        .scaleEffect(popCircles ? 1.1 : 1)
                                     
                                     Circle()
                                         .foregroundColor(Color(hex: middleCircleColor))
                                         .frame(width: 150)
-                                    
+                                        .scaleEffect(popCircles ? 1.1 : 1)
+
                                     Circle()
                                         .foregroundColor(Color(hex: innerCircleColor))
                                         .frame(width: 110)
-                                    
-                                    Image("shoe_walker")
+                                        .scaleEffect(popCircles ? 1.1 : 1)
+
+                                    Image(shoeImageResource)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 180)
+                                        .scaleEffect(popShoe ? 1.1 : 1)
                                     
                                 }.padding(.vertical, 30)
                                     .padding(.top, 15)
@@ -216,7 +226,12 @@ struct Optimizer: View {
                                         .overlay(RoundedRectangle(cornerRadius: 25)
                                             .stroke(Color("Almost Black"), lineWidth: 1.4))
                                     
-                                    TextField("Shoe Name", text: $shoeName)
+                                    TextField("Shoe Name", text: $shoeName, onEditingChanged: { (editingChanged) in
+                                        if editingChanged {
+                                            withAnimation(.easeOut .speed(1.5)) {
+                                                hideTab = true
+                                            }
+                                        }})
                                         .padding(.trailing, 6)
                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                         .font(Font.custom(fontTitles, size: 16))
@@ -271,12 +286,7 @@ struct Optimizer: View {
                                                 .padding([.bottom, .trailing], -3)
                                         
                                             Button(action: {
-                                                UIApplication.shared.hideKeyboard()
-                                                if shoeRarity == 3 {
-                                                    shoeRarity = 0
-                                                } else {
-                                                    shoeRarity += 1
-                                                }
+                                                // in tap action
                                             }, label: {
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -290,7 +300,11 @@ struct Optimizer: View {
                                                         .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                                 }
                                             }).buttonStyle(OptimizerButtons(tapAction: {
-                                                UIApplication.shared.hideKeyboard()
+                                                clearFocus()
+                                                popCircles = true
+                                                withAnimation(.linear(duration: 0.8)) {
+                                                    popCircles = false
+                                                }
                                                 if shoeRarity == 3 {
                                                     shoeRarity = 0
                                                 } else {
@@ -315,8 +329,7 @@ struct Optimizer: View {
                                                 .padding([.bottom, .trailing], -3)
                                         
                                             Button(action: {
-                                                // action goes here
-                                                UIApplication.shared.hideKeyboard()
+                                                // in tap action
                                             }, label: {
                                                 ZStack {
                                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -325,12 +338,46 @@ struct Optimizer: View {
                                                         .overlay(RoundedRectangle(cornerRadius: 8)
                                                             .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                     
-                                                    Text("Walker")
-                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                                    HStack(spacing: 0) {
+                                                        Image("footprint")
+                                                            .resizable()
+                                                            .renderingMode(.template)
+                                                            .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(maxWidth: shoeType == runner ? 10 : 0, maxHeight: 14)
+                                                        
+                                                        Image("footprint")
+                                                            .resizable()
+                                                            .renderingMode(.template)
+                                                            .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(maxWidth: shoeType == runner || shoeType == jogger ? 10 : 0, maxHeight: 14)
+                                                    
+                                                        Image(shoeType == trainer ? "trainer_t" : "footprint")
+                                                            .resizable()
+                                                            .renderingMode(.template)
+                                                            .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(height: 14)
+                                                            .padding(.trailing, 5)
+                                                        
+                                                        Text(shoeTypeString)
+                                                            .frame(height: 36)
+                                                            .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                                        
+                                                    }.frame(minWidth: 100, maxWidth: 105)
                                                 }
                                             }).buttonStyle(OptimizerButtons(tapAction: {
-                                                // action goes here too! :D
+                                                clearFocus()
+                                                popShoe = true
+                                                if shoeType == 3 {
+                                                    shoeType = 0
+                                                } else {
+                                                    shoeType += 1
+                                                }
+                                                withAnimation(.linear(duration: 0.8)) {
+                                                    popShoe = false
+                                                }
                                             }))
                                             .font(Font.custom(fontButtons, size: 17))
                                         }
@@ -361,7 +408,12 @@ struct Optimizer: View {
                                                 .padding(.trailing, 14)
                                                 .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
                                             
-                                            TextField("0.0", text: $energyString)
+                                            TextField("0.0", text: $energyString, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                }})
                                                 .padding(.trailing, 6)
                                                 .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
                                                 .font(Font.custom(fontTitles, size: 20))
@@ -1027,6 +1079,19 @@ struct Optimizer: View {
         }
     }
     
+    var shoeImageResource: String {
+        switch (shoeType) {
+        case jogger:
+            return "shoe_jogger"
+        case runner:
+            return "shoe_runner"
+        case trainer:
+            return "shoe_trainer"
+        default:
+            return "shoe_walker"
+        }
+    }
+    
     var rarityString: String {
         switch (shoeRarity) {
         case uncommon:
@@ -1037,6 +1102,26 @@ struct Optimizer: View {
             return "Epic"
         default:
             return "Common"
+        }
+    }
+    
+    var shoeTypeString: String {
+        switch (shoeType) {
+        case jogger:
+            return "Jogger"
+        case runner:
+            return "Runner"
+        case trainer:
+            return "Trainer"
+        default:
+            return "Walker"
+        }
+    }
+    
+    func clearFocus() {
+        UIApplication.shared.hideKeyboard()
+        withAnimation(.easeOut .speed(1.5)) {
+            hideTab = false
         }
     }
 }
