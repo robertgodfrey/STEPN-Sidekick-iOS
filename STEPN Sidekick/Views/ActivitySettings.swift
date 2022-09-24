@@ -272,7 +272,12 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
                                                     
-                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMinSpeed : $minSpeedString))
+                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMinSpeed : $minSpeedString), onEditingChanged: { (editingChanged) in
+                                                        if editingChanged {
+                                                            withAnimation(.easeOut .speed(1.5)) {
+                                                                hideTab = true
+                                                            }
+                                                        }})
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
@@ -314,7 +319,12 @@ struct ActivitySettings: View {
                                                         .foregroundColor(Color("Almost Black"))
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48, alignment: .trailing)
 
-                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMaxSpeed : $maxSpeedString))
+                                                    TextField("0.0", text: (shoeTypeIterator == customShoe ? $customMaxSpeed : $maxSpeedString), onEditingChanged: { (editingChanged) in
+                                                        if editingChanged {
+                                                            withAnimation(.easeOut .speed(1.5)) {
+                                                                hideTab = true
+                                                            }
+                                                        }})
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
@@ -406,8 +416,8 @@ struct ActivitySettings: View {
                                                                 hideTab = true
                                                             }
                                                         } else {
-                                                            energySelected = false                                                                   }
-                                                        })
+                                                            energySelected = false
+                                                        }})
                                                         .padding(.trailing, 6)
                                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                                         .font(Font.custom(fontTitles, size: 22))
