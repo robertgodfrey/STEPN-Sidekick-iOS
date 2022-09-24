@@ -160,6 +160,10 @@ struct ActivitySettings: View {
                                                             withAnimation {
                                                                 helperCircles = true
                                                             }
+                                                            UIApplication.shared.hideKeyboard()
+                                                            withAnimation(.easeOut .speed(1.5)) {
+                                                                hideTab = false
+                                                            }
                                                             Task {
                                                                 await delayCircles()
                                                             }
@@ -202,6 +206,10 @@ struct ActivitySettings: View {
                                                     }
                                                     minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
                                                     maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
+                                                    UIApplication.shared.hideKeyboard()
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = false
+                                                    }
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
@@ -215,6 +223,10 @@ struct ActivitySettings: View {
                                                     }
                                                     minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
                                                     maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
+                                                    UIApplication.shared.hideKeyboard()
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = false
+                                                    }
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
