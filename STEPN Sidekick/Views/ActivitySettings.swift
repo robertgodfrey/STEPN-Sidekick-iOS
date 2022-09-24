@@ -160,10 +160,7 @@ struct ActivitySettings: View {
                                                             withAnimation {
                                                                 helperCircles = true
                                                             }
-                                                            UIApplication.shared.hideKeyboard()
-                                                            withAnimation(.easeOut .speed(1.5)) {
-                                                                hideTab = false
-                                                            }
+                                                            clearFocus()
                                                             Task {
                                                                 await delayCircles()
                                                             }
@@ -206,10 +203,7 @@ struct ActivitySettings: View {
                                                     }
                                                     minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
                                                     maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
-                                                    UIApplication.shared.hideKeyboard()
-                                                    withAnimation(.easeOut .speed(1.5)) {
-                                                        hideTab = false
-                                                    }
+                                                    clearFocus()
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
@@ -223,10 +217,7 @@ struct ActivitySettings: View {
                                                     }
                                                     minSpeedString = shoes[shoeTypeIterator].getMinSpeed()
                                                     maxSpeedString = shoes[shoeTypeIterator].getMaxSpeed()
-                                                    UIApplication.shared.hideKeyboard()
-                                                    withAnimation(.easeOut .speed(1.5)) {
-                                                        hideTab = false
-                                                    }
+                                                    clearFocus()
                                                 }) {
                                                     Rectangle()
                                                         .fill(Color.clear)
@@ -240,10 +231,7 @@ struct ActivitySettings: View {
                                 ZStack {
                                     
                                     Button(action: {
-                                        UIApplication.shared.hideKeyboard()
-                                        withAnimation(.easeOut .speed(1.5)) {
-                                            hideTab = false
-                                        }
+                                        clearFocus()
                                     }) {
                                         Color("Background Almost White")
                                     }
@@ -373,9 +361,7 @@ struct ActivitySettings: View {
                                                         .padding([.top, .leading], 5)
                                                     
                                                     Button(action: {
-                                                        tenSecondTimer = !tenSecondTimer
-                                                        UIApplication.shared.hideKeyboard()
-                                                        print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
+                                                        // in tapAction
                                                     }) {
                                                         Text(tenSecondTimer == true ? "ENABLED" : "DISABLED")
                                                             .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
@@ -384,7 +370,7 @@ struct ActivitySettings: View {
                                                         .buttonStyle(MainButtons(enabled: tenSecondTimer,
                                                             tapAction: {
                                                                 tenSecondTimer = !tenSecondTimer
-                                                                UIApplication.shared.hideKeyboard()
+                                                                clearFocus()
                                                                 print("Tec second timer " + (tenSecondTimer ? "on" : "off"))
                                                             }
                                                         ))
@@ -488,13 +474,7 @@ struct ActivitySettings: View {
                                                 
                                                 
                                                     Button(action: {
-                                                        if voiceAlertsSpeedType == speedAlertsBoth {
-                                                            voiceAlertsSpeedType = speedAlertsDisabled
-                                                        } else {
-                                                            voiceAlertsSpeedType += 1
-                                                        }
-                                                        UIApplication.shared.hideKeyboard()
-                                                        print("Speed alerts button changed")
+                                                        // in tapAction
                                                     }, label: {
                                                         Text(voiceSpeedText())
                                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -507,7 +487,7 @@ struct ActivitySettings: View {
                                                                 voiceAlertsSpeedType += 1
                                                             }
                                                             print("Speed alerts button changed")
-                                                            UIApplication.shared.hideKeyboard()
+                                                            clearFocus()
                                                         }
                                                     ))
                                                     .font(Font.custom(fontButtons, size: 17))
@@ -527,9 +507,7 @@ struct ActivitySettings: View {
                                                         .padding([.top, .leading], 5)
                                                 
                                                     Button(action: {
-                                                        voiceAlertsTime = !voiceAlertsTime
-                                                        print("Time alerts button switched")
-                                                        UIApplication.shared.hideKeyboard()
+                                                        // in tapAction
                                                     }) {
                                                         Text(voiceAlertsTime == true ? "ENABLED" : "DISABLED")
                                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -539,7 +517,7 @@ struct ActivitySettings: View {
                                                             tapAction: {
                                                                 voiceAlertsTime = !voiceAlertsTime
                                                                 print("Time alerts button switched")
-                                                                UIApplication.shared.hideKeyboard()
+                                                                clearFocus()
                                                             }
                                                         ))
                                                         .font(Font.custom(fontButtons, size: 17))
@@ -559,9 +537,7 @@ struct ActivitySettings: View {
 
 
                                                     Button(action: {
-                                                        voiceAlertsMinThirty = !voiceAlertsMinThirty
-                                                        print("1 min / 30 sec button switched")
-                                                        UIApplication.shared.hideKeyboard()
+                                                        // in tapAction
                                                     }) {
                                                         Text(voiceAlertsMinThirty == true ? "ENABLED" : "DISABLED")
                                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -570,7 +546,7 @@ struct ActivitySettings: View {
                                                             tapAction: {
                                                                 voiceAlertsMinThirty = !voiceAlertsMinThirty
                                                                 print("1 min / 30 sec button switched")
-                                                                UIApplication.shared.hideKeyboard()
+                                                                clearFocus()
                                                             }))
                                                         .font(Font.custom(fontButtons, size: 17))
                                                 }
