@@ -13,29 +13,30 @@
 import SwiftUI
 
 struct Optimizer: View {
-    let common: Int = 0
-    let uncommon: Int = 1
-    let rare: Int = 2
-    let epic: Int = 3
+    private let common: Int = 0
+    private let uncommon: Int = 1
+    private let rare: Int = 2
+    private let epic: Int = 3
     
     @Binding var hideTab: Bool
     
-    @State var offset: CGFloat = 0
-    @State var lastOffset: CGFloat = 0
+    @State private var offset: CGFloat = 0
+    @State private var lastOffset: CGFloat = 0
     
-    @State var shoeRarity: Int = 0
-    @State var shoeType: Int = 0
+    @State private var shoeRarity: Int = 0
+    @State private var shoeType: Int = 0
     
-    @State var shoeName: String = ""
-    @State var energyString: String = ""
-    @State var shoeLevel: Double = 1
-    @State var baseEffString: String = ""
-    @State var baseLuckString: String = ""
-    @State var baseComfString: String = ""
-    @State var baseResString: String = ""
+    @State private var shoeName: String = ""
+    @State private var energy: String = ""
+    @State private var shoeLevel: Double = 1
+    @State private var baseEffString: String = ""
+    @State private var baseLuckString: String = ""
+    @State private var baseComfString: String = ""
+    @State private var baseResString: String = ""
 
     @State private var popCircles: Bool = false
     @State private var popShoe: Bool = false
+    @State private var energySelected: Bool = false
 
     var body: some View {
             VStack(spacing: 0) {
@@ -232,7 +233,10 @@ struct Optimizer: View {
                                                 hideTab = true
                                             }
                                         }})
-                                        .padding(.trailing, 6)
+                                        .disableAutocorrection(true)
+                                        .onReceive(shoeName.publisher.collect()) {
+                                            self.shoeName = String($0.prefix(12))
+                                        }
                                         .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
                                         .font(Font.custom(fontTitles, size: 16))
                                         .multilineTextAlignment(.center)
@@ -397,7 +401,7 @@ struct Optimizer: View {
                                                 .padding([.bottom, .trailing], -3)
                                          
                                             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Energy Blue"))  // TODO: or energy blue lighter
+                                                .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
                                                 .frame(height: 36)
                                                 .overlay(RoundedRectangle(cornerRadius: 8)
                                                     .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
@@ -408,11 +412,14 @@ struct Optimizer: View {
                                                 .padding(.trailing, 14)
                                                 .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
                                             
-                                            TextField("0.0", text: $energyString, onEditingChanged: { (editingChanged) in
+                                            TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
                                                 if editingChanged {
+                                                    energySelected = true
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
+                                                } else {
+                                                    energySelected = false
                                                 }})
                                                 .padding(.trailing, 6)
                                                 .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -420,6 +427,12 @@ struct Optimizer: View {
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                                .onReceive(energy.publisher.collect()) {
+                                                    self.energy = String($0.prefix(4))
+                                                    if Double(energy) ?? 0 > 25 {
+                                                        energy = "25"
+                                                    }
+                                                }
                                         }
                                     }
                                 }.padding(.horizontal, 40)
@@ -484,7 +497,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("1 - 10", text: $baseEffString)
+                                            TextField(baseRangeHint, text: $baseEffString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -538,7 +551,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
 
-                                            TextField("1 - 10", text: $baseEffString)
+                                            TextField(baseRangeHint, text: $baseEffString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -592,7 +605,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("1 - 10", text: $baseComfString)
+                                            TextField(baseRangeHint, text: $baseComfString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -646,7 +659,7 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField("1 - 10", text: $baseResString)
+                                            TextField(baseRangeHint, text: $baseResString)
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -711,13 +724,13 @@ struct Optimizer: View {
                                             .padding(.leading, 6)
                                         
                                         Button(action: {
-                                            // action
+                                            // in tapAction
                                         }, label: {
                                             Text("OPTIMIZE GST")
                                                 .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
                                         })
                                             .buttonStyle(StartButton(tapAction: {
-                                                // action
+                                                UIApplication.shared.hideKeyboard()
                                             })).font(Font.custom(fontButtons, size: 18))
                                                                      
                                     }
@@ -729,13 +742,13 @@ struct Optimizer: View {
                                             .padding(.leading, 6)
                                         
                                         Button(action: {
-                                            // action
+                                            // in tapAction
                                         }, label: {
                                             Text("OPTIMIZE LUCK")
                                                 .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
                                         })
                                             .buttonStyle(StartButton(tapAction: {
-                                                // action
+                                                UIApplication.shared.hideKeyboard()
                                             })).font(Font.custom(fontButtons, size: 18))
                                                                      
                                     }
@@ -1115,6 +1128,19 @@ struct Optimizer: View {
             return "Trainer"
         default:
             return "Walker"
+        }
+    }
+    
+    var baseRangeHint: String {
+        switch (shoeRarity) {
+        case uncommon:
+            return "8 - 21.6"
+        case rare:
+            return "15 - 42"
+        case epic:
+            return "28 - 75.6"
+        default:
+            return "1 - 10"
         }
     }
     
