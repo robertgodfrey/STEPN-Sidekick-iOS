@@ -71,6 +71,7 @@
 		D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */; };
 		D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */; };
 		D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFD28928C4295A002E931E /* CountdownTimer.swift */; };
+		D4F8B52228E1012100DDA9BE /* GemDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F8B52128E1012100DDA9BE /* GemDialog.swift */; };
 		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
 		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
 		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
@@ -164,6 +165,7 @@
 		D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
 		D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound_slow.mp3; sourceTree = "<group>"; };
 		D4EFD28928C4295A002E931E /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
+		D4F8B52128E1012100DDA9BE /* GemDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDialog.swift; sourceTree = "<group>"; };
 		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
 		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				D441B53428BB296C00D819EA /* CustomTabBar.swift */,
 				D441B53828BB77CB00D819EA /* About.swift */,
 				D4B82C8D28D07BD3004A80EB /* Optimizer.swift */,
+				D4F8B52128E1012100DDA9BE /* GemDialog.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				D4B82C8E28D07BD3004A80EB /* Optimizer.swift in Sources */,
 				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
 				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
+				D4F8B52228E1012100DDA9BE /* GemDialog.swift in Sources */,
 				D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */,
 				D441B53928BB77CB00D819EA /* About.swift in Sources */,
 				D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */,
