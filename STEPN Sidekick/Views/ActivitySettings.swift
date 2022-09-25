@@ -50,8 +50,8 @@ struct ActivitySettings: View {
     @State private var alertTitle: String = ""
     @State private var alertMessage: String = ""
     
-    @State var offset: CGFloat = 0
-    @State var lastOffset: CGFloat = 0
+    @State private var offset: CGFloat = 0
+    @State private var lastOffset: CGFloat = 0
             
     @State private var shoes: [Shoe] = [
         Shoe(title: "Walker", imageResource: "shoe_walker", footResource: "footprint", minSpeed: "1.0", maxSpeed: "6.0"),

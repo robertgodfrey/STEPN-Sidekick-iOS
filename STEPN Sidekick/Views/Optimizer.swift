@@ -13,27 +13,38 @@
 import SwiftUI
 
 struct Optimizer: View {
-    private let common: Int = 0
-    private let uncommon: Int = 1
-    private let rare: Int = 2
-    private let epic: Int = 3
+    // numbers matter to calc points available
+    private let common: Int = 2
+    private let uncommon: Int = 3
+    private let rare: Int = 4
+    private let epic: Int = 5
     
     @Binding var hideTab: Bool
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
     
-    @State private var shoeRarity: Int = 0
+    @State private var shoeRarity: Int = 2
     @State private var shoeType: Int = 0
     
     @State private var shoeName: String = ""
     @State private var energy: String = ""
     @State private var shoeLevel: Double = 1
+
     @State private var baseEffString: String = ""
     @State private var baseLuckString: String = ""
     @State private var baseComfString: String = ""
     @State private var baseResString: String = ""
+    @State private var addedEff: Int = 0
+    @State private var addedLuck: Int = 0
+    @State private var addedComf: Int = 0
+    @State private var addedRes: Int = 0
+    @State private var gemEff: Double = 0
+    @State private var gemLuck: Double = 0
+    @State private var gemComf: Double = 0
+    @State private var gemRes: Double = 0
 
+    
     @State private var popCircles: Bool = false
     @State private var popShoe: Bool = false
     @State private var energySelected: Bool = false
@@ -309,8 +320,8 @@ struct Optimizer: View {
                                                 withAnimation(.linear(duration: 0.8)) {
                                                     popCircles = false
                                                 }
-                                                if shoeRarity == 3 {
-                                                    shoeRarity = 0
+                                                if shoeRarity == 5 {
+                                                    shoeRarity = 2
                                                 } else {
                                                     shoeRarity += 1
                                                 }
@@ -497,12 +508,25 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField(baseRangeHint, text: $baseEffString)
+                                            TextField(baseRangeHint, text: $baseEffString, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(.decimalPad)
                                                 .frame(width: 95)
+                                                .onReceive(baseEffString.publisher.collect()) {
+                                                    self.baseEffString = String($0.prefix(5))
+                                                    if Double(baseEffString) ?? 0 < basePointsMin && baseEffString != "" {
+                                                        baseEffString = String(basePointsMin)
+                                                    } else if Double(baseEffString) ?? 0 > basePointsMax {
+                                                        baseEffString = String(basePointsMax)
+                                                    }
+                                                }
                                             
                                             Text("0.0")
                                                 .font(Font.custom(fontTitles, size: 23))
@@ -551,12 +575,25 @@ struct Optimizer: View {
                                             
                                             Spacer()
 
-                                            TextField(baseRangeHint, text: $baseEffString)
+                                            TextField(baseRangeHint, text: $baseLuckString, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(.decimalPad)
                                                 .frame(width: 95)
+                                                .onReceive(baseLuckString.publisher.collect()) {
+                                                    self.baseLuckString = String($0.prefix(5))
+                                                    if Double(baseLuckString) ?? 0 < basePointsMin && baseLuckString != "" {
+                                                        baseLuckString = String(basePointsMin)
+                                                    } else if Double(baseLuckString) ?? 0 > basePointsMax {
+                                                        baseLuckString = String(basePointsMax)
+                                                    }
+                                                }
                                             
                                             Text("0.0")
                                                 .font(Font.custom(fontTitles, size: 23))
@@ -605,12 +642,25 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField(baseRangeHint, text: $baseComfString)
+                                            TextField(baseRangeHint, text: $baseComfString, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(.decimalPad)
                                                 .frame(width: 95)
+                                                .onReceive(baseComfString.publisher.collect()) {
+                                                    self.baseComfString = String($0.prefix(5))
+                                                    if Double(baseComfString) ?? 0 < basePointsMin && baseComfString != "" {
+                                                        baseComfString = String(basePointsMin)
+                                                    } else if Double(baseComfString) ?? 0 > basePointsMax {
+                                                        baseComfString = String(basePointsMax)
+                                                    }
+                                                }
                                             
                                             Text("0.0")
                                                 .font(Font.custom(fontTitles, size: 23))
@@ -659,12 +709,25 @@ struct Optimizer: View {
                                             
                                             Spacer()
                                             
-                                            TextField(baseRangeHint, text: $baseResString)
+                                            TextField(baseRangeHint, text: $baseResString, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
                                                 .keyboardType(.decimalPad)
                                                 .frame(width: 95)
+                                                .onReceive(baseResString.publisher.collect()) {
+                                                    self.baseResString = String($0.prefix(5))
+                                                    if Double(baseResString) ?? 0 < basePointsMin && baseResString != "" {
+                                                        baseResString = String(basePointsMin)
+                                                    } else if Double(baseResString) ?? 0 > basePointsMax {
+                                                        baseResString = String(basePointsMax)
+                                                    }
+                                                }
                                             
                                             Text("0.0")
                                                 .font(Font.custom(fontTitles, size: 23))
@@ -705,7 +768,7 @@ struct Optimizer: View {
                                             .font(Font.custom(fontHeaders, size: 16))
                                             .foregroundColor(Color("Gandalf"))
                                         
-                                        Text("0")
+                                        Text(String(pointsAvailable))
                                             .font(Font.custom(fontTitles, size: 16))
                                             .foregroundColor(Color("Gandalf"))
                                             .padding(.trailing, 5)
@@ -772,7 +835,7 @@ struct Optimizer: View {
                                             .font(Font.custom(fontTitles, size: 18))
                                             .foregroundColor(Color("Almost Black"))
                                         
-                                        Text("0")
+                                        Text(String(gstLimit))
                                             .font(Font.custom(fontTitles, size: 18))
                                             .foregroundColor(Color("Almost Black"))
                                         
@@ -1141,6 +1204,55 @@ struct Optimizer: View {
             return "28 - 75.6"
         default:
             return "1 - 10"
+        }
+    }
+    
+    var basePointsMin: Double {
+        switch (shoeRarity) {
+        case uncommon:
+            return 8
+        case rare:
+            return 15
+        case epic:
+            return 28
+        default:
+            return 1
+        }
+    }
+    
+    var basePointsMax: Double {
+        switch (shoeRarity) {
+        case uncommon:
+            return 21.6
+        case rare:
+            return 42
+        case epic:
+            return 75.6
+        default:
+            return 10
+        }
+    }
+    
+    var gstLimit: Int {
+        if shoeLevel < 10 {
+            return Int(5 + (round(shoeLevel) * 10))
+        } else if shoeLevel < 23 {
+            return Int(60 + ((round(shoeLevel) - 10) * 10))
+        } else {
+            return Int(195 + ((round(shoeLevel) - 23) * 15))
+        }
+    }
+    
+    var pointsAvailable: Int {
+        let points: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+        if points - addedEff - addedLuck - addedComf - addedRes < 0 {
+            addedEff = 0
+            addedLuck = 0
+            addedComf = 0
+            addedRes = 0
+            return points
+        } else {
+            return points - addedEff - addedLuck - addedComf - addedRes
         }
     }
     
