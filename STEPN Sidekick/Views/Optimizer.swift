@@ -552,33 +552,51 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                if addedEff > 0 {
-                                                    addedEff -= 1
-                                                    pointsAvailable += 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color(addedEff > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(addedEff > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if addedEff > 0 {
+                                                            addedEff -= 1
+                                                            pointsAvailable += 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        pointsAvailable += addedEff
+                                                        addedEff = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                             
                                             Button(action: {
-                                                if pointsAvailable > 0 {
-                                                    addedEff += 1
-                                                    pointsAvailable -= 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(pointsAvailable > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if pointsAvailable > 0 {
+                                                            addedEff += 1
+                                                            pointsAvailable -= 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        addedEff += pointsAvailable
+                                                        pointsAvailable = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -633,33 +651,51 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                if addedLuck > 0 {
-                                                    addedLuck -= 1
-                                                    pointsAvailable += 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color(addedLuck > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(addedLuck > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if addedLuck > 0 {
+                                                            addedLuck -= 1
+                                                            pointsAvailable += 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        pointsAvailable += addedLuck
+                                                        addedLuck = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                             
                                             Button(action: {
-                                                if pointsAvailable > 0 {
-                                                    addedLuck += 1
-                                                    pointsAvailable -= 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(pointsAvailable > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if pointsAvailable > 0 {
+                                                            addedLuck += 1
+                                                            pointsAvailable -= 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        addedLuck += pointsAvailable
+                                                        pointsAvailable = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -714,33 +750,51 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                if addedComf > 0 {
-                                                    addedComf -= 1
-                                                    pointsAvailable += 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color(addedComf > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(addedComf > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if addedComf > 0 {
+                                                            addedComf -= 1
+                                                            pointsAvailable += 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        pointsAvailable += addedComf
+                                                        addedComf = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                             
                                             Button(action: {
-                                                if pointsAvailable > 0 {
-                                                    addedComf += 1
-                                                    pointsAvailable -= 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(pointsAvailable > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if pointsAvailable > 0 {
+                                                            addedComf += 1
+                                                            pointsAvailable -= 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        addedComf += pointsAvailable
+                                                        pointsAvailable = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -795,33 +849,51 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                if addedRes > 0 {
-                                                    addedRes -= 1
-                                                    pointsAvailable += 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
                                                     .foregroundColor(Color(addedRes > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(addedRes > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if addedRes > 0 {
+                                                            addedRes -= 1
+                                                            pointsAvailable += 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        pointsAvailable += addedRes
+                                                        addedRes = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                             
                                             Button(action: {
-                                                if pointsAvailable > 0 {
-                                                    addedRes += 1
-                                                    pointsAvailable -= 1
-                                                    updatePoints()
-                                                }
-                                                clearFocus()
+                                                // in tapGestures
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
                                                     .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
                                                     .disabled(pointsAvailable > 0 ? false : true)
+                                                    .onTapGesture(perform: {
+                                                        if pointsAvailable > 0 {
+                                                            addedRes += 1
+                                                            pointsAvailable -= 1
+                                                            updatePoints()
+                                                        }
+                                                        clearFocus()
+                                                    })
+                                                    .onLongPressGesture(perform: {
+                                                        addedRes += pointsAvailable
+                                                        pointsAvailable = 0
+                                                        updatePoints()
+                                                        clearFocus()
+                                                    })
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
