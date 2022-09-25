@@ -30,6 +30,7 @@ struct Optimizer: View {
     @State private var shoeName: String = ""
     @State private var energy: String = ""
     @State private var shoeLevel: Double = 1
+    @State private var pointsAvailable: Int = 0
 
     @State private var baseEffString: String = ""
     @State private var baseLuckString: String = ""
@@ -43,7 +44,10 @@ struct Optimizer: View {
     @State private var gemLuck: Double = 0
     @State private var gemComf: Double = 0
     @State private var gemRes: Double = 0
-
+    @State private var totalEff: Double = 0
+    @State private var totalLuck: Double = 0
+    @State private var totalComf: Double = 0
+    @State private var totalRes: Double = 0
     
     @State private var popCircles: Bool = false
     @State private var popShoe: Bool = false
@@ -70,6 +74,9 @@ struct Optimizer: View {
                                 .foregroundColor(.white)
                                 .onTapGesture(perform: {
                                     clearFocus()
+                                    withAnimation(.easeOut .speed(1.5)) {
+                                        hideTab = false
+                                    }
                                 })
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
@@ -325,6 +332,7 @@ struct Optimizer: View {
                                                 } else {
                                                     shoeRarity += 1
                                                 }
+                                                updatePoints()
                                             }))
                                             .font(Font.custom(fontButtons, size: 17))
                                         }
@@ -451,7 +459,9 @@ struct Optimizer: View {
                                 
                                 // MARK: Level slider
                                 ZStack {
-                                    CustomSlider(value: $shoeLevel)
+                                    CustomSlider(value: $shoeLevel, sliderAction: {
+                                        updatePoints()
+                                    })
                                         .padding(.horizontal, 40)
                                         .frame(maxWidth: 400, maxHeight: 30)
                                     
@@ -513,6 +523,13 @@ struct Optimizer: View {
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
+                                                } else {
+                                                    if Double(baseEffString) ?? 0 < basePointsMin && baseEffString != "" {
+                                                        baseEffString = String(basePointsMin)
+                                                    } else if Double(baseEffString) ?? 0 > basePointsMax {
+                                                        baseEffString = String(basePointsMax)
+                                                    }
+                                                    updatePoints()
                                                 }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
@@ -521,14 +538,9 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                                 .onReceive(baseEffString.publisher.collect()) {
                                                     self.baseEffString = String($0.prefix(5))
-                                                    if Double(baseEffString) ?? 0 < basePointsMin && baseEffString != "" {
-                                                        baseEffString = String(basePointsMin)
-                                                    } else if Double(baseEffString) ?? 0 > basePointsMax {
-                                                        baseEffString = String(basePointsMax)
-                                                    }
                                                 }
                                             
-                                            Text("0.0")
+                                            Text(String(totalEff))
                                                 .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -540,21 +552,33 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if addedEff > 0 {
+                                                    addedEff -= 1
+                                                    pointsAvailable += 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(addedEff > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(addedEff > 0 ? false : true)
                                             })
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if pointsAvailable > 0 {
+                                                    addedEff += 1
+                                                    pointsAvailable -= 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(pointsAvailable > 0 ? false : true)
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -580,6 +604,13 @@ struct Optimizer: View {
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
+                                                } else {
+                                                    if Double(baseLuckString) ?? 0 < basePointsMin && baseLuckString != "" {
+                                                        baseLuckString = String(basePointsMin)
+                                                    } else if Double(baseLuckString) ?? 0 > basePointsMax {
+                                                        baseLuckString = String(basePointsMax)
+                                                    }
+                                                    updatePoints()
                                                 }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
@@ -588,14 +619,9 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                                 .onReceive(baseLuckString.publisher.collect()) {
                                                     self.baseLuckString = String($0.prefix(5))
-                                                    if Double(baseLuckString) ?? 0 < basePointsMin && baseLuckString != "" {
-                                                        baseLuckString = String(basePointsMin)
-                                                    } else if Double(baseLuckString) ?? 0 > basePointsMax {
-                                                        baseLuckString = String(basePointsMax)
-                                                    }
                                                 }
                                             
-                                            Text("0.0")
+                                            Text(String(totalLuck))
                                                 .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -607,21 +633,33 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if addedLuck > 0 {
+                                                    addedLuck -= 1
+                                                    pointsAvailable += 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(addedLuck > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(addedLuck > 0 ? false : true)
                                             })
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if pointsAvailable > 0 {
+                                                    addedLuck += 1
+                                                    pointsAvailable -= 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(pointsAvailable > 0 ? false : true)
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -647,6 +685,13 @@ struct Optimizer: View {
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
+                                                } else {
+                                                    if Double(baseComfString) ?? 0 < basePointsMin && baseComfString != "" {
+                                                        baseComfString = String(basePointsMin)
+                                                    } else if Double(baseComfString) ?? 0 > basePointsMax {
+                                                        baseComfString = String(basePointsMax)
+                                                    }
+                                                    updatePoints()
                                                 }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
@@ -655,14 +700,9 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                                 .onReceive(baseComfString.publisher.collect()) {
                                                     self.baseComfString = String($0.prefix(5))
-                                                    if Double(baseComfString) ?? 0 < basePointsMin && baseComfString != "" {
-                                                        baseComfString = String(basePointsMin)
-                                                    } else if Double(baseComfString) ?? 0 > basePointsMax {
-                                                        baseComfString = String(basePointsMax)
-                                                    }
                                                 }
                                             
-                                            Text("0.0")
+                                            Text(String(totalComf))
                                                 .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -674,21 +714,33 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if addedComf > 0 {
+                                                    addedComf -= 1
+                                                    pointsAvailable += 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(addedComf > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(addedComf > 0 ? false : true)
                                             })
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if pointsAvailable > 0 {
+                                                    addedComf += 1
+                                                    pointsAvailable -= 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(pointsAvailable > 0 ? false : true)
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -714,6 +766,13 @@ struct Optimizer: View {
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
+                                                } else {
+                                                    if Double(baseResString) ?? 0 < basePointsMin && baseResString != "" {
+                                                        baseResString = String(basePointsMin)
+                                                    } else if Double(baseResString) ?? 0 > basePointsMax {
+                                                        baseResString = String(basePointsMax)
+                                                    }
+                                                    updatePoints()
                                                 }})
                                                 .font(Font.custom(fontHeaders, size: 20))
                                                 .multilineTextAlignment(.center)
@@ -722,14 +781,9 @@ struct Optimizer: View {
                                                 .frame(width: 95)
                                                 .onReceive(baseResString.publisher.collect()) {
                                                     self.baseResString = String($0.prefix(5))
-                                                    if Double(baseResString) ?? 0 < basePointsMin && baseResString != "" {
-                                                        baseResString = String(basePointsMin)
-                                                    } else if Double(baseResString) ?? 0 > basePointsMax {
-                                                        baseResString = String(basePointsMax)
-                                                    }
                                                 }
                                             
-                                            Text("0.0")
+                                            Text(String(totalRes))
                                                 .font(Font.custom(fontTitles, size: 23))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("Almost Black"))
@@ -741,21 +795,33 @@ struct Optimizer: View {
                                             Spacer()
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if addedRes > 0 {
+                                                    addedRes -= 1
+                                                    pointsAvailable += 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("-")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(addedRes > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(addedRes > 0 ? false : true)
                                             })
                                             
                                             Button(action: {
-                                                // action goes here
+                                                if pointsAvailable > 0 {
+                                                    addedRes += 1
+                                                    pointsAvailable -= 1
+                                                    updatePoints()
+                                                }
+                                                clearFocus()
                                             }, label: {
                                                 Text("+")
                                                     .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                    .foregroundColor(Color("Almost Black"))
+                                                    .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
                                                     .frame(width: 50, height: 40)
+                                                    .disabled(pointsAvailable > 0 ? false : true)
                                             })
                                         }.padding(.horizontal, 20)
                                             .frame(maxWidth: 440)
@@ -1242,25 +1308,26 @@ struct Optimizer: View {
             return Int(195 + ((round(shoeLevel) - 23) * 15))
         }
     }
-    
-    var pointsAvailable: Int {
+        
+    func updatePoints() {
         let points: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
         if points - addedEff - addedLuck - addedComf - addedRes < 0 {
             addedEff = 0
             addedLuck = 0
             addedComf = 0
             addedRes = 0
-            return points
+            pointsAvailable = points
         } else {
-            return points - addedEff - addedLuck - addedComf - addedRes
+            pointsAvailable = points - addedEff - addedLuck - addedComf - addedRes
+            totalEff = round(((Double(baseEffString) ?? 0) + Double(addedEff) + gemEff) * 10) / 10
+            totalLuck = round(((Double(baseLuckString) ?? 0) + Double(addedLuck) + gemLuck) * 10) / 10
+            totalComf = round(((Double(baseComfString) ?? 0) + Double(addedComf) + gemComf) * 10) / 10
+            totalRes = round(((Double(baseResString) ?? 0) + Double(addedRes) + gemRes) * 10) / 10
         }
     }
     
     func clearFocus() {
         UIApplication.shared.hideKeyboard()
-        withAnimation(.easeOut .speed(1.5)) {
-            hideTab = false
-        }
     }
 }
 
@@ -1273,6 +1340,7 @@ struct Optimizer_Previews: PreviewProvider {
 // dope-ass custom slider struct (courtesy of https://swdevnotes.com/swift/2021/how-to-customise-the-slider-in-swiftui/)
 struct CustomSlider: View {
     @Binding var value: Double
+    let sliderAction: (()->())
     
     @State var lastCoordinateValue: CGFloat = 0.0
     var sliderRange: ClosedRange<Double> = 1...30
@@ -1321,7 +1389,7 @@ struct CustomSlider: View {
                                         let nextCoordinateValue = max(minValue, self.lastCoordinateValue + v.translation.width)
                                         self.value = ((nextCoordinateValue - minValue) / scaleFactor) + lower
                                     }
-                                    
+                                    sliderAction()
                                 }
                         )
                     Spacer()
