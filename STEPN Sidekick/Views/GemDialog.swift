@@ -10,19 +10,19 @@ import SwiftUI
 struct GemDialog: View {
     
     @Binding var show: Bool
+    @Binding var gem: Gem
     
     var body: some View {
         ZStack {
             Color(.black)
-                .opacity(0.5)
-    
+                .opacity(0.5)   
             
             VStack {
                 Text("SELECT SOCKET TYPE")
-                    .font(Font.custom(fontTitles, size: 18))
+                    .font(Font.custom(fontTitles, size: 20))
                     .foregroundColor(Color("Almost Black"))
                 
-                HStack {
+                HStack(spacing: 15) {
                     VStack(spacing: 0) {
                         ZStack {
                             Circle()
@@ -33,12 +33,16 @@ struct GemDialog: View {
                                     endRadius: 25)
                                 )
                                 .frame(width: 55, height: 55)
+                                .opacity(gem.getSocketType() == eff ? 1 : 0)
                             
                             
                             Image("gem_symbol_efficiency")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 36)
+                                .onTapGesture(perform: {
+                                    gem.setSocketType(socketType: eff)
+                                })
                         }
                         Text("Efficiency")
                             .font(Font.custom(fontHeaders, size: 14))
@@ -55,12 +59,16 @@ struct GemDialog: View {
                                     endRadius: 25)
                                 )
                                 .frame(width: 55, height: 55)
+                                .opacity(gem.getSocketType() == luck ? 1 : 0)
                             
                             
                             Image("gem_symbol_luck")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 36)
+                                .onTapGesture(perform: {
+                                    gem.setSocketType(socketType: luck)
+                                })
                         }
                         Text("Luck")
                             .font(Font.custom(fontHeaders, size: 14))
@@ -76,12 +84,15 @@ struct GemDialog: View {
                                     endRadius: 25)
                                 )
                                 .frame(width: 55, height: 55)
-                            
+                                .opacity(gem.getSocketType() == comf ? 1 : 0)
                             
                             Image("gem_symbol_comfort")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 36)
+                                .onTapGesture(perform: {
+                                    gem.setSocketType(socketType: comf)
+                                })
                         }
                         Text("Comfort")
                             .font(Font.custom(fontHeaders, size: 14))
@@ -97,12 +108,15 @@ struct GemDialog: View {
                                     endRadius: 25)
                                 )
                                 .frame(width: 55, height: 55)
-                            
+                                .opacity(gem.getSocketType() == res ? 1 : 0)
                             
                             Image("gem_symbol_res")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 36)
+                                .onTapGesture(perform: {
+                                    gem.setSocketType(socketType: res)
+                                })
                         }
                         Text("Resilience")
                             .font(Font.custom(fontHeaders, size: 14))
@@ -113,7 +127,7 @@ struct GemDialog: View {
                 HStack(spacing: 15) {
                     Text("-")
                         .font(Font.custom("Roboto-Black", size: 22))
-                        .foregroundColor(Color(1 > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                        .foregroundColor(Color(1 > 0 ? "Almost Black" : "Gem Socket Shadow"))  //TODO: fix all these
                         .frame(width: 50, height: 40)
                         .disabled(1 > 0 ? false : true)
                     
@@ -126,15 +140,17 @@ struct GemDialog: View {
                             .frame(width: 46)
                             .offset(x: 1.5, y: 2.5)
                                             
-                        Image("gem_socket_gray_0")
+                        Image(gem.getSocketImageSource())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 46)
                         
-                        Image("gem_plus")
+                        Image(gem.getGemImageSource())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32)
+                            .padding(.top, CGFloat(gem.getTopPadding()))
+                            .padding(.bottom, CGFloat(gem.getBottomPadding()))
                     }
                     
                     Text("+")
@@ -146,11 +162,11 @@ struct GemDialog: View {
                 }.padding(15)
                 
                 Text("SELECT GEM")
-                    .font(Font.custom(fontTitles, size: 18))
+                    .font(Font.custom(fontTitles, size: 20))
                     .foregroundColor(Color("Almost Black"))
                     .padding(10)
                 
-                HStack(spacing: -10) {
+                HStack(spacing: -5) {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
@@ -160,6 +176,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
+                            .opacity(gem.getMountedGem() == 1 ? 1 : 0)
                         
                         
                         Image("gem_eff_level1")
@@ -176,7 +193,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
-                        
+                            .opacity(gem.getMountedGem() == 2 ? 1 : 0)
                         
                         Image("gem_eff_level2")
                             .resizable()
@@ -192,7 +209,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
-                        
+                            .opacity(gem.getMountedGem() == 3 ? 1 : 0)
                         
                         Image("gem_eff_level3")
                             .resizable()
@@ -208,7 +225,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
-                        
+                            .opacity(gem.getMountedGem() == 4 ? 1 : 0)
                         
                         Image("gem_eff_level4")
                             .resizable()
@@ -224,7 +241,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
-                        
+                            .opacity(gem.getMountedGem() == 5 ? 1 : 0)
                         
                         Image("gem_eff_level5")
                             .resizable()
@@ -240,7 +257,7 @@ struct GemDialog: View {
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
-                        
+                            .opacity(gem.getMountedGem() == 6 ? 1 : 0)
                         
                         Image("gem_eff_level6")
                             .resizable()
@@ -252,38 +269,38 @@ struct GemDialog: View {
                 VStack(spacing: 10) {
                     HStack {
                         Text("Gem:")
-                            .font(Font.custom(fontHeaders, size: 16))
+                            .font(Font.custom(fontHeaders, size: 18))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
                         
                         Text("+ 0.0")
-                            .font(Font.custom(fontHeaders, size: 16))
+                            .font(Font.custom(fontHeaders, size: 18))
                             .foregroundColor(Color("Almost Black"))
                     }
                     
                     HStack {
                         Text("Socket:")
-                            .font(Font.custom(fontHeaders, size: 16))
+                            .font(Font.custom(fontHeaders, size: 18))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
                         
                         Text("× 0.0")
-                            .font(Font.custom(fontHeaders, size: 16))
+                            .font(Font.custom(fontHeaders, size: 18))
                         
                             .foregroundColor(Color("Almost Black"))
                     }
                     
                     HStack {
                         Text("Total Points:")
-                            .font(Font.custom(fontHeaders, size: 16))
+                            .font(Font.custom(fontHeaders, size: 18))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
                         
                         Text("+ 0.0")
-                            .font(Font.custom(fontTitles, size: 16))
+                            .font(Font.custom(fontTitles, size: 18))
                             .foregroundColor(Color("Almost Black"))
                     }
                     
@@ -291,17 +308,17 @@ struct GemDialog: View {
                         Spacer()
                         
                         Text("See Details")
-                            .font(Font.custom(fontHeaders, size: 14))
+                            .font(Font.custom(fontHeaders, size: 16))
                             .foregroundColor(Color("Gandalf"))
                             .padding(.vertical, 5)
                     }
-                }.frame(maxWidth: 250)
+                }.frame(maxWidth: 280)
                     .padding(.vertical, 10)
                                     
                 ZStack {
                     RoundedRectangle(cornerRadius: 25, style: .continuous)
                         .foregroundColor(Color("Almost Black"))
-                        .frame(minWidth: 95, maxWidth: 100, minHeight: 36, maxHeight: 36)
+                        .frame(minWidth: 100, maxWidth: 110, minHeight: 38, maxHeight: 38)
                         .padding(.top, 4)
                         .padding(.leading, 4)
                     
@@ -309,17 +326,17 @@ struct GemDialog: View {
                         show = false
                     }, label: {
                         Text("SAVE")
-                            .frame(minWidth: 95, maxWidth: 100, minHeight: 36, maxHeight: 36)
+                            .frame(minWidth: 100, maxWidth: 110, minHeight: 38, maxHeight: 38)
                     })
                         .buttonStyle(StartButton(tapAction: {
                             show = false
                         }
                         ))
-                        .font(Font.custom(fontButtons, size: 19))
+                        .font(Font.custom(fontButtons, size: 20))
                     
                 }
-            }   .padding(20)
-                .frame(maxWidth: 310)
+            }   .padding(24)
+                .frame(maxWidth: 340)
                 .background(Color.white)
                 .cornerRadius(15)
         }.ignoresSafeArea()
@@ -328,6 +345,6 @@ struct GemDialog: View {
 
 struct GemDialog_Previews: PreviewProvider {
     static var previews: some View {
-        GemDialog(show: .constant(true))
+        GemDialog(show: .constant(true), gem: .constant(Gem(socketType: 0, socketRarity: 0, mountedGem: 0)))
     }
 }

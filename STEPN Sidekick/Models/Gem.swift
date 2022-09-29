@@ -24,6 +24,9 @@ struct Gem {
         self.socketImageSource = "gem_socket_gray_0"
         self.gemImageSource = "gem_plus"
         self.basePoints = 0
+        
+        updateSocketResource()
+        updateGemResource()
     }
     
     func getSocketType() -> Int {
@@ -32,6 +35,7 @@ struct Gem {
     
     mutating func setSocketType(socketType: Int) {
         self.socketType = socketType
+        updateSocketResource()
     }
     
     func getSocketRarity() -> Int {
