@@ -19,6 +19,12 @@ let runner: Int = 2
 let trainer: Int = 3
 let customShoe: Int = 4
 
+// shoe rarities: numbers matter to calc points available
+let common: Int = 2
+let uncommon: Int = 3
+let rare: Int = 4
+let epic: Int = 5
+
 // gem stuff
 let eff: Int = 0
 let luck: Int = 1

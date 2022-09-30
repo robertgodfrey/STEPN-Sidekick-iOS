@@ -11,7 +11,17 @@ struct GemDialog: View {
     
     @Binding var show: Bool
     @Binding var gem: Gem
+    var shoeRarity: Int
     
+    var baseEff: Double
+    var baseLuck: Double
+    var baseComf: Double
+    var baseRes: Double
+    @Binding var gemEff: Double
+    @Binding var gemLuck: Double
+    @Binding var gemComf: Double
+    @Binding var gemRes: Double
+
     var body: some View {
         ZStack {
             Color(.black)
@@ -42,6 +52,7 @@ struct GemDialog: View {
                                 .frame(width: 36)
                                 .onTapGesture(perform: {
                                     gem.setSocketType(socketType: eff)
+                                    gem.setBasePoints(basePoints: baseEff)
                                 })
                         }
                         Text("Efficiency")
@@ -68,6 +79,7 @@ struct GemDialog: View {
                                 .frame(width: 36)
                                 .onTapGesture(perform: {
                                     gem.setSocketType(socketType: luck)
+                                    gem.setBasePoints(basePoints: baseLuck)
                                 })
                         }
                         Text("Luck")
@@ -92,6 +104,8 @@ struct GemDialog: View {
                                 .frame(width: 36)
                                 .onTapGesture(perform: {
                                     gem.setSocketType(socketType: comf)
+                                    gem.setBasePoints(basePoints: baseComf)
+
                                 })
                         }
                         Text("Comfort")
@@ -116,6 +130,8 @@ struct GemDialog: View {
                                 .frame(width: 36)
                                 .onTapGesture(perform: {
                                     gem.setSocketType(socketType: res)
+                                    gem.setBasePoints(basePoints: baseRes)
+
                                 })
                         }
                         Text("Resilience")
@@ -127,9 +143,13 @@ struct GemDialog: View {
                 HStack(spacing: 15) {
                     Text("-")
                         .font(Font.custom("Roboto-Black", size: 22))
-                        .foregroundColor(Color(1 > 0 ? "Almost Black" : "Gem Socket Shadow"))  //TODO: fix all these
+                        .foregroundColor(Color(gem.getSocketRarity() > 0 ? "Almost Black" : "Gem Socket Shadow"))
                         .frame(width: 50, height: 40)
-                        .disabled(1 > 0 ? false : true)
+                        .onTapGesture(perform: {
+                            if gem.getSocketRarity() > 0 {
+                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() - 1)
+                            }
+                        })
                     
                     ZStack {
                         Image("gem_socket_gray_0")
@@ -144,6 +164,11 @@ struct GemDialog: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 46)
+                            .onTapGesture(perform: {
+                                if gem.getMountedGem() != 0 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                }
+                            })
                         
                         Image(gem.getGemImageSource())
                             .resizable()
@@ -155,9 +180,13 @@ struct GemDialog: View {
                     
                     Text("+")
                         .font(Font.custom("Roboto-Black", size: 18))
-                        .foregroundColor(Color(1 > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                        .foregroundColor(Color(gem.getSocketRarity() < gemSocketMaxRarity ? "Almost Black" : "Gem Socket Shadow"))
                         .frame(width: 50, height: 40)
-                        .disabled(1 > 0 ? false : true)
+                        .onTapGesture(perform: {
+                            if gem.getSocketRarity() < gemSocketMaxRarity {
+                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() + 1)
+                            }
+                        })
                     
                 }.padding(15)
                 
@@ -183,7 +212,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 28)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 1)
+                                if gem.getMountedGem() == 1 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 1)
+                                }
                             })
                     }
                     ZStack {
@@ -202,7 +235,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 34)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 2)
+                                if gem.getMountedGem() == 2 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 2)
+                                }
                             })
                     }
                     ZStack {
@@ -221,7 +258,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 3)
+                                if gem.getMountedGem() == 3 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 3)
+                                }
                             })
                     }
                     ZStack {
@@ -240,7 +281,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 4)
+                                if gem.getMountedGem() == 4 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 4)
+                                }
                             })
                     }
                     ZStack {
@@ -259,7 +304,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 5)
+                                if gem.getMountedGem() == 5 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 5)
+                                }
                             })
                     }
                     ZStack {
@@ -278,7 +327,11 @@ struct GemDialog: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32)
                             .onTapGesture(perform: {
-                                gem.setMountedGem(mountedGem: 6)
+                                if gem.getMountedGem() == 6 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 6)
+                                }
                             })
                     }
                 }
@@ -291,7 +344,7 @@ struct GemDialog: View {
                         
                         Spacer()
                         
-                        Text("+ 0.0")
+                        Text(gem.getGemParamsString())
                             .font(Font.custom(fontHeaders, size: 18))
                             .foregroundColor(Color("Almost Black"))
                     }
@@ -303,7 +356,7 @@ struct GemDialog: View {
                         
                         Spacer()
                         
-                        Text("× 0.0")
+                        Text(gem.getSocketParamsString())
                             .font(Font.custom(fontHeaders, size: 18))
                         
                             .foregroundColor(Color("Almost Black"))
@@ -316,7 +369,7 @@ struct GemDialog: View {
                         
                         Spacer()
                         
-                        Text("+ 0.0")
+                        Text(gem.getTotalPointsString())
                             .font(Font.custom(fontTitles, size: 18))
                             .foregroundColor(Color("Almost Black"))
                     }
@@ -327,7 +380,7 @@ struct GemDialog: View {
                         Text("See Details")
                             .font(Font.custom(fontHeaders, size: 16))
                             .foregroundColor(Color("Gandalf"))
-                            .padding(.vertical, 5)
+                            .padding(.bottom, 5)
                     }
                 }.frame(maxWidth: 280)
                     .padding(.vertical, 10)
@@ -463,10 +516,35 @@ struct GemDialog: View {
             return "gem_grey_level6"
         }
     }
+    
+    var gemSocketMaxRarity: Int {
+        switch (shoeRarity) {
+        case uncommon:
+            return 2
+        case rare:
+            return 3
+        case epic:
+            return 4
+        default:
+            return 1
+        }
+    }
 }
 
 struct GemDialog_Previews: PreviewProvider {
     static var previews: some View {
-        GemDialog(show: .constant(true), gem: .constant(Gem(socketType: 0, socketRarity: 0, mountedGem: 1)))
+        GemDialog(
+            show: .constant(true),
+            gem: .constant(Gem(socketType: 0, socketRarity: 0, mountedGem: 1)),
+            shoeRarity: uncommon,
+            baseEff: 0,
+            baseLuck: 0,
+            baseComf: 0,
+            baseRes: 0,
+            gemEff: .constant(0),
+            gemLuck: .constant(0),
+            gemComf: .constant(0),
+            gemRes: .constant(0)
+        )
     }
 }

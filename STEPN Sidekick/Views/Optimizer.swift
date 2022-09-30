@@ -13,11 +13,6 @@
 import SwiftUI
 
 struct Optimizer: View {
-    // numbers matter to calc points available
-    private let common: Int = 2
-    private let uncommon: Int = 3
-    private let rare: Int = 4
-    private let epic: Int = 5
     
     @Binding var hideTab: Bool
     
@@ -127,8 +122,10 @@ struct Optimizer: View {
                                                 .padding(.top, 30)
                                                 .padding(.leading, 45)
                                                 .onTapGesture(perform: {
+                                                    clearFocus()
                                                     if shoeLevel >= 5 {
                                                         withAnimation(.easeOut .speed(3)) {
+                                                            gems[0].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
                                                             gemSocketNum = 0
                                                             hideTab = true
                                                             gemPopup = true
@@ -145,8 +142,10 @@ struct Optimizer: View {
                                                 .padding(.top, 30)
                                                 .padding(.trailing, 45)
                                                 .onTapGesture(perform: {
+                                                    clearFocus()
                                                     if shoeLevel >= 10 {
                                                         withAnimation(.easeOut .speed(3)) {
+                                                            gems[1].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
                                                             gemSocketNum = 1
                                                             hideTab = true
                                                             gemPopup = true
@@ -164,8 +163,10 @@ struct Optimizer: View {
                                                 .padding(.bottom, 12)
                                                 .padding(.leading, 45)
                                                 .onTapGesture(perform: {
+                                                    clearFocus()
                                                     if shoeLevel >= 15 {
                                                         withAnimation(.easeOut .speed(3)) {
+                                                            gems[2].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
                                                             gemSocketNum = 2
                                                             hideTab = true
                                                             gemPopup = true
@@ -183,8 +184,10 @@ struct Optimizer: View {
                                                 .padding(.bottom, 12)
                                                 .padding(.trailing, 45)
                                                 .onTapGesture(perform: {
+                                                    clearFocus()
                                                     if shoeLevel >= 20 {
                                                         withAnimation(.easeOut .speed(3)) {
+                                                            gems[3].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
                                                             gemSocketNum = 3
                                                             hideTab = true
                                                             gemPopup = true
@@ -1210,7 +1213,21 @@ struct Optimizer: View {
         
             if gemPopup {
                 GeometryReader { _ in
-                    GemDialog(show: $gemPopup, gem: $gems[gemSocketNum])
+                    GemDialog(
+                        show: $gemPopup,
+                        gem: $gems[gemSocketNum],
+                        shoeRarity: shoeRarity,
+                        baseEff: Double(baseEffString) ?? 0,
+                        baseLuck: Double(baseLuckString) ?? 0,
+                        baseComf: Double(baseComfString) ?? 0,
+                        baseRes: Double(baseResString) ?? 0,
+                        gemEff: $gemEff,
+                        gemLuck: $gemLuck,
+                        gemComf: $gemComf,
+                        gemRes: $gemRes
+                    )
+                }.onDisappear{
+                    updatePoints()
                 }
             }
         }.ignoresSafeArea()
@@ -1362,9 +1379,61 @@ struct Optimizer: View {
             return Int(195 + ((round(shoeLevel) - 23) * 15))
         }
     }
+    
+    func getBasePointsGemType(socketType: Int) -> Double {
+        switch (socketType) {
+        case luck:
+            return Double(baseLuckString) ?? 0
+        case comf:
+            return Double(baseComfString) ?? 0
+        case res:
+            return Double(baseResString) ?? 0
+        default:
+            return Double(baseEffString) ?? 0
+        }
+    }
         
     func updatePoints() {
         let points: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+       
+        var gemsUnlocked: Int = 0;
+        
+        gemEff = 0;
+        gemLuck = 0;
+        gemComf = 0;
+        gemRes = 0;
+        
+        if shoeLevel >= 20 {
+            gemsUnlocked = 4
+        } else if shoeLevel >= 15 {
+            gemsUnlocked = 3
+        } else if shoeLevel >= 10 {
+            gemsUnlocked = 2
+        } else if (shoeLevel >= 5) {
+            gemsUnlocked = 1
+        }
+
+        if gemsUnlocked > 0 {
+            for socket in 1...gemsUnlocked {
+                switch (gems[socket - 1].getSocketType()) {
+                case eff:
+                    gems[socket - 1].setBasePoints(basePoints: Double(baseEffString) ?? 0)
+                    gemEff += gems[socket - 1].getTotalPoints()
+                case luck:
+                    gems[socket - 1].setBasePoints(basePoints: Double(baseLuckString) ?? 0)
+                    gemLuck += gems[socket - 1].getTotalPoints()
+                case comf:
+                    gems[socket - 1].setBasePoints(basePoints: Double(baseComfString) ?? 0)
+                    gemComf += gems[socket - 1].getTotalPoints()
+                case res:
+                    gems[socket - 1].setBasePoints(basePoints: Double(baseResString) ?? 0)
+                    gemRes += gems[socket - 1].getTotalPoints()
+                default:
+                    break
+                }
+            }
+        }
+        
         if points - addedEff - addedLuck - addedComf - addedRes < 0 {
             addedEff = 0
             addedLuck = 0
