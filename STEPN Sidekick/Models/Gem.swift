@@ -35,6 +35,7 @@ struct Gem {
     
     mutating func setSocketType(socketType: Int) {
         self.socketType = socketType
+        updateGemResource()
         updateSocketResource()
     }
     
@@ -277,15 +278,15 @@ struct Gem {
     
     // each gem image has different dimensions so need to manually set the padding for each one
     // i think this is easier than going in and editing all the image files so they are the same size ¯\_(ツ)_/¯
-    func getTopPadding() -> Int {
-        var topPadding: Int
+    func getTopPadding() -> Float {
+        var topPadding: Float
         switch (mountedGem) {
         case 0:
             topPadding = 2
         case 1:
-            topPadding = 4
-        case 2, 4, 5:
-            topPadding = 1
+            topPadding = 3
+        case 4, 5:
+            topPadding = 2
         default:
             topPadding = 0
         }
@@ -293,15 +294,15 @@ struct Gem {
         return topPadding
     }
 
-    func getBottomPadding() -> Int {
-        var bottomPadding: Int
+    func getBottomPadding() -> Float {
+        var bottomPadding: Float
         
         switch (mountedGem) {
         case 0:
             bottomPadding = 2
         case 1:
             bottomPadding = 3
-        case 2, 3:
+        case 3:
             bottomPadding = 1
         default:
             bottomPadding = 0

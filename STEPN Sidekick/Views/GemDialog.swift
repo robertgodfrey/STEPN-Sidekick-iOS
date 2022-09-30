@@ -148,9 +148,9 @@ struct GemDialog: View {
                         Image(gem.getGemImageSource())
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 32)
-                            .padding(.top, CGFloat(gem.getTopPadding()))
                             .padding(.bottom, CGFloat(gem.getBottomPadding()))
+                            .padding(.top, CGFloat(gem.getTopPadding()))
+                            .frame(maxWidth: 32, maxHeight: 32)
                     }
                     
                     Text("+")
@@ -170,24 +170,26 @@ struct GemDialog: View {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
                             )
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 1 ? 1 : 0)
-                        
-                        
-                        Image("gem_eff_level1")
+                                                
+                        Image(gemLevelOne)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 24)
+                            .frame(width: 28)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 1)
+                            })
                     }
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
@@ -195,15 +197,18 @@ struct GemDialog: View {
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 2 ? 1 : 0)
                         
-                        Image("gem_eff_level2")
+                        Image(gemLevelTwo)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
+                            .frame(width: 34)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 2)
+                            })
                     }
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
@@ -211,15 +216,18 @@ struct GemDialog: View {
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 3 ? 1 : 0)
                         
-                        Image("gem_eff_level3")
+                        Image(gemLevelThree)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 28)
+                            .frame(width: 32)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 3)
+                            })
                     }
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
@@ -227,15 +235,18 @@ struct GemDialog: View {
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 4 ? 1 : 0)
                         
-                        Image("gem_eff_level4")
+                        Image(gemLevelFour)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 28)
+                            .frame(width: 32)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 4)
+                            })
                     }
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
@@ -243,15 +254,18 @@ struct GemDialog: View {
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 5 ? 1 : 0)
                         
-                        Image("gem_eff_level5")
+                        Image(gemLevelFive)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 28)
+                            .frame(width: 32)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 5)
+                            })
                     }
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
-                                gradient: Gradient(colors: [Color(hex: "FFE583"), .white]),
+                                gradient: Gradient(colors: [selectorColor, .white]),
                                 center: .center,
                                 startRadius: 10,
                                 endRadius: 25)
@@ -259,10 +273,13 @@ struct GemDialog: View {
                             .frame(width: 55, height: 55)
                             .opacity(gem.getMountedGem() == 6 ? 1 : 0)
                         
-                        Image("gem_eff_level6")
+                        Image(gemLevelSix)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 28)
+                            .frame(width: 32)
+                            .onTapGesture(perform: {
+                                gem.setMountedGem(mountedGem: 6)
+                            })
                     }
                 }
                 
@@ -341,10 +358,115 @@ struct GemDialog: View {
                 .cornerRadius(15)
         }.ignoresSafeArea()
     }
+    
+    var selectorColor: Color {
+        switch (gem.getSocketType()) {
+        case eff:
+            return Color(hex: "FFE583")
+        case luck:
+            return Color(hex: "B6E4F3")
+        case comf:
+            return Color(hex: "F4A6A6")
+        case res:
+            return Color(hex: "B8C6F1")
+        default:
+            return .white
+        }
+    }
+    
+    var gemLevelOne: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level1"
+        case luck:
+            return "gem_luck_level1"
+        case comf:
+            return "gem_comf_level1"
+        case res:
+            return "gem_res_level1"
+        default:
+            return "gem_grey_level1"
+        }
+    }
+    
+    var gemLevelTwo: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level2"
+        case luck:
+            return "gem_luck_level2"
+        case comf:
+            return "gem_comf_level2"
+        case res:
+            return "gem_res_level2"
+        default:
+            return "gem_grey_level2"
+        }
+    }
+    
+    var gemLevelThree: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level3"
+        case luck:
+            return "gem_luck_level3"
+        case comf:
+            return "gem_comf_level3"
+        case res:
+            return "gem_res_level3"
+        default:
+            return "gem_grey_level3"
+        }
+    }
+    
+    var gemLevelFour: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level4"
+        case luck:
+            return "gem_luck_level4"
+        case comf:
+            return "gem_comf_level4"
+        case res:
+            return "gem_res_level4"
+        default:
+            return "gem_grey_level4"
+        }
+    }
+    
+    var gemLevelFive: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level5"
+        case luck:
+            return "gem_luck_level5"
+        case comf:
+            return "gem_comf_level5"
+        case res:
+            return "gem_res_level5"
+        default:
+            return "gem_grey_level5"
+        }
+    }
+    
+    var gemLevelSix: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level6"
+        case luck:
+            return "gem_luck_level6"
+        case comf:
+            return "gem_comf_level6"
+        case res:
+            return "gem_res_level6"
+        default:
+            return "gem_grey_level6"
+        }
+    }
 }
 
 struct GemDialog_Previews: PreviewProvider {
     static var previews: some View {
-        GemDialog(show: .constant(true), gem: .constant(Gem(socketType: 0, socketRarity: 0, mountedGem: 0)))
+        GemDialog(show: .constant(true), gem: .constant(Gem(socketType: 0, socketRarity: 0, mountedGem: 1)))
     }
 }

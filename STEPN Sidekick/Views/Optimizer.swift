@@ -62,6 +62,8 @@ struct Optimizer: View {
     @State private var energySelected: Bool = false
     
     @State private var gemPopup: Bool = false   // gem dialog
+    @State private var gemLockedDialog: Bool = false
+    @State private var gemLevelToUnlock: Int = 0
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -121,110 +123,77 @@ struct Optimizer: View {
                                 .padding(.top, 15)
                                 .overlay(
                                     HStack {
-                                        Button(action: {
-                                            print("tappin")
-                                            if shoeLevel >= 5 {
-                                                withAnimation(.easeOut .speed(3)) {
-                                                    gemSocketNum = 1
-                                                    hideTab = true
-                                                    gemPopup = true
-                                                }
-                                            } else {
-                                                // TODO: alert user
-                                            }
-                                        }, label: {
-                                            mainGems(shoeLevel: Int(shoeLevel), socketNum: 1)
+                                        mainGems(unlocked: shoeLevel >= 5, gem: gems[0])
                                                 .padding(.top, 30)
                                                 .padding(.leading, 45)
-                                        })
-                                        
-                                    }, alignment: .topLeading
-                                )
+                                                .onTapGesture(perform: {
+                                                    if shoeLevel >= 5 {
+                                                        withAnimation(.easeOut .speed(3)) {
+                                                            gemSocketNum = 0
+                                                            hideTab = true
+                                                            gemPopup = true
+                                                        }
+                                                    } else {
+                                                        gemLockedDialog = true
+                                                        gemLevelToUnlock = 5
+                                                    }
+                                                })
+                                    }, alignment: .topLeading)
                                 .overlay(
                                     HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-                                                .padding(.top, 4)
-                                                .padding(.leading, 2)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-
-                                            Image(shoeLevel >= 10 ? "gem_plus" : "gem_lock")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.top, 2)
-                                                .padding(.bottom, 2)
-                                                .frame(height: 32)
-                                            
-                                        }.padding(.top, 30)
-                                            .padding(.trailing, 45)
-                                        
+                                        mainGems(unlocked: shoeLevel >= 10, gem: gems[1])
+                                                .padding(.top, 30)
+                                                .padding(.trailing, 45)
+                                                .onTapGesture(perform: {
+                                                    if shoeLevel >= 10 {
+                                                        withAnimation(.easeOut .speed(3)) {
+                                                            gemSocketNum = 1
+                                                            hideTab = true
+                                                            gemPopup = true
+                                                        }
+                                                    } else {
+                                                        gemLockedDialog = true
+                                                        gemLevelToUnlock = 10
+                                                    }
+                                                })
                                     }, alignment: .topTrailing
                                 )
                                 .overlay(
                                     HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-                                                .padding(.top, 4)
-                                                .padding(.leading, 2)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-
-                                            Image(shoeLevel >= 15 ? "gem_plus" : "gem_lock")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.top, 2)
-                                                .padding(.bottom, 2)
-                                                .frame(height: 32)
-                                            
-                                        }.padding(.bottom, 12)
-                                            .padding(.leading, 45)
-                                        
+                                        mainGems(unlocked: shoeLevel >= 15, gem: gems[2])
+                                                .padding(.bottom, 12)
+                                                .padding(.leading, 45)
+                                                .onTapGesture(perform: {
+                                                    if shoeLevel >= 15 {
+                                                        withAnimation(.easeOut .speed(3)) {
+                                                            gemSocketNum = 2
+                                                            hideTab = true
+                                                            gemPopup = true
+                                                        }
+                                                    } else {
+                                                        gemLockedDialog = true
+                                                        gemLevelToUnlock = 15
+                                                    }
+                                                })
                                     }, alignment: .bottomLeading
                                 )
                                 .overlay(
                                     HStack {
-                                        ZStack {
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gem Socket Shadow"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-                                                .padding(.top, 4)
-                                                .padding(.leading, 2)
-                                            
-                                            Image("gem_socket_gray_0")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 46, height: 46)
-
-                                            Image(shoeLevel >= 20 ? "gem_plus" : "gem_lock")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.top, 2)
-                                                .padding(.bottom, 2)
-                                                .frame(height: 32)
-                                            
-                                        }.padding(.bottom, 12)
-                                            .padding(.trailing, 45)
-                                        
+                                        mainGems(unlocked: shoeLevel >= 20, gem: gems[3])
+                                                .padding(.bottom, 12)
+                                                .padding(.trailing, 45)
+                                                .onTapGesture(perform: {
+                                                    if shoeLevel >= 20 {
+                                                        withAnimation(.easeOut .speed(3)) {
+                                                            gemSocketNum = 3
+                                                            hideTab = true
+                                                            gemPopup = true
+                                                        }
+                                                    } else {
+                                                        gemLockedDialog = true
+                                                        gemLevelToUnlock = 20
+                                                    }
+                                                })
                                     }, alignment: .bottomTrailing
                                 )
                                 .frame(maxWidth: 400)
@@ -1247,6 +1216,11 @@ struct Optimizer: View {
         }.ignoresSafeArea()
             .preferredColorScheme(.light)
             .background(Color("Light Green"))
+            .alert(isPresented: $gemLockedDialog) {
+                Alert(title: Text("Socket Locked"),
+                      message: Text("Available at level " + String(gemLevelToUnlock)),
+                      dismissButton: .default(Text("Okay")))
+            }
     }
     
     var innerCircleColor: String {
@@ -1481,23 +1455,12 @@ struct CustomSlider: View {
 
 // main gem stacks
 struct mainGems: View {
-    var minLevel: Int
-    private var shoeLevel: Int
-    private var socketNum: Int
+    private var unlocked: Bool
+    private var gem: Gem
     
-    init(shoeLevel: Int, socketNum: Int) {
-        self.shoeLevel = shoeLevel
-        self.socketNum = socketNum
-        switch(socketNum) {
-        case 2:
-            minLevel = 10
-        case 3:
-            minLevel = 15
-        case 4:
-            minLevel = 20
-        default:
-            minLevel = 5
-        }
+    init(unlocked: Bool, gem: Gem) {
+        self.unlocked = unlocked
+        self.gem = gem
     }
     
     var body: some View {
@@ -1511,16 +1474,16 @@ struct mainGems: View {
                 .padding(.top, 4)
                 .padding(.leading, 2)
         
-            Image("gem_socket_gray_0")
+            Image(unlocked ? gem.getSocketImageSource() : "gem_socket_gray_0")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 46, height: 46)
             
-            Image(shoeLevel >= minLevel ? "gem_plus" : "gem_lock")
+            Image(unlocked ? gem.getGemImageSource() : "gem_lock")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .padding(.top, 2)
-                .padding(.bottom, 2)
+                .padding(.top, CGFloat(gem.getTopPadding()))
+                .padding(.bottom, CGFloat(gem.getBottomPadding()))
                 .frame(height: 32)
         }
     }
