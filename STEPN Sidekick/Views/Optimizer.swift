@@ -51,6 +51,8 @@ struct Optimizer: View {
         Gem(socketType: -1, socketRarity: 0, mountedGem: 0)
     ]
     
+    @State private var comfGemLvlForRestore: Int = 1
+    
     @State private var gemSocketNum: Int = 0
     @State private var popCircles: Bool = false
     @State private var popShoe: Bool = false
@@ -978,7 +980,7 @@ struct Optimizer: View {
                                     
                                     Spacer()
                                     
-                                    Text(String(repairCostDurability))
+                                    Text(String(Double(repairCostGst)))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
@@ -997,7 +999,7 @@ struct Optimizer: View {
                                     
                                     Spacer()
                                     
-                                    Text("0")
+                                    Text(hpLoss == 0 ? "0" : String(hpLoss))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
@@ -1011,11 +1013,11 @@ struct Optimizer: View {
                                     
                                     Spacer()
                                     
-                                    Text("0")
+                                    Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("gem_comf_level1")
+                                    Image(comfGemForRestoreResource)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1025,7 +1027,7 @@ struct Optimizer: View {
                                         .foregroundColor(Color("Almost Black"))
                                         .padding(.horizontal, 5)
                                     
-                                    Text("0")
+                                    Text(hpLoss == 0 ? "0" : String(restoreHpCostGst))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
@@ -1044,7 +1046,7 @@ struct Optimizer: View {
                                     
                                     Spacer()
                                     
-                                    Text("0")
+                                    Text(String(gstProfitBeforeGem))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
@@ -1058,11 +1060,11 @@ struct Optimizer: View {
                                         .foregroundColor(Color("Almost Black"))
                                         .padding(.horizontal, 5)
                                     
-                                    Text("0")
+                                    Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("gem_comf_level1")
+                                    Image(comfGemForRestoreResource)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1400,7 +1402,7 @@ struct Optimizer: View {
             return 0
         }
         
-        var durLoss: Int = Int(round((Double(energy) ?? 0) * 2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294))
+        var durLoss: Int = Int(round((Double(energy) ?? 0) * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
         
         if durLoss < 1 {
             durLoss = 1
@@ -1408,13 +1410,13 @@ struct Optimizer: View {
         return durLoss
     }
     
-    var repairCostDurability: Double {
-        return Double(repairCost * Double(durabilityLost))
+    var repairCostGst: Double {
+        return round(baseRepairCost * Double(durabilityLost) * 10) / 10
     }
-    
-    var repairCost: Double {
+        
+    var baseRepairCost: Double {
         if shoeRarity == common {
-            switch (shoeLevel) {
+            switch (Int(shoeLevel)) {
             case 1:
                 return 0.31
             case 2:
@@ -1479,7 +1481,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == uncommon {
-            switch (shoeLevel) {
+            switch (Int(shoeLevel)) {
             case 1:
                 return 0.41
             case 2:
@@ -1544,7 +1546,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == rare {
-            switch (shoeLevel) {
+            switch (Int(shoeLevel)) {
             case 1:
                 return 0.51
             case 2:
@@ -1609,7 +1611,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == epic {
-            switch (shoeLevel) {
+            switch (Int(shoeLevel)) {
             case 1:
                 return 0.61
             case 2:
@@ -1678,6 +1680,106 @@ struct Optimizer: View {
         }
     }
     
+    var gstCostBasedOnGem: Int {
+        switch (comfGemLvlForRestore) {
+        case 2:
+            return 30
+        case 3:
+            return 100
+        default:
+            return 10
+        }
+    }
+    
+    var hpLoss: Double {
+        if totalComf == 0 || (Double(energy) ?? 0) == 0 {
+            return 0
+        }
+        
+        switch (shoeRarity) {
+        case common:
+            return round((Double(energy) ?? 0) * 0.386 * pow(totalComf, -0.421) * 100) / 100
+        case uncommon:
+            return round((Double(energy) ?? 0) * 0.424 * pow(totalComf, -0.456) * 100) / 100
+        case rare:
+            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+        case epic:
+            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+        default:
+            return 0
+        }
+    }
+    
+    var hpPercentRestored: Double {
+        if totalComf == 0 || (Double(energy) ?? 0) == 0 {
+            return 1
+        }
+        
+        switch (shoeRarity) {
+        case common:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 39
+            case 3:
+                return 100
+            default:
+                return 3
+            }
+        case uncommon:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 23
+            case 3:
+                return 100
+            default:
+                return 1.8
+            }
+        case rare:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 16
+            case 3:
+                return 92
+            default:
+                return 1.2
+            }
+        case epic:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 11
+            case 3:
+                return 67
+            default:
+                return 0.88
+            }
+        default:
+            return 1
+        }
+    }
+    
+    var comfGemForRestoreResource: String {
+        switch (comfGemLvlForRestore) {
+        case 2:
+            return "gem_comf_level2"
+        case 3:
+            return "gem_comf_level3"
+        default:
+            return "gem_comf_level1"
+        }
+    }
+    
+    var restoreHpCostGst: Double {
+        return round(Double(gstCostBasedOnGem) * (hpLoss / hpPercentRestored) * 10) / 10
+    }
+    
+    var gstProfitBeforeGem: Double {
+        return round((gstEarned - repairCostGst - restoreHpCostGst) * 10) / 10
+    }
+    
+    var comfGemMultiplier: Double {
+        return round(hpLoss / hpPercentRestored * 100) / 100
+    }
+    
     func getBasePointsGemType(socketType: Int) -> Double {
         switch (socketType) {
         case luck:
@@ -1692,7 +1794,6 @@ struct Optimizer: View {
     }
         
     func updatePoints() {
-        print("update points called!\n:)")
         let points: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
        
         var gemsUnlocked: Int = 0;
