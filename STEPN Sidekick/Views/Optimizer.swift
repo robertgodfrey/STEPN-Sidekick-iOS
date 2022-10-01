@@ -147,7 +147,7 @@ struct Optimizer: View {
                                                     clearFocus()
                                                     if shoeLevel >= 10 {
                                                         withAnimation(.easeOut .speed(3)) {
-                                                            gems[1].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
+                                                            gems[1].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[1].getSocketType()))
                                                             gemSocketNum = 1
                                                             hideTab = true
                                                             gemPopup = true
@@ -168,7 +168,7 @@ struct Optimizer: View {
                                                     clearFocus()
                                                     if shoeLevel >= 15 {
                                                         withAnimation(.easeOut .speed(3)) {
-                                                            gems[2].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
+                                                            gems[2].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[2].getSocketType()))
                                                             gemSocketNum = 2
                                                             hideTab = true
                                                             gemPopup = true
@@ -189,7 +189,7 @@ struct Optimizer: View {
                                                     clearFocus()
                                                     if shoeLevel >= 20 {
                                                         withAnimation(.easeOut .speed(3)) {
-                                                            gems[3].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[0].getSocketType()))
+                                                            gems[3].setBasePoints(basePoints: getBasePointsGemType(socketType: gems[3].getSocketType()))
                                                             gemSocketNum = 3
                                                             hideTab = true
                                                             gemPopup = true
@@ -365,7 +365,6 @@ struct Optimizer: View {
                                         }).buttonStyle(OptimizerButtons(tapAction: {
                                             clearFocus()
                                             popShoe = true
-                                            calcTotals()
                                             if shoeType == 3 {
                                                 shoeType = 0
                                             } else {
@@ -412,7 +411,6 @@ struct Optimizer: View {
                                                 }
                                             } else {
                                                 energySelected = false
-                                                calcTotals()
                                             }})
                                             .padding(.trailing, 6)
                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -1091,36 +1089,51 @@ struct Optimizer: View {
                                     HStack {
                                         Image("mb1")
                                             .resizable()
+                                            .renderingMode(mb1Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb1Chance > 1 ? 1 : 0.5)
                                         
                                         Spacer()
                                         
                                         Image("mb2")
                                             .resizable()
+                                            .renderingMode(mb2Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb2Chance > 1 ? 1 : 0.5)
                                         
                                         Spacer()
 
                                         Image("mb3")
                                             .resizable()
+                                            .renderingMode(mb3Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb3Chance > 1 ? 1 : 0.5)
 
                                         Spacer()
 
                                         Image("mb4")
                                             .resizable()
+                                            .renderingMode(mb4Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb4Chance > 1 ? 1 : 0.5)
                                         
                                         Spacer()
 
                                         Image("mb5")
                                             .resizable()
+                                            .renderingMode(mb5Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb5Chance > 1 ? 1 : 0.5)
 
                                         
                                     }.padding(.horizontal, 40)
@@ -1130,36 +1143,57 @@ struct Optimizer: View {
                                     HStack {
                                         Image("mb6")
                                             .resizable()
+                                            .renderingMode(mb6Chance == 0 || mb9Chance == 2 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb6Chance > 1 && mb8Chance < 2 ? 1 : 0.5)
                                         
                                         Spacer()
                                         
                                         Image("mb7")
                                             .resizable()
+                                            .renderingMode(mb7Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb7Chance > 1 && mb9Chance < 2 ? 1 : 0.5)
                                         
                                         Spacer()
 
                                         Image("mb8")
                                             .resizable()
+                                            .renderingMode(mb8Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb8Chance > 1 ? 1 : 0.5)
 
                                         Spacer()
 
                                         Image("mb9")
                                             .resizable()
+                                            .renderingMode(mb9Chance == 0 ? .template : .none)
+                                            .foregroundColor(Color("Gandalf"))
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 54, height: 54)
+                                            .opacity(mb9Chance > 1 ? 1 : 0.5)
                                         
                                         Spacer()
-
-                                        Image("mb10")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
+                                        
+                                        ZStack {
+                                            Image("mb10")
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color("Gandalf"))
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 54, height: 54)
+                                                .opacity(0.5)
+                                            Text("¯\\ (ツ)_/¯".replacingOccurrences(of: " ", with: "_"))
+                                                .font(Font.custom("Roboto-Regular", size: 10))
+                                                .foregroundColor(Color("Almost Black"))
+                                                .opacity(mb9Chance > 1 ? 1 : 0)
+                                        }
 
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400)
@@ -1374,6 +1408,7 @@ struct Optimizer: View {
         }
     }
     
+    // MARK: Earning calcs
     var gstEarned: Double {
         switch (shoeType) {
         case jogger:
@@ -1780,6 +1815,115 @@ struct Optimizer: View {
         return round(hpLoss / hpPercentRestored * 100) / 100
     }
     
+    // MARK: Mystery box calcs
+    // 0 = very low/no chance, 1 = low chance, 2 = high chance
+    var mb1Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy <= -0.04 * totalLuck + 6 && localEnergy >= -0.05263 * totalLuck + 2 && localEnergy >= 1 && totalLuck > 1 {
+            return 2
+        }
+        if localEnergy > -0.04 * totalLuck + 6 && localEnergy < -0.02 * totalLuck + 8 && totalLuck < 110 && totalLuck > 1 {
+            return 1
+        }
+        return 0
+    }
+    
+    var mb2Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy <= -0.06897 * totalLuck + 10 && localEnergy >= -1.3333 * totalLuck + 6 && localEnergy >= 2 && totalLuck > 2 {
+            return 2
+        }
+        if localEnergy > -0.068966 * totalLuck + 10 && localEnergy < -0.04 * totalLuck + 13 && totalLuck > 2 {
+            return 1
+        }
+        return 0
+    }
+    
+    var mb3Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy <= -0.09091 * totalLuck + 16 && localEnergy >= 70 * pow((totalLuck + 8), -1) + 2 && localEnergy >= 3.1 && totalLuck > 3 {
+            return 2
+        }
+        if (localEnergy > -0.09091 * totalLuck + 16 && localEnergy < -0.08333 * totalLuck + 22)
+            || (localEnergy > 3.5 && localEnergy < 12 && totalLuck > 100 && totalLuck < 500) {
+            return 1
+        }
+        return 0
+    }
+    
+    var mb4Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 22 && localEnergy >= 70 * pow((totalLuck + 5), -1) + 3 && totalLuck > 4 {
+            if localEnergy <= -0.0001 * pow((totalLuck + 40), 2) + 18 && localEnergy >= 50 * pow((totalLuck + 30), -0.2) - 13.5 {
+                return 2
+            } else {
+                return 1
+            }
+        }
+        return 0
+    }
+    
+    var mb5Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 26.05 && localEnergy >= 50 * pow((totalLuck - 2), -1) + 7 && totalLuck > 5 {
+            if localEnergy <= -0.00003 * pow((totalLuck + 50), 2) + 22.5 && localEnergy >= 70 * pow((totalLuck - 10), -0.1) - 32 {
+                return 2
+            } else {
+                return 1
+            }
+        }
+        return 0
+    }
+    
+    var mb6Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+
+        if localEnergy >= 140 * pow((totalLuck - 20), -0.5) + 1 && totalLuck > 6 {
+            if localEnergy >= 70 * pow((totalLuck - 70), -0.1) - 25.5 {
+                return 2
+            } else {
+                return 1
+            }
+        }
+        return 0
+    }
+    
+    var mb7Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy >= -totalLuck / 45 + 26.9 && localEnergy > 7 {
+            if localEnergy >= -totalLuck / 100 + 26.5 {
+                return 2
+            } else {
+                return 1
+            }
+        }
+        return 0
+    }
+    
+    var mb8Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy >= -totalLuck / 150 + 32 && localEnergy > 14 {
+            return 2
+        }
+        return 0
+    }
+    
+    var mb9Chance: Int {
+        let localEnergy = Double(energy) ?? 0
+        
+        if localEnergy >= -totalLuck / 300 + 29 && localEnergy > 19 {
+            return 2
+        }
+        return 0
+    }
+    
     func getBasePointsGemType(socketType: Int) -> Double {
         switch (socketType) {
         case luck:
@@ -1847,14 +1991,8 @@ struct Optimizer: View {
             totalComf = round(((Double(baseComfString) ?? 0) + Double(addedComf) + gemComf) * 10) / 10
             totalRes = round(((Double(baseResString) ?? 0) + Double(addedRes) + gemRes) * 10) / 10
         }
-        
-        calcTotals()
     }
     
-    // calculate gst earnings, durability lost, repair cost, and mb chance
-    func calcTotals() {
-        // TODO: delete???
-    }
     
     func clearFocus() {
         UIApplication.shared.hideKeyboard()
