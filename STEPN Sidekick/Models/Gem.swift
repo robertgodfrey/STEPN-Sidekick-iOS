@@ -9,7 +9,7 @@
 
 import Foundation
 
-struct Gem {
+struct Gem: Codable {
     private var socketType: Int
     private var socketRarity: Int
     private var mountedGem: Int

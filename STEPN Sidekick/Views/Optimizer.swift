@@ -14,13 +14,17 @@ import SwiftUI
 
 struct Optimizer: View {
     
+    @AppStorage("shoeNum") private var shoeNum: Int = 1
+    
+    @EnvironmentObject var shoes: OptimizerShoes
+    
     @Binding var hideTab: Bool
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
     
-    @State private var shoeRarity: Int = 2
-    @State private var shoeType: Int = 0
+    @State private var shoeRarity: Int = common
+    @State private var shoeType: Int = walker
     
     @State private var shoeName: String = ""
     @State private var energy: String = ""
@@ -122,7 +126,7 @@ struct Optimizer: View {
                                 .padding(.top, 15)
                                 .overlay(
                                     HStack {
-                                        mainGems(unlocked: shoeLevel >= 5, gem: gems[0])
+                                        MainGems(unlocked: shoeLevel >= 5, gem: gems[0])
                                                 .padding(.top, 30)
                                                 .padding(.leading, 45)
                                                 .onTapGesture(perform: {
@@ -142,7 +146,7 @@ struct Optimizer: View {
                                     }, alignment: .topLeading)
                                 .overlay(
                                     HStack {
-                                        mainGems(unlocked: shoeLevel >= 10, gem: gems[1])
+                                        MainGems(unlocked: shoeLevel >= 10, gem: gems[1])
                                                 .padding(.top, 30)
                                                 .padding(.trailing, 45)
                                                 .onTapGesture(perform: {
@@ -163,7 +167,7 @@ struct Optimizer: View {
                                 )
                                 .overlay(
                                     HStack {
-                                        mainGems(unlocked: shoeLevel >= 15, gem: gems[2])
+                                        MainGems(unlocked: shoeLevel >= 15, gem: gems[2])
                                                 .padding(.bottom, 12)
                                                 .padding(.leading, 45)
                                                 .onTapGesture(perform: {
@@ -184,7 +188,7 @@ struct Optimizer: View {
                                 )
                                 .overlay(
                                     HStack {
-                                        mainGems(unlocked: shoeLevel >= 20, gem: gems[3])
+                                        MainGems(unlocked: shoeLevel >= 20, gem: gems[3])
                                                 .padding(.bottom, 12)
                                                 .padding(.trailing, 45)
                                                 .onTapGesture(perform: {
@@ -1313,6 +1317,53 @@ struct Optimizer: View {
         }.ignoresSafeArea()
             .preferredColorScheme(.light)
             .background(Color("Light Green"))
+            .onAppear {
+                shoeRarity = shoes.getShoe(0).shoeRarity
+                shoeType = shoes.getShoe(0).shoeType
+                shoeName = shoes.getShoe(0).shoeName
+                energy = shoes.getShoe(0).energy
+                shoeLevel = shoes.getShoe(0).shoeLevel
+                pointsAvailable = shoes.getShoe(0).pointsAvailable
+                baseEffString = shoes.getShoe(0).baseEffString
+                baseLuckString = shoes.getShoe(0).baseLuckString
+                baseComfString = shoes.getShoe(0).baseComfString
+                baseResString = shoes.getShoe(0).baseResString
+                addedEff = shoes.getShoe(0).addedEff
+                addedLuck = shoes.getShoe(0).addedLuck
+                addedComf = shoes.getShoe(0).addedComf
+                addedRes = shoes.getShoe(0).addedRes
+                gemEff = shoes.getShoe(0).gemEff
+                gemLuck = shoes.getShoe(0).gemLuck
+                gemComf = shoes.getShoe(0).gemComf
+                gemRes = shoes.getShoe(0).gemRes
+                gems = shoes.getShoe(0).gems
+                
+                updatePoints()
+            }
+            .onDisappear {
+                let currentShoe: OptimizerShoe = OptimizerShoe(
+                    shoeRarity: shoeRarity,
+                    shoeType: shoeType,
+                    shoeName: shoeName,
+                    energy: energy,
+                    shoeLevel: shoeLevel,
+                    pointsAvailable: pointsAvailable,
+                    baseEffString: baseEffString,
+                    baseLuckString: baseLuckString,
+                    baseComfString: baseComfString,
+                    baseResString: baseResString,
+                    addedEff: addedEff,
+                    addedLuck: addedLuck,
+                    addedComf: addedComf,
+                    addedRes: addedRes,
+                    gemEff: gemEff,
+                    gemLuck: gemLuck,
+                    gemComf: gemComf,
+                    gemRes: gemRes,
+                    gems: gems)
+                
+                shoes.update(shoe: currentShoe, i: 1)
+            }
     }
     
     var innerCircleColor: String {
@@ -2201,12 +2252,6 @@ struct Optimizer: View {
     }
 }
 
-struct Optimizer_Previews: PreviewProvider {
-    static var previews: some View {
-        Optimizer(hideTab: .constant(false))
-    }
-}
-
 // dope-ass custom slider struct (courtesy of https://swdevnotes.com/swift/2021/how-to-customise-the-slider-in-swiftui/)
 struct CustomSlider: View {
     @Binding var value: Double
@@ -2270,7 +2315,7 @@ struct CustomSlider: View {
 }
 
 // main gem stacks
-struct mainGems: View {
+struct MainGems: View {
     private var unlocked: Bool
     private var gem: Gem
     
@@ -2353,5 +2398,12 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+}
+
+struct Optimizer_Previews: PreviewProvider {
+    static var previews: some View {
+        Optimizer(hideTab: .constant(false))
+            .environmentObject(OptimizerShoes())
     }
 }

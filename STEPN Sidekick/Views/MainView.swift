@@ -15,6 +15,7 @@ import SwiftUI
 struct MainView: View {
     @State var currentTab = "Activity"
     @State var hideTab = false
+    @StateObject var shoes = OptimizerShoes()
     var bottomEdge: CGFloat
     
     // to hide tab view
@@ -37,7 +38,7 @@ struct MainView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color("Light Green"))
                 .tag("Info")
-        }
+        }.environmentObject(shoes)
         .overlay(
             VStack {
                 CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
