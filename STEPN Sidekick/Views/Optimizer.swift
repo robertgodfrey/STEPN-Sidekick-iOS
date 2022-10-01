@@ -1024,11 +1024,24 @@ struct Optimizer: View {
                                     Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
+                                        .padding(.trailing, -2)
                                     
-                                    Image(comfGemForRestoreResource)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
+                                    Button(action: {
+                                        if comfGemLvlForRestore == 3 {
+                                            comfGemLvlForRestore = 1
+                                        } else {
+                                            comfGemLvlForRestore += 1
+                                        }
+                                    }, label: {
+                                        Image(comfGemForRestoreResource)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
+                                            .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
+                                            .frame(width: 24, height: 24)
+                                            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                                            .padding(.horizontal, -10)
+                                    })
                                     
                                     Text("+")
                                         .font(Font.custom(fontTitles, size: 18))
@@ -1071,11 +1084,14 @@ struct Optimizer: View {
                                     Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
+                                        .padding(.trailing, -2)
                                     
                                     Image(comfGemForRestoreResource)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
+                                        .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
+                                        .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
+                                        .frame(width: 24, height: 24)
                                     
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
