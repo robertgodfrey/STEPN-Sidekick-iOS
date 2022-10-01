@@ -923,6 +923,7 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
+                                            optimizeForLuck()
                                         })).font(Font.custom(fontButtons, size: 18))
                                                                  
                                 }
@@ -1411,16 +1412,7 @@ struct Optimizer: View {
     
     // MARK: Earning calcs
     var gstEarned: Double {
-        switch (shoeType) {
-        case jogger:
-            return floor((Double(energy) ?? 0) * pow(totalEff, 0.48) * 10) / 10
-        case runner:
-            return floor((Double(energy) ?? 0) * pow(totalEff, 0.49) * 10) / 10
-        case trainer:
-            return floor((Double(energy) ?? 0) * pow(totalEff, 0.492) * 10) / 10
-        default:
-            return floor((Double(energy) ?? 0) * pow(totalEff, 0.47) * 10) / 10
-        }
+        return floor((Double(energy) ?? 0) * pow(totalEff, energyCo) * 10) / 10
     }
     
     var gstLimit: Int {
@@ -1925,6 +1917,19 @@ struct Optimizer: View {
         return 0
     }
     
+    var energyCo: Double {
+        switch (shoeType) {
+        case jogger:
+            return 0.48
+        case runner:
+            return 0.49
+        case trainer:
+            return 0.492
+        default:
+            return 0.47
+        }
+    }
+    
     func getBasePointsGemType(socketType: Int) -> Double {
         switch (socketType) {
         case luck:
@@ -2001,41 +2006,28 @@ struct Optimizer: View {
         let localComf: Double = (Double(baseComfString) ?? 0) + gemComf
         let localRes: Double = (Double(baseResString) ?? 0) + gemRes
         
-        var gstProfit: Double = 0
-        var energyCo: Double = 0
-        
-        var optimalAddedEff: Int = 0
-        var optimalAddedComf: Int = 0
-        var optimalAddedRes: Int = 0
-        var maxProfit: Double = 0
-        
         var localAddedEff: Int = 0
         var localAddedComf: Int = 0
         var localAddedRes: Int = 0
         
-        var i: Int = 1
+        var optimalAddedEff: Int = 0
+        var optimalAddedComf: Int = 0
+        var optimalAddedRes: Int = 0
         
-        switch (shoeType) {
-        case jogger:
-            energyCo = 0.48
-        case runner:
-            energyCo = 0.49
-        case trainer:
-            energyCo = 0.492
-        default:
-            energyCo = 0.47
-        }
-
+        var gstProfit: Double = 0
+        var maxProfit: Double = 0
+        
+        gstProfit = round((gstEarned - repairCostGst - restoreHpCostGst) * 10) / 10
+                            
         // O(n^2) w/ max 45,150 calcs... yikes :)
         while localAddedEff <= localPoints {
             while localAddedComf <= localPoints - localAddedEff {
                 localAddedRes = localPoints - localAddedComf - localAddedEff
 
-                gstProfit = (floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
-                    - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294) * 10)) / 10)
-                    - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)
+                gstProfit = round(((floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
+                                  - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294)) * 10) / 10)
+                                  - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
 
-                print("gst profit: " + String(round(gstProfit * 10) / 10))
                 if (gstProfit > maxProfit) {
                     optimalAddedEff = localAddedEff
                     optimalAddedComf = localAddedComf
@@ -2043,11 +2035,9 @@ struct Optimizer: View {
                     maxProfit = gstProfit
                 }
                 localAddedComf += 1
-                i += 1
             }
             localAddedComf = 0
             localAddedEff += 1
-                      print(String(maxProfit))
         }
         addedEff = optimalAddedEff
         addedLuck = 0
@@ -2070,6 +2060,76 @@ struct Optimizer: View {
         default:
             return 0
         }
+    }
+    
+    // optimizes for most luck with no GST loss
+    func optimizeForLuck() {
+        let localPoints: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+
+        var localAddedEff: Int = 0
+        var localAddedComf: Int = 0
+        var localAddedRes: Int = 0
+        var pointsSpent: Int = 0
+
+        // favors eff, but is efficient (see what i did there)
+        while !breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) && pointsSpent < localPoints {
+            pointsSpent += 1
+            localAddedEff = pointsSpent
+            localAddedComf = 0
+            localAddedRes = 0
+
+            if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                break
+            }
+
+            while localAddedEff > 0 {
+                localAddedEff -= 1
+                localAddedComf += 1
+
+                if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                    break
+                }
+
+                while localAddedComf > 0 {
+                    localAddedComf -= 1
+                    localAddedRes += 1
+
+                    if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                        break
+                    }
+                }
+
+                if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                    break
+                }
+
+                localAddedComf += localAddedRes
+                localAddedRes = 0
+            }
+        }
+
+        addedEff = localAddedEff
+        addedRes = localAddedRes
+        addedLuck = localPoints - pointsSpent
+        addedComf = localAddedComf
+        
+        updatePoints()
+    }
+    
+    // check GST profit, returns true if greater than 0
+    func breakEvenGst(localAddedEff: Int, localAddedComf: Int, localAddedRes: Int) -> Bool {
+        let localEnergy: Double = Double(energy) ?? 0
+        let localEff: Double = (Double(baseEffString) ?? 0) + gemEff
+        let localComf: Double = (Double(baseComfString) ?? 0) + gemComf
+        let localRes: Double = (Double(baseResString) ?? 0) + gemRes
+        
+        var gstProfit: Double = 0
+
+        gstProfit = round(((floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
+                          - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294)) * 10) / 10)
+                          - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
+  
+        return gstProfit >= 0
     }
     
     func clearFocus() {
