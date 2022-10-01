@@ -61,6 +61,8 @@ struct Optimizer: View {
     @State private var gemPopup: Bool = false   // gem dialog
     @State private var gemLockedDialog: Bool = false
     @State private var gemLevelToUnlock: Int = 0
+    
+    @State private var resetPageDialog: Bool = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -202,6 +204,11 @@ struct Optimizer: View {
                                     }, alignment: .bottomTrailing
                                 )
                                 .frame(maxWidth: 400)
+                                .alert(isPresented: $gemLockedDialog) {
+                                    Alert(title: Text("Socket Locked"),
+                                          message: Text("Available at level " + String(gemLevelToUnlock)),
+                                          dismissButton: .default(Text("Okay")))
+                                }
                             
                             // MARK: Shoe name
                             ZStack {
@@ -903,6 +910,7 @@ struct Optimizer: View {
                                             .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
                                     })
                                         .buttonStyle(StartButton(tapAction: {
+                                            // TODO: energy checks
                                             UIApplication.shared.hideKeyboard()
                                             optimizeForGst()
                                         })).font(Font.custom(fontButtons, size: 18))
@@ -1072,7 +1080,7 @@ struct Optimizer: View {
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                 
-                                
+                                /* TODO: add this :)
                                 HStack {
                                     Spacer()
                                     
@@ -1086,6 +1094,7 @@ struct Optimizer: View {
                                 Text("Mystery Box Chance")
                                     .font(Font.custom(fontTitles, size: 20))
                                     .foregroundColor(Color("Almost Black"))
+                                 */
                                 
                                 VStack {
                                     HStack {
@@ -1200,11 +1209,26 @@ struct Optimizer: View {
                                     }.padding(.horizontal, 40)
                                         .frame(maxWidth: 400)
                                     
-                                    Text("Reset Values")
-                                        .font(Font.custom(fontTitles, size: 14))
-                                        .foregroundColor(Color("Gandalf"))
-                                        .padding(.top, 20)
-                                        .padding(.bottom, 40)
+                                    Button(action: {
+                                        withAnimation(.easeOut .speed(1.5)) {
+                                            hideTab = true
+                                        }
+                                        resetPageDialog = true
+                                    }, label: {
+                                        Text("Reset Values")
+                                            .font(Font.custom(fontTitles, size: 14))
+                                            .foregroundColor(Color("Gandalf"))
+                                            .padding(.top, 20)
+                                            .padding(.bottom, 40)
+                                    }).alert(isPresented: $resetPageDialog) {
+                                        Alert(title: Text("Reset All Values"),
+                                              message: Text("Are you sure you want to reset all values?"),
+                                              primaryButton: .destructive(Text("Yes")) {
+                                                resetPage()
+                                            },
+                                              secondaryButton: .cancel()
+                                        )
+                                    }
                                 }
                             }.padding(.top, 16)
                         }
@@ -1273,11 +1297,6 @@ struct Optimizer: View {
         }.ignoresSafeArea()
             .preferredColorScheme(.light)
             .background(Color("Light Green"))
-            .alert(isPresented: $gemLockedDialog) {
-                Alert(title: Text("Socket Locked"),
-                      message: Text("Available at level " + String(gemLevelToUnlock)),
-                      dismissButton: .default(Text("Okay")))
-            }
     }
     
     var innerCircleColor: String {
@@ -2130,6 +2149,35 @@ struct Optimizer: View {
                           - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
   
         return gstProfit >= 0
+    }
+    
+    func resetPage() {
+        shoeType = walker
+        shoeRarity = common
+        shoeLevel = 1
+        energy = "0"
+        baseEffString = "0"
+        addedEff = 0
+        baseLuckString = "0"
+        addedLuck = 0
+        baseComfString = "0"
+        addedComf = 0
+        baseResString = "0"
+        addedRes = 0
+        shoeName = ""
+        gemEff = 0
+        gemLuck = 0
+        gemComf = 0
+        gemRes = 0
+
+        gems.removeAll()
+
+        gems.append(Gem(socketType: -1, socketRarity: 0, mountedGem: 0))
+        gems.append(Gem(socketType: -1, socketRarity: 0, mountedGem: 0))
+        gems.append(Gem(socketType: -1, socketRarity: 0, mountedGem: 0))
+        gems.append(Gem(socketType: -1, socketRarity: 0, mountedGem: 0))
+        
+        updatePoints()
     }
     
     func clearFocus() {
