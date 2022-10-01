@@ -438,7 +438,7 @@ struct Optimizer: View {
                                     .frame(maxWidth: 400, maxHeight: 30)
                                 
                                 HStack {
-                                    Text("Level " + String(Int(shoeLevel)))
+                                    Text("Level " + String(Int(round(shoeLevel))))
                                         .font(Font.custom(fontTitles, size: 15))
                                         .foregroundColor(Color("Almost Black"))
                                         .padding(.leading, 20)
@@ -904,6 +904,7 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
+                                            optimizeForGst()
                                         })).font(Font.custom(fontButtons, size: 18))
                                                                  
                                 }
@@ -1451,7 +1452,7 @@ struct Optimizer: View {
         
     var baseRepairCost: Double {
         if shoeRarity == common {
-            switch (Int(shoeLevel)) {
+            switch (round(shoeLevel)) {
             case 1:
                 return 0.31
             case 2:
@@ -1516,7 +1517,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == uncommon {
-            switch (Int(shoeLevel)) {
+            switch (round(shoeLevel)) {
             case 1:
                 return 0.41
             case 2:
@@ -1581,7 +1582,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == rare {
-            switch (Int(shoeLevel)) {
+            switch (round(shoeLevel)) {
             case 1:
                 return 0.51
             case 2:
@@ -1646,7 +1647,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == epic {
-            switch (Int(shoeLevel)) {
+            switch (round(shoeLevel)) {
             case 1:
                 return 0.61
             case 2:
@@ -1993,6 +1994,83 @@ struct Optimizer: View {
         }
     }
     
+    func optimizeForGst() {
+        let localEnergy: Double = Double(energy) ?? 0
+        let localPoints: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+        let localEff: Double = (Double(baseEffString) ?? 0) + gemEff
+        let localComf: Double = (Double(baseComfString) ?? 0) + gemComf
+        let localRes: Double = (Double(baseResString) ?? 0) + gemRes
+        
+        var gstProfit: Double = 0
+        var energyCo: Double = 0
+        
+        var optimalAddedEff: Int = 0
+        var optimalAddedComf: Int = 0
+        var optimalAddedRes: Int = 0
+        var maxProfit: Double = 0
+        
+        var localAddedEff: Int = 0
+        var localAddedComf: Int = 0
+        var localAddedRes: Int = 0
+        
+        var i: Int = 1
+        
+        switch (shoeType) {
+        case jogger:
+            energyCo = 0.48
+        case runner:
+            energyCo = 0.49
+        case trainer:
+            energyCo = 0.492
+        default:
+            energyCo = 0.47
+        }
+
+        // O(n^2) w/ max 45,150 calcs... yikes :)
+        while localAddedEff <= localPoints {
+            while localAddedComf <= localPoints - localAddedEff {
+                localAddedRes = localPoints - localAddedComf - localAddedEff
+
+                gstProfit = (floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
+                    - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294) * 10)) / 10)
+                    - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)
+
+                print("gst profit: " + String(round(gstProfit * 10) / 10))
+                if (gstProfit > maxProfit) {
+                    optimalAddedEff = localAddedEff
+                    optimalAddedComf = localAddedComf
+                    optimalAddedRes = localAddedRes
+                    maxProfit = gstProfit
+                }
+                localAddedComf += 1
+                i += 1
+            }
+            localAddedComf = 0
+            localAddedEff += 1
+                      print(String(maxProfit))
+        }
+        addedEff = optimalAddedEff
+        addedLuck = 0
+        addedComf = optimalAddedComf
+        addedRes = optimalAddedRes
+        
+        updatePoints()
+    }
+    
+    func hpLossForOptimizer(totalComf: Double) -> Double {
+        switch (shoeRarity) {
+        case common:
+            return round((Double(energy) ?? 0) * 0.386 * pow(totalComf, -0.421) * 100) / 100
+        case uncommon:
+            return round((Double(energy) ?? 0) * 0.424 * pow(totalComf, -0.456) * 100) / 100
+        case rare:
+            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+        case epic:
+            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+        default:
+            return 0
+        }
+    }
     
     func clearFocus() {
         UIApplication.shared.hideKeyboard()
