@@ -21,6 +21,8 @@ struct GemDialog: View {
     @Binding var gemLuck: Double
     @Binding var gemComf: Double
     @Binding var gemRes: Double
+    
+    @State private var showGemMoreDeets: Bool = false
 
     var body: some View {
         ZStack {
@@ -377,10 +379,14 @@ struct GemDialog: View {
                     HStack {
                         Spacer()
                         
-                        Text("See Details")
-                            .font(Font.custom(fontHeaders, size: 16))
-                            .foregroundColor(Color("Gandalf"))
-                            .padding(.bottom, 5)
+                        Button(action: {
+                            showGemMoreDeets = true
+                        }, label: {
+                            Text("See Details")
+                                .font(Font.custom(fontHeaders, size: 16))
+                                .foregroundColor(Color("Gandalf"))
+                                .padding(.bottom, 5)
+                        })
                     }
                 }.frame(maxWidth: 280)
                     .padding(.vertical, 10)
@@ -393,7 +399,7 @@ struct GemDialog: View {
                         .padding(.leading, 4)
                     
                     Button(action: {
-                        show = false
+                        // in tapAction
                     }, label: {
                         Text("SAVE")
                             .frame(minWidth: 100, maxWidth: 110, minHeight: 38, maxHeight: 38)
@@ -409,6 +415,10 @@ struct GemDialog: View {
                 .frame(maxWidth: 340)
                 .background(Color.white)
                 .cornerRadius(15)
+            
+            if showGemMoreDeets {
+                MoreGemDeets(show: $showGemMoreDeets, gem: gem)
+            }
         }.ignoresSafeArea()
     }
     
@@ -528,6 +538,159 @@ struct GemDialog: View {
         default:
             return 1
         }
+    }
+}
+
+struct MoreGemDeets: View {
+    @Binding var show: Bool
+    
+    var gem: Gem
+
+    var body: some View {
+        ZStack {
+            Color(.black)
+                .opacity(0.5)
+            
+            VStack {
+                HStack(spacing: 30) {
+                    VStack {
+                        Image(gem.getGemImageSource())
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top, CGFloat(gem.getTopPadding() + 3))
+                            .padding(.bottom, CGFloat(gem.getBottomPadding() + 1))
+                            .frame(height: 40)
+                        
+                        Text("Level " + String(gem.getMountedGem()) + " Gem")
+                            .font(Font.custom(fontTitles, size: 18))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Text("+ " + String(percent) + "% base")
+                            .font(Font.custom(fontHeaders, size: 16))
+                            .foregroundColor(Color("Gandalf"))
+                        
+                        Text("+ " + String(points) + " points")
+                            .font(Font.custom(fontHeaders, size: 16))
+                            .foregroundColor(Color("Gandalf"))
+                    }
+                    
+                    VStack {
+                        ZStack {
+                            Image("gem_socket_gray_0")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(Color("Gem Socket Shadow"))
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 40)
+                                .offset(x: 1, y: 1.8)
+                            
+                            Image(gem.getSocketImageSource())
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 40)
+                            
+                            Image("gem_plus")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 24)
+                        }
+                        
+                        Text(socket + " Socket")
+                            .font(Font.custom(fontTitles, size: 18))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Text("Gem Points " + gem.getSocketParamsString())
+                            .font(Font.custom(fontHeaders, size: 16))
+                            .foregroundColor(Color("Gandalf"))
+                        
+                        Text(" ")
+                            .font(Font.custom(fontHeaders, size: 16))
+                            .foregroundColor(Color("Gandalf"))
+                    }
+                }
+                
+                Text(calcString)
+                    .font(Font.custom(fontHeaders, size: 17))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.vertical, 10)
+                
+                Text("\(String(gem.getGemParams())) \(gem.getSocketParamsString()) = \(String(gem.getTotalPoints()))")
+                    .font(Font.custom(fontHeaders, size: 17))
+                    .foregroundColor(Color("Almost Black"))
+        
+                Text("Total Points: \t" + gem.getTotalPointsString())
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.vertical, 10)
+                
+            }.padding(24)
+                .frame(maxWidth: 300)
+                .background(Color.white)
+                .cornerRadius(15)
+    
+        }.ignoresSafeArea()
+            .onTapGesture(perform: {
+                withAnimation(.easeOut .speed(1.5)) {
+                    show = false
+                }
+            })
+    }
+    
+    var points: Int {
+        switch (gem.getMountedGem()) {
+        case 1:
+            return 2
+        case 2:
+            return 8
+        case 3:
+            return 25
+        case 4:
+            return 72
+        case 5:
+            return 200
+        case 6:
+            return 400
+        default:
+            return 0
+        }
+    }
+    
+    var percent: Int {
+        switch (gem.getMountedGem()) {
+        case 1:
+            return 5
+        case 2:
+            return 70
+        case 3:
+            return 220
+        case 4:
+            return 600
+        case 5:
+            return 1400
+        case 6:
+            return 4300
+        default:
+            return 0
+        }
+    }
+    
+    var socket: String {
+        switch (gem.getSocketRarity()) {
+        case 1:
+            return "Uncommon"
+        case 2:
+            return "Rare"
+        case 3:
+            return "Epic"
+        case 4:
+            return "Legendary"
+        default:
+            return "Common"
+        }
+    }
+    
+    var calcString: String {
+        return "(\(String(gem.getBasePoints())) × \(String(percent))%) + \(String(points)) = \(String(gem.getGemParams()))"
     }
 }
 

@@ -1364,12 +1364,7 @@ struct Optimizer: View {
                 gemComf = shoes.getShoe(shoeNum - 1).gemComf
                 gemRes = shoes.getShoe(shoeNum - 1).gemRes
                 gems = shoes.getShoe(shoeNum - 1).gems
-                print("gems array length: " + String(gems.count))
-                var i = 0
-                while i < gems.count {
-                    print("gems[" + String(i) + "]")
-                    i += 1
-                }
+
                 updatePoints()
             }
             .onDisappear {
