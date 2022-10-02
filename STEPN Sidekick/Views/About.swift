@@ -94,14 +94,68 @@ struct About: View {
                             HStack(alignment: .top, spacing: 5) {
 
                                 Text("3.")
-                                    .font(Font.custom("Roboto--Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
 
-                                Text("I am working on the shoe optimizer, it will be available soonish!")
-                                    .font(Font.custom("Roboto--Regular", size: 17))
+                                Text("Mystery box chances should be acceptably accurate for levels 1-6, but please do not rely too much on these estimates because they are not precise. Estimates for levels 7-10 will be less accurate; they are difficult to predict due to the lack of available data.")
+                                    .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
                             }
+                            
+                            VStack(spacing: 5) {
+                                Text("Thanks to:")
+                                    .font(Font.custom(fontHeaders, size: 16))
+                                    .foregroundColor(Color("Almost Black"))
+                                    .padding(.top, 10)
+                                    .padding(.bottom, 5)
+                                
+                                ZStack(alignment: .topLeading) {
+                                    Text("                               for gathering invaluable data and sharing with the community.")
+                                        .font(Font.custom("Roboto-Regular", size: 15))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    HStack {
+                                        Link(destination: URL(string: "https://twitter.com/Krit_STEPNstats")!) {
+                                            Text("@Krit_STEPNstats")
+                                                .font(Font.custom("Roboto-Medium", size: 15))
+                                                .foregroundColor(Color("Link Blue"))
+                                        }
+                                        Spacer()
+                                    }
+                                }
+                                
+                                ZStack(alignment: .topLeading) {
+                                    Text("                        for gathering and maintaining community HP data.")
+                                        .font(Font.custom("Roboto-Regular", size: 15))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    HStack {
+                                        Link(destination: URL(string: "https://twitter.com/Karl_Khader")!) {
+                                            Text("@Karl_Khader")
+                                                .font(Font.custom("Roboto-Medium", size: 15))
+                                                .foregroundColor(Color("Link Blue"))
+                                        }
+                                        Spacer()
+                                    }
+                                }
+                                
+                                ZStack(alignment: .topLeading) {
+                                    Text("              for letting me use his awesome STEPN-style sandal as the \"custom\" shoe image in this app. Check out his page for more great artwork.")
+                                        .font(Font.custom("Roboto-Regular", size: 15))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .fixedSize(horizontal: false, vertical: true)
+                                    HStack {
+                                        Link(destination: URL(string: "https://twitter.com/otik_x")!) {
+                                            Text("@otik_x")
+                                                .font(Font.custom("Roboto-Medium", size: 15))
+                                                .foregroundColor(Color("Link Blue"))
+                                        }
+                                        Spacer()
+                                    }
+                                }
+                                
+                            }.padding(.horizontal, 10)
                             
                             VStack(spacing: 10) {
                                 Text("Please contact me if you find any errors or have any suggestions to improve the app:")
@@ -112,20 +166,7 @@ struct About: View {
                                 
                                 Text("sidekickfeedback@gmail.com")
                                     .font(Font.custom("Roboto-Medium", size: 15))
-                                /*
-                                Text("If you enjoy the app, please consider supporting!")
-                                    .font(Font.custom("Roboto-Regular", size: 15))
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Link(destination: URL(string: "https://www.buymeacoffee.com/robgodfrey")!) {
-                                    Image("buy_coffee")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 36)
-                                        .padding(.vertical, 10)
-                                }
-                                */
+                                    .foregroundColor(Color("Link Blue"))
                                 
                                 Text("v 1.1")
                                     .font(Font.custom(fontHeaders, size: 13))
