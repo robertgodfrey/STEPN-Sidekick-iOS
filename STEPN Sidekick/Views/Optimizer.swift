@@ -247,34 +247,59 @@ struct Optimizer: View {
                             
                             // MARK: Shoe selector
                             HStack(spacing: 8) {
-                                Image("arrow_left")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 18)
-                                    .padding(.horizontal, 10)
+                                Button(action: {
+                                    saveEmLoadEm(shoeToLoad: shoeNum == 1 ? 6 : shoeNum - 1)
+                                    popShoe = true
+                                    if shoeNum == 1 {
+                                        shoeNum = 6
+                                    } else {
+                                        shoeNum -= 1
+                                    }
+                                    withAnimation(.linear(duration: 0.8)) {
+                                        popShoe = false
+                                    }
+                                }, label: {
+                                    Image("arrow_left")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 18)
+                                        .padding(15)
+                                })
                                 
-                                Text("")
+                                Text(shoeNum == 1 ? "" : String(shoeNum - 1))
                                     .font(Font.custom(fontHeaders, size: 12))
                                     .foregroundColor(Color("Gandalf"))
                                     .frame(width: 14)
                                 
-                                Text("1")
+                                Text(String(shoeNum))
                                     .font(Font.custom(fontTitles, size: 17))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 14)
                                 
-                                Text("2")
+                                Text(shoeNum == 6 ? "" : String(shoeNum + 1))
                                     .font(Font.custom(fontHeaders, size: 12))
                                     .foregroundColor(Color("Gandalf"))
                                     .frame(width: 14)
                                 
-                                Image("arrow_right")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 18)
-                                    .padding(.horizontal, 10)
-                            }.padding(5)
-                                .padding(.bottom, 5)
+                                Button(action: {
+                                    saveEmLoadEm(shoeToLoad: shoeNum == 6 ? 1 : shoeNum + 1)
+                                    popShoe = true
+                                    if shoeNum == 6 {
+                                        shoeNum = 1
+                                    } else {
+                                        shoeNum += 1
+                                    }
+                                    withAnimation(.linear(duration: 0.8)) {
+                                        popShoe = false
+                                    }
+                                }, label: {
+                                    Image("arrow_right")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 18)
+                                        .padding(15)
+                                })
+                            }.padding(.vertical, -5)
                             
                             HStack(spacing: 5) {
                                 // MARK: Rarity stack
@@ -1109,12 +1134,14 @@ struct Optimizer: View {
                                         .foregroundColor(Color("Gandalf"))
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+                                */
                                 
                                 // MARK: Mystery box chances
                                 Text("Mystery Box Chance")
                                     .font(Font.custom(fontTitles, size: 20))
                                     .foregroundColor(Color("Almost Black"))
-                                 */
+                                    .padding(.top, 10) // TODO: remove when "more details" is added
+                                
                                 
                                 VStack {
                                     HStack {
@@ -1318,26 +1345,31 @@ struct Optimizer: View {
             .preferredColorScheme(.light)
             .background(Color("Light Green"))
             .onAppear {
-                shoeRarity = shoes.getShoe(0).shoeRarity
-                shoeType = shoes.getShoe(0).shoeType
-                shoeName = shoes.getShoe(0).shoeName
-                energy = shoes.getShoe(0).energy
-                shoeLevel = shoes.getShoe(0).shoeLevel
-                pointsAvailable = shoes.getShoe(0).pointsAvailable
-                baseEffString = shoes.getShoe(0).baseEffString
-                baseLuckString = shoes.getShoe(0).baseLuckString
-                baseComfString = shoes.getShoe(0).baseComfString
-                baseResString = shoes.getShoe(0).baseResString
-                addedEff = shoes.getShoe(0).addedEff
-                addedLuck = shoes.getShoe(0).addedLuck
-                addedComf = shoes.getShoe(0).addedComf
-                addedRes = shoes.getShoe(0).addedRes
-                gemEff = shoes.getShoe(0).gemEff
-                gemLuck = shoes.getShoe(0).gemLuck
-                gemComf = shoes.getShoe(0).gemComf
-                gemRes = shoes.getShoe(0).gemRes
-                gems = shoes.getShoe(0).gems
-                
+                shoeRarity = shoes.getShoe(shoeNum - 1).shoeRarity
+                shoeType = shoes.getShoe(shoeNum - 1).shoeType
+                shoeName = shoes.getShoe(shoeNum - 1).shoeName
+                energy = shoes.getShoe(shoeNum - 1).energy
+                shoeLevel = shoes.getShoe(shoeNum - 1).shoeLevel
+                pointsAvailable = shoes.getShoe(shoeNum - 1).pointsAvailable
+                baseEffString = shoes.getShoe(shoeNum - 1).baseEffString
+                baseLuckString = shoes.getShoe(shoeNum - 1).baseLuckString
+                baseComfString = shoes.getShoe(shoeNum - 1).baseComfString
+                baseResString = shoes.getShoe(shoeNum - 1).baseResString
+                addedEff = shoes.getShoe(shoeNum - 1).addedEff
+                addedLuck = shoes.getShoe(shoeNum - 1).addedLuck
+                addedComf = shoes.getShoe(shoeNum - 1).addedComf
+                addedRes = shoes.getShoe(shoeNum - 1).addedRes
+                gemEff = shoes.getShoe(shoeNum - 1).gemEff
+                gemLuck = shoes.getShoe(shoeNum - 1).gemLuck
+                gemComf = shoes.getShoe(shoeNum - 1).gemComf
+                gemRes = shoes.getShoe(shoeNum - 1).gemRes
+                gems = shoes.getShoe(shoeNum - 1).gems
+                print("gems array length: " + String(gems.count))
+                var i = 0
+                while i < gems.count {
+                    print("gems[" + String(i) + "]")
+                    i += 1
+                }
                 updatePoints()
             }
             .onDisappear {
@@ -1362,7 +1394,7 @@ struct Optimizer: View {
                     gemRes: gemRes,
                     gems: gems)
                 
-                shoes.update(shoe: currentShoe, i: 1)
+                shoes.update(shoe: currentShoe, i: shoeNum - 1)
             }
     }
     
@@ -2216,6 +2248,55 @@ struct Optimizer: View {
                           - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
   
         return gstProfit >= 0
+    }
+    
+    func saveEmLoadEm(shoeToLoad: Int) {
+        // save em
+        let currentShoe: OptimizerShoe = OptimizerShoe(
+            shoeRarity: shoeRarity,
+            shoeType: shoeType,
+            shoeName: shoeName,
+            energy: energy,
+            shoeLevel: shoeLevel,
+            pointsAvailable: pointsAvailable,
+            baseEffString: baseEffString,
+            baseLuckString: baseLuckString,
+            baseComfString: baseComfString,
+            baseResString: baseResString,
+            addedEff: addedEff,
+            addedLuck: addedLuck,
+            addedComf: addedComf,
+            addedRes: addedRes,
+            gemEff: gemEff,
+            gemLuck: gemLuck,
+            gemComf: gemComf,
+            gemRes: gemRes,
+            gems: gems)
+        
+        shoes.update(shoe: currentShoe, i: shoeNum - 1)
+        
+        // load em
+        shoeRarity = shoes.getShoe(shoeToLoad - 1).shoeRarity
+        shoeType = shoes.getShoe(shoeToLoad - 1).shoeType
+        shoeName = shoes.getShoe(shoeToLoad - 1).shoeName
+        energy = shoes.getShoe(shoeToLoad - 1).energy
+        shoeLevel = shoes.getShoe(shoeToLoad - 1).shoeLevel
+        pointsAvailable = shoes.getShoe(shoeToLoad - 1).pointsAvailable
+        baseEffString = shoes.getShoe(shoeToLoad - 1).baseEffString
+        baseLuckString = shoes.getShoe(shoeToLoad - 1).baseLuckString
+        baseComfString = shoes.getShoe(shoeToLoad - 1).baseComfString
+        baseResString = shoes.getShoe(shoeToLoad - 1).baseResString
+        addedEff = shoes.getShoe(shoeToLoad - 1).addedEff
+        addedLuck = shoes.getShoe(shoeToLoad - 1).addedLuck
+        addedComf = shoes.getShoe(shoeToLoad - 1).addedComf
+        addedRes = shoes.getShoe(shoeToLoad - 1).addedRes
+        gemEff = shoes.getShoe(shoeToLoad - 1).gemEff
+        gemLuck = shoes.getShoe(shoeToLoad - 1).gemLuck
+        gemComf = shoes.getShoe(shoeToLoad - 1).gemComf
+        gemRes = shoes.getShoe(shoeToLoad - 1).gemRes
+        gems = shoes.getShoe(shoeToLoad - 1).gems
+        
+        updatePoints()
     }
     
     func resetPage() {

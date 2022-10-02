@@ -71,7 +71,7 @@ class OptimizerShoe: Codable {
             }
         }
 
-        // no saved data!
+        // no saved data
         shoes = [modelShoe, modelShoe, modelShoe, modelShoe, modelShoe, modelShoe]
     }
 
@@ -82,7 +82,7 @@ class OptimizerShoe: Codable {
     }
 
     func update(shoe: OptimizerShoe, i: Int) {
-        shoes[i - 1] = shoe
+        shoes[i] = shoe
         save()
     }
     
@@ -109,6 +109,11 @@ class OptimizerShoe: Codable {
         gemLuck: 0,
         gemComf: 0,
         gemRes: 0,
-        gems: []
+        gems: [
+            Gem(socketType: -1, socketRarity: 0, mountedGem: 0),
+            Gem(socketType: -1, socketRarity: 0, mountedGem: 0),
+            Gem(socketType: -1, socketRarity: 0, mountedGem: 0),
+            Gem(socketType: -1, socketRarity: 0, mountedGem: 0)
+        ]
         )
 }
