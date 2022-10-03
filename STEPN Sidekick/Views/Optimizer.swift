@@ -417,7 +417,7 @@ struct Optimizer: View {
                                 
                                 // MARK: Energy stack
                                 VStack(spacing: 1) {
-                                    Text("100% Energy")
+                                    Text("Energy")
                                         .font(Font.custom(fontHeaders, size: 16))
                                         .foregroundColor(Color("Gandalf"))
                                     
@@ -608,7 +608,7 @@ struct Optimizer: View {
                                                 })
                                         })
                                     }.padding(.horizontal, 20)
-                                        .frame(maxWidth: 440)
+                                        .frame(maxWidth: 400)
                                 }
                                     
                                 ZStack {
@@ -707,7 +707,7 @@ struct Optimizer: View {
                                                 })
                                         })
                                     }.padding(.horizontal, 20)
-                                        .frame(maxWidth: 440)
+                                        .frame(maxWidth: 400)
                                 }
                                 
                                 ZStack {
@@ -806,7 +806,7 @@ struct Optimizer: View {
                                                 })
                                         })
                                     }.padding(.horizontal, 20)
-                                        .frame(maxWidth: 440)
+                                        .frame(maxWidth: 400)
                                 }
                                 
                                 ZStack {
@@ -905,7 +905,7 @@ struct Optimizer: View {
                                                 })
                                         })
                                     }.padding(.horizontal, 20)
-                                        .frame(maxWidth: 440)
+                                        .frame(maxWidth: 400)
                                 }
                                 
                                 HStack(spacing: 4) {
