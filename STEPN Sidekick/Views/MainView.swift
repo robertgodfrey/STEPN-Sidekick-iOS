@@ -25,28 +25,32 @@ struct MainView: View {
     }
     
     var body: some View {
-        TabView(selection: $currentTab) {
-            ActivitySettings(hideTab: $hideTab)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
-                .tag("Activity")
-            Optimizer(hideTab: $hideTab)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white)
-                .tag("Optimizer")
-            About(hideTab: $hideTab)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color("Light Green"))
-                .tag("Info")
-        }.environmentObject(shoes)
-        .overlay(
-            VStack {
-                CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
-            }
-                .offset(y: hideTab ? (50 + (bottomEdge == 0 ? 15 : bottomEdge + 10)) : 0)
-            , alignment: .bottom
+        VStack {
+            SwiftUIBannerAd()
             
-        )
+            TabView(selection: $currentTab) {
+                ActivitySettings(hideTab: $hideTab)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.white)
+                    .tag("Activity")
+                Optimizer(hideTab: $hideTab)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.white)
+                    .tag("Optimizer")
+                About(hideTab: $hideTab)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color("Light Green"))
+                    .tag("Info")
+            }.environmentObject(shoes)
+            .overlay(
+                VStack {
+                    CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
+                }
+                    .offset(y: hideTab ? (50 + (bottomEdge == 0 ? 15 : bottomEdge + 10)) : 0)
+                , alignment: .bottom
+                
+            )
+        }
     }
 }
 

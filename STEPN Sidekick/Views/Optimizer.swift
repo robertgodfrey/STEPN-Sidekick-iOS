@@ -70,10 +70,11 @@ struct Optimizer: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+            Color("Light Green")
+
             ScrollView {
                 VStack {
                     ZStack {
-                        
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .foregroundColor(Color("Almost Black"))
                             .offset(x: 5, y: 5)
@@ -1316,12 +1317,7 @@ struct Optimizer: View {
                 }
                 
                 )
-            }.padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0 + 1)
-            
-            Rectangle()
-                .foregroundColor(Color("Light Green"))
-                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-        
+            }
             if gemPopup {
                 GeometryReader { _ in
                     GemDialog(

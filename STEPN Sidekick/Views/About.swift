@@ -19,11 +19,9 @@ struct About: View {
 
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                Rectangle()
-                    .foregroundColor(Color("Light Green"))
-                    .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-                                
+            Color("Light Green")
+
+            VStack(spacing: 0) {                                                
                 ScrollView {
                     VStack(spacing: 20) {
                         ZStack {
@@ -373,6 +371,7 @@ struct About: View {
                         }
                         
                     }.padding(.bottom, 40)
+                    .padding(.top, 5)
                     .overlay(
                         GeometryReader { proxy -> Color in
                             let minY = proxy.frame(in: .global).minY
