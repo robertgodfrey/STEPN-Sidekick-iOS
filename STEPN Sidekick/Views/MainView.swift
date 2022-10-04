@@ -25,7 +25,11 @@ struct MainView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack (spacing: 0) {
+            Rectangle()
+                .foregroundColor(Color("Light Green"))
+                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+            
             SwiftUIBannerAd()
             
             TabView(selection: $currentTab) {
@@ -50,7 +54,7 @@ struct MainView: View {
                 , alignment: .bottom
                 
             )
-        }
+        }.ignoresSafeArea()
     }
 }
 

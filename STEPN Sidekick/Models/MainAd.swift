@@ -65,7 +65,9 @@ class MainAd: UIViewController, MAAdViewAdDelegate
 final class BannerAd: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> MainAd {
-        return MainAd()
+        let view = MainAd()
+        view.createBannerAd()
+        return view
     }
 
     func updateUIViewController(_ uiViewController: MainAd, context: Context) {

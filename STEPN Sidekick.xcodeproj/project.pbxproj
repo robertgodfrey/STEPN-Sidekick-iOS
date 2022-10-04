@@ -159,6 +159,7 @@
 		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
 		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		D450654428ECB16600A9F88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D482731228DCD96700ADC0ED /* Gem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gem.swift; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -345,6 +346,7 @@
 		D4FFE3B6289F04A200D7E82B = {
 			isa = PBXGroup;
 			children = (
+				D450654428ECB16600A9F88E /* Info.plist */,
 				D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */,
 				D4FFE3D7289F04A400D7E82B /* STEPN SidekickTests */,
 				D4FFE3E1289F04A400D7E82B /* STEPN SidekickUITests */,
@@ -752,6 +754,7 @@
 		D4FFE3E6289F04A400D7E82B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -812,6 +815,7 @@
 		D4FFE3E7289F04A400D7E82B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -875,8 +879,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "/Users/rob/Desktop/STEPN Sidekick/Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -910,8 +914,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "STEPN-Sidekick-Info.plist";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "/Users/rob/Desktop/STEPN Sidekick/Info.plist";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
