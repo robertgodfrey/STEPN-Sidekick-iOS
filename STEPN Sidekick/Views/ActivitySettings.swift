@@ -92,7 +92,13 @@ struct ActivitySettings: View {
                 ZStack(alignment: .top) {
                     Color("Background Almost White")
                     
-                    VStack(spacing: 0){                     
+                    Rectangle()
+                        .foregroundColor(Color("Light Green"))
+                        .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+                    
+                    VStack(spacing: 0){
+                        SwiftUIBannerAd()
+                        
                         ScrollView {
                             VStack {
                                 ZStack {
@@ -608,7 +614,7 @@ struct ActivitySettings: View {
                                 
                             )
                         }
-                    }
+                    }.padding(.top, (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
                     
                 }.ignoresSafeArea()
                 .preferredColorScheme(.light)

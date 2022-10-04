@@ -71,6 +71,12 @@ struct Optimizer: View {
     var body: some View {
         ZStack(alignment: .top) {
             Color("Light Green")
+            
+            Rectangle()
+                .foregroundColor(Color("Light Green"))
+                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+            
+            SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
 
             ScrollView {
                 VStack {
@@ -1317,7 +1323,8 @@ struct Optimizer: View {
                 }
                 
                 )
-            }
+            }.padding(.top, ((UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50)
+                      + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
             if gemPopup {
                 GeometryReader { _ in
                     GemDialog(

@@ -450,14 +450,5 @@
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This only uses device info for more interesting and relevant ads.</string>
-	<key>AppLovinConsentFlowInfo</key>
-	<dict>
-		<key>AppLovinConsentFlowEnabled</key>
-		<true/>
-		<key>AppLovinConsentFlowPrivacyPolicy</key>
-		<string>http://stepnsidekick.com/STEPN%20Sidekick%20Privacy%20Policy.txt</string>
-	</dict>
-	<key>NSAdvertisingAttributionReportEndpoint</key>
-	<string>https://postbacks-app.com</string>
 </dict>
 </plist>

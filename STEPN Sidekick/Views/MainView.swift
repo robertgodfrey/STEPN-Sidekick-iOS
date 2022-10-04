@@ -25,13 +25,7 @@ struct MainView: View {
     }
     
     var body: some View {
-        VStack (spacing: 0) {
-            Rectangle()
-                .foregroundColor(Color("Light Green"))
-                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-            
-            SwiftUIBannerAd()
-            
+        VStack (spacing: 0) {        
             TabView(selection: $currentTab) {
                 ActivitySettings(hideTab: $hideTab)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
