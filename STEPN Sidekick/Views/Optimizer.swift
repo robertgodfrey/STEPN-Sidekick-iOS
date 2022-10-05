@@ -463,7 +463,7 @@ struct Optimizer: View {
                                             .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
                                             .onReceive(energy.publisher.collect()) {
                                                 self.energy = String($0.prefix(4))
-                                                if Double(energy) ?? 0 > 25 {
+                                                if energy.doubleValue > 25 {
                                                     energy = "25"
                                                 }
                                             }
@@ -539,9 +539,9 @@ struct Optimizer: View {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if Double(baseEffString) ?? 0 < basePointsMin && baseEffString != "" {
+                                                if baseEffString.doubleValue < basePointsMin && baseEffString != "" {
                                                     baseEffString = String(basePointsMin)
-                                                } else if Double(baseEffString) ?? 0 > basePointsMax {
+                                                } else if baseEffString.doubleValue > basePointsMax {
                                                     baseEffString = String(basePointsMax)
                                                 }
                                                 updatePoints()
@@ -638,9 +638,9 @@ struct Optimizer: View {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if Double(baseLuckString) ?? 0 < basePointsMin && baseLuckString != "" {
+                                                if baseLuckString.doubleValue < basePointsMin && baseLuckString != "" {
                                                     baseLuckString = String(basePointsMin)
-                                                } else if Double(baseLuckString) ?? 0 > basePointsMax {
+                                                } else if baseLuckString.doubleValue > basePointsMax {
                                                     baseLuckString = String(basePointsMax)
                                                 }
                                                 updatePoints()
@@ -737,9 +737,9 @@ struct Optimizer: View {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if Double(baseComfString) ?? 0 < basePointsMin && baseComfString != "" {
+                                                if baseComfString.doubleValue < basePointsMin && baseComfString != "" {
                                                     baseComfString = String(basePointsMin)
-                                                } else if Double(baseComfString) ?? 0 > basePointsMax {
+                                                } else if baseComfString.doubleValue > basePointsMax {
                                                     baseComfString = String(basePointsMax)
                                                 }
                                                 updatePoints()
@@ -836,9 +836,9 @@ struct Optimizer: View {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if Double(baseResString) ?? 0 < basePointsMin && baseResString != "" {
+                                                if baseResString.doubleValue < basePointsMin && baseResString != "" {
                                                     baseResString = String(basePointsMin)
-                                                } else if Double(baseResString) ?? 0 > basePointsMax {
+                                                } else if baseResString.doubleValue > basePointsMax {
                                                     baseResString = String(basePointsMax)
                                                 }
                                                 updatePoints()
@@ -1331,10 +1331,10 @@ struct Optimizer: View {
                         show: $gemPopup,
                         gem: $gems[gemSocketNum],
                         shoeRarity: shoeRarity,
-                        baseEff: Double(baseEffString) ?? 0,
-                        baseLuck: Double(baseLuckString) ?? 0,
-                        baseComf: Double(baseComfString) ?? 0,
-                        baseRes: Double(baseResString) ?? 0,
+                        baseEff: baseEffString.doubleValue,
+                        baseLuck: baseLuckString.doubleValue,
+                        baseComf: baseComfString.doubleValue,
+                        baseRes: baseResString.doubleValue,
                         gemEff: $gemEff,
                         gemLuck: $gemLuck,
                         gemComf: $gemComf,
@@ -1528,7 +1528,7 @@ struct Optimizer: View {
     
     // MARK: Earning calcs
     var gstEarned: Double {
-        return floor((Double(energy) ?? 0) * pow(totalEff, energyCo) * 10) / 10
+        return floor(energy.doubleValue * pow(totalEff, energyCo) * 10) / 10
     }
     
     var gstLimit: Int {
@@ -1542,11 +1542,11 @@ struct Optimizer: View {
     }
     
     var durabilityLost: Int {
-        if (Double(energy) ?? 0) == 0 || totalRes == 0 {
+        if energy.doubleValue == 0 || totalRes == 0 {
             return 0
         }
         
-        var durLoss: Int = Int(round((Double(energy) ?? 0) * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
+        var durLoss: Int = Int(round(energy.doubleValue * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
         
         if durLoss < 1 {
             durLoss = 1
@@ -1836,26 +1836,26 @@ struct Optimizer: View {
     }
     
     var hpLoss: Double {
-        if totalComf == 0 || (Double(energy) ?? 0) == 0 {
+        if totalComf == 0 || energy.doubleValue == 0 {
             return 0
         }
         
         switch (shoeRarity) {
         case common:
-            return round((Double(energy) ?? 0) * 0.386 * pow(totalComf, -0.421) * 100) / 100
+            return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
         case uncommon:
-            return round((Double(energy) ?? 0) * 0.424 * pow(totalComf, -0.456) * 100) / 100
+            return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
         case rare:
-            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
         case epic:
-            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
         default:
             return 0
         }
     }
     
     var hpPercentRestored: Double {
-        if totalComf == 0 || (Double(energy) ?? 0) == 0 {
+        if totalComf == 0 || energy.doubleValue == 0 {
             return 1
         }
         
@@ -1927,7 +1927,7 @@ struct Optimizer: View {
     // MARK: Mystery box calcs
     // 0 = very low/no chance, 1 = low chance, 2 = high chance
     var mb1Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy <= -0.04 * totalLuck + 6 && localEnergy >= -0.05263 * totalLuck + 2 && localEnergy >= 1 && totalLuck > 1 {
             return 2
@@ -1939,7 +1939,7 @@ struct Optimizer: View {
     }
     
     var mb2Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy <= -0.06897 * totalLuck + 10 && localEnergy >= -1.3333 * totalLuck + 6 && localEnergy >= 2 && totalLuck > 2 {
             return 2
@@ -1951,7 +1951,7 @@ struct Optimizer: View {
     }
     
     var mb3Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy <= -0.09091 * totalLuck + 16 && localEnergy >= 70 * pow((totalLuck + 8), -1) + 2 && localEnergy >= 3.1 && totalLuck > 3 {
             return 2
@@ -1964,7 +1964,7 @@ struct Optimizer: View {
     }
     
     var mb4Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 22 && localEnergy >= 70 * pow((totalLuck + 5), -1) + 3 && totalLuck > 4 {
             if localEnergy <= -0.0001 * pow((totalLuck + 40), 2) + 18 && localEnergy >= 50 * pow((totalLuck + 30), -0.2) - 13.5 {
@@ -1977,7 +1977,7 @@ struct Optimizer: View {
     }
     
     var mb5Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 26.05 && localEnergy >= 50 * pow((totalLuck - 2), -1) + 7 && totalLuck > 5 {
             if localEnergy <= -0.00003 * pow((totalLuck + 50), 2) + 22.5 && localEnergy >= 70 * pow((totalLuck - 10), -0.1) - 32 {
@@ -1990,7 +1990,7 @@ struct Optimizer: View {
     }
     
     var mb6Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
 
         if localEnergy >= 140 * pow((totalLuck - 20), -0.5) + 1 && totalLuck > 6 {
             if localEnergy >= 70 * pow((totalLuck - 70), -0.1) - 25.5 {
@@ -2003,7 +2003,7 @@ struct Optimizer: View {
     }
     
     var mb7Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy >= -totalLuck / 45 + 26.9 && localEnergy > 7 {
             if localEnergy >= -totalLuck / 100 + 26.5 {
@@ -2016,7 +2016,7 @@ struct Optimizer: View {
     }
     
     var mb8Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy >= -totalLuck / 150 + 32 && localEnergy > 14 {
             return 2
@@ -2025,7 +2025,7 @@ struct Optimizer: View {
     }
     
     var mb9Chance: Int {
-        let localEnergy = Double(energy) ?? 0
+        let localEnergy = energy.doubleValue
         
         if localEnergy >= -totalLuck / 300 + 29 && localEnergy > 19 {
             return 2
@@ -2049,13 +2049,13 @@ struct Optimizer: View {
     func getBasePointsGemType(socketType: Int) -> Double {
         switch (socketType) {
         case luck:
-            return Double(baseLuckString) ?? 0
+            return baseLuckString.doubleValue
         case comf:
-            return Double(baseComfString) ?? 0
+            return baseComfString.doubleValue
         case res:
-            return Double(baseResString) ?? 0
+            return baseResString.doubleValue
         default:
-            return Double(baseEffString) ?? 0
+            return baseEffString.doubleValue
         }
     }
         
@@ -2083,16 +2083,16 @@ struct Optimizer: View {
             for socket in 1...gemsUnlocked {
                 switch (gems[socket - 1].getSocketType()) {
                 case eff:
-                    gems[socket - 1].setBasePoints(basePoints: Double(baseEffString) ?? 0)
+                    gems[socket - 1].setBasePoints(basePoints: baseEffString.doubleValue)
                     gemEff += gems[socket - 1].getTotalPoints()
                 case luck:
-                    gems[socket - 1].setBasePoints(basePoints: Double(baseLuckString) ?? 0)
+                    gems[socket - 1].setBasePoints(basePoints: baseLuckString.doubleValue)
                     gemLuck += gems[socket - 1].getTotalPoints()
                 case comf:
-                    gems[socket - 1].setBasePoints(basePoints: Double(baseComfString) ?? 0)
+                    gems[socket - 1].setBasePoints(basePoints: baseComfString.doubleValue)
                     gemComf += gems[socket - 1].getTotalPoints()
                 case res:
-                    gems[socket - 1].setBasePoints(basePoints: Double(baseResString) ?? 0)
+                    gems[socket - 1].setBasePoints(basePoints: baseResString.doubleValue)
                     gemRes += gems[socket - 1].getTotalPoints()
                 default:
                     break
@@ -2108,19 +2108,19 @@ struct Optimizer: View {
             pointsAvailable = points
         } else {
             pointsAvailable = points - addedEff - addedLuck - addedComf - addedRes
-            totalEff = round(((Double(baseEffString) ?? 0) + Double(addedEff) + gemEff) * 10) / 10
-            totalLuck = round(((Double(baseLuckString) ?? 0) + Double(addedLuck) + gemLuck) * 10) / 10
-            totalComf = round(((Double(baseComfString) ?? 0) + Double(addedComf) + gemComf) * 10) / 10
-            totalRes = round(((Double(baseResString) ?? 0) + Double(addedRes) + gemRes) * 10) / 10
+            totalEff = round((baseEffString.doubleValue + Double(addedEff) + gemEff) * 10) / 10
+            totalLuck = round((baseLuckString.doubleValue + Double(addedLuck) + gemLuck) * 10) / 10
+            totalComf = round((baseComfString.doubleValue + Double(addedComf) + gemComf) * 10) / 10
+            totalRes = round((baseResString.doubleValue + Double(addedRes) + gemRes) * 10) / 10
         }
     }
     
     func optimizeForGst() {
-        let localEnergy: Double = Double(energy) ?? 0
+        let localEnergy: Double = energy.doubleValue
         let localPoints: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
-        let localEff: Double = (Double(baseEffString) ?? 0) + gemEff
-        let localComf: Double = (Double(baseComfString) ?? 0) + gemComf
-        let localRes: Double = (Double(baseResString) ?? 0) + gemRes
+        let localEff: Double = baseEffString.doubleValue + gemEff
+        let localComf: Double = baseComfString.doubleValue + gemComf
+        let localRes: Double = baseResString.doubleValue + gemRes
         
         var localAddedEff: Int = 0
         var localAddedComf: Int = 0
@@ -2166,13 +2166,13 @@ struct Optimizer: View {
     func hpLossForOptimizer(totalComf: Double) -> Double {
         switch (shoeRarity) {
         case common:
-            return round((Double(energy) ?? 0) * 0.386 * pow(totalComf, -0.421) * 100) / 100
+            return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
         case uncommon:
-            return round((Double(energy) ?? 0) * 0.424 * pow(totalComf, -0.456) * 100) / 100
+            return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
         case rare:
-            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
         case epic:
-            return round((Double(energy) ?? 0) * 0.47 * pow(totalComf, -0.467) * 100) / 100
+            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
         default:
             return 0
         }
@@ -2234,10 +2234,10 @@ struct Optimizer: View {
     
     // check GST profit, returns true if greater than 0
     func breakEvenGst(localAddedEff: Int, localAddedComf: Int, localAddedRes: Int) -> Bool {
-        let localEnergy: Double = Double(energy) ?? 0
-        let localEff: Double = (Double(baseEffString) ?? 0) + gemEff
-        let localComf: Double = (Double(baseComfString) ?? 0) + gemComf
-        let localRes: Double = (Double(baseResString) ?? 0) + gemRes
+        let localEnergy: Double = energy.doubleValue
+        let localEff: Double = baseEffString.doubleValue + gemEff
+        let localComf: Double = baseComfString.doubleValue + gemComf
+        let localRes: Double = baseResString.doubleValue + gemRes
         
         var gstProfit: Double = 0
 
@@ -2477,6 +2477,23 @@ extension Color {
             blue:  Double(b) / 255,
             opacity: Double(a) / 255
         )
+    }
+}
+
+// for those pesky decimal comma-using countries
+extension String {
+    static let numberFormatter = NumberFormatter()
+    var doubleValue: Double {
+        String.numberFormatter.decimalSeparator = "."
+        if let result =  String.numberFormatter.number(from: self) {
+            return result.doubleValue
+        } else {
+            String.numberFormatter.decimalSeparator = ","
+            if let result = String.numberFormatter.number(from: self) {
+                return result.doubleValue
+            }
+        }
+        return 0
     }
 }
 

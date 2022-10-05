@@ -73,9 +73,9 @@ struct ActivitySettings: View {
                 SpeedTracker(
                     hideTab: $hideTab,
                     shoeType: shoes[shoeTypeIterator].getTitle(),
-                    minSpeed: shoeTypeIterator == customShoe ? Double(customMinSpeed) ?? 1.0 : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
-                    maxSpeed: shoeTypeIterator == customShoe ? Double(customMaxSpeed) ?? 6.0 :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
-                    energy: Double(energy) ?? 0.2,
+                    minSpeed: shoeTypeIterator == customShoe ? customMinSpeed.doubleValue : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
+                    maxSpeed: shoeTypeIterator == customShoe ? customMaxSpeed.doubleValue :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
+                    energy: energy.doubleValue,
                     tenSecondTimer: tenSecondTimer,
                     voiceAlertsCurrentSpeed:
                         (voiceAlertsSpeedType == speedAlertsCurrent || voiceAlertsSpeedType == speedAlertsBoth) ? true : false,
@@ -426,7 +426,7 @@ struct ActivitySettings: View {
                                                         .keyboardType(.decimalPad)
                                                         .onReceive(energy.publisher.collect()) {
                                                             self.energy = String($0.prefix(4))
-                                                            if Double(energy) ?? 0 > 25 {
+                                                            if energy.doubleValue > 25 {
                                                                 energy = "25"
                                                             }
                                                         }
@@ -450,7 +450,7 @@ struct ActivitySettings: View {
                                             
                                             Spacer()
                                             
-                                            Text(getMinString(energy: Double(energy) ?? 0.0))
+                                            Text(getMinString(energy: energy.doubleValue))
                                                 .font(Font.custom(fontButtons, size: 16))
                                                 .foregroundColor(Color("Gandalf"))
                                                 .frame(minWidth: 150, maxWidth: 160)
@@ -641,21 +641,21 @@ struct ActivitySettings: View {
     }
     
     func startin() {
-        if Double(energy) ?? 0 == 0
-            || Int((Double(energy) ?? 0) * 10) % 2 != 0
+        if energy.doubleValue == 0
+            || Int(energy.doubleValue * 10) % 2 != 0
             || shoeTypeIterator == customShoe &&
-                (Double(customMinSpeed) ?? 0 < 1 || Double(customMaxSpeed) ?? 0 < (Double(customMinSpeed) ?? 0) + 1) {
+            (customMinSpeed.doubleValue < 1 || customMaxSpeed.doubleValue < customMinSpeed.doubleValue + 1) {
             
-            if Double(energy) ?? 0 == 0 {
+            if energy.doubleValue == 0 {
                 alertTitle = "Check Energy"
                 alertMessage = "Energy must be greater than 0"
-            } else if Int((Double(energy) ?? 0) * 10) % 2 != 0 {
+            } else if Int(energy.doubleValue * 10) % 2 != 0 {
                 alertTitle = "Check Energy"
                 alertMessage = "Energy must be a mutliple of 0.2"
-            } else if Double(customMinSpeed) ?? 0 < 1 {
+            } else if customMinSpeed.doubleValue < 1 {
                 alertTitle = "Check Min Speed"
                 alertMessage = "Minimum speed must be at least 1.0 km/h"
-            } else if Double(customMaxSpeed) ?? 0 < (Double(customMinSpeed) ?? 0) + 1 {
+            } else if customMaxSpeed.doubleValue < customMinSpeed.doubleValue + 1 {
                     alertTitle = "Check Custom Speeds"
                     alertMessage = "Maximum speed must be at least 1.0 km/h greater than minimum speed"
             } else {
