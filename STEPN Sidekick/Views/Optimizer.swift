@@ -251,7 +251,7 @@ struct Optimizer: View {
                                         self.shoeName = String($0.prefix(12))
                                     }
                                     .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                    .font(Font.custom(fontTitles, size: 16))
+                                    .font(Font.custom(fontTitles, size: 17))
                                     .multilineTextAlignment(.center)
                                     .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                 
@@ -493,10 +493,10 @@ struct Optimizer: View {
                                         
                                     Spacer()
                                 }.padding(.horizontal, 40)
+                                    .padding(.top, 25)
                                     .frame(maxWidth: 400)
                                 
                             }.padding(.vertical, 10)
-                                .padding(.top, 10)
                             
                             // MARK: Titles
                             HStack(alignment: .bottom) {
@@ -2483,10 +2483,18 @@ struct CustomSlider: View {
                     Spacer()
                 }.clipShape(RoundedRectangle(cornerRadius: radius))
                 HStack {
-                    Circle()
-                        .foregroundColor(Color(hex: "5FF3C0"))
-                        .frame(width: thumbSize, height: thumbSize)
-                        .offset(x: sliderVal)
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.white)
+                            .frame(width: thumbSize, height: thumbSize + 30)
+                            .offset(x: sliderVal)
+                            .opacity(0.0001)
+
+                        Circle()
+                            .foregroundColor(Color(hex: "5FF3C0"))
+                            .frame(width: thumbSize, height: thumbSize)
+                            .offset(x: sliderVal)
+                    }
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
