@@ -52,7 +52,6 @@
 		D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C828ACC25D00D3A478 /* nine.mp3 */; };
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
-		D424162528EF7C82001E1F52 /* GmtToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424162428EF7C82001E1F52 /* GmtToggle.swift */; };
 		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
 		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
 		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
@@ -74,6 +73,7 @@
 		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
 		D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */; };
 		D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */; };
+		D4E0541E28F251DB005D00CF /* UpdateDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0541D28F251DB005D00CF /* UpdateDialog.swift */; };
 		D4ED2AC828EAA27300ECF27B /* Pods_STEPN_Sidekick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4A4B6FA6F512F4E93FBC83 /* Pods_STEPN_Sidekick.framework */; };
 		D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFD28928C4295A002E931E /* CountdownTimer.swift */; };
 		D4F2B72628E83C51001DD913 /* OptimizerShoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */; };
@@ -156,7 +156,6 @@
 		D40A24C828ACC25D00D3A478 /* nine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nine.mp3; sourceTree = "<group>"; };
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
-		D424162428EF7C82001E1F52 /* GmtToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmtToggle.swift; sourceTree = "<group>"; };
 		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
@@ -180,6 +179,7 @@
 		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
 		D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound_slow.mp3; sourceTree = "<group>"; };
+		D4E0541D28F251DB005D00CF /* UpdateDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDialog.swift; sourceTree = "<group>"; };
 		D4EFD28928C4295A002E931E /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizerShoe.swift; sourceTree = "<group>"; };
 		D4F8B52128E1012100DDA9BE /* GemDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDialog.swift; sourceTree = "<group>"; };
@@ -310,6 +310,7 @@
 				D441B53828BB77CB00D819EA /* About.swift */,
 				D4B82C8D28D07BD3004A80EB /* Optimizer.swift */,
 				D4F8B52128E1012100DDA9BE /* GemDialog.swift */,
+				D4E0541D28F251DB005D00CF /* UpdateDialog.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -326,7 +327,6 @@
 				D482731228DCD96700ADC0ED /* Gem.swift */,
 				D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */,
 				D40A1CFB28E9852400A6A65F /* MainAd.swift */,
-				D424162428EF7C82001E1F52 /* GmtToggle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -715,8 +715,8 @@
 				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
+				D4E0541E28F251DB005D00CF /* UpdateDialog.swift in Sources */,
 				D482731328DCD96700ADC0ED /* Gem.swift in Sources */,
-				D424162528EF7C82001E1F52 /* GmtToggle.swift in Sources */,
 				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
 				D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */,
 			);
@@ -879,7 +879,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
@@ -914,7 +914,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;

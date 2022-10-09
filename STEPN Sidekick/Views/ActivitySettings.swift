@@ -38,6 +38,8 @@ struct ActivitySettings: View {
     @State private var minSpeedString = ""
     @State private var maxSpeedString = ""
     
+    @State private var showUpdateDialog = false
+    
     @State private var startSpeedTracker: Bool = false
     @State private var startLocationRequest: Bool = false
     
@@ -631,12 +633,27 @@ struct ActivitySettings: View {
                         Welcome(show: $firstTime, halp: $halp, circles: $helperCircles)
                     }
                 }
+                
+                if showUpdateDialog {
+                    GeometryReader { _ in
+                        UpdateDialog(show: $showUpdateDialog)
+                    }
+                }
             }
         }
         .alert(isPresented: $houstonWeHaveAProblem) {
             Alert(title: Text(alertTitle),
                   message: Text(alertMessage),
                   dismissButton: .default(Text("Okay")))
+        }
+        .onAppear {
+            let currentAppVersion: Double = 1.2
+            if firstTime {
+                savedAppVersion = currentAppVersion
+            } else if savedAppVersion < currentAppVersion {
+                showUpdateDialog = true
+                savedAppVersion = currentAppVersion
+            }
         }
     }
     

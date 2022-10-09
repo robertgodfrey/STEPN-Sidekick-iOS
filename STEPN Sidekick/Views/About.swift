@@ -107,6 +107,18 @@ struct About: View {
                                     .frame(width: 290)
                             }
                             
+                            HStack(alignment: .top, spacing: 5) {
+
+                                Text("4.")
+                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .foregroundColor(Color("Almost Black"))
+
+                                Text("GMT earnings are still new. The estimate will improve as more data is gathered. In general, the estimate is more accurate for shoes with less than 500 comfort.")
+                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .foregroundColor(Color("Almost Black"))
+                                    .frame(width: 290)
+                            }
+                            
                             VStack(spacing: 5) {
                                 Text("Thanks to:")
                                     .font(Font.custom(fontHeaders, size: 16))
@@ -172,7 +184,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Medium", size: 15))
                                     .foregroundColor(Color("Link Blue"))
                                 
-                                Text("v 1.1.1")
+                                Text("v 1.2.0")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)

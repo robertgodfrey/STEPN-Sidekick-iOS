@@ -11,6 +11,7 @@ import Foundation
 let fontTitles: String = "RobotoCondensed-BoldItalic"
 let fontButtons: String = "RobotoCondensed-BoldItalic"
 let fontHeaders: String = "RobotoCondensed-Italic"
+let fontRegText: String = "Roboto-Regular"
 
 // shoe types
 let walker: Int = 0
