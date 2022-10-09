@@ -31,7 +31,6 @@ struct Optimizer: View {
     @State private var energy: String = ""
     @State private var shoeLevel: Double = 1
     @State private var pointsAvailable: Int = 0
-    @State private var gmtEarningOn: Bool = false
 
     @State private var baseEffString: String = ""
     @State private var baseLuckString: String = ""
@@ -496,7 +495,7 @@ struct Optimizer: View {
                                     .padding(.top, 25)
                                     .frame(maxWidth: 400)
                                 
-                            }.padding(.vertical, 10)
+                            }.padding(.bottom, 10)
                             
                             // MARK: Titles
                             HStack(alignment: .bottom) {
@@ -1136,8 +1135,7 @@ struct Optimizer: View {
                                     Image("coin_gmt")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                        .opacity(gmtToggleOn ? 1 : 0)
+                                        .frame(width: gmtToggleOn ? 20 : 0, height: 20)
                                     
                                     Text("-")
                                         .font(Font.custom(fontTitles, size: 18))
@@ -1601,6 +1599,9 @@ struct Optimizer: View {
     }
     
     var gmtEarnedPerEnergy: Double {
+        if !gmtToggleOn {
+            return 0
+        }
         var gmtBaseline: Double = 0
         
         if totalComf < 118 {
