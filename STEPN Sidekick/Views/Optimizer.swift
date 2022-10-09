@@ -7,7 +7,7 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 21 Sep 22
+//  Last updated 8 Oct 22
 //
 
 import SwiftUI
@@ -15,6 +15,7 @@ import SwiftUI
 struct Optimizer: View {
     
     @AppStorage("shoeNum") private var shoeNum: Int = 1
+    @AppStorage("gmtToggle") private var gmtToggleOn: Bool = false
     
     @EnvironmentObject var shoes: OptimizerShoes
     
@@ -30,6 +31,7 @@ struct Optimizer: View {
     @State private var energy: String = ""
     @State private var shoeLevel: Double = 1
     @State private var pointsAvailable: Int = 0
+    @State private var gmtEarningOn: Bool = false
 
     @State private var baseEffString: String = ""
     @State private var baseLuckString: String = ""
@@ -66,6 +68,9 @@ struct Optimizer: View {
     @State private var gemLockedDialog: Bool = false
     @State private var gemLevelToUnlock: Int = 0
     
+    @State private var gmtLevelDialog: Bool = false
+    @State private var gmtOptimizeDialog: Bool = false
+    @State private var noEnergyDialog: Bool = false
     @State private var resetPageDialog: Bool = false
 
     var body: some View {
@@ -481,7 +486,7 @@ struct Optimizer: View {
                                     .frame(maxWidth: 400, maxHeight: 30)
                                 
                                 HStack {
-                                    Text("Level " + String(Int(round(shoeLevel))))
+                                    Text("Level " + String(Int(floor(shoeLevel))))
                                         .font(Font.custom(fontTitles, size: 15))
                                         .foregroundColor(Color("Almost Black"))
                                         .padding(.leading, 20)
@@ -813,6 +818,10 @@ struct Optimizer: View {
                                         })
                                     }.padding(.horizontal, 20)
                                         .frame(maxWidth: 400)
+                                }.alert(isPresented: $gmtOptimizeDialog) {
+                                    Alert(title: Text("Coming Soon"),
+                                          message: Text("Check back later for updates"),
+                                          dismissButton: .default(Text("Okay")))
                                 }
                                 
                                 ZStack {
@@ -942,16 +951,23 @@ struct Optimizer: View {
                                     Button(action: {
                                         // in tapAction
                                     }, label: {
-                                        Text("OPTIMIZE GST")
+                                        Text(gmtToggleOn ? "OPTIMIZE GMT" : "OPTIMIZE GST")
                                             .frame(minWidth: 145, maxWidth: 150, minHeight: 40, maxHeight: 40)
                                     })
                                         .buttonStyle(StartButton(tapAction: {
-                                            // TODO: energy checks
                                             UIApplication.shared.hideKeyboard()
-                                            optimizeForGst()
+                                            if gmtToggleOn {
+                                                gmtOptimizeDialog = true
+                                            } else {
+                                                if energy.doubleValue != 0 {
+                                                    optimizeForGst()
+                                                } else {
+                                                    noEnergyDialog = true
+                                                }
+                                            }
                                         })).font(Font.custom(fontButtons, size: 18))
-                                                                 
                                 }
+                                    
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 25, style: .continuous)
                                         .foregroundColor(Color("Almost Black"))
@@ -967,35 +983,44 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
-                                            optimizeForLuck()
+                                            if energy.doubleValue != 0 {
+                                                optimizeForLuck()
+                                            } else {
+                                                noEnergyDialog = true
+                                            }
                                         })).font(Font.custom(fontButtons, size: 18))
                                                                  
                                 }
                             }.frame(minWidth: 300, maxWidth: 315)
                                 .padding(.vertical, 10)
+                                .alert(isPresented: $noEnergyDialog) {
+                                    Alert(title: Text("Enter Energy"),
+                                          message: Text("Energy must be greater than 0 to optimize sneaker"),
+                                          dismissButton: .default(Text("Okay")))
+                                }
                             
                             // MARK: Calculated totals
                             VStack(spacing: 15) {
                                 HStack(spacing: 6) {
-                                    Text("Est. GST / Daily Limit:")
+                                    Text(gmtToggleOn ? "Est. GMT Range" : "Est. GST / Daily Limit:")
                                         .font(Font.custom(fontHeaders, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
                                     Spacer()
                                     
-                                    Text(String(gstEarned))
+                                    Text(gmtToggleOn ? "" : String(gstEarned))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color(gstEarned > Double(gstLimit) ? "Gps Red" : "Almost Black"))
                                     
-                                    Text("/")
+                                    Text(gmtToggleOn ? "" : "/")
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Text(String(gstLimit))
+                                    Text(gmtToggleOn ? (String(gmtLowRange) + " - " + String(gmtHighRange)) : String(gstLimit))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("logo_gst")
+                                    Image(gmtToggleOn ? "coin_gmt" : "coin_gst")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1028,7 +1053,7 @@ struct Optimizer: View {
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("logo_gst")
+                                    Image("coin_gst")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1088,7 +1113,7 @@ struct Optimizer: View {
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("logo_gst")
+                                    Image("coin_gst")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1096,18 +1121,34 @@ struct Optimizer: View {
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                 
-                                HStack(spacing: 6) {
+                                HStack(spacing: 4) {
                                     Text("Total Income:")
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
                                     Spacer()
                                     
+                                    Text(String(gmtEarned))
+                                        .font(Font.custom(fontTitles, size: 18))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .opacity(gmtToggleOn ? 1 : 0)
+                                    
+                                    Image("coin_gmt")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20, height: 20)
+                                        .opacity(gmtToggleOn ? 1 : 0)
+                                    
+                                    Text("-")
+                                        .font(Font.custom(fontTitles, size: 18))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .opacity(gmtToggleOn ? 1 : 0)
+                                    
                                     Text(String(gstProfitBeforeGem))
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Image("logo_gst")
+                                    Image("coin_gst")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 20, height: 20)
@@ -1115,7 +1156,6 @@ struct Optimizer: View {
                                     Text("-")
                                         .font(Font.custom(fontTitles, size: 18))
                                         .foregroundColor(Color("Almost Black"))
-                                        .padding(.horizontal, 5)
                                     
                                     Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
                                         .font(Font.custom(fontTitles, size: 18))
@@ -1132,23 +1172,52 @@ struct Optimizer: View {
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                 
-                                /* TODO: add this :)
-                                HStack {
-                                    Spacer()
+                                ZStack {
+                                    Capsule()
+                                        .frame(width: 90, height: 40)
+                                        .foregroundColor(gmtToggleOn ? Color(hex: "ffcb6d") : Color(hex: "e3e3e3"))
+                                        .overlay(
+                                            Capsule()
+                                                .stroke(gmtToggleOn ? Color(hex: "e78a1c") : Color(hex: "adadad"), lineWidth: 2)
+                                            )
                                     
-                                    Text("More Details")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                */
+                                    Text("GST")
+                                        .font(Font.custom(fontTitles, size: 18))
+                                        .foregroundColor(Color(hex: "adadad"))
+                                        .opacity(gmtToggleOn ? 0 : 1)
+                                        .offset(x: 16)
+                                    
+                                    Text("GMT")
+                                        .font(Font.custom(fontTitles, size: 18))
+                                        .foregroundColor(Color(hex: "e78a1c"))
+                                        .opacity(gmtToggleOn ? 1 : 0)
+                                        .offset(x: -16)
+                         
+                                    Image(gmtToggleOn ? "coin_gmt" : "coin_gst")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 40, height: 40)
+                                        .offset(x:gmtToggleOn ? 24 : -24)
+                                        .padding(24)
+                                        .animation(.spring())
+                                }
+                                .onTapGesture {
+                                    if shoeLevel >= 30 {
+                                        self.gmtToggleOn.toggle()
+                                    } else {
+                                        gmtLevelDialog = true
+                                    }
+                                }
+                                .alert(isPresented: $gmtLevelDialog) {
+                                    Alert(title: Text("Check Level"),
+                                          message: Text("Sneaker must be level 30 to activate GMT earning"),
+                                          dismissButton: .default(Text("Okay")))
+                                }
                                 
                                 // MARK: Mystery box chances
                                 Text("Mystery Box Chance")
                                     .font(Font.custom(fontTitles, size: 20))
                                     .foregroundColor(Color("Almost Black"))
-                                    .padding(.top, 10) // TODO: remove when "more details" is added
-                                
                                 
                                 VStack {
                                     HStack {
@@ -1531,13 +1600,54 @@ struct Optimizer: View {
         return floor(energy.doubleValue * pow(totalEff, energyCo) * 10) / 10
     }
     
+    var gmtEarnedPerEnergy: Double {
+        var gmtBaseline: Double = 0
+        
+        if totalComf < 118 {
+            gmtBaseline = -0.00001 * pow(totalComf - 350, 2) + 1.67
+        } else {
+            gmtBaseline = -10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75
+        }
+        
+        switch (shoeType) {
+        case walker:
+            gmtBaseline = gmtBaseline * 0.98
+        case runner:
+            gmtBaseline = gmtBaseline * 1.02
+        case trainer:
+            gmtBaseline = gmtBaseline * 1.025
+        default:
+            gmtBaseline = gmtBaseline * 1
+        }
+        
+        return round(gmtBaseline * 10) / 10
+    }
+    
+    var gmtEarned: Double {
+        return round(gmtEarnedPerEnergy * energy.doubleValue * 10) / 10
+    }
+    
+    var gmtLowRange: Double {
+        var gmtLow: Double = 0
+        gmtLow = round((gmtEarnedPerEnergy - 0.6) * energy.doubleValue * 10) / 10
+        
+        if gmtLow < 0 {
+            return 0
+        }
+        return gmtLow
+    }
+    
+    var gmtHighRange: Double {
+        return round((gmtEarnedPerEnergy + 0.6) * energy.doubleValue * 10) / 10
+    }
+    
     var gstLimit: Int {
         if shoeLevel < 10 {
-            return Int(5 + (round(shoeLevel) * 10))
+            return Int(5 + (floor(shoeLevel) * 10))
         } else if shoeLevel < 23 {
-            return Int(60 + ((round(shoeLevel) - 10) * 10))
+            return Int(60 + ((floor(shoeLevel) - 10) * 10))
         } else {
-            return Int(195 + ((round(shoeLevel) - 23) * 15))
+            return Int(195 + ((floor(shoeLevel) - 23) * 15))
         }
     }
     
@@ -1560,7 +1670,7 @@ struct Optimizer: View {
         
     var baseRepairCost: Double {
         if shoeRarity == common {
-            switch (round(shoeLevel)) {
+            switch (floor(shoeLevel)) {
             case 1:
                 return 0.31
             case 2:
@@ -1625,7 +1735,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == uncommon {
-            switch (round(shoeLevel)) {
+            switch (floor(shoeLevel)) {
             case 1:
                 return 0.41
             case 2:
@@ -1690,7 +1800,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == rare {
-            switch (round(shoeLevel)) {
+            switch (floor(shoeLevel)) {
             case 1:
                 return 0.51
             case 2:
@@ -1755,7 +1865,7 @@ struct Optimizer: View {
                 return 0
             }
         } else if shoeRarity == epic {
-            switch (round(shoeLevel)) {
+            switch (floor(shoeLevel)) {
             case 1:
                 return 0.61
             case 2:
@@ -1917,6 +2027,9 @@ struct Optimizer: View {
     }
     
     var gstProfitBeforeGem: Double {
+        if gmtToggleOn {
+            return round((repairCostGst + restoreHpCostGst) * 10) / 10
+        }
         return round((gstEarned - repairCostGst - restoreHpCostGst) * 10) / 10
     }
     
@@ -2060,7 +2173,7 @@ struct Optimizer: View {
     }
         
     func updatePoints() {
-        let points: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+        let points: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
        
         var gemsUnlocked: Int = 0;
         
@@ -2075,8 +2188,12 @@ struct Optimizer: View {
             gemsUnlocked = 3
         } else if shoeLevel >= 10 {
             gemsUnlocked = 2
-        } else if (shoeLevel >= 5) {
+        } else if shoeLevel >= 5 {
             gemsUnlocked = 1
+        }
+        
+        if shoeLevel < 30 {
+            gmtToggleOn = false
         }
 
         if gemsUnlocked > 0 {
@@ -2117,7 +2234,7 @@ struct Optimizer: View {
     
     func optimizeForGst() {
         let localEnergy: Double = energy.doubleValue
-        let localPoints: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+        let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
         let localEff: Double = baseEffString.doubleValue + gemEff
         let localComf: Double = baseComfString.doubleValue + gemComf
         let localRes: Double = baseResString.doubleValue + gemRes
@@ -2180,7 +2297,7 @@ struct Optimizer: View {
     
     // optimizes for most luck with no GST loss
     func optimizeForLuck() {
-        let localPoints: Int = Int(round(shoeLevel) * 2 * Double(shoeRarity))
+        let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
 
         var localAddedEff: Int = 0
         var localAddedComf: Int = 0

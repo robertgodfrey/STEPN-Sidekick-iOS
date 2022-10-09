@@ -52,6 +52,7 @@
 		D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C828ACC25D00D3A478 /* nine.mp3 */; };
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
+		D424162528EF7C82001E1F52 /* GmtToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424162428EF7C82001E1F52 /* GmtToggle.swift */; };
 		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
 		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
 		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
@@ -155,6 +156,7 @@
 		D40A24C828ACC25D00D3A478 /* nine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nine.mp3; sourceTree = "<group>"; };
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
+		D424162428EF7C82001E1F52 /* GmtToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmtToggle.swift; sourceTree = "<group>"; };
 		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				D482731228DCD96700ADC0ED /* Gem.swift */,
 				D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */,
 				D40A1CFB28E9852400A6A65F /* MainAd.swift */,
+				D424162428EF7C82001E1F52 /* GmtToggle.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
 				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
 				D482731328DCD96700ADC0ED /* Gem.swift in Sources */,
+				D424162528EF7C82001E1F52 /* GmtToggle.swift in Sources */,
 				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
 				D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */,
 			);
@@ -875,7 +879,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
@@ -893,7 +897,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-Sidekick";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -910,7 +914,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
@@ -928,7 +932,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-Sidekick";
 				PRODUCT_NAME = "$(TARGET_NAME)";
