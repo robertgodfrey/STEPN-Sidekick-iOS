@@ -1605,9 +1605,9 @@ struct Optimizer: View {
         var gmtBaseline: Double = 0
         
         if totalComf < 118 {
-            gmtBaseline = -0.00001 * pow(totalComf - 350, 2) + 1.67
+            gmtBaseline = 0.4 * (-0.00001 * pow(totalComf - 350, 2) + 1.67)
         } else {
-            gmtBaseline = -10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75
+            gmtBaseline = 0.4 * (-10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75)
         }
         
         switch (shoeType) {
@@ -1630,7 +1630,7 @@ struct Optimizer: View {
     
     var gmtLowRange: Double {
         var gmtLow: Double = 0
-        gmtLow = round((gmtEarnedPerEnergy - 0.6) * energy.doubleValue * 10) / 10
+        gmtLow = round((gmtEarnedPerEnergy - 0.2) * energy.doubleValue * 10) / 10
         
         if gmtLow < 0 {
             return 0
@@ -1639,7 +1639,7 @@ struct Optimizer: View {
     }
     
     var gmtHighRange: Double {
-        return round((gmtEarnedPerEnergy + 0.6) * energy.doubleValue * 10) / 10
+        return round((gmtEarnedPerEnergy + 0.2) * energy.doubleValue * 10) / 10
     }
     
     var gstLimit: Int {
