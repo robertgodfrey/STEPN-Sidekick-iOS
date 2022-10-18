@@ -1621,7 +1621,7 @@ struct Optimizer: View {
             gmtBaseline = gmtBaseline * 1
         }
         
-        return round(gmtBaseline * 10) / 10
+        return gmtBaseline
     }
     
     var gmtEarned: Double {
