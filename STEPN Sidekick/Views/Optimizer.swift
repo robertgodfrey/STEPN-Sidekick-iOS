@@ -26,6 +26,7 @@ struct Optimizer: View {
     
     @State private var shoeRarity: Int = common
     @State private var shoeType: Int = walker
+    @State private var blockhain: Int = sol
     
     @State private var shoeName: String = ""
     @State private var energy: String = ""
@@ -1170,6 +1171,150 @@ struct Optimizer: View {
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
                                 
+                                // MARK: bottom three stacks
+                                HStack(spacing: 5) {
+                                    // MARK: Chain stack
+                                    VStack(spacing: 1) {
+                                        Text("Chain")
+                                            .font(Font.custom(fontHeaders, size: 16))
+                                            .foregroundColor(Color("Gandalf"))
+                                        
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(height: 36)
+                                                .padding([.top, .leading], 2)
+                                                .padding([.bottom, .trailing], -3)
+                                        
+                                            Button(action: {
+                                                // in tap action
+                                            }, label: {
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color(hex: labelChainHexColor))
+                                                        .frame(height: 36)
+                                                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
+                                                    
+                                                    Text(chainString)
+                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                        .foregroundColor(Color("White"))
+                                                }
+                                            }).buttonStyle(OptimizerButtons(tapAction: {
+                                                clearFocus()
+                                                if blockhain == 2 {
+                                                    blockhain = 0
+                                                } else {
+                                                    blockhain += 1
+                                                }
+                                            }))
+                                            .font(Font.custom(fontButtons, size: 17))
+                                        }
+                                    }
+                                    
+                                    // MARK: GST/GMT stack
+                                    VStack(spacing: 1) {
+                                        Text("Token")
+                                            .font(Font.custom(fontHeaders, size: 16))
+                                            .foregroundColor(Color("Gandalf"))
+                                        
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(height: 36)
+                                                .padding([.top, .leading], 2)
+                                                .padding([.bottom, .trailing], -3)
+                                        
+                                            Button(action: {
+                                                // in tap action
+                                            }, label: {
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                        .foregroundColor(Color(hex: gmtToggleOn ? "gmtColor" : "gstColor"))
+                                                        .frame(height: 36)
+                                                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
+                                                    
+                                                    HStack(spacing: 5) {
+                                                        Text(gmtToggleOn ? "GMT" : "GST")
+                                                            .frame(height: 36)
+                                                            .foregroundColor(Color("Almost Black"))
+                                                        Image(gmtToggleOn ? "gmtLogo" : "gstLogo")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(height: 14)
+                                                    }.frame(minWidth: 100, maxWidth: 105)
+                                                }
+                                            }).buttonStyle(OptimizerButtons(tapAction: {
+                                                clearFocus()
+                                                if shoeLevel >= 30 {
+                                                    self.gmtToggleOn.toggle()
+                                                } else {
+                                                    gmtLevelDialog = true
+                                                }
+                                            }))
+                                            .font(Font.custom(fontButtons, size: 17))
+                                        }
+                                    }
+                                    
+                                    // MARK: Comfort gem price stack
+                                    VStack(spacing: 1) {
+                                        Text("Comf Gem Price")
+                                            .font(Font.custom(fontHeaders, size: 16))
+                                            .foregroundColor(Color("Gandalf"))
+                                        
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(height: 36)
+                                                .padding([.top, .leading], 2)
+                                                .padding([.bottom, .trailing], -3)
+                                         
+                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            // TODO: Stopping point
+                                                .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
+                                                .frame(height: 36)
+                                                .overlay(RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
+                                            
+                                            Image("energy_bolt")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .padding(.trailing, 14)
+                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
+                                            
+                                            TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
+                                                if editingChanged {
+                                                    energySelected = true
+                                                    withAnimation(.easeOut .speed(1.5)) {
+                                                        hideTab = true
+                                                    }
+                                                } else {
+                                                    energySelected = false
+                                                }})
+                                                .padding(.trailing, 6)
+                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                .font(Font.custom(fontTitles, size: 20))
+                                                .multilineTextAlignment(.center)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                                .onReceive(energy.publisher.collect()) {
+                                                    self.energy = String($0.prefix(4))
+                                                    if energy.doubleValue > 25 {
+                                                        energy = "25"
+                                                    }
+                                                }
+                                        }
+                                    }
+                                }.padding(.horizontal, 40)
+                                    .frame(maxWidth: 400)
+                                    .alert(isPresented: $gmtLevelDialog) {
+                                        Alert(title: Text("Check Level"),
+                                              message: Text("Sneaker must be level 30 to activate GMT earning"),
+                                              dismissButton: .default(Text("Okay")))
+                                    }
+                                
+                                /*
                                 ZStack {
                                     Capsule()
                                         .frame(width: 90, height: 40)
@@ -1206,11 +1351,8 @@ struct Optimizer: View {
                                         gmtLevelDialog = true
                                     }
                                 }
-                                .alert(isPresented: $gmtLevelDialog) {
-                                    Alert(title: Text("Check Level"),
-                                          message: Text("Sneaker must be level 30 to activate GMT earning"),
-                                          dismissButton: .default(Text("Okay")))
-                                }
+                                 */
+
                                 
                                 // MARK: Mystery box chances
                                 Text("Mystery Box Chance")
@@ -1512,6 +1654,28 @@ struct Optimizer: View {
             return "9d62cc"
         default:
             return "e9e9e9"
+        }
+    }
+    
+    var labelChainHexColor: String {
+        switch (blockchain) {
+        case bnb:
+            return "0f0f0f"
+        case eth:
+            return "0f0f0f"
+        default:
+            return "0f0f0f"
+        }
+    }
+    
+    var chainString: String {
+        switch (blockhain) {
+        case bnb:
+            return "BNB"
+        case eth:
+            return "ETH"
+        default:
+            return "SOL"
         }
     }
     

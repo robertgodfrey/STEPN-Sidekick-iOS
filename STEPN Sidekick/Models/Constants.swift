@@ -31,3 +31,8 @@ let eff: Int = 0
 let luck: Int = 1
 let comf: Int = 2
 let res: Int = 3
+
+// blockchains/realms
+let sol: Int = 0
+let bnb: Int = 1
+let eth: Int = 2
