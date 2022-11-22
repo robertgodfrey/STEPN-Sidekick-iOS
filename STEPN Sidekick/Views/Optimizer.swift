@@ -1141,9 +1141,7 @@ struct Optimizer: View {
                                             .overlay(RoundedRectangle(cornerRadius: 8)
                                                 .stroke(Color("Almost Black"), lineWidth: 1.4))
                                         
-                                        HStack(spacing: 0) {
-                                            Spacer()
-                                            
+                                        HStack(spacing: 4) {
                                             TextField("0.0", text: $comfGemPrice, onEditingChanged: { (editingChanged) in
                                                 if editingChanged {
                                                     comfGemPriceSelected = true
@@ -1156,17 +1154,17 @@ struct Optimizer: View {
                                                 .font(Font.custom(fontTitles, size: 20))
                                                 .multilineTextAlignment(.center)
                                                 .foregroundColor(Color("White"))
-                                                .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                                                .keyboardType(.decimalPad)
                                                 .onReceive(comfGemPrice.publisher.collect()) {
-                                                    self.comfGemPrice = String($0.prefix(9))
+                                                    self.comfGemPrice = String($0.prefix(6))
                                                 }
+                                                .frame(width: getGemInputWidth(length: comfGemPrice.count))
+                                                .padding(.leading, 10)
                                             
                                             Image(chainCoinIcon(blockchain: blockchain))
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(height: 20)
-                                            
-                                            Spacer()
+                                                .frame(width: 20, height: 20)
                                         }
                                     }
                                 }
@@ -1323,11 +1321,25 @@ struct Optimizer: View {
                     }
                     
                     Text("Based on unofficial STEPN community data.\nActual results may vary.")
-                        .font(Font.custom(fontHeaders, size: 16))
+                        .font(Font.custom("Roboto-Regular", size: 13))
                         .foregroundColor(Color("Gandalf"))
                         .multilineTextAlignment(.center)
                         .padding(.top, 24)
-                        .padding(.bottom, 60)
+                        .padding(.bottom, 10)
+                    
+                    HStack(spacing: 4) {
+                        Text("Price data provided by")
+                            .font(Font.custom("Roboto-Regular", size: 13))
+                            .foregroundColor(Color("Gandalf"))
+                            .multilineTextAlignment(.center)
+
+                        Image("coin_gecko")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 24)
+                            .padding(.top, 2)
+                        
+                    }.padding(.bottom, 60)
                 }.overlay(
                 GeometryReader { proxy -> Color in
                     let minY = proxy.frame(in: .global).minY
@@ -1990,6 +2002,19 @@ struct Optimizer: View {
             return 0.492
         default:
             return 0.47
+        }
+    }
+    
+    func getGemInputWidth(length: Int) -> CGFloat {
+        switch (length) {
+        case 4:
+            return 40
+        case 5:
+            return 50
+        case 6:
+            return 60
+        default:
+            return 30
         }
     }
     
@@ -2818,7 +2843,8 @@ struct CalcedTotals: View {
                     .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
                     .frame(width: 24, height: 24)
                 
-            }.padding(.horizontal, 40)
+            }.padding(.leading, 40)
+                .padding(.trailing, 38)
                 .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
             
             HStack(spacing: 4) {
@@ -2829,15 +2855,15 @@ struct CalcedTotals: View {
                 Spacer()
                 
                 Text(comfGemPrice > 0 ? "0.00" : "Enter Gem Price ↓")
-                    .font(Font.custom(comfGemPrice > 0 ? fontTitles : "RobotoCondensed-Italic", size: 18))
-                    .foregroundColor(Color("Almost Black"))
-                    .padding(.trailing, -2)
+                    .font(Font.custom(comfGemPrice > 0 ? fontTitles : "RobotoCondensed-Italic", size: comfGemPrice > 0 ? 18 : 16))
+                    .foregroundColor(Color(comfGemPrice > 0 ? "Almost Black" : "Gandalf"))
+                    .padding(.trailing, 4)
                 
                 Text("$")
                     .font(Font.custom("RobotoCondensed-Bold", size: 18))
                     .foregroundColor(Color("Almost Black"))
             }.padding(.leading, 40)
-                .padding(.trailing, 44)
+                .padding(.trailing, 45)
                 .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
         }
     }
