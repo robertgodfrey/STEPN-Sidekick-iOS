@@ -26,7 +26,8 @@ struct Optimizer: View {
     
     @State private var shoeRarity: Int = common
     @State private var shoeType: Int = walker
-    @State private var blockhain: Int = sol
+    @State private var blockchain: Int = sol
+    @State private var comfGemPrice: String = ""
     
     @State private var shoeName: String = ""
     @State private var energy: String = ""
@@ -63,6 +64,7 @@ struct Optimizer: View {
     @State private var popCircles: Bool = false
     @State private var popShoe: Bool = false
     @State private var energySelected: Bool = false
+    @State private var comfGemPriceSelected: Bool = false
     
     @State private var gemPopup: Bool = false   // gem dialog
     @State private var gemLockedDialog: Bool = false
@@ -81,10 +83,10 @@ struct Optimizer: View {
                 .foregroundColor(Color("Light Green"))
                 .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
             
-            SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            // SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
 
             ScrollView {
-                VStack {
+                LazyVStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 20, style: .continuous)
                             .foregroundColor(Color("Almost Black"))
@@ -114,21 +116,21 @@ struct Optimizer: View {
                             // MARK: Shoe + gems
                             ZStack{
                                 Circle()
-                                    .foregroundColor(Color(hex: outerCircleColor))
+                                    .foregroundColor(Color(hex: outerCircleColor(shoeRarity: shoeRarity)))
                                     .frame(height: 190)
                                     .scaleEffect(popCircles ? 1.1 : 1)
                                 
                                 Circle()
-                                    .foregroundColor(Color(hex: middleCircleColor))
+                                    .foregroundColor(Color(hex: middleCircleColor(shoeRarity: shoeRarity)))
                                     .frame(width: 150)
                                     .scaleEffect(popCircles ? 1.1 : 1)
 
                                 Circle()
-                                    .foregroundColor(Color(hex: innerCircleColor))
+                                    .foregroundColor(Color(hex: innerCircleColor(shoeRarity: shoeRarity)))
                                     .frame(width: 110)
                                     .scaleEffect(popCircles ? 1.1 : 1)
 
-                                Image(shoeImageResource)
+                                Image(shoeImageResource(shoeType: shoeType))
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 180)
@@ -226,92 +228,95 @@ struct Optimizer: View {
                                           dismissButton: .default(Text("Okay")))
                                 }
                             
-                            // MARK: Shoe name
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                    .foregroundColor(Color("Almost Black"))
-                                    .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
-                                    .padding(.top, 6)
-                                    .padding(.leading, 4)
-                                
-                                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                    .foregroundColor(Color(hex: labelHexColor))
-                                    .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
-                                    .overlay(RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color("Almost Black"), lineWidth: 1.4))
-                                
-                                TextField("Shoe Name", text: $shoeName, onEditingChanged: { (editingChanged) in
-                                    if editingChanged {
-                                        withAnimation(.easeOut .speed(1.5)) {
-                                            hideTab = true
-                                        }
-                                    }})
-                                    .disableAutocorrection(true)
-                                    .onReceive(shoeName.publisher.collect()) {
-                                        self.shoeName = String($0.prefix(12))
-                                    }
-                                    .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
-                                    .font(Font.custom(fontTitles, size: 17))
-                                    .multilineTextAlignment(.center)
-                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                
-                            }.padding(.top, -10)
+                            VStack {
                             
-                            // MARK: Shoe selector
-                            HStack(spacing: 8) {
-                                Button(action: {
-                                    saveEmLoadEm(shoeToLoad: shoeNum == 1 ? 6 : shoeNum - 1)
-                                    popShoe = true
-                                    if shoeNum == 1 {
-                                        shoeNum = 6
-                                    } else {
-                                        shoeNum -= 1
-                                    }
-                                    withAnimation(.linear(duration: 0.8)) {
-                                        popShoe = false
-                                    }
-                                }, label: {
-                                    Image("arrow_left")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 18)
-                                        .padding(15)
-                                })
+                                // MARK: Shoe name
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                        .foregroundColor(Color("Almost Black"))
+                                        .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
+                                        .padding(.top, 6)
+                                        .padding(.leading, 4)
+                                    
+                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                        .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
+                                        .frame(minWidth: 140, maxWidth: 140, minHeight: 36, maxHeight: 36)
+                                        .overlay(RoundedRectangle(cornerRadius: 25)
+                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
+                                    
+                                    TextField("Shoe Name", text: $shoeName, onEditingChanged: { (editingChanged) in
+                                        if editingChanged {
+                                            withAnimation(.easeOut .speed(1.5)) {
+                                                hideTab = true
+                                            }
+                                        }})
+                                        .disableAutocorrection(true)
+                                        .onReceive(shoeName.publisher.collect()) {
+                                            self.shoeName = String($0.prefix(12))
+                                        }
+                                        .frame(minWidth: 150, maxWidth: 157, minHeight: 42, maxHeight: 48)
+                                        .font(Font.custom(fontTitles, size: 17))
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                    
+                                }.padding(.top, -10)
                                 
-                                Text(shoeNum == 1 ? "" : String(shoeNum - 1))
-                                    .font(Font.custom(fontHeaders, size: 12))
-                                    .foregroundColor(Color("Gandalf"))
-                                    .frame(width: 14)
-                                
-                                Text(String(shoeNum))
-                                    .font(Font.custom(fontTitles, size: 17))
-                                    .foregroundColor(Color("Almost Black"))
-                                    .frame(width: 14)
-                                
-                                Text(shoeNum == 6 ? "" : String(shoeNum + 1))
-                                    .font(Font.custom(fontHeaders, size: 12))
-                                    .foregroundColor(Color("Gandalf"))
-                                    .frame(width: 14)
-                                
-                                Button(action: {
-                                    saveEmLoadEm(shoeToLoad: shoeNum == 6 ? 1 : shoeNum + 1)
-                                    popShoe = true
-                                    if shoeNum == 6 {
-                                        shoeNum = 1
-                                    } else {
-                                        shoeNum += 1
-                                    }
-                                    withAnimation(.linear(duration: 0.8)) {
-                                        popShoe = false
-                                    }
-                                }, label: {
-                                    Image("arrow_right")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 18)
-                                        .padding(15)
-                                })
-                            }.padding(.vertical, -5)
+                                // MARK: Shoe selector
+                                HStack(spacing: 8) {
+                                    Button(action: {
+                                        saveEmLoadEm(shoeToLoad: shoeNum == 1 ? 6 : shoeNum - 1)
+                                        popShoe = true
+                                        if shoeNum == 1 {
+                                            shoeNum = 6
+                                        } else {
+                                            shoeNum -= 1
+                                        }
+                                        withAnimation(.linear(duration: 0.8)) {
+                                            popShoe = false
+                                        }
+                                    }, label: {
+                                        Image("arrow_left")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 18)
+                                            .padding(15)
+                                    })
+                                    
+                                    Text(shoeNum == 1 ? "" : String(shoeNum - 1))
+                                        .font(Font.custom(fontHeaders, size: 12))
+                                        .foregroundColor(Color("Gandalf"))
+                                        .frame(width: 14)
+                                    
+                                    Text(String(shoeNum))
+                                        .font(Font.custom(fontTitles, size: 17))
+                                        .foregroundColor(Color("Almost Black"))
+                                        .frame(width: 14)
+                                    
+                                    Text(shoeNum == 6 ? "" : String(shoeNum + 1))
+                                        .font(Font.custom(fontHeaders, size: 12))
+                                        .foregroundColor(Color("Gandalf"))
+                                        .frame(width: 14)
+                                    
+                                    Button(action: {
+                                        saveEmLoadEm(shoeToLoad: shoeNum == 6 ? 1 : shoeNum + 1)
+                                        popShoe = true
+                                        if shoeNum == 6 {
+                                            shoeNum = 1
+                                        } else {
+                                            shoeNum += 1
+                                        }
+                                        withAnimation(.linear(duration: 0.8)) {
+                                            popShoe = false
+                                        }
+                                    }, label: {
+                                        Image("arrow_right")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 18)
+                                            .padding(15)
+                                    })
+                                }.padding(.vertical, -5)
+                            }
                             
                             HStack(spacing: 5) {
                                 // MARK: Rarity stack
@@ -332,12 +337,12 @@ struct Optimizer: View {
                                         }, label: {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: labelHexColor))
+                                                    .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
                                                     .frame(height: 36)
                                                     .overlay(RoundedRectangle(cornerRadius: 8)
                                                         .stroke(Color("Almost Black"), lineWidth: 1.4))
                                                 
-                                                Text(rarityString)
+                                                Text(rarityString(shoeRarity: shoeRarity))
                                                     .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
                                                     .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                             }
@@ -376,7 +381,7 @@ struct Optimizer: View {
                                         }, label: {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: labelHexColor))
+                                                    .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
                                                     .frame(height: 36)
                                                     .overlay(RoundedRectangle(cornerRadius: 8)
                                                         .stroke(Color("Almost Black"), lineWidth: 1.4))
@@ -404,7 +409,7 @@ struct Optimizer: View {
                                                         .frame(height: 14)
                                                         .padding(.trailing, 5)
                                                     
-                                                    Text(shoeTypeString)
+                                                    Text(shoeTypeString(shoeType: shoeType))
                                                         .frame(height: 36)
                                                         .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                                     
@@ -498,31 +503,31 @@ struct Optimizer: View {
                                 
                             }.padding(.bottom, 10)
                             
-                            // MARK: Titles
-                            HStack(alignment: .bottom) {
-                                Text("Attributes")
-                                    .font(Font.custom(fontTitles, size: 23))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Spacer()
-                                
-                                Text("Base")
-                                    .font(Font.custom(fontTitles, size: 16))
-                                    .foregroundColor(Color("Almost Black"))
-                                    .padding(.horizontal, 30)
-                                                                    
-                                VStack(spacing: 20) {
-                                    Text("Total")
+                            // MARK: Attributes
+                            VStack {
+                                // MARK: Titles
+                                HStack(alignment: .bottom) {
+                                    Text("Attributes")
+                                        .font(Font.custom(fontTitles, size: 23))
+                                        .foregroundColor(Color("Almost Black"))
+                                    
+                                    Spacer()
+                                    
+                                    Text("Base")
                                         .font(Font.custom(fontTitles, size: 16))
                                         .foregroundColor(Color("Almost Black"))
                                         .padding(.horizontal, 30)
-                                }
-                            }.padding(.vertical, 15)
-                                .padding(.horizontal, 40)
-                                .frame(maxWidth: 400)
+                                                                        
+                                    VStack(spacing: 20) {
+                                        Text("Total")
+                                            .font(Font.custom(fontTitles, size: 16))
+                                            .foregroundColor(Color("Almost Black"))
+                                            .padding(.horizontal, 30)
+                                    }
+                                }.padding(.vertical, 15)
+                                    .padding(.horizontal, 40)
+                                    .frame(maxWidth: 400)
                             
-                            // MARK: Attributes
-                            VStack {
                                 ZStack {
                                     HStack {
                                         HStack {
@@ -538,16 +543,16 @@ struct Optimizer: View {
                                         
                                         Spacer()
                                         
-                                        TextField(baseRangeHint, text: $baseEffString, onEditingChanged: { (editingChanged) in
+                                        TextField(baseRangeHint(shoeRarity: shoeRarity), text: $baseEffString, onEditingChanged: { (editingChanged) in
                                             if editingChanged {
                                                 withAnimation(.easeOut .speed(1.5)) {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if baseEffString.doubleValue < basePointsMin && baseEffString != "" {
-                                                    baseEffString = String(basePointsMin)
-                                                } else if baseEffString.doubleValue > basePointsMax {
-                                                    baseEffString = String(basePointsMax)
+                                                if baseEffString.doubleValue < basePointsMin(shoeRarity: shoeRarity) && baseEffString != "" {
+                                                    baseEffString = String(basePointsMin(shoeRarity: shoeRarity))
+                                                } else if baseEffString.doubleValue > basePointsMax(shoeRarity: shoeRarity) {
+                                                    baseEffString = String(basePointsMax(shoeRarity: shoeRarity))
                                                 }
                                                 updatePoints()
                                             }})
@@ -637,16 +642,16 @@ struct Optimizer: View {
                                         
                                         Spacer()
 
-                                        TextField(baseRangeHint, text: $baseLuckString, onEditingChanged: { (editingChanged) in
+                                        TextField(baseRangeHint(shoeRarity: shoeRarity), text: $baseLuckString, onEditingChanged: { (editingChanged) in
                                             if editingChanged {
                                                 withAnimation(.easeOut .speed(1.5)) {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if baseLuckString.doubleValue < basePointsMin && baseLuckString != "" {
-                                                    baseLuckString = String(basePointsMin)
-                                                } else if baseLuckString.doubleValue > basePointsMax {
-                                                    baseLuckString = String(basePointsMax)
+                                                if baseLuckString.doubleValue < basePointsMin(shoeRarity: shoeRarity) && baseLuckString != "" {
+                                                    baseLuckString = String(basePointsMin(shoeRarity: shoeRarity))
+                                                } else if baseLuckString.doubleValue > basePointsMax(shoeRarity: shoeRarity) {
+                                                    baseLuckString = String(basePointsMax(shoeRarity: shoeRarity))
                                                 }
                                                 updatePoints()
                                             }})
@@ -736,16 +741,16 @@ struct Optimizer: View {
                                         
                                         Spacer()
                                         
-                                        TextField(baseRangeHint, text: $baseComfString, onEditingChanged: { (editingChanged) in
+                                        TextField(baseRangeHint(shoeRarity: shoeRarity), text: $baseComfString, onEditingChanged: { (editingChanged) in
                                             if editingChanged {
                                                 withAnimation(.easeOut .speed(1.5)) {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if baseComfString.doubleValue < basePointsMin && baseComfString != "" {
-                                                    baseComfString = String(basePointsMin)
-                                                } else if baseComfString.doubleValue > basePointsMax {
-                                                    baseComfString = String(basePointsMax)
+                                                if baseComfString.doubleValue < basePointsMin(shoeRarity: shoeRarity) && baseComfString != "" {
+                                                    baseComfString = String(basePointsMin(shoeRarity: shoeRarity))
+                                                } else if baseComfString.doubleValue > basePointsMax(shoeRarity: shoeRarity) {
+                                                    baseComfString = String(basePointsMax(shoeRarity: shoeRarity))
                                                 }
                                                 updatePoints()
                                             }})
@@ -839,16 +844,16 @@ struct Optimizer: View {
                                         
                                         Spacer()
                                         
-                                        TextField(baseRangeHint, text: $baseResString, onEditingChanged: { (editingChanged) in
+                                        TextField(baseRangeHint(shoeRarity: shoeRarity), text: $baseResString, onEditingChanged: { (editingChanged) in
                                             if editingChanged {
                                                 withAnimation(.easeOut .speed(1.5)) {
                                                     hideTab = true
                                                 }
                                             } else {
-                                                if baseResString.doubleValue < basePointsMin && baseResString != "" {
-                                                    baseResString = String(basePointsMin)
-                                                } else if baseResString.doubleValue > basePointsMax {
-                                                    baseResString = String(basePointsMax)
+                                                if baseResString.doubleValue < basePointsMin(shoeRarity: shoeRarity) && baseResString != "" {
+                                                    baseResString = String(basePointsMin(shoeRarity: shoeRarity))
+                                                } else if baseResString.doubleValue > basePointsMax(shoeRarity: shoeRarity) {
+                                                    baseResString = String(basePointsMax(shoeRarity: shoeRarity))
                                                 }
                                                 updatePoints()
                                             }})
@@ -999,501 +1004,321 @@ struct Optimizer: View {
                                           dismissButton: .default(Text("Okay")))
                                 }
                             
-                            // MARK: Calculated totals
-                            VStack(spacing: 15) {
-                                HStack(spacing: 6) {
-                                    Text(gmtToggleOn ? "Est. GMT Range" : "Est. GST / Daily Limit:")
-                                        .font(Font.custom(fontHeaders, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
+                            // MARK: results
+                            CalcedTotals(
+                                gmtToggleOn: gmtToggleOn,
+                                gstEarned: gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy),
+                                gstLimit: gstLimit,
+                                gmtLowRange: gmtLowRange,
+                                gmtHighRange: gmtHighRange,
+                                durabilityLost: durabilityLost,
+                                repairCostGst: repairCostGst,
+                                hpLoss: hpLoss,
+                                restoreHpCostGst: restoreHpCostGst,
+                                comfGemMultiplier: comfGemMultiplier,
+                                comfGemLvlForRestore: $comfGemLvlForRestore,
+                                comfGemForRestoreResource: comfGemForRestoreResource,
+                                gmtEarned: gmtEarned,
+                                gstProfitBeforeGem: gstProfitBeforeGem,
+                                comfGemPrice: comfGemPrice.doubleValue
+                            ).padding(.top, 10)
+                                .padding(.bottom, 20)
+
+                            // MARK: bottom three stacks
+                            HStack(spacing: 5) {
+                                // MARK: Chain stack
+                                VStack(spacing: 1) {
+                                    Text("Chain")
+                                        .font(Font.custom(fontHeaders, size: 16))
+                                        .foregroundColor(Color("Gandalf"))
                                     
-                                    Spacer()
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .foregroundColor(Color("Almost Black"))
+                                            .frame(height: 36)
+                                            .padding([.top, .leading], 2)
+                                            .padding([.bottom, .trailing], -3)
                                     
-                                    Text(gmtToggleOn ? "" : String(gstEarned))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color(gstEarned > Double(gstLimit) ? "Gps Red" : "Almost Black"))
-                                    
-                                    Text(gmtToggleOn ? "" : "/")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Text(gmtToggleOn ? (String(gmtLowRange) + " - " + String(gmtHighRange)) : String(gstLimit))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Image(gmtToggleOn ? "coin_gmt" : "coin_gst")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                HStack(spacing: 6) {
-                                    Text("Durability Loss:")
-                                        .font(Font.custom(fontHeaders, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Spacer()
-                                    
-                                    Text(String(durabilityLost))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                HStack(spacing: 6) {
-                                    Text("Repair Cost:")
-                                        .font(Font.custom(fontHeaders, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Spacer()
-                                    
-                                    Text(String(Double(repairCostGst)))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Image("coin_gst")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                HStack(spacing: 6) {
-                                    Text("HP Loss:")
-                                        .font(Font.custom(fontHeaders, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Spacer()
-                                    
-                                    Text(hpLoss == 0 ? "0" : String(hpLoss))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                HStack(spacing: 6) {
-                                    Text("Restoration Cost:")
-                                        .font(Font.custom(fontHeaders, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Spacer()
-                                    
-                                    Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .padding(.trailing, -2)
-                                    
-                                    Button(action: {
-                                        if comfGemLvlForRestore == 3 {
-                                            comfGemLvlForRestore = 1
-                                        } else {
-                                            comfGemLvlForRestore += 1
-                                        }
-                                    }, label: {
-                                        Image(comfGemForRestoreResource)
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
-                                            .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
-                                            .frame(width: 24, height: 24)
-                                            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-                                            .padding(.horizontal, -10)
-                                    })
-                                    
-                                    Text("+")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .padding(.horizontal, 5)
-                                    
-                                    Text(hpLoss == 0 ? "0" : String(restoreHpCostGst))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Image("coin_gst")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                HStack(spacing: 4) {
-                                    Text("Total Income:")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Spacer()
-                                    
-                                    Text(String(gmtEarned))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .opacity(gmtToggleOn ? 1 : 0)
-                                    
-                                    Image("coin_gmt")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: gmtToggleOn ? 20 : 0, height: 20)
-                                    
-                                    Text("-")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .opacity(gmtToggleOn ? 1 : 0)
-                                    
-                                    Text(String(gstProfitBeforeGem))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Image("coin_gst")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                    
-                                    Text("-")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color("Almost Black"))
-                                        .padding(.trailing, -2)
-                                    
-                                    Image(comfGemForRestoreResource)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
-                                        .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
-                                        .frame(width: 24, height: 24)
-                                    
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
-                                
-                                // MARK: bottom three stacks
-                                HStack(spacing: 5) {
-                                    // MARK: Chain stack
-                                    VStack(spacing: 1) {
-                                        Text("Chain")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(height: 36)
-                                                .padding([.top, .leading], 2)
-                                                .padding([.bottom, .trailing], -3)
-                                        
-                                            Button(action: {
-                                                // in tap action
-                                            }, label: {
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color(hex: labelChainHexColor))
-                                                        .frame(height: 36)
-                                                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
-                                                    
-                                                    Text(chainString)
-                                                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                        .foregroundColor(Color("White"))
-                                                }
-                                            }).buttonStyle(OptimizerButtons(tapAction: {
-                                                clearFocus()
-                                                if blockhain == 2 {
-                                                    blockhain = 0
-                                                } else {
-                                                    blockhain += 1
-                                                }
-                                            }))
-                                            .font(Font.custom(fontButtons, size: 17))
-                                        }
+                                        Button(action: {
+                                            // in tap action
+                                        }, label: {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .fill(LinearGradient(
+                                                            gradient: Gradient(
+                                                                colors: [Color(hex: blockchain == sol ? "b04ced"
+                                                                               : labelChainHexColor(blockchain: blockchain)), Color(hex: labelChainHexColor(blockchain: blockchain))]),
+                                                            startPoint: .leading,
+                                                            endPoint: .trailing))
+                                                    .frame(height: 36)
+                                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color("Almost Black"), lineWidth: 1.4))
+                                                
+                                                Text(chainString(blockchain: blockchain))
+                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                                    .foregroundColor(Color("White"))
+                                            }
+                                        }).buttonStyle(OptimizerButtons(tapAction: {
+                                            clearFocus()
+                                            if blockchain == 2 {
+                                                blockchain = 0
+                                            } else {
+                                                blockchain += 1
+                                            }
+                                        }))
+                                        .font(Font.custom(fontButtons, size: 17))
                                     }
-                                    
-                                    // MARK: GST/GMT stack
-                                    VStack(spacing: 1) {
-                                        Text("Token")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
-                                        
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(height: 36)
-                                                .padding([.top, .leading], 2)
-                                                .padding([.bottom, .trailing], -3)
-                                        
-                                            Button(action: {
-                                                // in tap action
-                                            }, label: {
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                        .foregroundColor(Color(hex: gmtToggleOn ? "gmtColor" : "gstColor"))
+                                }
+                                
+                                // MARK: GST/GMT stack
+                                LazyVStack(spacing: 1) {
+                                    Text("Token")
+                                        .font(Font.custom(fontHeaders, size: 16))
+                                        .foregroundColor(Color("Gandalf"))
+                                
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                             .foregroundColor(Color("Almost Black"))
+                                             .frame(height: 36)
+                                             .padding([.top, .leading], 2)
+                                             .padding([.bottom, .trailing], -3)
+                                     
+                                        Button(action: {
+                                            // in tap action
+                                        }, label: {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                                    .fill(
+                                                        LinearGradient(
+                                                            gradient: Gradient(
+                                                                colors: [gmtToggleOn ? Color(hex: "c6a242") : Color(hex: "D1D1D1"),
+                                                                         gmtToggleOn ? Color(hex: "F4E5AE") : Color(hex: "E1E1E1")]),
+                                                            startPoint: .leading,
+                                                            endPoint: .trailing))
+                                                    .frame(height: 36)
+                                                    .overlay(RoundedRectangle(cornerRadius: 8)
+                                                        .stroke(Color("Almost Black"), lineWidth: 1.4))
+                                                
+                                                HStack(spacing: 5) {
+                                                    Text(gmtToggleOn ? "GMT" : "GST")
                                                         .frame(height: 36)
-                                                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                                            .stroke(Color("Almost Black"), lineWidth: 1.4))
-                                                    
-                                                    HStack(spacing: 5) {
-                                                        Text(gmtToggleOn ? "GMT" : "GST")
-                                                            .frame(height: 36)
-                                                            .foregroundColor(Color("Almost Black"))
-                                                        Image(gmtToggleOn ? "gmtLogo" : "gstLogo")
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(height: 14)
-                                                    }.frame(minWidth: 100, maxWidth: 105)
-                                                }
-                                            }).buttonStyle(OptimizerButtons(tapAction: {
-                                                clearFocus()
-                                                if shoeLevel >= 30 {
-                                                    self.gmtToggleOn.toggle()
-                                                } else {
-                                                    gmtLevelDialog = true
-                                                }
-                                            }))
-                                            .font(Font.custom(fontButtons, size: 17))
-                                        }
+                                                        .foregroundColor(Color("Almost Black"))
+                                                        .padding(.leading, 5)
+                                                    Image(gmtToggleOn ? "logo_gmt" : "logo_gst")
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .frame(height: 20)
+                                                }.frame(minWidth: 100, maxWidth: 105)
+                                            }
+                                        }).buttonStyle(OptimizerButtons(tapAction: {
+                                            clearFocus()
+                                            if shoeLevel >= 30 {
+                                                self.gmtToggleOn.toggle()
+                                            } else {
+                                                gmtLevelDialog = true
+                                            }
+                                        }))
+                                        .font(Font.custom(fontButtons, size: 17))
                                     }
+                                }
+                                
+                                // MARK: Comfort gem price stack
+                                VStack(spacing: 1) {
+                                    Text("Gem Price")
+                                        .font(Font.custom(fontHeaders, size: 16))
+                                        .foregroundColor(Color("Gandalf"))
                                     
-                                    // MARK: Comfort gem price stack
-                                    VStack(spacing: 1) {
-                                        Text("Comf Gem Price")
-                                            .font(Font.custom(fontHeaders, size: 16))
-                                            .foregroundColor(Color("Gandalf"))
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .foregroundColor(Color("Almost Black"))
+                                            .frame(height: 36)
+                                            .padding([.top, .leading], 2)
+                                            .padding([.bottom, .trailing], -3)
+                                     
+                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                            .foregroundColor(comfGemPriceSelected ? Color(hex: "EC6262") : Color(hex: "EC3F3F"))
+                                            .frame(height: 36)
+                                            .overlay(RoundedRectangle(cornerRadius: 8)
+                                                .stroke(Color("Almost Black"), lineWidth: 1.4))
                                         
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                .foregroundColor(Color("Almost Black"))
-                                                .frame(height: 36)
-                                                .padding([.top, .leading], 2)
-                                                .padding([.bottom, .trailing], -3)
-                                         
-                                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            // TODO: Stopping point
-                                                .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
-                                                .frame(height: 36)
-                                                .overlay(RoundedRectangle(cornerRadius: 8)
-                                                    .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
+                                        HStack(spacing: 0) {
+                                            Spacer()
                                             
-                                            Image("energy_bolt")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .padding(.trailing, 14)
-                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
-                                            
-                                            TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
+                                            TextField("0.0", text: $comfGemPrice, onEditingChanged: { (editingChanged) in
                                                 if editingChanged {
-                                                    energySelected = true
+                                                    comfGemPriceSelected = true
                                                     withAnimation(.easeOut .speed(1.5)) {
                                                         hideTab = true
                                                     }
                                                 } else {
-                                                    energySelected = false
+                                                    comfGemPriceSelected = false
                                                 }})
-                                                .padding(.trailing, 6)
-                                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
                                                 .font(Font.custom(fontTitles, size: 20))
                                                 .multilineTextAlignment(.center)
-                                                .foregroundColor(Color("Almost Black"))
+                                                .foregroundColor(Color("White"))
                                                 .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
-                                                .onReceive(energy.publisher.collect()) {
-                                                    self.energy = String($0.prefix(4))
-                                                    if energy.doubleValue > 25 {
-                                                        energy = "25"
-                                                    }
+                                                .onReceive(comfGemPrice.publisher.collect()) {
+                                                    self.comfGemPrice = String($0.prefix(9))
                                                 }
+                                            
+                                            Image(chainCoinIcon(blockchain: blockchain))
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height: 20)
+                                            
+                                            Spacer()
                                         }
                                     }
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400)
-                                    .alert(isPresented: $gmtLevelDialog) {
-                                        Alert(title: Text("Check Level"),
-                                              message: Text("Sneaker must be level 30 to activate GMT earning"),
-                                              dismissButton: .default(Text("Okay")))
-                                    }
-                                
-                                /*
-                                ZStack {
-                                    Capsule()
-                                        .frame(width: 90, height: 40)
-                                        .foregroundColor(gmtToggleOn ? Color(hex: "ffcb6d") : Color(hex: "e3e3e3"))
-                                        .overlay(
-                                            Capsule()
-                                                .stroke(gmtToggleOn ? Color(hex: "e78a1c") : Color(hex: "adadad"), lineWidth: 2)
-                                            )
-                                    
-                                    Text("GST")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color(hex: "adadad"))
-                                        .opacity(gmtToggleOn ? 0 : 1)
-                                        .offset(x: 16)
-                                    
-                                    Text("GMT")
-                                        .font(Font.custom(fontTitles, size: 18))
-                                        .foregroundColor(Color(hex: "e78a1c"))
-                                        .opacity(gmtToggleOn ? 1 : 0)
-                                        .offset(x: -16)
-                         
-                                    Image(gmtToggleOn ? "coin_gmt" : "coin_gst")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 40, height: 40)
-                                        .offset(x:gmtToggleOn ? 24 : -24)
-                                        .padding(24)
-                                        .animation(.spring())
                                 }
-                                .onTapGesture {
-                                    if shoeLevel >= 30 {
-                                        self.gmtToggleOn.toggle()
-                                    } else {
-                                        gmtLevelDialog = true
-                                    }
+                            }.padding(.horizontal, 40)
+                                .frame(maxWidth: 400)
+                                .alert(isPresented: $gmtLevelDialog) {
+                                    Alert(title: Text("Check Level"),
+                                          message: Text("Sneaker must be level 30 to activate GMT earning"),
+                                          dismissButton: .default(Text("Okay")))
                                 }
-                                 */
-
-                                
-                                // MARK: Mystery box chances
+                    
+                            // MARK: Mystery box chances
+                            VStack {
                                 Text("Mystery Box Chance")
                                     .font(Font.custom(fontTitles, size: 20))
                                     .foregroundColor(Color("Almost Black"))
                                 
-                                VStack {
-                                    HStack {
-                                        Image("mb1")
-                                            .resizable()
-                                            .renderingMode(mb1Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb1Chance > 1 ? 1 : 0.5)
-                                        
-                                        Spacer()
-                                        
-                                        Image("mb2")
-                                            .resizable()
-                                            .renderingMode(mb2Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb2Chance > 1 ? 1 : 0.5)
-                                        
-                                        Spacer()
-
-                                        Image("mb3")
-                                            .resizable()
-                                            .renderingMode(mb3Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb3Chance > 1 ? 1 : 0.5)
-
-                                        Spacer()
-
-                                        Image("mb4")
-                                            .resizable()
-                                            .renderingMode(mb4Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb4Chance > 1 ? 1 : 0.5)
-                                        
-                                        Spacer()
-
-                                        Image("mb5")
-                                            .resizable()
-                                            .renderingMode(mb5Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb5Chance > 1 ? 1 : 0.5)
-
-                                        
-                                    }.padding(.horizontal, 40)
-                                        .padding(.top, 5)
-                                        .frame(maxWidth: 400)
+                                HStack {
+                                    Image("mb1")
+                                        .resizable()
+                                        .renderingMode(mb1Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb1Chance > 1 ? 1 : 0.5)
                                     
-                                    HStack {
-                                        Image("mb6")
-                                            .resizable()
-                                            .renderingMode(mb6Chance == 0 || mb9Chance == 2 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb6Chance > 1 && mb8Chance < 2 ? 1 : 0.5)
-                                        
-                                        Spacer()
-                                        
-                                        Image("mb7")
-                                            .resizable()
-                                            .renderingMode(mb7Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb7Chance > 1 && mb9Chance < 2 ? 1 : 0.5)
-                                        
-                                        Spacer()
-
-                                        Image("mb8")
-                                            .resizable()
-                                            .renderingMode(mb8Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb8Chance > 1 ? 1 : 0.5)
-
-                                        Spacer()
-
-                                        Image("mb9")
-                                            .resizable()
-                                            .renderingMode(mb9Chance == 0 ? .template : .none)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(mb9Chance > 1 ? 1 : 0.5)
-                                        
-                                        Spacer()
-                                        
-                                        ZStack {
-                                            Image("mb10")
-                                                .resizable()
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color("Gandalf"))
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 54, height: 54)
-                                                .opacity(0.5)
-                                            Text("¯\\ (ツ)_/¯".replacingOccurrences(of: " ", with: "_"))
-                                                .font(Font.custom("Roboto-Regular", size: 10))
-                                                .foregroundColor(Color("Almost Black"))
-                                                .opacity(mb9Chance > 1 ? 1 : 0)
-                                        }
-
-                                    }.padding(.horizontal, 40)
-                                        .frame(maxWidth: 400)
+                                    Spacer()
                                     
-                                    Button(action: {
-                                        withAnimation(.easeOut .speed(1.5)) {
-                                            hideTab = true
-                                        }
-                                        resetPageDialog = true
-                                    }, label: {
-                                        Text("Reset Values")
-                                            .font(Font.custom(fontTitles, size: 14))
+                                    Image("mb2")
+                                        .resizable()
+                                        .renderingMode(mb2Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb2Chance > 1 ? 1 : 0.5)
+                                    
+                                    Spacer()
+
+                                    Image("mb3")
+                                        .resizable()
+                                        .renderingMode(mb3Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb3Chance > 1 ? 1 : 0.5)
+
+                                    Spacer()
+
+                                    Image("mb4")
+                                        .resizable()
+                                        .renderingMode(mb4Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb4Chance > 1 ? 1 : 0.5)
+                                    
+                                    Spacer()
+
+                                    Image("mb5")
+                                        .resizable()
+                                        .renderingMode(mb5Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb5Chance > 1 ? 1 : 0.5)
+
+                                    
+                                }.padding(.horizontal, 40)
+                                    .padding(.top, 5)
+                                    .frame(maxWidth: 400)
+                                
+                                HStack {
+                                    Image("mb6")
+                                        .resizable()
+                                        .renderingMode(mb6Chance == 0 || mb9Chance == 2 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb6Chance > 1 && mb8Chance < 2 ? 1 : 0.5)
+                                    
+                                    Spacer()
+                                    
+                                    Image("mb7")
+                                        .resizable()
+                                        .renderingMode(mb7Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb7Chance > 1 && mb9Chance < 2 ? 1 : 0.5)
+                                    
+                                    Spacer()
+
+                                    Image("mb8")
+                                        .resizable()
+                                        .renderingMode(mb8Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb8Chance > 1 ? 1 : 0.5)
+
+                                    Spacer()
+
+                                    Image("mb9")
+                                        .resizable()
+                                        .renderingMode(mb9Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb9Chance > 1 ? 1 : 0.5)
+                                    
+                                    Spacer()
+                                    
+                                    ZStack {
+                                        Image("mb10")
+                                            .resizable()
+                                            .renderingMode(.template)
                                             .foregroundColor(Color("Gandalf"))
-                                            .padding(.top, 20)
-                                            .padding(.bottom, 40)
-                                    }).alert(isPresented: $resetPageDialog) {
-                                        Alert(title: Text("Reset All Values"),
-                                              message: Text("Are you sure you want to reset all values?"),
-                                              primaryButton: .destructive(Text("Yes")) {
-                                                resetPage()
-                                            },
-                                              secondaryButton: .cancel()
-                                        )
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 54, height: 54)
+                                            .opacity(0.5)
+                                        Text("¯\\ (ツ)_/¯".replacingOccurrences(of: " ", with: "_"))
+                                            .font(Font.custom("Roboto-Regular", size: 10))
+                                            .foregroundColor(Color("Almost Black"))
+                                            .opacity(mb9Chance > 1 ? 1 : 0)
                                     }
+
+                                }.padding(.horizontal, 40)
+                                    .frame(maxWidth: 400)
+                                    
+                                Button(action: {
+                                    withAnimation(.easeOut .speed(1.5)) {
+                                        hideTab = true
+                                    }
+                                    resetPageDialog = true
+                                }, label: {
+                                    Text("Reset Values")
+                                        .font(Font.custom(fontTitles, size: 14))
+                                        .foregroundColor(Color("Gandalf"))
+                                        .padding(.top, 20)
+                                        .padding(.bottom, 40)
+                                }).alert(isPresented: $resetPageDialog) {
+                                    Alert(title: Text("Reset All Values"),
+                                          message: Text("Are you sure you want to reset all values?"),
+                                          primaryButton: .destructive(Text("Yes")) {
+                                            resetPage()
+                                        },
+                                          secondaryButton: .cancel()
+                                    )
                                 }
-                            }.padding(.top, 16)
+                                
+                            }.padding(.top, 22)
+                           
                         }
                     }
                     
@@ -1605,603 +1430,447 @@ struct Optimizer: View {
             }
     }
     
-    var innerCircleColor: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "7bc799"
-        case rare:
-            return "7ac4e1"
-        case epic:
-            return "b98fd9"
-        default:
-            return "ebebeb"
-        }
-    }
-    
-    var middleCircleColor: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "cae9d9"
-        case rare:
-            return "cce8f4"
-        case epic:
-            return "e4d4f1"
-        default:
-            return "f7f7f7"
-        }
-    }
-    
-    var outerCircleColor: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "ecf7f1"
-        case rare:
-            return "ecf7fb"
-        case epic:
-            return "f5eff9"
-        default:
-            return "fcfcfc"
-        }
-    }
-    
-    var labelHexColor: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "48b073"
-        case rare:
-            return "45acd5"
-        case epic:
-            return "9d62cc"
-        default:
-            return "e9e9e9"
-        }
-    }
-    
-    var labelChainHexColor: String {
-        switch (blockchain) {
-        case bnb:
-            return "0f0f0f"
-        case eth:
-            return "0f0f0f"
-        default:
-            return "0f0f0f"
-        }
-    }
-    
-    var chainString: String {
-        switch (blockhain) {
-        case bnb:
-            return "BNB"
-        case eth:
-            return "ETH"
-        default:
-            return "SOL"
-        }
-    }
-    
-    var shoeImageResource: String {
-        switch (shoeType) {
-        case jogger:
-            return "shoe_jogger"
-        case runner:
-            return "shoe_runner"
-        case trainer:
-            return "shoe_trainer"
-        default:
-            return "shoe_walker"
-        }
-    }
-    
-    var rarityString: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "Uncommon"
-        case rare:
-            return "Rare"
-        case epic:
-            return "Epic"
-        default:
-            return "Common"
-        }
-    }
-    
-    var shoeTypeString: String {
-        switch (shoeType) {
-        case jogger:
-            return "Jogger"
-        case runner:
-            return "Runner"
-        case trainer:
-            return "Trainer"
-        default:
-            return "Walker"
-        }
-    }
-    
-    var baseRangeHint: String {
-        switch (shoeRarity) {
-        case uncommon:
-            return "8 - 21.6"
-        case rare:
-            return "15 - 42"
-        case epic:
-            return "28 - 75.6"
-        default:
-            return "1 - 10"
-        }
-    }
-    
-    var basePointsMin: Double {
-        switch (shoeRarity) {
-        case uncommon:
-            return 8
-        case rare:
-            return 15
-        case epic:
-            return 28
-        default:
-            return 1
-        }
-    }
-    
-    var basePointsMax: Double {
-        switch (shoeRarity) {
-        case uncommon:
-            return 21.6
-        case rare:
-            return 42
-        case epic:
-            return 75.6
-        default:
-            return 10
-        }
-    }
-    
-    // MARK: Earning calcs
-    var gstEarned: Double {
-        return floor(energy.doubleValue * pow(totalEff, energyCo) * 10) / 10
-    }
-    
+    // MARK: Gmt calcs
     var gmtEarnedPerEnergy: Double {
-        if !gmtToggleOn {
-            return 0
+            if !gmtToggleOn {
+                return 0
+            }
+            var gmtBaseline: Double = 0
+            
+            if totalComf < 118 {
+                gmtBaseline = 0.4 * (-0.00001 * pow(totalComf - 350, 2) + 1.67)
+            } else {
+                gmtBaseline = 0.4 * (-10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75)
+            }
+            
+            switch (shoeType) {
+            case walker:
+                gmtBaseline = gmtBaseline * 0.98
+            case runner:
+                gmtBaseline = gmtBaseline * 1.02
+            case trainer:
+                gmtBaseline = gmtBaseline * 1.025
+            default:
+                gmtBaseline = gmtBaseline * 1
+            }
+            
+            return gmtBaseline
         }
-        var gmtBaseline: Double = 0
         
-        if totalComf < 118 {
-            gmtBaseline = 0.4 * (-0.00001 * pow(totalComf - 350, 2) + 1.67)
-        } else {
-            gmtBaseline = 0.4 * (-10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75)
+        var gmtEarned: Double {
+            return round(gmtEarnedPerEnergy * energy.doubleValue * 10) / 10
         }
         
-        switch (shoeType) {
-        case walker:
-            gmtBaseline = gmtBaseline * 0.98
-        case runner:
-            gmtBaseline = gmtBaseline * 1.02
-        case trainer:
-            gmtBaseline = gmtBaseline * 1.025
-        default:
-            gmtBaseline = gmtBaseline * 1
+        var gmtLowRange: Double {
+            var gmtLow: Double = 0
+            gmtLow = round((gmtEarnedPerEnergy - 0.2) * energy.doubleValue * 10) / 10
+            
+            if gmtLow < 0 {
+                return 0
+            }
+            return gmtLow
         }
         
-        return gmtBaseline
-    }
-    
-    var gmtEarned: Double {
-        return round(gmtEarnedPerEnergy * energy.doubleValue * 10) / 10
-    }
-    
-    var gmtLowRange: Double {
-        var gmtLow: Double = 0
-        gmtLow = round((gmtEarnedPerEnergy - 0.2) * energy.doubleValue * 10) / 10
-        
-        if gmtLow < 0 {
-            return 0
+        var gmtHighRange: Double {
+            return round((gmtEarnedPerEnergy + 0.2) * energy.doubleValue * 10) / 10
         }
-        return gmtLow
-    }
-    
-    var gmtHighRange: Double {
-        return round((gmtEarnedPerEnergy + 0.2) * energy.doubleValue * 10) / 10
-    }
     
     var gstLimit: Int {
-        if shoeLevel < 10 {
-            return Int(5 + (floor(shoeLevel) * 10))
-        } else if shoeLevel < 23 {
-            return Int(60 + ((floor(shoeLevel) - 10) * 10))
-        } else {
-            return Int(195 + ((floor(shoeLevel) - 23) * 15))
-        }
-    }
-    
-    var durabilityLost: Int {
-        if energy.doubleValue == 0 || totalRes == 0 {
-            return 0
-        }
-        
-        var durLoss: Int = Int(round(energy.doubleValue * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
-        
-        if durLoss < 1 {
-            durLoss = 1
-        }
-        return durLoss
-    }
-    
-    var repairCostGst: Double {
-        return round(baseRepairCost * Double(durabilityLost) * 10) / 10
-    }
-        
-    var baseRepairCost: Double {
-        if shoeRarity == common {
-            switch (floor(shoeLevel)) {
-            case 1:
-                return 0.31
-            case 2:
-                return 0.32
-            case 3:
-                return 0.33
-            case 4:
-                return 0.35
-            case 5:
-                return 0.36
-            case 6:
-                return 0.37
-            case 7:
-                return 0.38
-            case 8:
-                return 0.4
-            case 9:
-                return 0.41
-            case 10:
-                return 0.42
-            case 11:
-                return 0.44
-            case 12:
-                return 0.46
-            case 13:
-                return 0.48
-            case 14:
-                return 0.5
-            case 15:
-                return 0.52
-            case 16:
-                return 0.54
-            case 17:
-                return 0.56
-            case 18:
-                return 0.58
-            case 19:
-                return 0.6
-            case 20:
-                return 0.62
-            case 21:
-                return 0.64
-            case 22:
-                return 0.67
-            case 23:
-                return 0.7
-            case 24:
-                return 0.72
-            case 25:
-                return 0.75
-            case 26:
-                return 0.78
-            case 27:
-                return 0.81
-            case 28:
-                return 0.83
-            case 29:
-                return 0.87
-            case 30:
-                return 0.9
-            default:
-                return 0
-            }
-        } else if shoeRarity == uncommon {
-            switch (floor(shoeLevel)) {
-            case 1:
-                return 0.41
-            case 2:
-                return 0.43
-            case 3:
-                return 0.45
-            case 4:
-                return 0.46
-            case 5:
-                return 0.48
-            case 6:
-                return 0.5
-            case 7:
-                return 0.51
-            case 8:
-                return 0.53
-            case 9:
-                return 0.55
-            case 10:
-                return 0.57
-            case 11:
-                return 0.6
-            case 12:
-                return 0.62
-            case 13:
-                return 0.64
-            case 14:
-                return 0.66
-            case 15:
-                return 0.69
-            case 16:
-                return 0.71
-            case 17:
-                return 0.74
-            case 18:
-                return 0.77
-            case 19:
-                return 0.8
-            case 20:
-                return 0.83
-            case 21:
-                return 0.86
-            case 22:
-                return 0.89
-            case 23:
-                return 0.92
-            case 24:
-                return 0.95
-            case 25:
-                return 1
-            case 26:
-                return 1.03
-            case 27:
-                return 1.06
-            case 28:
-                return 1.11
-            case 29:
-                return 1.15
-            case 30:
-                return 1.2
-            default:
-                return 0
-            }
-        } else if shoeRarity == rare {
-            switch (floor(shoeLevel)) {
-            case 1:
-                return 0.51
-            case 2:
-                return 0.54
-            case 3:
-                return 0.57
-            case 4:
-                return 0.59
-            case 5:
-                return 0.61
-            case 6:
-                return 0.63
-            case 7:
-                return 0.65
-            case 8:
-                return 0.67
-            case 9:
-                return 0.69
-            case 10:
-                return 0.72
-            case 11:
-                return 0.75
-            case 12:
-                return 0.78
-            case 13:
-                return 0.81
-            case 14:
-                return 0.84
-            case 15:
-                return 0.87
-            case 16:
-                return 0.90
-            case 17:
-                return 0.94
-            case 18:
-                return 0.97
-            case 19:
-                return 1
-            case 20:
-                return 1.04
-            case 21:
-                return 1.08
-            case 22:
-                return 1.12
-            case 23:
-                return 1.16
-            case 24:
-                return 1.2
-            case 25:
-                return 1.25
-            case 26:
-                return 1.3
-            case 27:
-                return 1.34
-            case 28:
-                return 1.39
-            case 29:
-                return 1.45
-            case 30:
-                return 1.5
-            default:
-                return 0
-            }
-        } else if shoeRarity == epic {
-            switch (floor(shoeLevel)) {
-            case 1:
-                return 0.61
-            case 2:
-                return 0.65
-            case 3:
-                return 0.69
-            case 4:
-                return 0.72
-            case 5:
-                return 0.75
-            case 6:
-                return 0.78
-            case 7:
-                return 0.81
-            case 8:
-                return 0.84
-            case 9:
-                return 0.87
-            case 10:
-                return 0.91
-            case 11:
-                return 0.95
-            case 12:
-                return 0.99
-            case 13:
-                return 1.03
-            case 14:
-                return 1.07
-            case 15:
-                return 1.11
-            case 16:
-                return 1.15
-            case 17:
-                return 1.19
-            case 18:
-                return 1.24
-            case 19:
-                return 1.28
-            case 20:
-                return 1.33
-            case 21:
-                return 1.38
-            case 22:
-                return 1.43
-            case 23:
-                return 1.48
-            case 24:
-                return 1.51
-            case 25:
-                return 1.55
-            case 26:
-                return 1.59
-            case 27:
-                return 1.63
-            case 28:
-                return 1.66
-            case 29:
-                return 1.69
-            case 30:
-                return 1.72
-            default:
-                return 0
-            }
-        } else {
-            return 1
-        }
-    }
-    
-    var gstCostBasedOnGem: Int {
-        switch (comfGemLvlForRestore) {
-        case 2:
-            return 30
-        case 3:
-            return 100
-        default:
-            return 10
-        }
-    }
-    
-    var hpLoss: Double {
-        if totalComf == 0 || energy.doubleValue == 0 {
-            return 0
-        }
-        
-        switch (shoeRarity) {
-        case common:
-            return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
-        case uncommon:
-            return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
-        case rare:
-            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-        case epic:
-            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-        default:
-            return 0
-        }
-    }
-    
-    var hpPercentRestored: Double {
-        if totalComf == 0 || energy.doubleValue == 0 {
-            return 1
-        }
-        
-        switch (shoeRarity) {
-        case common:
-            switch (comfGemLvlForRestore) {
-            case 2:
-                return 39
-            case 3:
-                return 100
-            default:
-                return 3
-            }
-        case uncommon:
-            switch (comfGemLvlForRestore) {
-            case 2:
-                return 23
-            case 3:
-                return 100
-            default:
-                return 1.8
-            }
-        case rare:
-            switch (comfGemLvlForRestore) {
-            case 2:
-                return 16
-            case 3:
-                return 92
-            default:
-                return 1.2
-            }
-        case epic:
-            switch (comfGemLvlForRestore) {
-            case 2:
-                return 11
-            case 3:
-                return 67
-            default:
-                return 0.88
-            }
-        default:
-            return 1
-        }
-    }
-    
-    var comfGemForRestoreResource: String {
-        switch (comfGemLvlForRestore) {
-        case 2:
-            return "gem_comf_level2"
-        case 3:
-            return "gem_comf_level3"
-        default:
-            return "gem_comf_level1"
-        }
-    }
-    
-    var restoreHpCostGst: Double {
-        return round(Double(gstCostBasedOnGem) * (hpLoss / hpPercentRestored) * 10) / 10
-    }
-    
-    var gstProfitBeforeGem: Double {
-        if gmtToggleOn {
-            return round((repairCostGst + restoreHpCostGst) * 10) / 10
-        }
-        return round((gstEarned - repairCostGst - restoreHpCostGst) * 10) / 10
-    }
-    
-    var comfGemMultiplier: Double {
-        return round(hpLoss / hpPercentRestored * 100) / 100
-    }
-    
+          if shoeLevel < 10 {
+              return Int(5 + (floor(shoeLevel) * 10))
+          } else if shoeLevel < 23 {
+              return Int(60 + ((floor(shoeLevel) - 10) * 10))
+          } else {
+              return Int(195 + ((floor(shoeLevel) - 23) * 15))
+          }
+      }
+      
+      var durabilityLost: Int {
+          if energy.doubleValue == 0 || totalRes == 0 {
+              return 0
+          }
+          
+          var durLoss: Int = Int(round(energy.doubleValue * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
+          
+          if durLoss < 1 {
+              durLoss = 1
+          }
+          return durLoss
+      }
+      
+      var repairCostGst: Double {
+          return round(baseRepairCost * Double(durabilityLost) * 10) / 10
+      }
+          
+      var baseRepairCost: Double {
+          if shoeRarity == common {
+              switch (floor(shoeLevel)) {
+              case 1:
+                  return 0.31
+              case 2:
+                  return 0.32
+              case 3:
+                  return 0.33
+              case 4:
+                  return 0.35
+              case 5:
+                  return 0.36
+              case 6:
+                  return 0.37
+              case 7:
+                  return 0.38
+              case 8:
+                  return 0.4
+              case 9:
+                  return 0.41
+              case 10:
+                  return 0.42
+              case 11:
+                  return 0.44
+              case 12:
+                  return 0.46
+              case 13:
+                  return 0.48
+              case 14:
+                  return 0.5
+              case 15:
+                  return 0.52
+              case 16:
+                  return 0.54
+              case 17:
+                  return 0.56
+              case 18:
+                  return 0.58
+              case 19:
+                  return 0.6
+              case 20:
+                  return 0.62
+              case 21:
+                  return 0.64
+              case 22:
+                  return 0.67
+              case 23:
+                  return 0.7
+              case 24:
+                  return 0.72
+              case 25:
+                  return 0.75
+              case 26:
+                  return 0.78
+              case 27:
+                  return 0.81
+              case 28:
+                  return 0.83
+              case 29:
+                  return 0.87
+              case 30:
+                  return 0.9
+              default:
+                  return 0
+              }
+          } else if shoeRarity == uncommon {
+              switch (floor(shoeLevel)) {
+              case 1:
+                  return 0.41
+              case 2:
+                  return 0.43
+              case 3:
+                  return 0.45
+              case 4:
+                  return 0.46
+              case 5:
+                  return 0.48
+              case 6:
+                  return 0.5
+              case 7:
+                  return 0.51
+              case 8:
+                  return 0.53
+              case 9:
+                  return 0.55
+              case 10:
+                  return 0.57
+              case 11:
+                  return 0.6
+              case 12:
+                  return 0.62
+              case 13:
+                  return 0.64
+              case 14:
+                  return 0.66
+              case 15:
+                  return 0.69
+              case 16:
+                  return 0.71
+              case 17:
+                  return 0.74
+              case 18:
+                  return 0.77
+              case 19:
+                  return 0.8
+              case 20:
+                  return 0.83
+              case 21:
+                  return 0.86
+              case 22:
+                  return 0.89
+              case 23:
+                  return 0.92
+              case 24:
+                  return 0.95
+              case 25:
+                  return 1
+              case 26:
+                  return 1.03
+              case 27:
+                  return 1.06
+              case 28:
+                  return 1.11
+              case 29:
+                  return 1.15
+              case 30:
+                  return 1.2
+              default:
+                  return 0
+              }
+          } else if shoeRarity == rare {
+              switch (floor(shoeLevel)) {
+              case 1:
+                  return 0.51
+              case 2:
+                  return 0.54
+              case 3:
+                  return 0.57
+              case 4:
+                  return 0.59
+              case 5:
+                  return 0.61
+              case 6:
+                  return 0.63
+              case 7:
+                  return 0.65
+              case 8:
+                  return 0.67
+              case 9:
+                  return 0.69
+              case 10:
+                  return 0.72
+              case 11:
+                  return 0.75
+              case 12:
+                  return 0.78
+              case 13:
+                  return 0.81
+              case 14:
+                  return 0.84
+              case 15:
+                  return 0.87
+              case 16:
+                  return 0.90
+              case 17:
+                  return 0.94
+              case 18:
+                  return 0.97
+              case 19:
+                  return 1
+              case 20:
+                  return 1.04
+              case 21:
+                  return 1.08
+              case 22:
+                  return 1.12
+              case 23:
+                  return 1.16
+              case 24:
+                  return 1.2
+              case 25:
+                  return 1.25
+              case 26:
+                  return 1.3
+              case 27:
+                  return 1.34
+              case 28:
+                  return 1.39
+              case 29:
+                  return 1.45
+              case 30:
+                  return 1.5
+              default:
+                  return 0
+              }
+          } else if shoeRarity == epic {
+              switch (floor(shoeLevel)) {
+              case 1:
+                  return 0.61
+              case 2:
+                  return 0.65
+              case 3:
+                  return 0.69
+              case 4:
+                  return 0.72
+              case 5:
+                  return 0.75
+              case 6:
+                  return 0.78
+              case 7:
+                  return 0.81
+              case 8:
+                  return 0.84
+              case 9:
+                  return 0.87
+              case 10:
+                  return 0.91
+              case 11:
+                  return 0.95
+              case 12:
+                  return 0.99
+              case 13:
+                  return 1.03
+              case 14:
+                  return 1.07
+              case 15:
+                  return 1.11
+              case 16:
+                  return 1.15
+              case 17:
+                  return 1.19
+              case 18:
+                  return 1.24
+              case 19:
+                  return 1.28
+              case 20:
+                  return 1.33
+              case 21:
+                  return 1.38
+              case 22:
+                  return 1.43
+              case 23:
+                  return 1.48
+              case 24:
+                  return 1.51
+              case 25:
+                  return 1.55
+              case 26:
+                  return 1.59
+              case 27:
+                  return 1.63
+              case 28:
+                  return 1.66
+              case 29:
+                  return 1.69
+              case 30:
+                  return 1.72
+              default:
+                  return 0
+              }
+          } else {
+              return 1
+          }
+      }
+      
+      var gstCostBasedOnGem: Int {
+          switch (comfGemLvlForRestore) {
+          case 2:
+              return 30
+          case 3:
+              return 100
+          default:
+              return 10
+          }
+      }
+      
+      var hpLoss: Double {
+          if totalComf == 0 || energy.doubleValue == 0 {
+              return 0
+          }
+          
+          switch (shoeRarity) {
+          case common:
+              return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
+          case uncommon:
+              return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
+          case rare:
+              return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
+          case epic:
+              return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
+          default:
+              return 0
+          }
+      }
+      
+      var hpPercentRestored: Double {
+          if totalComf == 0 || energy.doubleValue == 0 {
+              return 1
+          }
+          
+          switch (shoeRarity) {
+          case common:
+              switch (comfGemLvlForRestore) {
+              case 2:
+                  return 39
+              case 3:
+                  return 100
+              default:
+                  return 3
+              }
+          case uncommon:
+              switch (comfGemLvlForRestore) {
+              case 2:
+                  return 23
+              case 3:
+                  return 100
+              default:
+                  return 1.8
+              }
+          case rare:
+              switch (comfGemLvlForRestore) {
+              case 2:
+                  return 16
+              case 3:
+                  return 92
+              default:
+                  return 1.2
+              }
+          case epic:
+              switch (comfGemLvlForRestore) {
+              case 2:
+                  return 11
+              case 3:
+                  return 67
+              default:
+                  return 0.88
+              }
+          default:
+              return 1
+          }
+      }
+      
+      var comfGemForRestoreResource: String {
+          switch (comfGemLvlForRestore) {
+          case 2:
+              return "gem_comf_level2"
+          case 3:
+              return "gem_comf_level3"
+          default:
+              return "gem_comf_level1"
+          }
+      }
+      
+      var restoreHpCostGst: Double {
+          return round(Double(gstCostBasedOnGem) * (hpLoss / hpPercentRestored) * 10) / 10
+      }
+      
+      var gstProfitBeforeGem: Double {
+          if gmtToggleOn {
+              return round((repairCostGst + restoreHpCostGst) * 10) / 10
+          }
+          return round((gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst) * 10) / 10
+      }
+      
+      var comfGemMultiplier: Double {
+          return round(hpLoss / hpPercentRestored * 100) / 100
+      }
+
     // MARK: Mystery box calcs
     // 0 = very low/no chance, 1 = low chance, 2 = high chance
     var mb1Chance: Int {
@@ -2415,7 +2084,7 @@ struct Optimizer: View {
         var gstProfit: Double = 0
         var maxProfit: Double = 0
         
-        gstProfit = round((gstEarned - repairCostGst - restoreHpCostGst) * 10) / 10
+        gstProfit = round((gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst) * 10) / 10
                             
         // O(n^2) w/ max 45,150 calcs... yikes :)
         while localAddedEff <= localPoints {
@@ -2791,5 +2460,385 @@ struct Optimizer_Previews: PreviewProvider {
     static var previews: some View {
         Optimizer(hideTab: .constant(false))
             .environmentObject(OptimizerShoes())
+    }
+}
+
+func innerCircleColor(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "7bc799"
+    case rare:
+        return "7ac4e1"
+    case epic:
+        return "b98fd9"
+    default:
+        return "ebebeb"
+    }
+}
+
+func middleCircleColor(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "cae9d9"
+    case rare:
+        return "cce8f4"
+    case epic:
+        return "e4d4f1"
+    default:
+        return "f7f7f7"
+    }
+}
+
+func outerCircleColor(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "ecf7f1"
+    case rare:
+        return "ecf7fb"
+    case epic:
+        return "f5eff9"
+    default:
+        return "fcfcfc"
+    }
+}
+
+func labelHexColor(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "48b073"
+    case rare:
+        return "45acd5"
+    case epic:
+        return "9d62cc"
+    default:
+        return "e9e9e9"
+    }
+}
+
+func labelChainHexColor(blockchain: Int) -> String {
+    switch (blockchain) {
+    case bnb:
+        return "f3ba2c"
+    case eth:
+        return "8a93b2"
+    default:
+        return "11edaa"
+    }
+}
+
+func chainString(blockchain: Int) -> String {
+    switch (blockchain) {
+    case bnb:
+        return "BNB"
+    case eth:
+        return "ETH"
+    default:
+        return "SOL"
+    }
+}
+
+func chainCoinIcon(blockchain: Int) -> String {
+    switch (blockchain) {
+    case bnb:
+        return "logo_bnb_white"
+    case eth:
+        return "logo_eth_white"
+    default:
+        return "logo_sol_white"
+    }
+}
+
+func shoeImageResource(shoeType: Int) -> String {
+    switch (shoeType) {
+    case jogger:
+        return "shoe_jogger"
+    case runner:
+        return "shoe_runner"
+    case trainer:
+        return "shoe_trainer"
+    default:
+        return "shoe_walker"
+    }
+}
+
+func rarityString(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "Uncommon"
+    case rare:
+        return "Rare"
+    case epic:
+        return "Epic"
+    default:
+        return "Common"
+    }
+}
+
+func shoeTypeString(shoeType: Int) -> String {
+    switch (shoeType) {
+    case jogger:
+        return "Jogger"
+    case runner:
+        return "Runner"
+    case trainer:
+        return "Trainer"
+    default:
+        return "Walker"
+    }
+}
+
+func baseRangeHint(shoeRarity: Int) -> String {
+    switch (shoeRarity) {
+    case uncommon:
+        return "8 - 21.6"
+    case rare:
+        return "15 - 42"
+    case epic:
+        return "28 - 75.6"
+    default:
+        return "1 - 10"
+    }
+}
+
+func basePointsMin(shoeRarity: Int) -> Double {
+    switch (shoeRarity) {
+    case uncommon:
+        return 8
+    case rare:
+        return 15
+    case epic:
+        return 28
+    default:
+        return 1
+    }
+}
+
+func basePointsMax(shoeRarity: Int) -> Double {
+    switch (shoeRarity) {
+    case uncommon:
+        return 21.6
+    case rare:
+        return 42
+    case epic:
+        return 75.6
+    default:
+        return 10
+    }
+}
+
+// MARK: gst earning calcs
+func gstEarned(totalEff: Double, energyCo: Double, energy: String) -> Double {
+    return floor(energy.doubleValue * pow(totalEff, energyCo) * 10) / 10
+}
+
+struct CalcedTotals: View {
+    let gmtToggleOn: Bool
+    let gstEarned: Double
+    let gstLimit: Int
+    let gmtLowRange: Double
+    let gmtHighRange: Double
+    let durabilityLost: Int
+    let repairCostGst: Double
+    let hpLoss: Double
+    let restoreHpCostGst: Double
+    let comfGemMultiplier: Double
+    @Binding var comfGemLvlForRestore: Int
+    let comfGemForRestoreResource: String
+    let gmtEarned: Double
+    let gstProfitBeforeGem: Double
+    let comfGemPrice: Double
+    
+    var body: some View {
+        // MARK: Calculated totals
+        LazyVStack(spacing: 15) {
+            HStack(spacing: 6) {
+                Text(gmtToggleOn ? "Est. GMT Range" : "Est. GST / Daily Limit:")
+                    .font(Font.custom(fontHeaders, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(gmtToggleOn ? "" : String(gstEarned))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color(gstEarned > Double(gstLimit) ? "Gps Red" : "Almost Black"))
+                
+                Text(gmtToggleOn ? "" : "/")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Text(gmtToggleOn ? (String(gmtLowRange) + " - " + String(gmtHighRange)) : String(gstLimit))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Image(gmtToggleOn ? "coin_gmt" : "coin_gst")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 6) {
+                Text("Durability Loss:")
+                    .font(Font.custom(fontHeaders, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(String(durabilityLost))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 6) {
+                Text("Repair Cost:")
+                    .font(Font.custom(fontHeaders, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(String(Double(repairCostGst)))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Image("coin_gst")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 6) {
+                Text("HP Loss:")
+                    .font(Font.custom(fontHeaders, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(hpLoss == 0 ? "0" : String(hpLoss))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 6) {
+                Text("Restoration Cost:")
+                    .font(Font.custom(fontHeaders, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.trailing, -2)
+                
+                Button(action: {
+                    if comfGemLvlForRestore == 3 {
+                        comfGemLvlForRestore = 1
+                    } else {
+                        comfGemLvlForRestore += 1
+                    }
+                }, label: {
+                    Image(comfGemForRestoreResource)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
+                        .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
+                        .frame(width: 24, height: 24)
+                        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                        .padding(.horizontal, -10)
+                })
+                
+                Text("+")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.horizontal, 5)
+                
+                Text(hpLoss == 0 ? "0" : String(restoreHpCostGst))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Image("coin_gst")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 4) {
+                Text("Total Income:")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(String(gmtEarned))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .opacity(gmtToggleOn ? 1 : 0)
+                
+                Image("coin_gmt")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: gmtToggleOn ? 20 : 0, height: 20)
+                
+                Text("-")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .opacity(gmtToggleOn ? 1 : 0)
+                
+                Text(String(gstProfitBeforeGem))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Image("coin_gst")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 20, height: 20)
+                
+                Text("-")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.trailing, -2)
+                
+                Image(comfGemForRestoreResource)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.top, comfGemLvlForRestore == 1 ? 3 : 0)
+                    .padding(.bottom, comfGemLvlForRestore == 1 ? 2 : 0)
+                    .frame(width: 24, height: 24)
+                
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+            
+            HStack(spacing: 4) {
+                Text("Total Income USD:")
+                    .font(Font.custom(fontTitles, size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                
+                Spacer()
+                
+                Text(comfGemPrice > 0 ? "0.00" : "Enter Gem Price ↓")
+                    .font(Font.custom(comfGemPrice > 0 ? fontTitles : "RobotoCondensed-Italic", size: 18))
+                    .foregroundColor(Color("Almost Black"))
+                    .padding(.trailing, -2)
+                
+                Text("$")
+                    .font(Font.custom("RobotoCondensed-Bold", size: 18))
+                    .foregroundColor(Color("Almost Black"))
+            }.padding(.leading, 40)
+                .padding(.trailing, 44)
+                .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
+        }
     }
 }
