@@ -21,6 +21,15 @@ struct Optimizer: View {
     
     @Binding var hideTab: Bool
     
+    @State var coinPrices: Coins = Coins(
+        greenSatoshiToken: Coin(usd: 0),
+        solana: Coin(usd: 0),
+        ethereum: Coin(usd: 0),
+        binancecoin: Coin(usd: 0),
+        greenSatoshiTokenOnEth: Coin(usd: 0),
+        greenSatoshiTokenBsc: Coin(usd: 0),
+        stepn: Coin(usd: 0))
+    
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
     
@@ -1413,7 +1422,8 @@ struct Optimizer: View {
                 gemComf = shoes.getShoe(shoeNum - 1).gemComf
                 gemRes = shoes.getShoe(shoeNum - 1).gemRes
                 gems = shoes.getShoe(shoeNum - 1).gems
-
+                
+                apiCall()
                 updatePoints()
             }
             .onDisappear {
@@ -2003,6 +2013,34 @@ struct Optimizer: View {
         default:
             return 0.47
         }
+    }
+    
+    func apiCall() {
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cethereum%2Cgreen-satoshi-token-on-eth&vs_currencies=usd") else {
+            print("Invalid URL")
+            return
+        }
+        let request = URLRequest(url: url)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                if let response = try? JSONDecoder().decode(Coins.self, from: data) {
+                    DispatchQueue.main.async {
+                        coinPrices = response
+                        print("\n========== Current Prices ==========")
+                        print("             GMT  $\(coinPrices.stepn.usd)")
+                        print("             SOL  $\(coinPrices.solana.usd)")
+                        print("         GST-SOL  $\(coinPrices.greenSatoshiToken.usd)")
+                        print("             BSC  $\(coinPrices.binancecoin.usd)")
+                        print("         GST-BSC  $\(coinPrices.greenSatoshiTokenBsc.usd)")
+                        print("             ETH  $\(coinPrices.ethereum.usd)")
+                        print("         GST-ETH  $\(coinPrices.greenSatoshiTokenOnEth.usd)")
+                        print("====================================\n")
+                    }
+                    return
+                }
+            }
+        }.resume()
     }
     
     func getGemInputWidth(length: Int) -> CGFloat {

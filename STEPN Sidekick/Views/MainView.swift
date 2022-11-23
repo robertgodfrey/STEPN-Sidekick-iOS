@@ -25,7 +25,7 @@ struct MainView: View {
     }
     
     var body: some View {
-        VStack (spacing: 0) {        
+        VStack (spacing: 0) {
             TabView(selection: $currentTab) {
                 ActivitySettings(hideTab: $hideTab)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
