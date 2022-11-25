@@ -34,5 +34,5 @@ let res: Int = 3
 
 // blockchains/realms
 let sol: Int = 0
-let bnb: Int = 1
+let bsc: Int = 1
 let eth: Int = 2

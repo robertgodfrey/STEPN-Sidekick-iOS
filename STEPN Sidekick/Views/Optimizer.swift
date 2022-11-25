@@ -1029,7 +1029,9 @@ struct Optimizer: View {
                                 comfGemForRestoreResource: comfGemForRestoreResource,
                                 gmtEarned: gmtEarned,
                                 gstProfitBeforeGem: gstProfitBeforeGem,
-                                comfGemPrice: comfGemPrice.doubleValue
+                                comfGemPrice: comfGemPrice.doubleValue,
+                                blockchain: blockchain,
+                                coinPrices: coinPrices
                             ).padding(.top, 10)
                                 .padding(.bottom, 20)
 
@@ -2580,7 +2582,7 @@ func labelHexColor(shoeRarity: Int) -> String {
 
 func labelChainHexColor(blockchain: Int) -> String {
     switch (blockchain) {
-    case bnb:
+    case bsc:
         return "f3ba2c"
     case eth:
         return "8a93b2"
@@ -2591,8 +2593,8 @@ func labelChainHexColor(blockchain: Int) -> String {
 
 func chainString(blockchain: Int) -> String {
     switch (blockchain) {
-    case bnb:
-        return "BNB"
+    case bsc:
+        return "BSC"
     case eth:
         return "ETH"
     default:
@@ -2602,7 +2604,7 @@ func chainString(blockchain: Int) -> String {
 
 func chainCoinIcon(blockchain: Int) -> String {
     switch (blockchain) {
-    case bnb:
+    case bsc:
         return "logo_bnb_white"
     case eth:
         return "logo_eth_white"
@@ -2710,6 +2712,8 @@ struct CalcedTotals: View {
     let gmtEarned: Double
     let gstProfitBeforeGem: Double
     let comfGemPrice: Double
+    let blockchain: Int
+    let coinPrices: Coins
     
     var body: some View {
         // MARK: Calculated totals
@@ -2892,7 +2896,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(comfGemPrice > 0 ? "0.00" : "Enter Gem Price ↓")
+                Text(comfGemPrice > 0 ? usdIncome : "Enter Gem Price ↓")
                     .font(Font.custom(comfGemPrice > 0 ? fontTitles : "RobotoCondensed-Italic", size: comfGemPrice > 0 ? 18 : 16))
                     .foregroundColor(Color(comfGemPrice > 0 ? "Almost Black" : "Gandalf"))
                     .padding(.trailing, 4)
@@ -2905,4 +2909,33 @@ struct CalcedTotals: View {
                 .frame(maxWidth: 400, minHeight: 20, maxHeight: 20)
         }
     }
+    
+    var usdIncome: String {
+        var chainTokenPrice: Double
+        var chainGstPrice: Double
+        var usdProf: Double
+        
+        switch (blockchain) {
+        case bsc:
+            chainTokenPrice = coinPrices.binancecoin.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
+        case eth:
+            chainTokenPrice = coinPrices.ethereum.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        default:
+            chainTokenPrice = coinPrices.solana.usd
+            chainGstPrice = coinPrices.greenSatoshiToken.usd
+        }
+        
+        if gmtToggleOn {
+            usdProf = gmtEarned * coinPrices.stepn.usd - (repairCostGst + restoreHpCostGst) * chainGstPrice
+        } else {
+            usdProf = gstProfitBeforeGem * chainGstPrice
+        }
+        usdProf -= comfGemMultiplier * comfGemPrice * chainTokenPrice
+        
+        return String(round(usdProf * 100) / 100)
+    }
 }
+
+
