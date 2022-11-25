@@ -1022,8 +1022,8 @@ struct Optimizer: View {
                                 gmtHighRange: gmtHighRange,
                                 repairCostGst: repairCostGst,
                                 restoreHpCostGst: restoreHpCostGst,
-                                hpLoss: 0.0,
-                                durabilityLoss: 1.2,
+                                hpLoss: getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity),
+                                durabilityLoss: getDurabilityLost(energy: energy.doubleValue, res: totalRes),
                                 comfGemMultiplier: comfGemMultiplier,
                                 comfGemLvlForRestore: $comfGemLvlForRestore,
                                 comfGemForRestoreResource: comfGemForRestoreResource,
@@ -1869,7 +1869,7 @@ struct Optimizer: View {
           if gmtToggleOn {
               return round((repairCostGst + restoreHpCostGst) * 10) / 10
           }
-          return round((gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst) * 10) / 10
+          return gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst
       }
       
       var comfGemMultiplier: Double {
@@ -2145,7 +2145,7 @@ struct Optimizer: View {
             chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
-                                    
+                    
         // O(n^2) w/ max 45,150 calcs... yikes :)
         while localAddedEff <= localPoints {
             while localAddedComf <= localPoints - localAddedEff {
@@ -2154,13 +2154,14 @@ struct Optimizer: View {
                 localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
 
                 profit = gstEarned(totalEff: localEff + Double(localAddedEff), energyCo: energyCo, energy: String(localEnergy))
-                                - (baseRepairCost * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))))
+                                - (round(baseRepairCost * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * 10) / 10)
                                 - (Double(gstCostBasedOnGem) * localGemMultiplier)
-
+                
                 if usdOn {
-                    profit = (profit * chainGstPrice) - (comfGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
-                    print(String(profit))
+                    profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
                 }
+                
+                print("E" + String(localAddedEff) + "\tC" + String(localAddedComf) + "\tTotal: $" + String(profit))
                 
                 if profit > maxProfit {
                     optimalAddedEff = localAddedEff
@@ -2173,6 +2174,15 @@ struct Optimizer: View {
             localAddedComf = 0
             localAddedEff += 1
         }
+        
+        print("maxProfit")
+        print(String(maxProfit))
+        print("points to allocate")
+        print(String(Int(floor(shoeLevel) * 2 * Double(shoeRarity))))
+        
+        print("hp percent restored")
+        print(String(hpPercentRestored))
+        
         addedEff = optimalAddedEff
         addedLuck = 0
         addedComf = optimalAddedComf
@@ -2716,7 +2726,7 @@ struct CalcedTotals: View {
     let repairCostGst: Double
     let restoreHpCostGst: Double
     let hpLoss: Double
-    let durabilityLoss: Double
+    let durabilityLoss: Int
     let comfGemMultiplier: Double
     @Binding var comfGemLvlForRestore: Int
     let comfGemForRestoreResource: String
@@ -2810,7 +2820,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(String(hpLoss))
+                Text(String(comfGemMultiplier))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
@@ -2871,7 +2881,7 @@ struct CalcedTotals: View {
                     .foregroundColor(Color("Almost Black"))
                     .opacity(gmtToggleOn ? 1 : 0)
                 
-                Text(String(gstProfitBeforeGem))
+                Text(String(round(gstProfitBeforeGem * 10) / 10))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
@@ -2884,7 +2894,7 @@ struct CalcedTotals: View {
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
-                Text(String(hpLoss))
+                Text(String(comfGemMultiplier))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
@@ -2945,8 +2955,6 @@ struct CalcedTotals: View {
         }
         usdProf -= comfGemMultiplier * comfGemPrice * chainTokenPrice
         
-        return String(round(usdProf * 100) / 100)
+        return String(format: "%.2f", round(usdProf * 100) / 100)
     }
 }
-
-
