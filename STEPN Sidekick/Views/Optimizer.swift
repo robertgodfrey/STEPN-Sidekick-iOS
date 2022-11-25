@@ -80,7 +80,7 @@ struct Optimizer: View {
     @State private var gemLevelToUnlock: Int = 0
     
     @State private var gmtLevelDialog: Bool = false
-    @State private var gmtOptimizeDialog: Bool = false
+    @State private var noComfGemDialog: Bool = false
     @State private var noEnergyDialog: Bool = false
     @State private var resetPageDialog: Bool = false
 
@@ -832,9 +832,9 @@ struct Optimizer: View {
                                         })
                                     }.padding(.horizontal, 20)
                                         .frame(maxWidth: 400)
-                                }.alert(isPresented: $gmtOptimizeDialog) {
-                                    Alert(title: Text("Coming Soon"),
-                                          message: Text("Check back later for updates"),
+                                }.alert(isPresented: $noComfGemDialog) {
+                                    Alert(title: Text("No Gem Price Entered"),
+                                          message: Text("For a more accurate estimation, enter comfort gem price."),
                                           dismissButton: .default(Text("Okay")))
                                 }
                                 
@@ -970,14 +970,17 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
-                                            if gmtToggleOn {
-                                                gmtOptimizeDialog = true
-                                            } else {
-                                                if energy.doubleValue != 0 {
-                                                    optimizeForGst(usdOn: comfGemPrice.doubleValue <= 0 ? false : true)
+                                            if energy.doubleValue != 0 {
+                                                if gmtToggleOn {
+                                                    optimizeForGmt()
                                                 } else {
-                                                    noEnergyDialog = true
+                                                    optimizeForGst(usdOn: comfGemPrice.doubleValue <= 0 ? false : true)
                                                 }
+                                                if comfGemPrice.doubleValue <= 0 {
+                                                    noComfGemDialog = true
+                                                }
+                                            } else {
+                                                noEnergyDialog = true
                                             }
                                         })).font(Font.custom(fontButtons, size: 18))
                                 }
@@ -998,7 +1001,7 @@ struct Optimizer: View {
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
                                             if energy.doubleValue != 0 {
-                                                optimizeForLuck()
+                                                optimizeForLuckGst()
                                             } else {
                                                 noEnergyDialog = true
                                             }
@@ -1455,49 +1458,49 @@ struct Optimizer: View {
     }
     
     // MARK: Gmt calcs
-    var gmtEarnedPerEnergy: Double {
-            if !gmtToggleOn {
-                return 0
-            }
-            var gmtBaseline: Double = 0
-            
-            if totalComf < 118 {
-                gmtBaseline = 0.4 * (-0.00001 * pow(totalComf - 350, 2) + 1.67)
-            } else {
-                gmtBaseline = 0.4 * (-10.1 * exp(-totalComf / 2415) + 0.82 * exp(-totalComf / 11) + 10.75)
-            }
-            
-            switch (shoeType) {
-            case walker:
-                gmtBaseline = gmtBaseline * 0.98
-            case runner:
-                gmtBaseline = gmtBaseline * 1.02
-            case trainer:
-                gmtBaseline = gmtBaseline * 1.025
-            default:
-                gmtBaseline = gmtBaseline * 1
-            }
-            
-            return gmtBaseline
+    func gmtEarnedPerEnergy(comf: Double) -> Double {
+        if !gmtToggleOn {
+            return 0
+        }
+        var gmtBaseline: Double = 0
+        
+        if comf < 118 {
+            gmtBaseline = 0.4 * (-0.00001 * pow(comf - 350, 2) + 1.67)
+        } else {
+            gmtBaseline = 0.4 * (-10.1 * exp(-comf / 2415) + 0.82 * exp(-comf / 11) + 10.75)
         }
         
-        var gmtEarned: Double {
-            return round(gmtEarnedPerEnergy * energy.doubleValue * 10) / 10
+        switch (shoeType) {
+        case walker:
+            gmtBaseline = gmtBaseline * 0.98
+        case runner:
+            gmtBaseline = gmtBaseline * 1.02
+        case trainer:
+            gmtBaseline = gmtBaseline * 1.025
+        default:
+            gmtBaseline = gmtBaseline * 1
         }
         
-        var gmtLowRange: Double {
-            var gmtLow: Double = 0
-            gmtLow = round((gmtEarnedPerEnergy - 0.2) * energy.doubleValue * 10) / 10
-            
-            if gmtLow < 0 {
-                return 0
-            }
-            return gmtLow
-        }
+        return gmtBaseline
+    }
+    
+    var gmtEarned: Double {
+        return round(gmtEarnedPerEnergy(comf:totalComf) * energy.doubleValue * 10) / 10
+    }
+    
+    var gmtLowRange: Double {
+        var gmtLow: Double = 0
+        gmtLow = round((gmtEarnedPerEnergy(comf:totalComf) - 0.2) * energy.doubleValue * 10) / 10
         
-        var gmtHighRange: Double {
-            return round((gmtEarnedPerEnergy + 0.2) * energy.doubleValue * 10) / 10
+        if gmtLow < 0 {
+            return 0
         }
+        return gmtLow
+    }
+    
+    var gmtHighRange: Double {
+        return round((gmtEarnedPerEnergy(comf:totalComf) + 0.2) * energy.doubleValue * 10) / 10
+    }
     
     var gstLimit: Int {
           if shoeLevel < 10 {
@@ -2055,12 +2058,12 @@ struct Optimizer: View {
     func updatePoints() {
         let points: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
        
-        var gemsUnlocked: Int = 0;
+        var gemsUnlocked: Int = 0
         
-        gemEff = 0;
-        gemLuck = 0;
-        gemComf = 0;
-        gemRes = 0;
+        gemEff = 0
+        gemLuck = 0
+        gemComf = 0
+        gemRes = 0
         
         if shoeLevel >= 20 {
             gemsUnlocked = 4
@@ -2115,6 +2118,7 @@ struct Optimizer: View {
     func optimizeForGst(usdOn: Bool) {
         let localEnergy: Double = energy.doubleValue
         let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
+        
         let localEff: Double = baseEffString.doubleValue + gemEff
         let localComf: Double = baseComfString.doubleValue + gemComf
         let localRes: Double = baseResString.doubleValue + gemRes
@@ -2160,9 +2164,7 @@ struct Optimizer: View {
                 if usdOn {
                     profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
                 }
-                
-                print("E" + String(localAddedEff) + "\tC" + String(localAddedComf) + "\tTotal: $" + String(profit))
-                
+            
                 if profit > maxProfit {
                     optimalAddedEff = localAddedEff
                     optimalAddedComf = localAddedComf
@@ -2174,15 +2176,7 @@ struct Optimizer: View {
             localAddedComf = 0
             localAddedEff += 1
         }
-        
-        print("maxProfit")
-        print(String(maxProfit))
-        print("points to allocate")
-        print(String(Int(floor(shoeLevel) * 2 * Double(shoeRarity))))
-        
-        print("hp percent restored")
-        print(String(hpPercentRestored))
-        
+    
         addedEff = optimalAddedEff
         addedLuck = 0
         addedComf = optimalAddedComf
@@ -2191,13 +2185,68 @@ struct Optimizer: View {
         updatePoints()
     }
     
-    // TODO: :)
+    // finds the point allocation that is most profitable for GMT
     func optimizeForGmt() {
+        let localEnergy: Double = energy.doubleValue
+        let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
         
+        let localComf: Double = baseComfString.doubleValue + gemComf
+        let localRes: Double = baseResString.doubleValue + gemRes
+        var localAddedComf: Int = 0
+        var localAddedRes: Int = 0
+        
+        var optimalAddedRes: Int = 0
+        var optimalAddedComf: Int = 0
+        var profit: Double = -50
+        var maxProfit: Double = -50
+        
+        
+        var chainTokenPrice: Double
+        var chainGstPrice: Double
+        var localGemMultiplier: Double
+        
+        switch (blockchain) {
+        case bsc:
+            chainTokenPrice = coinPrices.binancecoin.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
+        case eth:
+            chainTokenPrice = coinPrices.ethereum.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        default:
+            chainTokenPrice = coinPrices.solana.usd
+            chainGstPrice = coinPrices.greenSatoshiToken.usd
+        }
+
+        while (localAddedComf <= localPoints) {
+            localAddedRes = localPoints - localAddedComf
+            localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
+
+            // total profit GMT in USD
+            profit = localEnergy * gmtEarnedPerEnergy(comf: localComf + Double(localAddedComf)) * coinPrices.stepn.usd
+            // subtract USD cost of repair durability restore HP (GST)
+            profit -= chainGstPrice * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * baseRepairCost
+            profit -= chainGstPrice * Double(gstCostBasedOnGem) * localGemMultiplier
+            // subtract USD cost of restore HP
+            profit -= (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+
+            if profit > maxProfit {
+                optimalAddedComf = localAddedComf
+                optimalAddedRes = localAddedRes
+                maxProfit = profit
+            }
+
+            localAddedComf += 1
+        }
+
+        addedRes = optimalAddedRes
+        addedLuck = 0
+        addedEff = 0
+        addedComf = optimalAddedComf
+        updatePoints()
     }
     
     // optimizes for most luck with no GST loss
-    func optimizeForLuck() {
+    func optimizeForLuckGst() {
         let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
 
         var localAddedEff: Int = 0
