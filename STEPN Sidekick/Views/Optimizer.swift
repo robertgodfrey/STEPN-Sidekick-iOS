@@ -974,7 +974,7 @@ struct Optimizer: View {
                                                 gmtOptimizeDialog = true
                                             } else {
                                                 if energy.doubleValue != 0 {
-                                                    optimizeForGst()
+                                                    optimizeForGst(usdOn: comfGemPrice.doubleValue <= 0 ? false : true)
                                                 } else {
                                                     noEnergyDialog = true
                                                 }
@@ -1020,10 +1020,10 @@ struct Optimizer: View {
                                 gstLimit: gstLimit,
                                 gmtLowRange: gmtLowRange,
                                 gmtHighRange: gmtHighRange,
-                                durabilityLost: durabilityLost,
                                 repairCostGst: repairCostGst,
-                                hpLoss: hpLoss,
                                 restoreHpCostGst: restoreHpCostGst,
+                                hpLoss: 0.0,
+                                durabilityLoss: 1.2,
                                 comfGemMultiplier: comfGemMultiplier,
                                 comfGemLvlForRestore: $comfGemLvlForRestore,
                                 comfGemForRestoreResource: comfGemForRestoreResource,
@@ -1509,12 +1509,12 @@ struct Optimizer: View {
           }
       }
       
-      var durabilityLost: Int {
-          if energy.doubleValue == 0 || totalRes == 0 {
+    func getDurabilityLost(energy: Double, res: Double) -> Int {
+          if energy == 0 || res == 0 {
               return 0
           }
           
-          var durLoss: Int = Int(round(energy.doubleValue * (2.944 * exp(-totalRes / 6.763) + 2.119 * exp(-totalRes / 36.817) + 0.294)))
+          var durLoss: Int = Int(round(energy * (2.944 * exp(-res / 6.763) + 2.119 * exp(-res / 36.817) + 0.294)))
           
           if durLoss < 1 {
               durLoss = 1
@@ -1523,7 +1523,7 @@ struct Optimizer: View {
       }
       
       var repairCostGst: Double {
-          return round(baseRepairCost * Double(durabilityLost) * 10) / 10
+          return round(baseRepairCost * Double(getDurabilityLost(energy: energy.doubleValue, res: totalRes)) * 10) / 10
       }
           
       var baseRepairCost: Double {
@@ -1803,25 +1803,6 @@ struct Optimizer: View {
           }
       }
       
-      var hpLoss: Double {
-          if totalComf == 0 || energy.doubleValue == 0 {
-              return 0
-          }
-          
-          switch (shoeRarity) {
-          case common:
-              return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
-          case uncommon:
-              return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
-          case rare:
-              return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-          case epic:
-              return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-          default:
-              return 0
-          }
-      }
-      
       var hpPercentRestored: Double {
           if totalComf == 0 || energy.doubleValue == 0 {
               return 1
@@ -1881,7 +1862,7 @@ struct Optimizer: View {
       }
       
       var restoreHpCostGst: Double {
-          return round(Double(gstCostBasedOnGem) * (hpLoss / hpPercentRestored) * 10) / 10
+          return round(Double(gstCostBasedOnGem) * (getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored) * 10) / 10
       }
       
       var gstProfitBeforeGem: Double {
@@ -1892,7 +1873,7 @@ struct Optimizer: View {
       }
       
       var comfGemMultiplier: Double {
-          return round(hpLoss / hpPercentRestored * 100) / 100
+          return round(getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored * 100) / 100
       }
 
     // MARK: Mystery box calcs
@@ -2131,7 +2112,7 @@ struct Optimizer: View {
         }
     }
     
-    func optimizeForGst() {
+    func optimizeForGst(usdOn: Bool) {
         let localEnergy: Double = energy.doubleValue
         let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
         let localEff: Double = baseEffString.doubleValue + gemEff
@@ -2146,25 +2127,46 @@ struct Optimizer: View {
         var optimalAddedComf: Int = 0
         var optimalAddedRes: Int = 0
         
-        var gstProfit: Double = 0
-        var maxProfit: Double = 0
+        var profit: Double = -50
+        var maxProfit: Double = -50
         
-        gstProfit = round((gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst) * 10) / 10
-                            
+        var chainTokenPrice: Double
+        var chainGstPrice: Double
+        var localGemMultiplier: Double
+        
+        switch (blockchain) {
+        case bsc:
+            chainTokenPrice = coinPrices.binancecoin.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
+        case eth:
+            chainTokenPrice = coinPrices.ethereum.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        default:
+            chainTokenPrice = coinPrices.solana.usd
+            chainGstPrice = coinPrices.greenSatoshiToken.usd
+        }
+                                    
         // O(n^2) w/ max 45,150 calcs... yikes :)
         while localAddedEff <= localPoints {
             while localAddedComf <= localPoints - localAddedEff {
                 localAddedRes = localPoints - localAddedComf - localAddedEff
+                
+                localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
 
-                gstProfit = round(((floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
-                                  - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294)) * 10) / 10)
-                                  - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
+                profit = gstEarned(totalEff: localEff + Double(localAddedEff), energyCo: energyCo, energy: String(localEnergy))
+                                - (baseRepairCost * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))))
+                                - (Double(gstCostBasedOnGem) * localGemMultiplier)
 
-                if (gstProfit > maxProfit) {
+                if usdOn {
+                    profit = (profit * chainGstPrice) - (comfGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+                    print(String(profit))
+                }
+                
+                if profit > maxProfit {
                     optimalAddedEff = localAddedEff
                     optimalAddedComf = localAddedComf
                     optimalAddedRes = localAddedRes
-                    maxProfit = gstProfit
+                    maxProfit = profit
                 }
                 localAddedComf += 1
             }
@@ -2179,19 +2181,9 @@ struct Optimizer: View {
         updatePoints()
     }
     
-    func hpLossForOptimizer(totalComf: Double) -> Double {
-        switch (shoeRarity) {
-        case common:
-            return round(energy.doubleValue * 0.386 * pow(totalComf, -0.421) * 100) / 100
-        case uncommon:
-            return round(energy.doubleValue * 0.424 * pow(totalComf, -0.456) * 100) / 100
-        case rare:
-            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-        case epic:
-            return round(energy.doubleValue * 0.47 * pow(totalComf, -0.467) * 100) / 100
-        default:
-            return 0
-        }
+    // TODO: :)
+    func optimizeForGmt() {
+        
     }
     
     // optimizes for most luck with no GST loss
@@ -2259,7 +2251,7 @@ struct Optimizer: View {
 
         gstProfit = round(((floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
                           - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294)) * 10) / 10)
-                          - (round(Double(gstCostBasedOnGem) * (hpLossForOptimizer(totalComf: (localComf + Double(localAddedComf))) / hpPercentRestored) * 10) / 10)) * 10) / 10
+                          - (round(Double(gstCostBasedOnGem) * (getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored) * 10) / 10)) * 10) / 10
   
         return gstProfit >= 0
     }
@@ -2527,6 +2519,25 @@ struct Optimizer_Previews: PreviewProvider {
             .environmentObject(OptimizerShoes())
     }
 }
+                                   
+func getHpLoss(comf: Double, energy: Double, shoeRarity: Int) -> Double {
+   if comf == 0 || energy == 0 {
+       return 0
+   }
+   
+   switch (shoeRarity) {
+   case common:
+       return round(energy * 0.386 * pow(comf, -0.421) * 100) / 100
+   case uncommon:
+       return round(energy * 0.424 * pow(comf, -0.456) * 100) / 100
+   case rare:
+       return round(energy * 0.47 * pow(comf, -0.467) * 100) / 100
+   case epic:
+       return round(energy * 0.47 * pow(comf, -0.467) * 100) / 100
+   default:
+       return 0
+   }
+}
 
 func innerCircleColor(shoeRarity: Int) -> String {
     switch (shoeRarity) {
@@ -2702,10 +2713,10 @@ struct CalcedTotals: View {
     let gstLimit: Int
     let gmtLowRange: Double
     let gmtHighRange: Double
-    let durabilityLost: Int
     let repairCostGst: Double
-    let hpLoss: Double
     let restoreHpCostGst: Double
+    let hpLoss: Double
+    let durabilityLoss: Double
     let comfGemMultiplier: Double
     @Binding var comfGemLvlForRestore: Int
     let comfGemForRestoreResource: String
@@ -2752,7 +2763,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(String(durabilityLost))
+                Text(String(durabilityLoss))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
@@ -2785,7 +2796,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(hpLoss == 0 ? "0" : String(hpLoss))
+                Text(String(hpLoss))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
@@ -2799,7 +2810,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
+                Text(String(hpLoss))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
@@ -2873,7 +2884,7 @@ struct CalcedTotals: View {
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
-                Text(hpLoss == 0 ? "0" : String(comfGemMultiplier))
+                Text(String(hpLoss))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
