@@ -83,6 +83,7 @@ struct Optimizer: View {
     @State private var noComfGemDialog: Bool = false
     @State private var noEnergyDialog: Bool = false
     @State private var resetPageDialog: Bool = false
+    @State private var noBreakEvenDialog: Bool = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -1001,12 +1002,23 @@ struct Optimizer: View {
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
                                             if energy.doubleValue != 0 {
-                                                optimizeForLuckGst()
+                                                var optimized = optimizeForLuckGst()
+                                                if !optimized {
+                                                    noBreakEvenDialog = true
+                                                    print("u suck")
+
+                                                } else {
+                                                    print("optimized")
+                                                }
                                             } else {
                                                 noEnergyDialog = true
                                             }
                                         })).font(Font.custom(fontButtons, size: 18))
                                                                  
+                                }.alert(isPresented: $noBreakEvenDialog) {
+                                    Alert(title: Text("Unable to Optimize Luck"),
+                                          message: Text("No possible point allocation where shoe does not lose money."),
+                                          dismissButton: .default(Text("Okay")))
                                 }
                             }.frame(minWidth: 300, maxWidth: 315)
                                 .padding(.vertical, 10)
@@ -2245,44 +2257,74 @@ struct Optimizer: View {
         updatePoints()
     }
     
-    // optimizes for most luck with no GST loss
-    func optimizeForLuckGst() {
+    // optimizes for most luck with no GST loss. returns true if able to find point allocation that results in a profit greater than or equal to 0
+    // very (very) terrible runtime, but really should max out around 50 loops
+    func optimizeForLuckGst() -> Bool {
         let localPoints: Int = Int(floor(shoeLevel) * 2 * Double(shoeRarity))
-
         var localAddedEff: Int = 0
         var localAddedComf: Int = 0
         var localAddedRes: Int = 0
         var pointsSpent: Int = 0
-
+        
+        if breakEvenGst(localAddedEff: 0, localAddedComf: 0, localAddedRes: 0) {
+            addedEff = 0
+            addedLuck = localPoints
+            addedComf = 0
+            addedRes = 0
+            updatePoints()
+            return true
+        }
+        
+        // check if over max value is unprofitable to avoid long calculation
+        if !breakEvenGst(localAddedEff: localPoints - 20, localAddedComf: 50, localAddedRes: 10) {
+            return false
+        }
+        
+        // check if half of expected max value is unprofitable, if it is then start there
+        if !breakEvenGst(localAddedEff: Int(Double(localPoints) / 2) - 30, localAddedComf: 20, localAddedRes: 10) {
+            pointsSpent = Int(Double(localPoints) / 2)
+        }
+        
+        // one more check for good measure
+        if !breakEvenGst(localAddedEff: Int(Double(localPoints) *  3 / 4) - 30, localAddedComf: 20, localAddedRes: 10) {
+            pointsSpent = Int(Double(localPoints) *  3 / 4)
+        }
+        
+        var breakEven: Bool = false
+        
         // favors eff, but is efficient (see what i did there)
         while !breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) && pointsSpent < localPoints {
-            pointsSpent += 1
+            pointsSpent += 3
             localAddedEff = pointsSpent
             localAddedComf = 0
             localAddedRes = 0
-
+            
             if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                breakEven = true
                 break
             }
 
             while localAddedEff > 0 {
-                localAddedEff -= 1
-                localAddedComf += 1
+                localAddedEff -= 3
+                localAddedComf += 3
 
                 if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                    breakEven = true
                     break
                 }
 
                 while localAddedComf > 0 {
-                    localAddedComf -= 1
-                    localAddedRes += 1
-
+                    localAddedComf -= 3
+                    localAddedRes += 3
+                    
                     if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                        breakEven = true
                         break
                     }
                 }
 
                 if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+                    breakEven = true
                     break
                 }
 
@@ -2291,12 +2333,17 @@ struct Optimizer: View {
             }
         }
 
+        if !breakEven {
+            return false
+        }
+        
         addedEff = localAddedEff
         addedRes = localAddedRes
         addedLuck = localPoints - pointsSpent
         addedComf = localAddedComf
-        
         updatePoints()
+        
+        return true
     }
     
     // check GST profit, returns true if greater than 0
@@ -2305,14 +2352,30 @@ struct Optimizer: View {
         let localEff: Double = baseEffString.doubleValue + gemEff
         let localComf: Double = baseComfString.doubleValue + gemComf
         let localRes: Double = baseResString.doubleValue + gemRes
+        let localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
         
-        var gstProfit: Double = 0
-
-        gstProfit = round(((floor(localEnergy * pow((localEff + Double(localAddedEff)), energyCo) * 10) / 10)
-                          - (round(baseRepairCost * round(localEnergy * (2.944 * exp(-(Double(localAddedRes) + localRes) / 6.763) + 2.119 * exp(-(Double(localAddedRes) + localRes) / 36.817) + 0.294)) * 10) / 10)
-                          - (round(Double(gstCostBasedOnGem) * (getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored) * 10) / 10)) * 10) / 10
-  
-        return gstProfit >= 0
+        var chainTokenPrice: Double
+        var chainGstPrice: Double
+        
+        switch (blockchain) {
+        case bsc:
+            chainTokenPrice = coinPrices.binancecoin.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
+        case eth:
+            chainTokenPrice = coinPrices.ethereum.usd
+            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        default:
+            chainTokenPrice = coinPrices.solana.usd
+            chainGstPrice = coinPrices.greenSatoshiToken.usd
+        }
+        
+        var profit = gstEarned(totalEff: localEff + Double(localAddedEff), energyCo: energyCo, energy: String(localEnergy))
+                        - (round(baseRepairCost * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * 10) / 10)
+                        - (Double(gstCostBasedOnGem) * localGemMultiplier)
+                
+        profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+            
+        return profit >= 0
     }
     
     func saveEmLoadEm(shoeToLoad: Int) {
