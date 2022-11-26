@@ -93,7 +93,7 @@ struct Optimizer: View {
                 .foregroundColor(Color("Light Green"))
                 .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
             
-            // SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
 
             ScrollView {
                 LazyVStack {

@@ -25,7 +25,7 @@ struct About: View {
                 .foregroundColor(Color("Light Green"))
                 .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
             
-            SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            // SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
                                                            
             ScrollView {
                 VStack(spacing: 20) {
@@ -113,7 +113,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
 
-                                Text("GMT earnings are still new. The estimate will improve as more data is gathered. In general, the estimate is more accurate for shoes with less than 500 comfort.")
+                                Text("GMT earnings are always changing and are difficult to predict. In general, the GMT estimate is more accurate for shoes with less than 500 comfort.")
                                     .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
@@ -228,6 +228,48 @@ struct About: View {
                                 .padding(.top, -10)
                             
                             VStack {
+                                Link(destination: URL(string: "https://stepn-market.guide/")!) {
+                                    Image("stepn_market_guide")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 300)
+                                }
+                                
+                                HStack(spacing: 4) {
+                                    Text("Improved marketplace filter by")
+                                        .font(Font.custom("Roboto-Regular", size: 13))
+                                        .foregroundColor(Color("Almost Black"))
+                                    
+                                    Link(destination: URL(string: "https://twitter.com/t2_stepn")!) {
+                                        Text("@t2_stepn")
+                                            .font(Font.custom("Roboto-Medium", size: 13))
+                                            .foregroundColor(Color("Link Blue"))
+                                    }
+                                }
+                            }.padding(.top, 10)
+                            
+                            VStack {
+                                Link(destination: URL(string: "https://stepnfp.com/")!) {
+                                    Image("stepn_fp")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding(.top, 5)
+                                        .frame(width: 250)
+                                }
+                                
+                                Text("Shoe, gem, and scroll floorprice tracker by")
+                                    .font(Font.custom("Roboto-Regular", size: 13))
+                                    .foregroundColor(Color("Almost Black"))
+                                
+                                Link(destination: URL(string: "https://twitter.com/StepnFP")!) {
+                                    Text("@StepnFP")
+                                        .font(Font.custom("Roboto-Medium", size: 13))
+                                        .foregroundColor(Color("Link Blue"))
+                                        .padding(.top, -5)
+                                }
+                            }.padding(.top, 5)
+                            
+                            VStack {
                                 Link(destination: URL(string: "https://stepn.guide/")!) {
                                     Image("stepn_guide")
                                         .resizable()
@@ -291,48 +333,7 @@ struct About: View {
                                     }
                                 }
                             }
-                            
-                            VStack {
-                                Link(destination: URL(string: "https://stepnfp.com/")!) {
-                                    Image("stepn_fp")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .padding(.top, 5)
-                                        .frame(width: 280)
-                                }
-                                
-                                Text("Shoe, gem, and scroll floorprice tracker by")
-                                    .font(Font.custom("Roboto-Regular", size: 13))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Link(destination: URL(string: "https://twitter.com/StepnFP")!) {
-                                    Text("@StepnFP")
-                                        .font(Font.custom("Roboto-Medium", size: 13))
-                                        .foregroundColor(Color("Link Blue"))
-                                        .padding(.top, -5)
-                                }
-                            }.padding(.top, 5)
-                            
-                            VStack(spacing: 2) {
-                                Link(destination: URL(string: "https://chrome.google.com/webstore/detail/enhanced-filter-for-stepn/amibnhkklghdncklemlohpglbbbnpjhe")!) {
-                                    Image("stepn_enhanced_filter")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 260)
-                                }
-                                
-                                Text("Browser extension with marketplace filter by")
-                                    .font(Font.custom("Roboto-Regular", size: 13))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                Link(destination: URL(string: "https://twitter.com/1napolsky")!) {
-                                    Text("@1napolsky")
-                                        .font(Font.custom("Roboto-Medium", size: 13))
-                                        .foregroundColor(Color("Link Blue"))
-                                        .padding(.top, 1)
-                                }
-                            }
-                            
+                                                                                    
                             VStack {
                                 Link(destination: URL(string: "https://discord.gg/stepnstats")!) {
                                     Image("stepn_stats")
@@ -341,7 +342,7 @@ struct About: View {
                                         .frame(width: 245)
                                 }
                                 
-                                Text("(Beta) App for gathering stats ad more by")
+                                Text("(Beta) App for gathering stats and more by")
                                     .font(Font.custom("Roboto-Regular", size: 13))
                                     .foregroundColor(Color("Almost Black"))
                                 
@@ -360,31 +361,10 @@ struct About: View {
                                     }
                                 }.padding(.top, -4)
                                     
-                            }.padding(.bottom, 10)
-                        
-                            VStack {
-                                Link(destination: URL(string: "https://stepn-market.guide/")!) {
-                                    Image("stepn_market_guide")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 300)
-                                }
-                                
-                                HStack(spacing: 4) {
-                                    Text("Website marketplace filter by")
-                                        .font(Font.custom("Roboto-Regular", size: 13))
-                                        .foregroundColor(Color("Almost Black"))
-                                    
-                                    Link(destination: URL(string: "https://twitter.com/t2_stepn")!) {
-                                        Text("@t2_stepn")
-                                            .font(Font.custom("Roboto-Medium", size: 13))
-                                            .foregroundColor(Color("Link Blue"))
-                                    }
-                                }
-                            }.padding(.bottom, 30)
-                            
+                            }.padding(.bottom, 8)
                             
                         }.frame(maxWidth: 400)
+                            .padding(.bottom, 30)
                     }
                     
                 }.padding(.bottom, 40)
