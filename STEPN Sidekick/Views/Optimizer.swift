@@ -1002,7 +1002,7 @@ struct Optimizer: View {
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
                                             if energy.doubleValue != 0 {
-                                                var optimized = optimizeForLuckGst()
+                                                let optimized = optimizeForLuckGst()
                                                 if !optimized {
                                                     noBreakEvenDialog = true
                                                     print("u suck")
@@ -1015,10 +1015,6 @@ struct Optimizer: View {
                                             }
                                         })).font(Font.custom(fontButtons, size: 18))
                                                                  
-                                }.alert(isPresented: $noBreakEvenDialog) {
-                                    Alert(title: Text("Unable to Optimize Luck"),
-                                          message: Text("No possible point allocation where shoe does not lose money."),
-                                          dismissButton: .default(Text("Okay")))
                                 }
                             }.frame(minWidth: 300, maxWidth: 315)
                                 .padding(.vertical, 10)
@@ -1039,7 +1035,7 @@ struct Optimizer: View {
                                 restoreHpCostGst: restoreHpCostGst,
                                 hpLoss: getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity),
                                 durabilityLoss: getDurabilityLost(energy: energy.doubleValue, res: totalRes),
-                                comfGemMultiplier: comfGemMultiplier,
+                                comfGemMultiplier: getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored,
                                 comfGemLvlForRestore: $comfGemLvlForRestore,
                                 comfGemForRestoreResource: comfGemForRestoreResource,
                                 gmtEarned: gmtEarned,
@@ -1049,6 +1045,11 @@ struct Optimizer: View {
                                 coinPrices: coinPrices
                             ).padding(.top, 10)
                                 .padding(.bottom, 20)
+                                .alert(isPresented: $noBreakEvenDialog) {
+                                    Alert(title: Text("Unable to Optimize Luck"),
+                                          message: Text("No possible point allocation where shoe does not lose money."),
+                                          dismissButton: .default(Text("Okay")))
+                                }
 
                             // MARK: bottom three stacks
                             HStack(spacing: 5) {
@@ -1886,10 +1887,6 @@ struct Optimizer: View {
           }
           return gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst
       }
-      
-      var comfGemMultiplier: Double {
-          return round(getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored * 100) / 100
-      }
 
     // MARK: Mystery box calcs
     // 0 = very low/no chance, 1 = low chance, 2 = high chance
@@ -2292,7 +2289,7 @@ struct Optimizer: View {
         
         var breakEven: Bool = false
         
-        // favors eff, but is efficient (see what i did there)
+        // favors eff... skip by 3 to save time
         while !breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf, localAddedRes: localAddedRes) && pointsSpent < localPoints {
             pointsSpent += 3
             localAddedEff = pointsSpent
@@ -2374,7 +2371,8 @@ struct Optimizer: View {
                         - (Double(gstCostBasedOnGem) * localGemMultiplier)
                 
         profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
-            
+        
+        print(String(format: "%.2f", profit))
         return profit >= 0
     }
     
@@ -2932,7 +2930,7 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(String(comfGemMultiplier))
+                Text(String(round(comfGemMultiplier * 100) / 100))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
@@ -3006,7 +3004,7 @@ struct CalcedTotals: View {
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
-                Text(String(comfGemMultiplier))
+                Text(String(round(comfGemMultiplier * 100) / 100))
                     .font(Font.custom(fontTitles, size: 18))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.trailing, -2)
@@ -3066,7 +3064,7 @@ struct CalcedTotals: View {
             usdProf = gstProfitBeforeGem * chainGstPrice
         }
         usdProf -= comfGemMultiplier * comfGemPrice * chainTokenPrice
-        
+         
         return String(format: "%.2f", round(usdProf * 100) / 100)
     }
 }
