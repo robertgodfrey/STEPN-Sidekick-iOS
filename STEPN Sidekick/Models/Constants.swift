@@ -2,7 +2,7 @@
 //  Constants.swift
 //  STEPN Sidekick
 //
-//  Last updated 22 Sep 22
+//  Last updated 26 Nov 22
 //
 
 import Foundation

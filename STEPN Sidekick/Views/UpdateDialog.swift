@@ -27,7 +27,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("You can now switch between calculating earnings for GST or GMT.")
+                        Text("USD estimates are now available in the shoe optimizer.")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -40,7 +40,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Because GMT earnings vary so widely, estimated GMT earnings are displayed as a range. The number at the bottom is the average expected earning.")
+                        Text("The \"Optimize GMT\" button is now functional.")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -53,7 +53,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Optimizing GMT will come in a later update, along with other GMT-related features.")
+                        Text("There is now an option to remove ads in the \"About\" section")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         

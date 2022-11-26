@@ -2,12 +2,12 @@
 //  Optimizer.swift
 //  STEPN Sidekick
 //
-//  Shoe optimizer. Uses community data to determine best points allocation for GST earning
+//  Shoe optimizer. Uses community data to determine best points allocation for GST/GMT earning
 //  and mystery box chance.
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 8 Oct 22
+//  Last updated 26 Nov 22
 //
 
 import SwiftUI

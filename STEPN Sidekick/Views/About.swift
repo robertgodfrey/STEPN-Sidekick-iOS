@@ -6,7 +6,7 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 3 Sep 22
+//  Last updated 26 Nov 22
 //
 
 import SwiftUI
@@ -119,6 +119,26 @@ struct About: View {
                                     .frame(width: 290)
                             }
                             
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                    .foregroundColor(Color("Almost Black"))
+                                    .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
+                                    .padding(.top, 6)
+                                    .padding(.leading, 6)
+                                
+                                Button(action: {
+                                    // in tapAction
+                                }, label: {
+                                    Text("REMOVE ADS")
+                                        .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
+                                })
+                                    .buttonStyle(StartButton(tapAction: {
+                                        // do stuff
+                                    })).font(Font.custom(fontButtons, size: 20))
+                                
+                            }.padding(.top, 16)
+                                .padding(.bottom, 8)
+                            
                             VStack(spacing: 5) {
                                 Text("Thanks to:")
                                     .font(Font.custom(fontHeaders, size: 16))
@@ -184,7 +204,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Medium", size: 15))
                                     .foregroundColor(Color("Link Blue"))
                                 
-                                Text("v 1.2.2")
+                                Text("v 1.3.0")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)
