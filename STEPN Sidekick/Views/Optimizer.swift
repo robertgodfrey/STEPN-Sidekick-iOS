@@ -2337,6 +2337,19 @@ struct Optimizer: View {
             return false
         }
         
+        if breakEvenGst(localAddedEff: localAddedEff - 1, localAddedComf: localAddedComf, localAddedRes: localAddedRes) {
+            localAddedEff -= 1
+            pointsSpent -= 1
+        }
+        if breakEvenGst(localAddedEff: localAddedEff, localAddedComf: localAddedComf - 1, localAddedRes: localAddedRes) {
+            localAddedComf -= 1
+            pointsSpent -= 1
+        }
+        if breakEvenGst(localAddedEff: localAddedEff - 1, localAddedComf: localAddedComf, localAddedRes: localAddedRes - 1) {
+            localAddedRes -= 1
+            pointsSpent -= 1
+        }
+        
         addedEff = localAddedEff
         addedRes = localAddedRes
         addedLuck = localPoints - pointsSpent
@@ -2402,6 +2415,15 @@ struct Optimizer: View {
         
         if !breakEven {
             return false
+        }
+        
+        if breakEvenGmt(localAddedComf: localAddedComf - 1, localAddedRes: localAddedRes) {
+            localAddedComf -= 1
+            pointsSpent -= 1
+        }
+        if breakEvenGmt(localAddedComf: localAddedComf, localAddedRes: localAddedRes - 1) {
+            localAddedRes -= 1
+            pointsSpent -= 1
         }
         
         addedEff = 0
