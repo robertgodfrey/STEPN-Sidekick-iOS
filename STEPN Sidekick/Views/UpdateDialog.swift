@@ -27,7 +27,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("USD estimates are now available in the shoe optimizer.")
+                        Text("USD estimates are now available at the bottom of the shoe optimizer")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -40,27 +40,27 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("The \"Optimize GMT\" button is now functional.")
+                        Text("The \"Optimize GMT\" button is now functional")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
 
                     }
-                    
+                    /*
                     HStack(alignment: .top) {
                         Text("•")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("There is now an option to remove ads in the \"About\" section")
+                        Text("There is now a paid option to remove ads in the \"About\" section")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
 
                     }
-                    
+                    */
                     Text("If you have been enjoying the app, please consider leaving a review in the App Store!")
                         .font(Font.custom(fontRegText, size: 17))
                         .foregroundColor(Color("Almost Black"))

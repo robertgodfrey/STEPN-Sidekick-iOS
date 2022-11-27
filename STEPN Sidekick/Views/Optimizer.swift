@@ -20,6 +20,7 @@ struct Optimizer: View {
     @EnvironmentObject var shoes: OptimizerShoes
     
     @Binding var hideTab: Bool
+    @Binding var showAds: Bool
     
     @State var coinPrices: Coins = Coins(
         greenSatoshiToken: Coin(usd: 0),
@@ -89,12 +90,14 @@ struct Optimizer: View {
         ZStack(alignment: .top) {
             Color("Light Green")
             
-            Rectangle()
-                .foregroundColor(Color("Light Green"))
-                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-            
-            SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
-
+            if showAds {
+                Rectangle()
+                    .foregroundColor(Color("Light Green"))
+                    .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+                
+                SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            }
+        
             ScrollView {
                 LazyVStack {
                     ZStack {
@@ -1400,8 +1403,8 @@ struct Optimizer: View {
                 }
                 
                 )
-            }.padding(.top, ((UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50)
-                      + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+            }.padding(.top, showAds ? (((UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50)
+                      + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1) : 0)
             if gemPopup {
                 GeometryReader { _ in
                     GemDialog(
@@ -2759,7 +2762,7 @@ extension String {
 
 struct Optimizer_Previews: PreviewProvider {
     static var previews: some View {
-        Optimizer(hideTab: .constant(false))
+        Optimizer(hideTab: .constant(false), showAds: .constant(false))
             .environmentObject(OptimizerShoes())
     }
 }

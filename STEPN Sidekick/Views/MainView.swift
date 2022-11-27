@@ -4,18 +4,18 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 12 Sep 22
-//
-//
-//  TODO: add lock screen widget for iOS 16
+//  Last updated 26 Nov 22
 //
 
 import SwiftUI
+import StoreKit
 
 struct MainView: View {
     @State var currentTab = "Activity"
     @State var hideTab = false
+    @State var showAds = true
     @StateObject var shoes = OptimizerShoes()
+    @StateObject var storeManager = StoreManager()
     var bottomEdge: CGFloat
     
     // to hide tab view
@@ -27,19 +27,23 @@ struct MainView: View {
     var body: some View {
         VStack (spacing: 0) {
             TabView(selection: $currentTab) {
-                ActivitySettings(hideTab: $hideTab)
+                ActivitySettings(hideTab: $hideTab, showAds: $showAds)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .tag("Activity")
-                Optimizer(hideTab: $hideTab)
+                Optimizer(hideTab: $hideTab, showAds: $showAds)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.white)
                     .tag("Optimizer")
-                About(hideTab: $hideTab)
+                About(hideTab: $hideTab, showAds: $showAds)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color("Light Green"))
                     .tag("Info")
+                    .onAppear(perform: {
+                        SKPaymentQueue.default().add(storeManager)
+                    })
             }.environmentObject(shoes)
+                .environmentObject(storeManager)
             .overlay(
                 VStack {
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
@@ -49,6 +53,10 @@ struct MainView: View {
                 
             )
         }.ignoresSafeArea()
+            .onAppear(perform: {
+                storeManager.getProducts(productIDs: ["remove_ads"])
+                showAds = UserDefaults.standard.bool(forKey: "remove_ads")
+            })
     }
 }
 

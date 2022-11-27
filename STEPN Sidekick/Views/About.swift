@@ -13,6 +13,8 @@ import SwiftUI
 
 struct About: View {
     @Binding var hideTab: Bool
+    @Binding var showAds: Bool
+    @EnvironmentObject var storeManager: StoreManager
     
     @State var offset: CGFloat = 0
     @State var lastOffset: CGFloat = 0
@@ -21,11 +23,13 @@ struct About: View {
         ZStack(alignment: .top) {
             Color("Light Green")
             
-            Rectangle()
-                .foregroundColor(Color("Light Green"))
-                .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-            
-            // SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            if showAds {
+                Rectangle()
+                    .foregroundColor(Color("Light Green"))
+                    .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
+                
+                SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+            }
                                                            
             ScrollView {
                 VStack(spacing: 20) {
@@ -119,25 +123,39 @@ struct About: View {
                                     .frame(width: 290)
                             }
                             
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                    .foregroundColor(Color("Almost Black"))
-                                    .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
-                                    .padding(.top, 6)
-                                    .padding(.leading, 6)
-                                
-                                Button(action: {
-                                    // in tapAction
-                                }, label: {
-                                    Text("REMOVE ADS")
+                            /* TODO: add once IAP is approved
+                            if showAds {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                        .foregroundColor(Color("Almost Black"))
                                         .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
-                                })
-                                    .buttonStyle(StartButton(tapAction: {
-                                        // do stuff
-                                    })).font(Font.custom(fontButtons, size: 20))
-                                
-                            }.padding(.top, 16)
-                                .padding(.bottom, 8)
+                                        .padding(.top, 6)
+                                        .padding(.leading, 6)
+                                    
+                                    Button(action: {
+                                        // in tapAction
+                                    }, label: {
+                                        Text("REMOVE ADS")
+                                            .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
+                                    })
+                                        .buttonStyle(StartButton(tapAction: {
+                                            storeManager.purchaseProduct(product: product)
+                                        })).font(Font.custom(fontButtons, size: 20))
+                                        .onLongPressGesture {
+                                            storeManager.restoreProducts() // TODO: double check if this works...
+                                            print("long pressin")
+                                        }
+                                    
+                                }.padding(.top, 16)
+                                    .padding(.bottom, 8)
+                            } else {
+                                Text("Thank you for removing ads! ❤")
+                                    .font(Font.custom("Roboto-Regular", size: 15))
+                                    .foregroundColor(Color("Almost Black"))
+                                    .padding(.top, 14)
+                                    .padding(.bottom, 8)
+                            }
+                             */
                             
                             VStack(spacing: 5) {
                                 Text("Thanks to:")
@@ -420,6 +438,13 @@ struct About: View {
                 )            
             }.padding(.top, (UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50
                       + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
+                .onAppear(perform: {
+                    print("remove_ads")
+                    print(UserDefaults.standard.bool(forKey: "remove_ads"))
+                    print("\n\nProducts:")
+                    print(storeManager.myProducts)
+                    print("\n\n")
+                })
         }   .ignoresSafeArea()
             .preferredColorScheme(.light)
     }
@@ -427,6 +452,6 @@ struct About: View {
 
 struct Info_Previews: PreviewProvider {
     static var previews: some View {
-        About(hideTab: .constant(false))
+        About(hideTab: .constant(false), showAds: .constant(false))
     }
 }
