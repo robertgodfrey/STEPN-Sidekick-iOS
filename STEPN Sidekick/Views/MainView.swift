@@ -55,7 +55,7 @@ struct MainView: View {
         }.ignoresSafeArea()
             .onAppear(perform: {
                 storeManager.getProducts(productIDs: ["remove_ads"])
-                showAds = UserDefaults.standard.bool(forKey: "remove_ads")
+                showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
             })
     }
 }

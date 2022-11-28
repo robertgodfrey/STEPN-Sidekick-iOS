@@ -6,7 +6,7 @@
 //  Displays current/average speed, time/energy remaining, and GPS signal strength
 //
 //  Created by Rob Godfrey
-//  Last updated 3 Sep 22
+//  Last updated 27 Nov 22
 //
 
 import SwiftUI
@@ -17,6 +17,7 @@ struct SpeedTracker: View {
     
     @ObservedObject var locationManager = LocationManager.shared
     @Binding var hideTab: Bool
+    @Binding var showAds: Bool
     
     @StateObject private var timerVm = ViewModel()
     @State private var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -52,7 +53,7 @@ struct SpeedTracker: View {
     var body: some View {
         
         if returnToSettings {
-            ActivitySettings(hideTab: $hideTab)
+            ActivitySettings(hideTab: $hideTab, showAds: $showAds)
         } else {
             ZStack(alignment: .top) {
                 
@@ -820,6 +821,7 @@ struct SpeedTracker_Previews: PreviewProvider {
     static var previews: some View {
         SpeedTracker(
             hideTab: .constant(true),
+            showAds: .constant(true),
             shoeType: "Jogger",
             minSpeed: -2.0,
             maxSpeed: 20.0,

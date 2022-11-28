@@ -76,6 +76,7 @@ struct ActivitySettings: View {
             if startSpeedTracker {
                 SpeedTracker(
                     hideTab: $hideTab,
+                    showAds: $showAds,
                     shoeType: shoes[shoeTypeIterator].getTitle(),
                     minSpeed: shoeTypeIterator == customShoe ? customMinSpeed.doubleValue : Double(shoes[shoeTypeIterator].getMinSpeed()) ?? 1.0,
                     maxSpeed: shoeTypeIterator == customShoe ? customMaxSpeed.doubleValue :Double(shoes[shoeTypeIterator].getMaxSpeed()) ?? 6.0,
@@ -90,7 +91,7 @@ struct ActivitySettings: View {
                     .transition(.move(edge: .bottom))
                 
             } else if startLocationRequest {
-                LocationRequestView(hideTab: $hideTab)
+                LocationRequestView(hideTab: $hideTab, showAds: $showAds)
                 
             } else {
                 ZStack(alignment: .top) {
@@ -617,8 +618,7 @@ struct ActivitySettings: View {
                             }
                             
                         )
-                    }..padding(.top, showAds ? (((UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50)
-                                                + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1) : 0)
+                    }.padding(.top, (showAds ? (UIDevice.current.userInterfaceIdiom == .pad ? 90 : 50) : 0) + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
                 }.ignoresSafeArea()
                 .preferredColorScheme(.light)
                 .padding(.horizontal, -38)

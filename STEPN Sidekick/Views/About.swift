@@ -436,8 +436,7 @@ struct About: View {
                     }
                     
                 )            
-            }.padding(.top, (UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50
-                      + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0))
+            }.padding(.top, (showAds ? (UIDevice.current.userInterfaceIdiom == .pad ? 90 : 50) : 0) + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
                 .onAppear(perform: {
                     print("remove_ads")
                     print(UserDefaults.standard.bool(forKey: "remove_ads"))

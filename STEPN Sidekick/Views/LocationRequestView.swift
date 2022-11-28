@@ -5,7 +5,7 @@
 //  View to let user know why location permissions are needed and how they will be used.
 //
 //  Created by Rob Godfrey
-//  Last updated 3 Sep 22
+//  Last updated 27 Nov 22
 //
 
 import SwiftUI
@@ -18,11 +18,12 @@ struct LocationRequestView: View {
 
     @State var returnToSettings: Bool = false
     @Binding var hideTab: Bool
+    @Binding var showAds: Bool
     
     var body: some View {
         ZStack {
             if returnToSettings {
-                ActivitySettings(hideTab: $hideTab)
+                ActivitySettings(hideTab: $hideTab, showAds: $showAds)
             } else {
                 Color(.systemBlue).ignoresSafeArea()
                 
@@ -104,6 +105,6 @@ struct LocationRequestView: View {
 
 struct LocationRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationRequestView(hideTab: .constant(true))
+        LocationRequestView(hideTab: .constant(true), showAds: .constant(true))
     }
 }

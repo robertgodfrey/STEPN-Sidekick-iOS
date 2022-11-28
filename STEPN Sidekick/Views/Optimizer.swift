@@ -1403,8 +1403,7 @@ struct Optimizer: View {
                 }
                 
                 )
-            }.padding(.top, showAds ? (((UIDevice.current.userInterfaceIdiom == .pad) ? 90 : 50)
-                      + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1) : 0)
+            }.padding(.top, (showAds ? (UIDevice.current.userInterfaceIdiom == .pad ? 90 : 50) : 0) + (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
             if gemPopup {
                 GeometryReader { _ in
                     GemDialog(
