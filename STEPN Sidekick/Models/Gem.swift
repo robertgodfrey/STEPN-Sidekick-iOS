@@ -142,7 +142,7 @@ struct Gem: Codable {
             case 3:
                 self.socketImageSource = "gem_socket_eff_3"
             case 4:
-                self.socketImageSource = "gem_socket_eff_3" // TODO: add resource and change
+                self.socketImageSource = "gem_socket_eff_4"
             default:
                 self.socketImageSource = "gem_socket_eff_0"
             }
