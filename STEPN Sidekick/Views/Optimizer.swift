@@ -1219,51 +1219,51 @@ struct Optimizer: View {
                                 HStack {
                                     Image("mb1")
                                         .resizable()
-                                        .renderingMode(mb1Chance == 0 ? .template : .none)
+                                        .renderingMode(mb1Chance == 0 && bestMbMatch != 1 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb1Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb1Chance > 1 || bestMbMatch == 1 ? 1 : 0.5)
                                     
                                     Spacer()
                                     
                                     Image("mb2")
                                         .resizable()
-                                        .renderingMode(mb2Chance == 0 ? .template : .none)
+                                        .renderingMode(mb2Chance == 0 && bestMbMatch != 2 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb2Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb2Chance > 1 || bestMbMatch == 2 ? 1 : 0.5)
                                     
                                     Spacer()
 
                                     Image("mb3")
                                         .resizable()
-                                        .renderingMode(mb3Chance == 0 ? .template : .none)
+                                        .renderingMode(mb3Chance == 0 && bestMbMatch != 3 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb3Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb3Chance > 1 || bestMbMatch == 3 ? 1 : 0.5)
 
                                     Spacer()
 
                                     Image("mb4")
                                         .resizable()
-                                        .renderingMode(mb4Chance == 0 ? .template : .none)
+                                        .renderingMode(mb4Chance == 0 && bestMbMatch != 4 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb4Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb4Chance > 1 || bestMbMatch == 4 ? 1 : 0.5)
                                     
                                     Spacer()
 
                                     Image("mb5")
                                         .resizable()
-                                        .renderingMode(mb5Chance == 0 ? .template : .none)
+                                        .renderingMode(mb5Chance == 0 && bestMbMatch != 5 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb5Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb5Chance > 1 || bestMbMatch == 5 ? 1 : 0.5)
 
                                     
                                 }.padding(.horizontal, 40)
@@ -1273,51 +1273,51 @@ struct Optimizer: View {
                                 HStack {
                                     Image("mb6")
                                         .resizable()
-                                        .renderingMode(mb6Chance == 0 ? .template : .none)
+                                        .renderingMode(mb6Chance == 0 && bestMbMatch != 6 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb6Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb6Chance > 1 || bestMbMatch == 6 ? 1 : 0.5)
                                     
                                     Spacer()
                                     
                                     Image("mb7")
                                         .resizable()
-                                        .renderingMode(mb7Chance == 0 ? .template : .none)
+                                        .renderingMode(mb7Chance == 0 && bestMbMatch != 7 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb7Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb7Chance > 1 || bestMbMatch == 7 ? 1 : 0.5)
                                     
                                     Spacer()
 
                                     Image("mb8")
                                         .resizable()
-                                        .renderingMode(mb8Chance == 0 ? .template : .none)
+                                        .renderingMode(mb8Chance == 0 && bestMbMatch != 8 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb8Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb8Chance > 1 || bestMbMatch == 8 ? 1 : 0.5)
 
                                     Spacer()
 
                                     Image("mb9")
                                         .resizable()
-                                        .renderingMode(mb9Chance == 0 ? .template : .none)
+                                        .renderingMode(mb9Chance == 0 && bestMbMatch != 9 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb9Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb9Chance > 1 || bestMbMatch == 9 ? 1 : 0.5)
                                     
                                     Spacer()
                                     
                                     Image("mb10")
                                         .resizable()
-                                        .renderingMode(mb10Chance == 0 ? .template : .none)
+                                        .renderingMode(mb10Chance == 0 && bestMbMatch != 10 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb10Chance > 1 ? 1 : 0.5)
+                                        .opacity(mb10Chance > 1 || bestMbMatch == 10 ? 1 : 0.5)
 
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400)
@@ -2018,6 +2018,67 @@ struct Optimizer: View {
             return 1
         }
         return 0
+    }
+    
+    // not efficient but don't care
+    var bestMbMatch: Int {
+        let localEnergy = energy.doubleValue
+
+        if localEnergy < 2 {
+            return 0
+        }
+        
+        let levelOneLine = totalLuck < 1000 ? -0.6 * log(totalLuck + 15) + 4.1 : -99
+        let levelTwoLine = totalLuck < 1500 ? -1.2 * log(totalLuck + 5) + 8.2 : -99
+        let levelThreeLine = totalLuck < 2000 ? -2.1 * log(totalLuck + 10) + 14.9 : -99
+        let levelFourLine = totalLuck < 4000 ? -2.8 * log(totalLuck + 5) + 22.1 : -99
+        let levelFiveLine = -2.9 * log(totalLuck + 10) + 27.7
+        let levelSixLine = -3 * log(totalLuck + 10) + 35
+        let levelSevenLine = -4 * log(totalLuck - 100) + 47
+        let levelEightLine = -5 * log(totalLuck - 650) + 58
+        let levelNineLine = -6 * log(totalLuck - 1000) + 68.5
+        let levelTenLine = -6 * log(totalLuck - 2000) + 70.5
+        
+        var best = 1
+        
+        var minVal = abs(localEnergy - abs(levelOneLine))
+        
+        if abs(localEnergy - abs(levelTwoLine)) < minVal {
+            minVal = abs(localEnergy - abs(levelTwoLine))
+            best = 2
+        }
+        if (abs(localEnergy - abs(levelThreeLine)) < minVal) {
+            minVal = abs(localEnergy - abs(levelThreeLine))
+            best = 3
+        }
+        if (abs(localEnergy - abs(levelFourLine)) < minVal) {
+            minVal = abs(localEnergy - abs(levelFourLine))
+            best = 4
+        }
+        if (abs(localEnergy - abs(levelFiveLine)) < minVal) {
+            minVal = abs(localEnergy - abs(levelFiveLine))
+            best = 5
+        }
+        if (abs(localEnergy - abs(levelSixLine)) < minVal) {
+            minVal = abs(localEnergy - abs(levelSixLine))
+            best = 6
+        }
+        if (abs(localEnergy - abs(levelSevenLine)) < minVal) {
+            minVal = abs(localEnergy - abs(levelSevenLine))
+            best = 7
+        }
+        if (abs(localEnergy - levelEightLine) < minVal) {
+            minVal = abs(localEnergy - levelEightLine)
+            best = 8
+        }
+        if (abs(localEnergy - levelNineLine) < minVal) {
+            minVal = abs(localEnergy - levelNineLine)
+            best = 9
+        }
+        if (abs(localEnergy - levelTenLine) < minVal) {
+            best = 10
+        }
+        return best
     }
     
     var energyCo: Double {
