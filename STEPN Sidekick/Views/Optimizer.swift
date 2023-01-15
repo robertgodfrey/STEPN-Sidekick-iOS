@@ -1195,7 +1195,7 @@ struct Optimizer: View {
                                                 .frame(width: getGemInputWidth(length: comfGemPrice.count))
                                                 .padding(.leading, 10)
                                             
-                                            Image(chainCoinIcon(blockchain: blockchain))
+                                            Image("logo_gmt_solid")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
                                                 .frame(width: 20, height: 20)
@@ -1354,7 +1354,7 @@ struct Optimizer: View {
                         }
                     }
                     
-                    Text("Based on unofficial STEPN community data.\nActual results may vary.")
+                    Text("Based on unofficial community data.\nActual results may vary.")
                         .font(Font.custom("Roboto-Regular", size: 13))
                         .foregroundColor(Color("Gandalf"))
                         .multilineTextAlignment(.center)
@@ -2856,17 +2856,6 @@ func chainString(blockchain: Int) -> String {
         return "ETH"
     default:
         return "SOL"
-    }
-}
-
-func chainCoinIcon(blockchain: Int) -> String {
-    switch (blockchain) {
-    case bsc:
-        return "logo_bnb_white"
-    case eth:
-        return "logo_eth_white"
-    default:
-        return "logo_sol_white"
     }
 }
 

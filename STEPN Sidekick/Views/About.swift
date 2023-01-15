@@ -59,7 +59,7 @@ struct About: View {
                                 .foregroundColor(Color("Almost Black"))
                                 .padding(.top, 20)
                             
-                            Text("The goal of this app is to make walking and running while using STEPN more enjoyable. Audible alerts allow you to focus on your activity rather than constantly checking your phone.")
+                            Text("The main goal of this app is to make moving-to-earn more enjoyable. Audible alerts allow you to focus on your activity rather than constantly checking your phone.")
                                 .font(Font.custom("Roboto-Medium", size: 17))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color("Almost Black"))

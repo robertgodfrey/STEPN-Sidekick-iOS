@@ -4,7 +4,7 @@
 //
 //  Gem struct for creating gem object
 //
-//  Last updated 22 Sep 22
+//  Last updated 27 Nov 22
 //
 
 import Foundation
