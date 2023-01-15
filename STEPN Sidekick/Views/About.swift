@@ -105,19 +105,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
 
-                                Text("Mystery box chances should be acceptably accurate for levels 1-6, but please do not rely too much on these estimates because they are not precise. Estimates for levels 7-10 will be less accurate; they are difficult to predict due to the lack of available data.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
-                                    .foregroundColor(Color("Almost Black"))
-                                    .frame(width: 290)
-                            }
-                            
-                            HStack(alignment: .top, spacing: 5) {
-
-                                Text("4.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
-                                    .foregroundColor(Color("Almost Black"))
-
-                                Text("GMT earnings are always changing and are difficult to predict. In general, the GMT estimate is more accurate for shoes with less than 500 comfort.")
+                                Text("GMT earnings are always changing and are difficult to predict. This app's estimate gives you an idea of the earning range to expect but is not precise.")
                                     .font(Font.custom("Roboto-Regular", size: 17))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
@@ -165,13 +153,13 @@ struct About: View {
                                     .padding(.bottom, 5)
                                 
                                 ZStack(alignment: .topLeading) {
-                                    Text("                               for gathering invaluable data and sharing with the community.")
+                                    Text("                            for gathering invaluable data and sharing with the community.")
                                         .font(Font.custom("Roboto-Regular", size: 15))
                                         .foregroundColor(Color("Almost Black"))
                                         .fixedSize(horizontal: false, vertical: true)
                                     HStack {
-                                        Link(destination: URL(string: "https://twitter.com/Krit_STEPNstats")!) {
-                                            Text("@Krit_STEPNstats")
+                                        Link(destination: URL(string: "https://twitter.com/Krit_G4M3fi")!) {
+                                            Text("@Krit_G4M3fi")
                                                 .font(Font.custom("Roboto-Medium", size: 15))
                                                 .foregroundColor(Color("Link Blue"))
                                         }
@@ -320,8 +308,8 @@ struct About: View {
                                         .font(Font.custom("Roboto-Regular", size: 13))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Link(destination: URL(string: "https://twitter.com/StepNGuide_")!) {
-                                        Text("@StepNGuide_")
+                                    Link(destination: URL(string: "https://twitter.com/Stepappturkey")!) {
+                                        Text("@Stepappturkey")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
                                     }
@@ -373,21 +361,21 @@ struct About: View {
                             }
                                                                                     
                             VStack {
-                                Link(destination: URL(string: "https://discord.gg/stepnstats")!) {
-                                    Image("stepn_stats")
+                                Link(destination: URL(string: "https://discord.gg/g4m3fi")!) {
+                                    Image("gamefi")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 245)
                                 }
                                 
-                                Text("(Beta) App for gathering stats and more by")
+                                Text("Upcoming companion app for M2E games by")
                                     .font(Font.custom("Roboto-Regular", size: 13))
                                     .foregroundColor(Color("Almost Black"))
                                 
                                 HStack(spacing: 10) {
                                     
-                                    Link(destination: URL(string: "https://twitter.com/Krit_STEPNstats")!) {
-                                        Text("@Krit_STEPNstats")
+                                    Link(destination: URL(string: "https://twitter.com/Krit_G4M3fi")!) {
+                                        Text("@Krit_G4M3fi")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
                                     }
