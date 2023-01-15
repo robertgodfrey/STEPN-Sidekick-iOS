@@ -7,7 +7,7 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 26 Nov 22
+//  Last updated 15 Jan 23
 //
 
 import SwiftUI
@@ -2149,19 +2149,15 @@ struct Optimizer: View {
         var profit: Double = -50
         var maxProfit: Double = -50
         
-        var chainTokenPrice: Double
         var chainGstPrice: Double
         var localGemMultiplier: Double
         
         switch (blockchain) {
         case bsc:
-            chainTokenPrice = coinPrices.binancecoin.usd
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
         case eth:
-            chainTokenPrice = coinPrices.ethereum.usd
             chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
         default:
-            chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
                     
@@ -2177,7 +2173,7 @@ struct Optimizer: View {
                                 - (Double(gstCostBasedOnGem) * localGemMultiplier)
                 
                 if usdOn {
-                    profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+                    profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd)
                 }
             
                 if profit > maxProfit {
@@ -2215,20 +2211,15 @@ struct Optimizer: View {
         var profit: Double = -50
         var maxProfit: Double = -50
         
-        
-        var chainTokenPrice: Double
         var chainGstPrice: Double
         var localGemMultiplier: Double
         
         switch (blockchain) {
         case bsc:
-            chainTokenPrice = coinPrices.binancecoin.usd
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
         case eth:
-            chainTokenPrice = coinPrices.ethereum.usd
             chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
         default:
-            chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
 
@@ -2242,7 +2233,7 @@ struct Optimizer: View {
             profit -= chainGstPrice * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * baseRepairCost
             profit -= chainGstPrice * Double(gstCostBasedOnGem) * localGemMultiplier
             // subtract USD cost of restore HP
-            profit -= (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+            profit -= (localGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd)
 
             if profit > maxProfit {
                 optimalAddedComf = localAddedComf
@@ -2445,18 +2436,14 @@ struct Optimizer: View {
         let localRes: Double = baseResString.doubleValue + gemRes
         let localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
                 
-        var chainTokenPrice: Double
         var chainGstPrice: Double
         
         switch (blockchain) {
         case bsc:
-            chainTokenPrice = coinPrices.binancecoin.usd
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
         case eth:
-            chainTokenPrice = coinPrices.ethereum.usd
             chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
         default:
-            chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
         
@@ -2464,7 +2451,7 @@ struct Optimizer: View {
                         - (round(baseRepairCost * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * 10) / 10)
                         - (Double(gstCostBasedOnGem) * localGemMultiplier)
                 
-        profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+        profit = (profit * chainGstPrice) - (localGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd)
             
         return profit >= 0
     }
@@ -2476,18 +2463,14 @@ struct Optimizer: View {
         let localRes: Double = baseResString.doubleValue + gemRes
         let localGemMultiplier = getHpLoss(comf: localComf + Double(localAddedComf), energy: localEnergy, shoeRarity: shoeRarity) / hpPercentRestored
         
-        var chainTokenPrice: Double
         var chainGstPrice: Double
         
         switch (blockchain) {
         case bsc:
-            chainTokenPrice = coinPrices.binancecoin.usd
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
         case eth:
-            chainTokenPrice = coinPrices.ethereum.usd
             chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
         default:
-            chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
         
@@ -2497,7 +2480,7 @@ struct Optimizer: View {
         profit -= chainGstPrice * Double(getDurabilityLost(energy: localEnergy, res: localRes + Double(localAddedRes))) * baseRepairCost
         profit -= chainGstPrice * Double(gstCostBasedOnGem) * localGemMultiplier
         // subtract USD cost of restore HP
-        profit -= (localGemMultiplier * comfGemPrice.doubleValue * chainTokenPrice)
+        profit -= (localGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd)
         
         return profit >= 0
     }
@@ -3157,19 +3140,15 @@ struct CalcedTotals: View {
     }
     
     var usdIncome: String {
-        var chainTokenPrice: Double
         var chainGstPrice: Double
         var usdProf: Double
         
         switch (blockchain) {
         case bsc:
-            chainTokenPrice = coinPrices.binancecoin.usd
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
         case eth:
-            chainTokenPrice = coinPrices.ethereum.usd
             chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
         default:
-            chainTokenPrice = coinPrices.solana.usd
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
         
@@ -3178,7 +3157,7 @@ struct CalcedTotals: View {
         } else {
             usdProf = gstProfitBeforeGem * chainGstPrice
         }
-        usdProf -= comfGemMultiplier * comfGemPrice * chainTokenPrice
+        usdProf -= comfGemMultiplier * comfGemPrice * coinPrices.stepn.usd
          
         return String(format: "%.2f", round(usdProf * 100) / 100)
     }
