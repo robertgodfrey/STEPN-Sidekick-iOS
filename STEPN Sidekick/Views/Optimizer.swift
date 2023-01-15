@@ -1273,11 +1273,11 @@ struct Optimizer: View {
                                 HStack {
                                     Image("mb6")
                                         .resizable()
-                                        .renderingMode(mb6Chance == 0 || mb9Chance == 2 ? .template : .none)
+                                        .renderingMode(mb6Chance == 0 ? .template : .none)
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb6Chance > 1 && mb8Chance < 2 ? 1 : 0.5)
+                                        .opacity(mb6Chance > 1 ? 1 : 0.5)
                                     
                                     Spacer()
                                     
@@ -1287,7 +1287,7 @@ struct Optimizer: View {
                                         .foregroundColor(Color("Gandalf"))
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 54, height: 54)
-                                        .opacity(mb7Chance > 1 && mb9Chance < 2 ? 1 : 0.5)
+                                        .opacity(mb7Chance > 1 ? 1 : 0.5)
                                     
                                     Spacer()
 
@@ -1311,19 +1311,13 @@ struct Optimizer: View {
                                     
                                     Spacer()
                                     
-                                    ZStack {
-                                        Image("mb10")
-                                            .resizable()
-                                            .renderingMode(.template)
-                                            .foregroundColor(Color("Gandalf"))
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 54, height: 54)
-                                            .opacity(0.5)
-                                        Text("¯\\ (ツ)_/¯".replacingOccurrences(of: " ", with: "_"))
-                                            .font(Font.custom("Roboto-Regular", size: 10))
-                                            .foregroundColor(Color("Almost Black"))
-                                            .opacity(mb9Chance > 1 ? 1 : 0)
-                                    }
+                                    Image("mb10")
+                                        .resizable()
+                                        .renderingMode(mb10Chance == 0 ? .template : .none)
+                                        .foregroundColor(Color("Gandalf"))
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 54, height: 54)
+                                        .opacity(mb10Chance > 1 ? 1 : 0.5)
 
                                 }.padding(.horizontal, 40)
                                     .frame(maxWidth: 400)
@@ -1898,11 +1892,12 @@ struct Optimizer: View {
     // 0 = very low/no chance, 1 = low chance, 2 = high chance
     var mb1Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelOneLine = totalLuck < 1000 ? -0.6 * log(totalLuck + 15) + 4.1 : -99
         
-        if localEnergy <= -0.04 * totalLuck + 6 && localEnergy >= -0.05263 * totalLuck + 2 && localEnergy >= 1 && totalLuck > 1 {
+        if localEnergy >= levelOneLine - 1 && localEnergy <= levelOneLine + 1 {
             return 2
         }
-        if localEnergy > -0.04 * totalLuck + 6 && localEnergy < -0.02 * totalLuck + 8 && totalLuck < 110 && totalLuck > 1 {
+        if localEnergy >= levelOneLine - 1.2 && localEnergy <= levelOneLine + 2 {
             return 1
         }
         return 0
@@ -1910,11 +1905,12 @@ struct Optimizer: View {
     
     var mb2Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelTwoLine = totalLuck < 1500 ? -1.2 * log(totalLuck + 5) + 8.2 : -99
         
-        if localEnergy <= -0.06897 * totalLuck + 10 && localEnergy >= -1.3333 * totalLuck + 6 && localEnergy >= 2 && totalLuck > 2 {
+        if localEnergy >= levelTwoLine - 1 && localEnergy <= levelTwoLine + 1 {
             return 2
         }
-        if localEnergy > -0.068966 * totalLuck + 10 && localEnergy < -0.04 * totalLuck + 13 && totalLuck > 2 {
+        if localEnergy >= levelTwoLine - 1.6 && localEnergy <= levelTwoLine + 2 {
             return 1
         }
         return 0
@@ -1922,12 +1918,12 @@ struct Optimizer: View {
     
     var mb3Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelThreeLine = totalLuck < 2000 ? -2.1 * log(totalLuck + 10) + 14.9 : -99
         
-        if localEnergy <= -0.09091 * totalLuck + 16 && localEnergy >= 70 * pow((totalLuck + 8), -1) + 2 && localEnergy >= 3.1 && totalLuck > 3 {
+        if localEnergy >= levelThreeLine - 2 && localEnergy <= levelThreeLine + 1.7 {
             return 2
         }
-        if (localEnergy > -0.09091 * totalLuck + 16 && localEnergy < -0.08333 * totalLuck + 22)
-            || (localEnergy > 3.5 && localEnergy < 12 && totalLuck > 100 && totalLuck < 500) {
+        if localEnergy >= levelThreeLine - 3 && localEnergy <= levelThreeLine + 4 {
             return 1
         }
         return 0
@@ -1935,70 +1931,91 @@ struct Optimizer: View {
     
     var mb4Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelFourLine = totalLuck < 4000 ? -2.8 * log(totalLuck + 5) + 22.1 : -99
         
-        if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 22 && localEnergy >= 70 * pow((totalLuck + 5), -1) + 3 && totalLuck > 4 {
-            if localEnergy <= -0.0001 * pow((totalLuck + 40), 2) + 18 && localEnergy >= 50 * pow((totalLuck + 30), -0.2) - 13.5 {
-                return 2
-            } else {
-                return 1
-            }
+        if localEnergy >= levelFourLine - 2 && localEnergy <= levelFourLine + 2.5 {
+            return 2
+        }
+        if localEnergy >= levelFourLine - 4.5 && localEnergy <= levelFourLine + 6 {
+            return 1
         }
         return 0
     }
     
     var mb5Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelFiveLine = -2.9 * log(totalLuck + 10) + 27.7
         
-        if localEnergy <= -0.00001 * pow((totalLuck + 150), 2) + 26.05 && localEnergy >= 50 * pow((totalLuck - 2), -1) + 7 && totalLuck > 5 {
-            if localEnergy <= -0.00003 * pow((totalLuck + 50), 2) + 22.5 && localEnergy >= 70 * pow((totalLuck - 10), -0.1) - 32 {
-                return 2
-            } else {
-                return 1
-            }
+        if localEnergy >= levelFiveLine - 2 && localEnergy <= levelFiveLine + 2 {
+            return 2
+        }
+        if localEnergy >= levelFiveLine - 4 && localEnergy <= levelFiveLine + 5 {
+            return 1
         }
         return 0
     }
     
     var mb6Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelSixLine = -3 * log(totalLuck + 10) + 35
 
-        if localEnergy >= 140 * pow((totalLuck - 20), -0.5) + 1 && totalLuck > 6 {
-            if localEnergy >= 70 * pow((totalLuck - 70), -0.1) - 25.5 {
-                return 2
-            } else {
-                return 1
-            }
+        if localEnergy >= levelSixLine - 2.2 && localEnergy <= levelSixLine + 2.5 {
+            return 2
+        }
+        if localEnergy >= levelSixLine - 5.5 && localEnergy <= levelSixLine + 7.5 {
+            return 1
         }
         return 0
     }
     
     var mb7Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelSevenLine = -4 * log(totalLuck - 100) + 47
         
-        if localEnergy >= -totalLuck / 45 + 26.9 && localEnergy > 7 {
-            if localEnergy >= -totalLuck / 100 + 26.5 {
-                return 2
-            } else {
-                return 1
-            }
+        if localEnergy >= levelSevenLine - 2 && localEnergy <= levelSevenLine + 3 {
+            return 2
+        }
+        if localEnergy >= levelSevenLine - 4 && localEnergy <= levelSevenLine + 6 {
+            return 1
         }
         return 0
     }
     
     var mb8Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelEightLine = -5 * log(totalLuck - 650) + 58
         
-        if localEnergy >= -totalLuck / 150 + 32 && localEnergy > 14 {
+        if localEnergy >= levelEightLine - 1.5 && localEnergy <= levelEightLine + 1.5 {
             return 2
+        }
+        if localEnergy >= levelEightLine - 2.5 && localEnergy <= levelEightLine + 4 {
+            return 1
         }
         return 0
     }
     
     var mb9Chance: Int {
         let localEnergy = energy.doubleValue
+        let levelNineLine = -6 * log(totalLuck - 1000) + 68.5
         
-        if localEnergy >= -totalLuck / 300 + 29 && localEnergy > 19 {
+        if localEnergy >= levelNineLine - 1 && localEnergy <= levelNineLine + 1.5 {
             return 2
+        }
+        if localEnergy >= levelNineLine - 3.5 && localEnergy <= levelNineLine + 4 {
+            return 1
+        }
+        return 0
+    }
+    
+    var mb10Chance: Int {
+        let localEnergy = energy.doubleValue
+        let levelTenLine = -6 * log(totalLuck - 2000) + 70.5
+        
+        if localEnergy >= levelTenLine - 1 {
+            return 2
+        }
+        if localEnergy >= levelTenLine - 1.5 {
+            return 1
         }
         return 0
     }
