@@ -149,7 +149,7 @@ struct GemDialog: View {
                     .foregroundColor(Color("Almost Black"))
                     .padding(.top, 14)
                 
-                HStack(spacing: 5) {
+                HStack(spacing: 10) {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
@@ -244,7 +244,7 @@ struct GemDialog: View {
                     }
                 }
                 
-                HStack(spacing: 5) {
+                HStack(spacing: 10) {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
@@ -731,6 +731,10 @@ struct MoreGemDeets: View {
             return 200
         case 6:
             return 400
+        case 7:
+            return 777
+        case 8:
+            return 1888
         default:
             return 0
         }
@@ -750,6 +754,10 @@ struct MoreGemDeets: View {
             return 1400
         case 6:
             return 4300
+        case 7:
+            return 11000
+        case 8:
+            return 28000
         default:
             return 0
         }

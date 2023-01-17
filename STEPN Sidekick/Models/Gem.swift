@@ -307,6 +307,8 @@ struct Gem: Codable {
             topPadding = 3
         case 4, 5:
             topPadding = 2
+        case 8:
+            topPadding = 1
         default:
             topPadding = 0
         }
@@ -324,6 +326,10 @@ struct Gem: Codable {
             bottomPadding = 3
         case 3:
             bottomPadding = 1
+        case 7:
+            bottomPadding = 1
+        case 8:
+            bottomPadding = 2
         default:
             bottomPadding = 0
         }
