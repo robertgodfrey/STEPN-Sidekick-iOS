@@ -9,6 +9,8 @@ import Foundation
 
 class OptimizerShoe: Codable {
     
+    var gmtToggle: Bool
+    var blockchain: Int
     var shoeRarity: Int
     var shoeType: Int
     
@@ -32,10 +34,12 @@ class OptimizerShoe: Codable {
     
     var gems: [Gem]
     
-    init(shoeRarity: Int, shoeType: Int, shoeName: String, energy: String, shoeLevel: Double, pointsAvailable: Int, baseEffString: String,
+    init(gmtToggle: Bool, blockchain: Int, shoeRarity: Int, shoeType: Int, shoeName: String, energy: String, shoeLevel: Double, pointsAvailable: Int, baseEffString: String,
          baseLuckString: String, baseComfString: String, baseResString: String, addedEff: Int, addedLuck: Int, addedComf: Int, addedRes: Int,
          gemEff: Double, gemLuck: Double, gemComf: Double, gemRes: Double, gems: [Gem]) {
         
+        self.gmtToggle = gmtToggle
+        self.blockchain = blockchain
         self.shoeRarity = shoeRarity
         self.shoeType = shoeType
         self.shoeName = shoeName
@@ -91,6 +95,8 @@ class OptimizerShoe: Codable {
     }
     
     let modelShoe: OptimizerShoe = OptimizerShoe(
+        gmtToggle: false,
+        blockchain: sol,
         shoeRarity: common,
         shoeType: walker,
         shoeName: "",

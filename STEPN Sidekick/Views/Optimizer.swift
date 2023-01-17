@@ -15,7 +15,7 @@ import SwiftUI
 struct Optimizer: View {
     
     @AppStorage("shoeNum") private var shoeNum: Int = 1
-    @AppStorage("gmtToggle") private var gmtToggleOn: Bool = false
+    @AppStorage("comfGemLvl") private var comfGemLvlForRestore: Int = 1
     
     @EnvironmentObject var shoes: OptimizerShoes
     
@@ -68,7 +68,7 @@ struct Optimizer: View {
         Gem(socketType: -1, socketRarity: 0, mountedGem: 0)
     ]
     
-    @State private var comfGemLvlForRestore: Int = 1
+    @State private var gmtToggleOn: Bool = false
     
     @State private var gemSocketNum: Int = 0
     @State private var popCircles: Bool = false
@@ -1421,6 +1421,8 @@ struct Optimizer: View {
             .preferredColorScheme(.light)
             .background(Color("Light Green"))
             .onAppear {
+                gmtToggleOn = shoes.getShoe(shoeNum - 1).gmtToggle
+                blockchain = shoes.getShoe(shoeNum - 1).blockchain
                 shoeRarity = shoes.getShoe(shoeNum - 1).shoeRarity
                 shoeType = shoes.getShoe(shoeNum - 1).shoeType
                 shoeName = shoes.getShoe(shoeNum - 1).shoeName
@@ -1446,6 +1448,8 @@ struct Optimizer: View {
             }
             .onDisappear {
                 let currentShoe: OptimizerShoe = OptimizerShoe(
+                    gmtToggle: gmtToggleOn,
+                    blockchain: blockchain,
                     shoeRarity: shoeRarity,
                     shoeType: shoeType,
                     shoeName: shoeName,
@@ -2564,6 +2568,8 @@ struct Optimizer: View {
     func saveEmLoadEm(shoeToLoad: Int) {
         // save em
         let currentShoe: OptimizerShoe = OptimizerShoe(
+            gmtToggle: gmtToggleOn,
+            blockchain: blockchain,
             shoeRarity: shoeRarity,
             shoeType: shoeType,
             shoeName: shoeName,
@@ -2587,6 +2593,8 @@ struct Optimizer: View {
         shoes.update(shoe: currentShoe, i: shoeNum - 1)
         
         // load em
+        gmtToggleOn = shoes.getShoe(shoeToLoad - 1).gmtToggle
+        blockchain = shoes.getShoe(shoeToLoad - 1).blockchain
         shoeRarity = shoes.getShoe(shoeToLoad - 1).shoeRarity
         shoeType = shoes.getShoe(shoeToLoad - 1).shoeType
         shoeName = shoes.getShoe(shoeToLoad - 1).shoeName
@@ -2611,6 +2619,8 @@ struct Optimizer: View {
     }
     
     func resetPage() {
+        gmtToggleOn = false
+        blockchain = sol
         shoeType = walker
         shoeRarity = common
         shoeLevel = 1
