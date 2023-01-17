@@ -4,7 +4,7 @@
 //
 //  Gem struct for creating gem object
 //
-//  Last updated 27 Nov 22
+//  Last updated 16 Jan 23
 //
 
 import Foundation
@@ -89,6 +89,10 @@ struct Gem: Codable {
             gemParams = 200 + floor(14 * basePoints * 10.0) / 10.0
         case 6:
             gemParams = 400 + floor(43 * basePoints * 10.0) / 10.0
+        case 7:
+            gemParams = 777 + floor(110 * basePoints * 10.0) / 10.0
+        case 8:
+            gemParams = 1888 + floor(280 * basePoints * 10.0) / 10.0
         default:
             gemParams = 0
         }
@@ -217,6 +221,10 @@ struct Gem: Codable {
                 gemImageSource = "gem_eff_level5"
             case 6:
                 gemImageSource = "gem_eff_level6"
+            case 7:
+                gemImageSource = "gem_eff_level7"
+            case 8:
+                gemImageSource = "gem_eff_level8"
             default:
                 gemImageSource = "gem_plus"
             }
@@ -234,6 +242,10 @@ struct Gem: Codable {
                 gemImageSource = "gem_luck_level5"
             case 6:
                 gemImageSource = "gem_luck_level6"
+            case 7:
+                gemImageSource = "gem_luck_level7"
+            case 8:
+                gemImageSource = "gem_luck_level8"
             default:
                 gemImageSource = "gem_plus"
             }
@@ -251,6 +263,10 @@ struct Gem: Codable {
                 gemImageSource = "gem_comf_level5"
             case 6:
                 gemImageSource = "gem_comf_level6"
+            case 7:
+                gemImageSource = "gem_comf_level7"
+            case 8:
+                gemImageSource = "gem_comf_level8"
             default:
                 gemImageSource = "gem_plus"
             }
@@ -268,6 +284,10 @@ struct Gem: Codable {
                 gemImageSource = "gem_res_level5"
             case 6:
                 gemImageSource = "gem_res_level6"
+            case 7:
+                gemImageSource = "gem_res_level7"
+            case 8:
+                gemImageSource = "gem_res_level8"
             default:
                 gemImageSource = "gem_plus"
             }
