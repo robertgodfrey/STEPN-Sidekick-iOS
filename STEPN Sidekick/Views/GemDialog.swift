@@ -142,62 +142,14 @@ struct GemDialog: View {
                     }
                 }
                 
-                HStack(spacing: 15) {
-                    Text("-")
-                        .font(Font.custom("Roboto-Black", size: 22))
-                        .foregroundColor(Color(gem.getSocketRarity() > 0 ? "Almost Black" : "Gem Socket Shadow"))
-                        .frame(width: 50, height: 40)
-                        .onTapGesture(perform: {
-                            if gem.getSocketRarity() > 0 {
-                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() - 1)
-                            }
-                        })
-                    
-                    ZStack {
-                        Image("gem_socket_gray_0")
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(Color("Gem Socket Shadow"))
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 46)
-                            .offset(x: 1.5, y: 2.5)
-                                            
-                        Image(gem.getSocketImageSource())
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 46)
-                            .onTapGesture(perform: {
-                                if gem.getMountedGem() != 0 {
-                                    gem.setMountedGem(mountedGem: 0)
-                                }
-                            })
-                        
-                        Image(gem.getGemImageSource())
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .padding(.bottom, CGFloat(gem.getBottomPadding()))
-                            .padding(.top, CGFloat(gem.getTopPadding()))
-                            .frame(maxWidth: 32, maxHeight: 32)
-                    }
-                    
-                    Text("+")
-                        .font(Font.custom("Roboto-Black", size: 18))
-                        .foregroundColor(Color(gem.getSocketRarity() < gemSocketMaxRarity ? "Almost Black" : "Gem Socket Shadow"))
-                        .frame(width: 50, height: 40)
-                        .onTapGesture(perform: {
-                            if gem.getSocketRarity() < gemSocketMaxRarity {
-                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() + 1)
-                            }
-                        })
-                    
-                }.padding(15)
+
                 
                 Text("SELECT GEM")
                     .font(Font.custom(fontTitles, size: 20))
                     .foregroundColor(Color("Almost Black"))
-                    .padding(10)
+                    .padding(.top, 14)
                 
-                HStack(spacing: -5) {
+                HStack(spacing: 5) {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
@@ -212,7 +164,7 @@ struct GemDialog: View {
                         Image(gemLevelOne)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 28)
+                            .frame(width: 26)
                             .onTapGesture(perform: {
                                 if gem.getMountedGem() == 1 {
                                     gem.setMountedGem(mountedGem: 0)
@@ -235,7 +187,7 @@ struct GemDialog: View {
                         Image(gemLevelTwo)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 34)
+                            .frame(width: 32)
                             .onTapGesture(perform: {
                                 if gem.getMountedGem() == 2 {
                                     gem.setMountedGem(mountedGem: 0)
@@ -290,6 +242,9 @@ struct GemDialog: View {
                                 }
                             })
                     }
+                }
+                
+                HStack(spacing: 5) {
                     ZStack {
                         Circle()
                             .fill(RadialGradient(
@@ -327,7 +282,7 @@ struct GemDialog: View {
                         Image(gemLevelSix)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 32)
+                            .frame(width: 34)
                             .onTapGesture(perform: {
                                 if gem.getMountedGem() == 6 {
                                     gem.setMountedGem(mountedGem: 0)
@@ -336,7 +291,103 @@ struct GemDialog: View {
                                 }
                             })
                     }
-                }
+                    ZStack {
+                        Circle()
+                            .fill(RadialGradient(
+                                gradient: Gradient(colors: [selectorColor, .white]),
+                                center: .center,
+                                startRadius: 10,
+                                endRadius: 25)
+                            )
+                            .frame(width: 55, height: 55)
+                            .opacity(gem.getMountedGem() == 7 ? 1 : 0)
+                        
+                        Image(gemLevelSeven)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 29)
+                            .onTapGesture(perform: {
+                                if gem.getMountedGem() == 7 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 7)
+                                }
+                            })
+                    }
+                    ZStack {
+                        Circle()
+                            .fill(RadialGradient(
+                                gradient: Gradient(colors: [selectorColor, .white]),
+                                center: .center,
+                                startRadius: 10,
+                                endRadius: 25)
+                            )
+                            .frame(width: 55, height: 55)
+                            .opacity(gem.getMountedGem() == 8 ? 1 : 0)
+                        
+                        Image(gemLevelEight)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 34)
+                            .onTapGesture(perform: {
+                                if gem.getMountedGem() == 8 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                } else {
+                                    gem.setMountedGem(mountedGem: 8)
+                                }
+                            })
+                    }
+                }.padding(.top, -10)
+                
+                HStack(spacing: 15) {
+                    Text("-")
+                        .font(Font.custom("Roboto-Black", size: 22))
+                        .foregroundColor(Color(gem.getSocketRarity() > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                        .frame(width: 50, height: 40)
+                        .onTapGesture(perform: {
+                            if gem.getSocketRarity() > 0 {
+                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() - 1)
+                            }
+                        })
+                    
+                    ZStack {
+                        Image("gem_socket_gray_0")
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(Color("Gem Socket Shadow"))
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 46)
+                            .offset(x: 1.5, y: 2.5)
+                                            
+                        Image(gem.getSocketImageSource())
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 46)
+                            .onTapGesture(perform: {
+                                if gem.getMountedGem() != 0 {
+                                    gem.setMountedGem(mountedGem: 0)
+                                }
+                            })
+                        
+                        Image(gem.getGemImageSource())
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.bottom, CGFloat(gem.getBottomPadding()))
+                            .padding(.top, CGFloat(gem.getTopPadding()))
+                            .frame(maxWidth: 32, maxHeight: 32)
+                    }
+                    
+                    Text("+")
+                        .font(Font.custom("Roboto-Black", size: 18))
+                        .foregroundColor(Color(gem.getSocketRarity() < gemSocketMaxRarity ? "Almost Black" : "Gem Socket Shadow"))
+                        .frame(width: 50, height: 40)
+                        .onTapGesture(perform: {
+                            if gem.getSocketRarity() < gemSocketMaxRarity {
+                                gem.setSocketRarity(socketRarity: gem.getSocketRarity() + 1)
+                            }
+                        })
+                    
+                }.padding(.top, 14)
                 
                 VStack(spacing: 10) {
                     HStack {
@@ -389,7 +440,7 @@ struct GemDialog: View {
                         })
                     }
                 }.frame(maxWidth: 280)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 6)
                                     
                 ZStack {
                     RoundedRectangle(cornerRadius: 25, style: .continuous)
@@ -524,6 +575,36 @@ struct GemDialog: View {
             return "gem_res_level6"
         default:
             return "gem_grey_level6"
+        }
+    }
+    
+    var gemLevelSeven: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level7"
+        case luck:
+            return "gem_luck_level7"
+        case comf:
+            return "gem_comf_level7"
+        case res:
+            return "gem_res_level7"
+        default:
+            return "gem_grey_level7"
+        }
+    }
+    
+    var gemLevelEight: String {
+        switch (gem.getSocketType()) {
+        case eff:
+            return "gem_eff_level8"
+        case luck:
+            return "gem_luck_level8"
+        case comf:
+            return "gem_comf_level8"
+        case res:
+            return "gem_res_level8"
+        default:
+            return "gem_grey_level8"
         }
     }
     
