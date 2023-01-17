@@ -20,14 +20,14 @@ struct UpdateDialog: View {
                 Text("UPDATE")
                     .font(Font.custom(fontTitles, size: 20))
                     .foregroundColor(Color("Gandalf"))
-                
+        
                 VStack(spacing: 10) {
                     HStack(alignment: .top) {
                         Text("•")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("USD estimates are now available at the bottom of the shoe optimizer")
+                        Text("Estimated income in USD is now available at the bottom of the shoe optimizer")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -47,7 +47,20 @@ struct UpdateDialog: View {
                         Spacer()
 
                     }
-                    /*
+                    
+                    HStack(alignment: .top) {
+                        Text("•")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                    
+                        Text("Mystery box / GMT estimates have been updated and are significantly more reliable")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Spacer()
+
+                    }
+                    
                     HStack(alignment: .top) {
                         Text("•")
                             .font(Font.custom(fontRegText, size: 17))
@@ -60,8 +73,8 @@ struct UpdateDialog: View {
                         Spacer()
 
                     }
-                    */
-                    Text("If you have been enjoying the app, please consider leaving a review in the App Store!")
+                    
+                    Text("Due to modifications to structure of the app's stored data, your old sneaker data is no longer accessible and will have to be re-entered. Apologies for the inconvenience this causes.")
                         .font(Font.custom(fontRegText, size: 17))
                         .foregroundColor(Color("Almost Black"))
                     

@@ -153,7 +153,7 @@ struct About: View {
                                     .padding(.bottom, 5)
                                 
                                 ZStack(alignment: .topLeading) {
-                                    Text("                            for gathering invaluable data and sharing with the community.")
+                                    Text("                        for gathering invaluable data and sharing with the community.")
                                         .font(Font.custom("Roboto-Regular", size: 15))
                                         .foregroundColor(Color("Almost Black"))
                                         .fixedSize(horizontal: false, vertical: true)
