@@ -1475,13 +1475,7 @@ struct Optimizer: View {
         if !gmtToggleOn {
             return 0
         }
-        var gmtBaseline: Double = 0
-        
-        if comf < 118 {
-            gmtBaseline = 0.4 * (-0.00001 * pow(comf - 350, 2) + 1.67)
-        } else {
-            gmtBaseline = 0.4 * (-10.1 * exp(-comf / 2415) + 0.82 * exp(-comf / 11) + 10.75)
-        }
+        var gmtBaseline: Double = 0.0696 * pow(comf, 0.4821) - 0.25
         
         switch (shoeType) {
         case walker:
@@ -1494,6 +1488,10 @@ struct Optimizer: View {
             gmtBaseline = gmtBaseline * 1
         }
         
+        if gmtBaseline < 0 {
+            return 0
+        }
+        
         return gmtBaseline
     }
     
@@ -1503,7 +1501,7 @@ struct Optimizer: View {
     
     var gmtLowRange: Double {
         var gmtLow: Double = 0
-        gmtLow = round((gmtEarnedPerEnergy(comf:totalComf) - 0.2) * energy.doubleValue * 10) / 10
+        gmtLow = round((gmtEarnedPerEnergy(comf:totalComf) - 0.2) * 20) / 100
         
         if gmtLow < 0 {
             return 0
@@ -1512,7 +1510,7 @@ struct Optimizer: View {
     }
     
     var gmtHighRange: Double {
-        return round((gmtEarnedPerEnergy(comf:totalComf) + 0.2) * energy.doubleValue * 10) / 10
+        return round((gmtEarnedPerEnergy(comf:totalComf) + 0.2) * 20) / 100
     }
     
     var gstLimit: Int {
@@ -3026,7 +3024,7 @@ struct CalcedTotals: View {
         // MARK: Calculated totals
         LazyVStack(spacing: 15) {
             HStack(spacing: 6) {
-                Text(gmtToggleOn ? "Est. GMT Range" : "Est. GST / Daily Limit:")
+                Text(gmtToggleOn ? "Est. GMT / Min:" : "Est. GST / Daily Limit:")
                     .font(Font.custom(fontHeaders, size: 18))
                     .foregroundColor(Color("Almost Black"))
                 
