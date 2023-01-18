@@ -111,7 +111,6 @@ struct About: View {
                                     .frame(width: 290)
                             }
                             
-                            /* TODO: add once IAP is approved
                             if showAds {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 25, style: .continuous)
@@ -127,10 +126,13 @@ struct About: View {
                                             .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
                                     })
                                         .buttonStyle(StartButton(tapAction: {
-                                            storeManager.purchaseProduct(product: product)
+                                            showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
+                                            if showAds {
+                                                storeManager.purchaseProduct(product: storeManager.myProducts[0])
+                                            }                                            
                                         })).font(Font.custom(fontButtons, size: 20))
                                         .onLongPressGesture {
-                                            storeManager.restoreProducts() // TODO: double check if this works...
+                                            storeManager.restoreProducts()
                                             print("long pressin")
                                         }
                                     
@@ -143,7 +145,6 @@ struct About: View {
                                     .padding(.top, 14)
                                     .padding(.bottom, 8)
                             }
-                             */
                             
                             VStack(spacing: 5) {
                                 Text("Thanks to:")
