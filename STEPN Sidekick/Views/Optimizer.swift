@@ -1933,10 +1933,10 @@ struct Optimizer: View {
         let localEnergy = energy.doubleValue
         let levelFourLine = totalLuck < 4000 ? -2.8 * log(totalLuck + 5) + 22.1 : -99
         
-        if localEnergy >= levelFourLine - 2.6 && localEnergy <= levelFourLine + 3.1 {
+        if localEnergy >= levelFourLine - 3 && localEnergy <= levelFourLine + 3.1 {
             return 2
         }
-        if localEnergy >= levelFourLine - 5.1 && localEnergy <= levelFourLine + 6.6 {
+        if localEnergy >= levelFourLine - 5 && localEnergy <= levelFourLine + 6.6 {
             return 1
         }
         return 0
@@ -1946,10 +1946,10 @@ struct Optimizer: View {
         let localEnergy = energy.doubleValue
         let levelFiveLine = -2.9 * log(totalLuck + 10) + 27.7
         
-        if localEnergy >= levelFiveLine - 2.6 && localEnergy <= levelFiveLine + 2.6 {
+        if localEnergy >= levelFiveLine - 2.6 && localEnergy <= levelFiveLine + 2.7 {
             return 2
         }
-        if localEnergy >= levelFiveLine - 4.6 && localEnergy <= levelFiveLine + 5.6 {
+        if localEnergy >= levelFiveLine - 5.5 && localEnergy <= levelFiveLine + 7 {
             return 1
         }
         return 0
@@ -1959,10 +1959,10 @@ struct Optimizer: View {
         let localEnergy = energy.doubleValue
         let levelSixLine = -3 * log(totalLuck + 10) + 35
 
-        if localEnergy >= levelSixLine - 3.2 && localEnergy <= levelSixLine + 3 {
+        if localEnergy >= levelSixLine - 3.9 && localEnergy <= levelSixLine + 3 {
             return 2
         }
-        if localEnergy >= levelSixLine - 5.8 && localEnergy <= levelSixLine + 8.6 {
+        if localEnergy >= levelSixLine - 6 && localEnergy <= levelSixLine + 7 {
             return 1
         }
         return 0
@@ -1975,7 +1975,7 @@ struct Optimizer: View {
         if localEnergy >= levelSevenLine - 3.8 && localEnergy <= levelSevenLine + 3.4 {
             return 2
         }
-        if localEnergy >= levelSevenLine - 5.6 && localEnergy <= levelSevenLine + 6.6 {
+        if localEnergy >= levelSevenLine - 6 && localEnergy <= levelSevenLine + 8 {
             return 1
         }
         return 0
@@ -1988,7 +1988,7 @@ struct Optimizer: View {
         if localEnergy >= levelEightLine - 2.6 && localEnergy <= levelEightLine + 2.1 {
             return 2
         }
-        if localEnergy >= levelEightLine - 5.1 && localEnergy <= levelEightLine + 4.6 {
+        if localEnergy >= levelEightLine - 6 && localEnergy <= levelEightLine + 8 {
             return 1
         }
         return 0
@@ -2001,7 +2001,7 @@ struct Optimizer: View {
         if localEnergy >= levelNineLine - 2.6 && localEnergy <= levelNineLine + 2.1 {
             return 2
         }
-        if localEnergy >= levelNineLine - 7.4 && localEnergy <= levelNineLine + 4.6 {
+        if localEnergy >= levelNineLine - 7 && localEnergy <= levelNineLine + 7 {
             return 1
         }
         return 0
@@ -2014,7 +2014,7 @@ struct Optimizer: View {
         if localEnergy >= levelTenLine - 1.4 {
             return 2
         }
-        if localEnergy >= levelTenLine - 1.8 {
+        if localEnergy >= levelTenLine - 4 {
             return 1
         }
         return 0
