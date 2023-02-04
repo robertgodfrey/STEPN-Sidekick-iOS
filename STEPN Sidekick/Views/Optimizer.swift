@@ -170,9 +170,9 @@ struct Optimizer: View {
                                                         gemLevelToUnlock = 5
                                                     }
                                                 })
-                                    }, alignment: .topLeading)
-                                .overlay(
-                                    HStack {
+                                        
+                                        Spacer()
+                                        
                                         MainGems(unlocked: shoeLevel >= 10, gem: gems[1])
                                                 .padding(.top, 30)
                                                 .padding(.trailing, 45)
@@ -190,8 +190,7 @@ struct Optimizer: View {
                                                         gemLevelToUnlock = 10
                                                     }
                                                 })
-                                    }, alignment: .topTrailing
-                                )
+                                    }.frame(width: 390), alignment: .top)
                                 .overlay(
                                     HStack {
                                         MainGems(unlocked: shoeLevel >= 15, gem: gems[2])
@@ -211,10 +210,9 @@ struct Optimizer: View {
                                                         gemLevelToUnlock = 15
                                                     }
                                                 })
-                                    }, alignment: .bottomLeading
-                                )
-                                .overlay(
-                                    HStack {
+                                        
+                                        Spacer()
+                                        
                                         MainGems(unlocked: shoeLevel >= 20, gem: gems[3])
                                                 .padding(.bottom, 12)
                                                 .padding(.trailing, 45)
@@ -232,7 +230,7 @@ struct Optimizer: View {
                                                         gemLevelToUnlock = 20
                                                     }
                                                 })
-                                    }, alignment: .bottomTrailing
+                                    }.frame(width: 390), alignment: .bottom
                                 )
                                 .frame(maxWidth: 400)
                                 .alert(isPresented: $gemLockedDialog) {
