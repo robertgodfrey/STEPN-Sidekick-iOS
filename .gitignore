@@ -8,6 +8,18 @@ xcuserdata/
 
 .build/
 
+# Tests/Workspace
+STEPN SidekickTests
+STEPN SidekickUITests
+STEPN Sidekick.xcodeproj
+STEPN Sidekick.xcworkspace
 
-/MainAd.swift
-/Info.plist
+# Pods
+Pods
+Podfile
+Podfile.lock
+
+# Ad stuff
+MainAd.swift
+STEPN-Sidekick-Info.plist
+Info.plist
