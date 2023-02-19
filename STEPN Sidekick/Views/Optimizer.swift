@@ -1959,7 +1959,7 @@ struct Optimizer: View {
         let localEnergy = energy.doubleValue
         let levelSixLine = -3 * log(totalLuck + 10) + 35
 
-        if localEnergy >= levelSixLine - 3.9 && localEnergy <= levelSixLine + 3 {
+        if localEnergy >= levelSixLine - 3.9 && localEnergy <= levelSixLine + 4.7 {
             return 2
         }
         if localEnergy >= levelSixLine - 6 && localEnergy <= levelSixLine + 7 {
