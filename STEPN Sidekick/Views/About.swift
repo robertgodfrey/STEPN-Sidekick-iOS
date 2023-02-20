@@ -211,7 +211,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Medium", size: 15))
                                     .foregroundColor(Color("Link Blue"))
                                 
-                                Text("v 1.3.2")
+                                Text("v 1.3.3")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)
@@ -372,23 +372,15 @@ struct About: View {
                                 Text("Upcoming companion app for M2E games by")
                                     .font(Font.custom("Roboto-Regular", size: 13))
                                     .foregroundColor(Color("Almost Black"))
-                                
-                                HStack(spacing: 10) {
-                                    
-                                    Link(destination: URL(string: "https://twitter.com/Krit_G4M3fi")!) {
-                                        Text("@Krit_G4M3fi")
-                                            .font(Font.custom("Roboto-Medium", size: 13))
-                                            .foregroundColor(Color("Link Blue"))
-                                    }
-                                    
-                                    Link(destination: URL(string: "https://twitter.com/lyesbcb")!) {
-                                        Text("@lyesbcb")
-                                            .font(Font.custom("Roboto-Medium", size: 13))
-                                            .foregroundColor(Color("Link Blue"))
-                                    }
+                                                                    
+                                Link(destination: URL(string: "https://twitter.com/Krit_G4M3fi")!) {
+                                    Text("@Krit_G4M3fi")
+                                        .font(Font.custom("Roboto-Medium", size: 13))
+                                        .foregroundColor(Color("Link Blue"))
                                 }.padding(.top, -4)
                                     
                             }.padding(.bottom, 8)
+                                .padding(.top, 6)
                             
                         }.frame(maxWidth: 400)
                             .padding(.bottom, 30)
