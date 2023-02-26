@@ -1542,351 +1542,351 @@ struct Optimizer: View {
         return round(baseRepairCost * Double(getDurabilityLost(energy: energy.doubleValue, res: totalRes)) * 10) / 10
     }
           
-      var baseRepairCost: Double {
-          if shoeRarity == common {
-              switch (floor(shoeLevel)) {
-              case 1:
-                  return 0.31
-              case 2:
-                  return 0.32
-              case 3:
-                  return 0.33
-              case 4:
-                  return 0.35
-              case 5:
-                  return 0.36
-              case 6:
-                  return 0.37
-              case 7:
-                  return 0.38
-              case 8:
-                  return 0.4
-              case 9:
-                  return 0.41
-              case 10:
-                  return 0.42
-              case 11:
-                  return 0.44
-              case 12:
-                  return 0.46
-              case 13:
-                  return 0.48
-              case 14:
-                  return 0.5
-              case 15:
-                  return 0.52
-              case 16:
-                  return 0.54
-              case 17:
-                  return 0.56
-              case 18:
-                  return 0.58
-              case 19:
-                  return 0.6
-              case 20:
-                  return 0.62
-              case 21:
-                  return 0.64
-              case 22:
-                  return 0.67
-              case 23:
-                  return 0.7
-              case 24:
-                  return 0.72
-              case 25:
-                  return 0.75
-              case 26:
-                  return 0.78
-              case 27:
-                  return 0.81
-              case 28:
-                  return 0.83
-              case 29:
-                  return 0.87
-              case 30:
-                  return 0.9
-              default:
-                  return 0
-              }
-          } else if shoeRarity == uncommon {
-              switch (floor(shoeLevel)) {
-              case 1:
-                  return 0.41
-              case 2:
-                  return 0.43
-              case 3:
-                  return 0.45
-              case 4:
-                  return 0.46
-              case 5:
-                  return 0.48
-              case 6:
-                  return 0.5
-              case 7:
-                  return 0.51
-              case 8:
-                  return 0.53
-              case 9:
-                  return 0.55
-              case 10:
-                  return 0.57
-              case 11:
-                  return 0.6
-              case 12:
-                  return 0.62
-              case 13:
-                  return 0.64
-              case 14:
-                  return 0.66
-              case 15:
-                  return 0.69
-              case 16:
-                  return 0.71
-              case 17:
-                  return 0.74
-              case 18:
-                  return 0.77
-              case 19:
-                  return 0.8
-              case 20:
-                  return 0.83
-              case 21:
-                  return 0.86
-              case 22:
-                  return 0.89
-              case 23:
-                  return 0.92
-              case 24:
-                  return 0.95
-              case 25:
-                  return 1
-              case 26:
-                  return 1.03
-              case 27:
-                  return 1.06
-              case 28:
-                  return 1.11
-              case 29:
-                  return 1.15
-              case 30:
-                  return 1.2
-              default:
-                  return 0
-              }
-          } else if shoeRarity == rare {
-              switch (floor(shoeLevel)) {
-              case 1:
-                  return 0.51
-              case 2:
-                  return 0.54
-              case 3:
-                  return 0.57
-              case 4:
-                  return 0.59
-              case 5:
-                  return 0.61
-              case 6:
-                  return 0.63
-              case 7:
-                  return 0.65
-              case 8:
-                  return 0.67
-              case 9:
-                  return 0.69
-              case 10:
-                  return 0.72
-              case 11:
-                  return 0.75
-              case 12:
-                  return 0.78
-              case 13:
-                  return 0.81
-              case 14:
-                  return 0.84
-              case 15:
-                  return 0.87
-              case 16:
-                  return 0.90
-              case 17:
-                  return 0.94
-              case 18:
-                  return 0.97
-              case 19:
-                  return 1
-              case 20:
-                  return 1.04
-              case 21:
-                  return 1.08
-              case 22:
-                  return 1.12
-              case 23:
-                  return 1.16
-              case 24:
-                  return 1.2
-              case 25:
-                  return 1.25
-              case 26:
-                  return 1.3
-              case 27:
-                  return 1.34
-              case 28:
-                  return 1.39
-              case 29:
-                  return 1.45
-              case 30:
-                  return 1.5
-              default:
-                  return 0
-              }
-          } else if shoeRarity == epic {
-              switch (floor(shoeLevel)) {
-              case 1:
-                  return 0.61
-              case 2:
-                  return 0.65
-              case 3:
-                  return 0.69
-              case 4:
-                  return 0.72
-              case 5:
-                  return 0.75
-              case 6:
-                  return 0.78
-              case 7:
-                  return 0.81
-              case 8:
-                  return 0.84
-              case 9:
-                  return 0.87
-              case 10:
-                  return 0.91
-              case 11:
-                  return 0.95
-              case 12:
-                  return 0.99
-              case 13:
-                  return 1.03
-              case 14:
-                  return 1.07
-              case 15:
-                  return 1.11
-              case 16:
-                  return 1.15
-              case 17:
-                  return 1.19
-              case 18:
-                  return 1.24
-              case 19:
-                  return 1.28
-              case 20:
-                  return 1.33
-              case 21:
-                  return 1.38
-              case 22:
-                  return 1.43
-              case 23:
-                  return 1.48
-              case 24:
-                  return 1.51
-              case 25:
-                  return 1.55
-              case 26:
-                  return 1.59
-              case 27:
-                  return 1.63
-              case 28:
-                  return 1.66
-              case 29:
-                  return 1.69
-              case 30:
-                  return 1.72
-              default:
-                  return 0
-              }
-          } else {
-              return 1
-          }
-      }
-      
-      var gstCostBasedOnGem: Int {
-          switch (comfGemLvlForRestore) {
-          case 2:
-              return 30
-          case 3:
-              return 100
-          default:
-              return 10
-          }
-      }
-      
-      var hpPercentRestored: Double {
-          if totalComf == 0 || energy.doubleValue == 0 {
-              return 1
-          }
-          
-          switch (shoeRarity) {
-          case common:
-              switch (comfGemLvlForRestore) {
-              case 2:
-                  return 39
-              case 3:
-                  return 100
-              default:
-                  return 3
-              }
-          case uncommon:
-              switch (comfGemLvlForRestore) {
-              case 2:
-                  return 23
-              case 3:
-                  return 100
-              default:
-                  return 1.8
-              }
-          case rare:
-              switch (comfGemLvlForRestore) {
-              case 2:
-                  return 16
-              case 3:
-                  return 92
-              default:
-                  return 1.2
-              }
-          case epic:
-              switch (comfGemLvlForRestore) {
-              case 2:
-                  return 11
-              case 3:
-                  return 67
-              default:
-                  return 0.88
-              }
-          default:
-              return 1
-          }
-      }
-      
-      var comfGemForRestoreResource: String {
-          switch (comfGemLvlForRestore) {
-          case 2:
-              return "gem_comf_level2"
-          case 3:
-              return "gem_comf_level3"
-          default:
-              return "gem_comf_level1"
-          }
-      }
-      
-      var restoreHpCostGst: Double {
-          return round(Double(gstCostBasedOnGem) * (getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored) * 10) / 10
-      }
-      
-      var gstProfitBeforeGem: Double {
-          if gmtToggleOn {
-              return round((repairCostGst + restoreHpCostGst) * 10) / 10
-          }
-          return gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst
-      }
+    var baseRepairCost: Double {
+        if shoeRarity == common {
+            switch (floor(shoeLevel)) {
+            case 1:
+                return 0.31
+            case 2:
+                return 0.32
+            case 3:
+                return 0.33
+            case 4:
+                return 0.35
+            case 5:
+                return 0.36
+            case 6:
+                return 0.37
+            case 7:
+                return 0.38
+            case 8:
+                return 0.4
+            case 9:
+                return 0.41
+            case 10:
+                return 0.42
+            case 11:
+                return 0.44
+            case 12:
+                return 0.46
+            case 13:
+                return 0.48
+            case 14:
+                return 0.5
+            case 15:
+                return 0.52
+            case 16:
+                return 0.54
+            case 17:
+                return 0.56
+            case 18:
+                return 0.58
+            case 19:
+                return 0.6
+            case 20:
+                return 0.62
+            case 21:
+                return 0.64
+            case 22:
+                return 0.67
+            case 23:
+                return 0.7
+            case 24:
+                return 0.72
+            case 25:
+                return 0.75
+            case 26:
+                return 0.78
+            case 27:
+                return 0.81
+            case 28:
+                return 0.83
+            case 29:
+                return 0.87
+            case 30:
+                return 0.9
+            default:
+                return 0
+            }
+        } else if shoeRarity == uncommon {
+            switch (floor(shoeLevel)) {
+            case 1:
+                return 0.41
+            case 2:
+                return 0.43
+            case 3:
+                return 0.45
+            case 4:
+                return 0.46
+            case 5:
+                return 0.48
+            case 6:
+                return 0.5
+            case 7:
+                return 0.51
+            case 8:
+                return 0.53
+            case 9:
+                return 0.55
+            case 10:
+                return 0.57
+            case 11:
+                return 0.6
+            case 12:
+                return 0.62
+            case 13:
+                return 0.64
+            case 14:
+                return 0.66
+            case 15:
+                return 0.69
+            case 16:
+                return 0.71
+            case 17:
+                return 0.74
+            case 18:
+                return 0.77
+            case 19:
+                return 0.8
+            case 20:
+                return 0.83
+            case 21:
+                return 0.86
+            case 22:
+                return 0.89
+            case 23:
+                return 0.92
+            case 24:
+                return 0.95
+            case 25:
+                return 1
+            case 26:
+                return 1.03
+            case 27:
+                return 1.06
+            case 28:
+                return 1.11
+            case 29:
+                return 1.15
+            case 30:
+                return 1.2
+            default:
+                return 0
+            }
+        } else if shoeRarity == rare {
+            switch (floor(shoeLevel)) {
+            case 1:
+                return 0.51
+            case 2:
+                return 0.54
+            case 3:
+                return 0.57
+            case 4:
+                return 0.59
+            case 5:
+                return 0.61
+            case 6:
+                return 0.63
+            case 7:
+                return 0.65
+            case 8:
+                return 0.67
+            case 9:
+                return 0.69
+            case 10:
+                return 0.72
+            case 11:
+                return 0.75
+            case 12:
+                return 0.78
+            case 13:
+                return 0.81
+            case 14:
+                return 0.84
+            case 15:
+                return 0.87
+            case 16:
+                return 0.90
+            case 17:
+                return 0.94
+            case 18:
+                return 0.97
+            case 19:
+                return 1
+            case 20:
+                return 1.04
+            case 21:
+                return 1.08
+            case 22:
+                return 1.12
+            case 23:
+                return 1.16
+            case 24:
+                return 1.2
+            case 25:
+                return 1.25
+            case 26:
+                return 1.3
+            case 27:
+                return 1.34
+            case 28:
+                return 1.39
+            case 29:
+                return 1.45
+            case 30:
+                return 1.5
+            default:
+                return 0
+            }
+        } else if shoeRarity == epic {
+            switch (floor(shoeLevel)) {
+            case 1:
+                return 0.61
+            case 2:
+                return 0.65
+            case 3:
+                return 0.69
+            case 4:
+                return 0.72
+            case 5:
+                return 0.75
+            case 6:
+                return 0.78
+            case 7:
+                return 0.81
+            case 8:
+                return 0.84
+            case 9:
+                return 0.87
+            case 10:
+                return 0.91
+            case 11:
+                return 0.95
+            case 12:
+                return 0.99
+            case 13:
+                return 1.03
+            case 14:
+                return 1.07
+            case 15:
+                return 1.11
+            case 16:
+                return 1.15
+            case 17:
+                return 1.19
+            case 18:
+                return 1.24
+            case 19:
+                return 1.28
+            case 20:
+                return 1.33
+            case 21:
+                return 1.38
+            case 22:
+                return 1.43
+            case 23:
+                return 1.48
+            case 24:
+                return 1.51
+            case 25:
+                return 1.55
+            case 26:
+                return 1.59
+            case 27:
+                return 1.63
+            case 28:
+                return 1.66
+            case 29:
+                return 1.69
+            case 30:
+                return 1.72
+            default:
+                return 0
+            }
+        } else {
+            return 1
+        }
+    }
+    
+    var gstCostBasedOnGem: Int {
+        switch (comfGemLvlForRestore) {
+        case 2:
+            return 30
+        case 3:
+            return 100
+        default:
+            return 10
+        }
+    }
+    
+    var hpPercentRestored: Double {
+        if totalComf == 0 || energy.doubleValue == 0 {
+            return 1
+        }
+        
+        switch (shoeRarity) {
+        case common:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 39
+            case 3:
+                return 100
+            default:
+                return 3
+            }
+        case uncommon:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 23
+            case 3:
+                return 100
+            default:
+                return 1.8
+            }
+        case rare:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 16
+            case 3:
+                return 92
+            default:
+                return 1.2
+            }
+        case epic:
+            switch (comfGemLvlForRestore) {
+            case 2:
+                return 11
+            case 3:
+                return 67
+            default:
+                return 0.88
+            }
+        default:
+            return 1
+        }
+    }
+    
+    var comfGemForRestoreResource: String {
+        switch (comfGemLvlForRestore) {
+        case 2:
+            return "gem_comf_level2"
+        case 3:
+            return "gem_comf_level3"
+        default:
+            return "gem_comf_level1"
+        }
+    }
+    
+    var restoreHpCostGst: Double {
+        return round(Double(gstCostBasedOnGem) * (getHpLoss(comf: totalComf, energy: energy.doubleValue, shoeRarity: shoeRarity) / hpPercentRestored) * 10) / 10
+    }
+    
+    var gstProfitBeforeGem: Double {
+        if gmtToggleOn {
+            return round((repairCostGst + restoreHpCostGst) * 10) / 10
+        }
+        return gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst
+    }
 
     // MARK: Mystery box calcs
     // 0 = very low/no chance, 1 = low chance, 2 = high chance
