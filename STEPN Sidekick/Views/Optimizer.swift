@@ -1516,31 +1516,31 @@ struct Optimizer: View {
     }
     
     var gstLimit: Int {
-          if shoeLevel < 10 {
-              return Int(5 + (floor(shoeLevel) * 10))
-          } else if shoeLevel < 23 {
-              return Int(60 + ((floor(shoeLevel) - 10) * 10))
-          } else {
-              return Int(195 + ((floor(shoeLevel) - 23) * 15))
-          }
-      }
+        if shoeLevel < 10 {
+            return Int(5 + (floor(shoeLevel) * 10))
+        } else if shoeLevel < 23 {
+            return Int(60 + ((floor(shoeLevel) - 10) * 10))
+        } else {
+            return Int(195 + ((floor(shoeLevel) - 23) * 15))
+        }
+    }
       
     func getDurabilityLost(energy: Double, res: Double) -> Int {
-          if energy == 0 || res == 0 {
-              return 0
-          }
-          
-          var durLoss: Int = Int(round(energy * (2.944 * exp(-res / 6.763) + 2.119 * exp(-res / 36.817) + 0.294)))
-          
-          if durLoss < 1 {
-              durLoss = 1
-          }
-          return durLoss
-      }
+        if energy == 0 || res == 0 {
+            return 0
+        }
+        var durLoss: Int
+        if res > 160 {
+            durLoss = Int(round(energy * (-0.0005 * res + 0.4)))
+        } else {
+            durLoss = Int(round(energy * (2.944 * exp(-res / 6.763) + 2.119 * exp(-res / 36.817) + 0.294)))
+        }
+        return max(durLoss, 1)
+    }
       
-      var repairCostGst: Double {
-          return round(baseRepairCost * Double(getDurabilityLost(energy: energy.doubleValue, res: totalRes)) * 10) / 10
-      }
+    var repairCostGst: Double {
+        return round(baseRepairCost * Double(getDurabilityLost(energy: energy.doubleValue, res: totalRes)) * 10) / 10
+    }
           
       var baseRepairCost: Double {
           if shoeRarity == common {
