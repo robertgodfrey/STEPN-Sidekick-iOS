@@ -6,7 +6,7 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 26 Nov 22
+//  Last updated 26 Feb 23
 //
 
 import SwiftUI
@@ -211,7 +211,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Medium", size: 15))
                                     .foregroundColor(Color("Link Blue"))
                                 
-                                Text("v 1.3.3")
+                                Text("v 1.4.0")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)

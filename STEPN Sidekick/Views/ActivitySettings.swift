@@ -8,7 +8,7 @@
 //  SpeedTracker activity.
 //
 //  Created by Rob Godfrey
-//  Last updated 26 Nov 22
+//  Last updated 26 Feb 23
 //
 
 import SwiftUI
@@ -648,7 +648,7 @@ struct ActivitySettings: View {
                   dismissButton: .default(Text("Okay")))
         }
         .onAppear {
-            let currentAppVersion: Double = 1.3
+            let currentAppVersion: Double = 1.4
             if firstTime {
                 savedAppVersion = currentAppVersion
             } else if savedAppVersion < currentAppVersion {

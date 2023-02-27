@@ -27,7 +27,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Estimated income in USD is now available at the bottom of the shoe optimizer")
+                        Text("Comfort gem prices in the optimizer are now filled automagically with current floor prices from the marketplace (gem levels 1-3)")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -40,7 +40,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("The \"Optimize GMT\" button is now functional")
+                        Text("These prices are updated every 15 minutes, so they might be slightly off of what you see in the markeplace")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -53,7 +53,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Mystery box / GMT estimates have been updated and are significantly more reliable")
+                        Text("You still have the ability to edit these prices by selecting the red box and entering a number")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -61,20 +61,7 @@ struct UpdateDialog: View {
 
                     }
                     
-                    HStack(alignment: .top) {
-                        Text("•")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                    
-                        Text("There is now a paid option to remove ads in the \"About\" section")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                        
-                        Spacer()
-
-                    }
-                    
-                    Text("Due to modifications to structure of the app's stored data, your old sneaker data is no longer accessible and will have to be re-entered. Apologies for the inconvenience this causes.")
+                    Text("If you have been enjoying the app, please consider leaving a review on the App Store!")
                         .font(Font.custom(fontRegText, size: 17))
                         .foregroundColor(Color("Almost Black"))
                     
