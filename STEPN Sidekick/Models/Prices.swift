@@ -81,8 +81,8 @@ struct Coin: Codable {
  */
 
 
-struct Gems: Codable {
-    let one, two, three: Int
+struct GemPrices: Codable {
+    let one, two, three: Double
 
     enum CodingKeys: String, CodingKey {
         case one = "1"
@@ -90,9 +90,9 @@ struct Gems: Codable {
         case three = "3"
     }
     
-    init(one: Int, two: Int, three: Int) {
-        self.one = one
-        self.two = two
-        self.three = three
+    init(one: Double, two: Double, three: Double) {
+        self.one = one / 100
+        self.two = two / 100
+        self.three = three / 100
     }
 }

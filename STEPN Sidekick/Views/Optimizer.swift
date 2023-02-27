@@ -31,6 +31,8 @@ struct Optimizer: View {
         greenSatoshiTokenBsc: Coin(usd: 0),
         stepn: Coin(usd: 0))
     
+    @State var gemPrices: GemPrices = GemPrices(one: 0, two: 0, three: 0)
+    
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
     
@@ -1045,9 +1047,10 @@ struct Optimizer: View {
                                 comfGemForRestoreResource: comfGemForRestoreResource,
                                 gmtEarned: gmtEarned,
                                 gstProfitBeforeGem: gstProfitBeforeGem,
-                                comfGemPrice: comfGemPrice.doubleValue,
+                                comfGemPrice: $comfGemPrice,
                                 blockchain: blockchain,
-                                coinPrices: coinPrices
+                                coinPrices: coinPrices,
+                                gemPrices: gemPrices
                             ).padding(.top, 10)
                                 .padding(.bottom, 20)
                                 .alert(isPresented: $noBreakEvenDialog) {
@@ -1441,7 +1444,8 @@ struct Optimizer: View {
                 gemRes = shoes.getShoe(shoeNum - 1).gemRes
                 gems = shoes.getShoe(shoeNum - 1).gems
                 
-                apiCall()
+                tokenApiCall()
+                gemApiCall()
                 updatePoints()
             }
             .onDisappear {
@@ -2094,7 +2098,39 @@ struct Optimizer: View {
         }
     }
     
-    func apiCall() {
+    func gemApiCall() {
+        guard let url = URL(string: "http://stepnsidekick.com/gems.json") else {
+            print("Invalid URL")
+            return
+        }
+        let request = URLRequest(url: url)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                if let response = try? JSONDecoder().decode(GemPrices.self, from: data) {
+                    DispatchQueue.main.async {
+                        gemPrices = response
+                        print("\n========== Comf Gem Prices ==========")
+                        print("        Level 1:  \(gemPrices.one / 100) GMT")
+                        print("        Level 2:  \(gemPrices.two / 100) GMT")
+                        print("        Level 3:  \(gemPrices.three / 100) GMT")
+                        print("=====================================\n")
+                        
+                        if comfGemLvlForRestore == 1 {
+                            comfGemPrice = String(gemPrices.one / 100)
+                        } else if comfGemLvlForRestore == 2 {
+                            comfGemPrice = String(gemPrices.two / 100)
+                        } else {
+                            comfGemPrice = String(gemPrices.three / 100)
+                        }
+                    }
+                    return
+                }
+            }
+        }.resume()
+    }
+    
+    func tokenApiCall() {
         guard let url = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cethereum%2Cgreen-satoshi-token-on-eth&vs_currencies=usd") else {
             print("Invalid URL")
             return
@@ -3024,9 +3060,10 @@ struct CalcedTotals: View {
     let comfGemForRestoreResource: String
     let gmtEarned: Double
     let gstProfitBeforeGem: Double
-    let comfGemPrice: Double
+    @Binding var comfGemPrice: String
     let blockchain: Int
     let coinPrices: Coins
+    let gemPrices: GemPrices
     
     var body: some View {
         // MARK: Calculated totals
@@ -3120,8 +3157,13 @@ struct CalcedTotals: View {
                 Button(action: {
                     if comfGemLvlForRestore == 3 {
                         comfGemLvlForRestore = 1
+                        comfGemPrice = String(gemPrices.one / 100)
+                    } else if comfGemLvlForRestore == 2 {
+                        comfGemLvlForRestore += 1
+                        comfGemPrice = String(gemPrices.three / 100)
                     } else {
                         comfGemLvlForRestore += 1
+                        comfGemPrice = String(gemPrices.two / 100)
                     }
                 }, label: {
                     Image(comfGemForRestoreResource)
@@ -3209,9 +3251,9 @@ struct CalcedTotals: View {
                 
                 Spacer()
                 
-                Text(comfGemPrice > 0 ? usdIncome : "Enter Gem Price ↓")
-                    .font(Font.custom(comfGemPrice > 0 ? fontTitles : "RobotoCondensed-Italic", size: comfGemPrice > 0 ? 18 : 16))
-                    .foregroundColor(Color(comfGemPrice > 0 ? "Almost Black" : "Gandalf"))
+                Text(comfGemPrice.doubleValue > 0 ? usdIncome : "Enter Gem Price ↓")
+                    .font(Font.custom(comfGemPrice.doubleValue > 0 ? fontTitles : "RobotoCondensed-Italic", size: comfGemPrice.doubleValue > 0 ? 18 : 16))
+                    .foregroundColor(Color(comfGemPrice.doubleValue > 0 ? "Almost Black" : "Gandalf"))
                     .padding(.trailing, 4)
                 
                 Text("$")
@@ -3241,7 +3283,7 @@ struct CalcedTotals: View {
         } else {
             usdProf = gstProfitBeforeGem * chainGstPrice
         }
-        usdProf -= comfGemMultiplier * comfGemPrice * coinPrices.stepn.usd
+        usdProf -= comfGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd
          
         return String(format: "%.2f", round(usdProf * 100) / 100)
     }
