@@ -31,7 +31,7 @@ struct Optimizer: View {
         greenSatoshiTokenBsc: Coin(usd: 0),
         stepn: Coin(usd: 0))
     
-    @State var gemPrices: GemPrices = GemPrices(one: 0, two: 0, three: 0)
+    @State var gemPrices: GemPrices = GemPrices(prices: [0,0,0])
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
@@ -2099,7 +2099,7 @@ struct Optimizer: View {
     }
     
     func gemApiCall() {
-        guard let url = URL(string: "http://stepnsidekick.com/gems.json") else {
+        guard let url = URL(string: "https://nw3wvp7zk7zlvqctaqes5xs7ji0enbih.lambda-url.us-east-1.on.aws/") else {
             print("Invalid URL")
             return
         }
@@ -2111,17 +2111,17 @@ struct Optimizer: View {
                     DispatchQueue.main.async {
                         gemPrices = response
                         print("\n========== Comf Gem Prices ==========")
-                        print("        Level 1:  \(gemPrices.one / 100) GMT")
-                        print("        Level 2:  \(gemPrices.two / 100) GMT")
-                        print("        Level 3:  \(gemPrices.three / 100) GMT")
+                        print("        Level 1:  \(gemPrices.prices[0] / 100) GMT")
+                        print("        Level 2:  \(gemPrices.prices[1] / 100) GMT")
+                        print("        Level 3:  \(gemPrices.prices[2] / 100) GMT")
                         print("=====================================\n")
                         
                         if comfGemLvlForRestore == 1 {
-                            comfGemPrice = String(gemPrices.one / 100)
+                            comfGemPrice = String(gemPrices.prices[0] / 100)
                         } else if comfGemLvlForRestore == 2 {
-                            comfGemPrice = String(gemPrices.two / 100)
+                            comfGemPrice = String(gemPrices.prices[1] / 100)
                         } else {
-                            comfGemPrice = String(gemPrices.three / 100)
+                            comfGemPrice = String(gemPrices.prices[2] / 100)
                         }
                     }
                     return
@@ -3157,13 +3157,13 @@ struct CalcedTotals: View {
                 Button(action: {
                     if comfGemLvlForRestore == 3 {
                         comfGemLvlForRestore = 1
-                        comfGemPrice = String(gemPrices.one / 100)
+                        comfGemPrice = String(gemPrices.prices[0] / 100)
                     } else if comfGemLvlForRestore == 2 {
                         comfGemLvlForRestore += 1
-                        comfGemPrice = String(gemPrices.three / 100)
+                        comfGemPrice = String(gemPrices.prices[2] / 100)
                     } else {
                         comfGemLvlForRestore += 1
-                        comfGemPrice = String(gemPrices.two / 100)
+                        comfGemPrice = String(gemPrices.prices[1] / 100)
                     }
                 }, label: {
                     Image(comfGemForRestoreResource)

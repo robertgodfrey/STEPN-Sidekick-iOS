@@ -70,29 +70,27 @@ struct Coin: Codable {
 
 /*
  --- API call for gems ---
- http://stepnsidekick.com/gems.json
+ https://nw3wvp7zk7zlvqctaqes5xs7ji0enbih.lambda-url.us-east-1.on.aws/
  
  --- Raw Data Example ---
  {
-    "1":231,
-    "2":2740,
-    "3":15050
+   "prices":[
+     310,
+     3198,
+     18210
+   ]
  }
  */
 
 
 struct GemPrices: Codable {
-    let one, two, three: Double
+    let prices: [Double]
 
     enum CodingKeys: String, CodingKey {
-        case one = "1"
-        case two = "2"
-        case three = "3"
+        case prices
     }
     
-    init(one: Double, two: Double, three: Double) {
-        self.one = one / 100
-        self.two = two / 100
-        self.three = three / 100
+    init(prices: [Double]) {
+        self.prices = prices
     }
 }
