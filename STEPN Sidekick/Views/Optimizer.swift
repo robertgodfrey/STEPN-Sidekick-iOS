@@ -31,7 +31,7 @@ struct Optimizer: View {
         greenSatoshiTokenBsc: Coin(usd: 0),
         stepn: Coin(usd: 0))
     
-    @State var gemPrices: GemPrices = GemPrices(prices: [0,0,0])
+    @State var gemPrices: [Double] = [0,0,0]
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
@@ -2099,32 +2099,91 @@ struct Optimizer: View {
     }
     
     func gemApiCall() {
-        guard let url = URL(string: "https://nw3wvp7zk7zlvqctaqes5xs7ji0enbih.lambda-url.us-east-1.on.aws/") else {
+        let urlOne = "https://apilb.stepn.com/run/orderlist?saleId=1&order=2001&chain="
+        let urlTwo = "&refresh=true&page=0&otd=&type=501&gType=3&quality=&level="
+        let urlThree = "&bread=0"
+        var chainCode: String
+        
+        switch (blockchain) {
+        case bsc:
+            chainCode = "104"
+        case eth:
+            chainCode = "101"
+        default:
+            chainCode = "103"
+        }
+        
+        
+        guard let urlLevelOne = URL(string: urlOne + chainCode + urlTwo + "2010" + urlThree) else {
             print("Invalid URL")
             return
         }
-        let request = URLRequest(url: url)
+        let requestOne = URLRequest(url: urlLevelOne)
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        URLSession.shared.dataTask(with: requestOne) { data, response, error in
             if let data = data {
-                if let response = try? JSONDecoder().decode(GemPrices.self, from: data) {
+                do {
+                    let response = try JSONDecoder().decode(GemPrices.self, from: data)
                     DispatchQueue.main.async {
-                        gemPrices = response
-                        print("\n========== Comf Gem Prices ==========")
-                        print("        Level 1:  \(gemPrices.prices[0] / 100) GMT")
-                        print("        Level 2:  \(gemPrices.prices[1] / 100) GMT")
-                        print("        Level 3:  \(gemPrices.prices[2] / 100) GMT")
-                        print("=====================================\n")
+                        gemPrices[0] = Double(response.data[2].sellPrice) / 100
                         
                         if comfGemLvlForRestore == 1 {
-                            comfGemPrice = String(gemPrices.prices[0] / 100)
-                        } else if comfGemLvlForRestore == 2 {
-                            comfGemPrice = String(gemPrices.prices[1] / 100)
-                        } else {
-                            comfGemPrice = String(gemPrices.prices[2] / 100)
+                            comfGemPrice = String(gemPrices[0])
                         }
+                        print("Comf Gem Lvl 1 Price: \(gemPrices[0])")
                     }
-                    return
+                } catch let jsonError as NSError {
+                    print("JSON decode failed: \(jsonError.localizedDescription)")
+                }
+            }
+        }.resume()
+        
+        guard let urlLevelTwo = URL(string: urlOne + chainCode + urlTwo + "3010" + urlThree) else {
+            print("Invalid URL")
+            return
+        }
+        let requestTwo = URLRequest(url: urlLevelTwo)
+        
+        print(requestTwo)
+
+        URLSession.shared.dataTask(with: requestTwo) { data, response, error in
+            if let data = data {
+                do {
+                    let response = try JSONDecoder().decode(GemPrices.self, from: data)
+                    DispatchQueue.main.async {
+                        gemPrices[1] = Double(response.data[2].sellPrice) / 100
+                        
+                        if comfGemLvlForRestore == 2 {
+                            comfGemPrice = String(gemPrices[1])
+                        }
+                        print("Comf Gem Lvl 2 Price: \(gemPrices[1])")
+                    }
+                } catch let jsonError as NSError {
+                    print("JSON decode failed: \(jsonError.localizedDescription)")
+                }
+            }
+        }.resume()
+        
+        guard let urlLevelThree = URL(string: urlOne + chainCode + urlTwo + "4010" + urlThree) else {
+            print("Invalid URL")
+            return
+        }
+        let requestThree = URLRequest(url: urlLevelThree)
+
+        URLSession.shared.dataTask(with: requestThree) { data, response, error in
+            if let data = data {
+                do {
+                    let response = try JSONDecoder().decode(GemPrices.self, from: data)
+                    DispatchQueue.main.async {
+                        gemPrices[2] = Double(response.data[2].sellPrice) / 100
+                        
+                        if comfGemLvlForRestore == 3 {
+                            comfGemPrice = String(gemPrices[2])
+                        }
+                        print("Comf Gem Lvl 3 Price: \(gemPrices[2])")
+                    }
+                } catch let jsonError as NSError {
+                    print("JSON decode failed: \(jsonError.localizedDescription)")
                 }
             }
         }.resume()
@@ -3063,7 +3122,7 @@ struct CalcedTotals: View {
     @Binding var comfGemPrice: String
     let blockchain: Int
     let coinPrices: Coins
-    let gemPrices: GemPrices
+    let gemPrices: [Double]
     
     var body: some View {
         // MARK: Calculated totals
@@ -3157,13 +3216,13 @@ struct CalcedTotals: View {
                 Button(action: {
                     if comfGemLvlForRestore == 3 {
                         comfGemLvlForRestore = 1
-                        comfGemPrice = String(gemPrices.prices[0] / 100)
+                        comfGemPrice = String(gemPrices[0])
                     } else if comfGemLvlForRestore == 2 {
                         comfGemLvlForRestore += 1
-                        comfGemPrice = String(gemPrices.prices[2] / 100)
+                        comfGemPrice = String(gemPrices[2])
                     } else {
                         comfGemLvlForRestore += 1
-                        comfGemPrice = String(gemPrices.prices[1] / 100)
+                        comfGemPrice = String(gemPrices[1])
                     }
                 }, label: {
                     Image(comfGemForRestoreResource)

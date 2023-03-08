@@ -63,34 +63,65 @@ struct Coin: Codable {
     let usd: Double
     
     init(usd: Double) {
-        self.usd = 0.0
+        self.usd = 0
     }
 }
 
 
 /*
  --- API call for gems ---
- https://nw3wvp7zk7zlvqctaqes5xs7ji0enbih.lambda-url.us-east-1.on.aws/
+ BASE URL:   "https://apilb.stepn.com/"
+ add:        "run/orderlist?saleId=1&order=2001&chain={chainNum}&refresh=true&page=0&otd=&type=501&gType=3&quality=&level={gemLevel}&bread=0"
+
+ chainNums: SOL: 103
+            BSC: 104
+            ETH: 101
+ gemLevels: 1:  2010
+            2:  3010
+            3:  4010
  
- --- Raw Data Example ---
+ EXAMPLE: BSC level 2 gem price: https://apilb.stepn.com/run/orderlist?saleId=1&order=2001&chain=104&refresh=true&page=0&otd=&type=501&gType=3&quality=&level=3010&bread=0
+ 
  {
-   "prices":[
-     310,
-     3198,
-     18210
-   ]
+    "code":0,
+    "data":[
+        {
+            "id":304564045,
+            "otd":45245732262,
+            "time":0,
+            "propID":45245732262,
+            "img":"gem_comfortabe_1.png",
+            "dataID":100031,
+            "sellPrice":309,
+            "hp":0,
+            "level":1,
+            "quality":1,
+            "mint":0,
+            "addRatio":50,
+            "lifeRatio":10000,
+            "v1":3,
+            "v2":20,
+            "speedMax":0,
+            "speedMin":0
+        },
+        { ..... }
+    ]
  }
- */
+*/
 
 
 struct GemPrices: Codable {
-    let prices: [Double]
-
-    enum CodingKeys: String, CodingKey {
-        case prices
-    }
+    let data: [NestedGemPrice]
     
-    init(prices: [Double]) {
-        self.prices = prices
+    init(data: [NestedGemPrice]) {
+        self.data = data
+    }
+}
+
+struct NestedGemPrice: Codable {
+    let sellPrice: Int
+    
+    init(sellPrice: Int) {
+        self.sellPrice = sellPrice
     }
 }
