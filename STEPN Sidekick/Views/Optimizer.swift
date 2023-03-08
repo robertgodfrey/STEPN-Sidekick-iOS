@@ -1100,6 +1100,7 @@ struct Optimizer: View {
                                             } else {
                                                 blockchain += 1
                                             }
+                                            gemApiCall()
                                         }))
                                         .font(Font.custom(fontButtons, size: 17))
                                     }
