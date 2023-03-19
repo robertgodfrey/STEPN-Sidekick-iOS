@@ -11,6 +11,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct Optimizer: View {
     
@@ -157,15 +158,10 @@ struct Optimizer: View {
                                         .scaleEffect(popShoe ? 1.1 : 1)
                                         .onTapGesture(perform: { changeImageDialog = true })
                                 } else {
-                                    RemoteImageView(
-                                        url: URL(string: imageUrl)!,
-                                        placeholder: {
-                                            Text("Loading...")
-                                        },
-                                        image: {
-                                            $0.resizable().aspectRatio(contentMode: .fit)
-                                        }
-                                    )
+                                    KFImage(URL(string: imageUrl)!)
+                                        .fade(duration: 0.25)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
                                         .onTapGesture(perform: { changeImageDialog = true })
