@@ -89,6 +89,7 @@ struct Optimizer: View {
     @State private var noEnergyDialog: Bool = false
     @State private var resetPageDialog: Bool = false
     @State private var noBreakEvenDialog: Bool = false
+    @State private var changeImageDialog: Bool = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -146,6 +147,7 @@ struct Optimizer: View {
                                     .foregroundColor(Color(hex: innerCircleColor(shoeRarity: shoeRarity)))
                                     .frame(width: 110)
                                     .scaleEffect(popCircles ? 1.1 : 1)
+                                    .onTapGesture(perform: { changeImageDialog = true })
 
                                 if imageUrl.isEmpty {
                                     Image(shoeImageResource(shoeType: shoeType))
@@ -153,6 +155,7 @@ struct Optimizer: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
+                                        .onTapGesture(perform: { changeImageDialog = true })
                                 } else {
                                     RemoteImageView(
                                         url: URL(string: imageUrl)!,
@@ -165,6 +168,7 @@ struct Optimizer: View {
                                     )
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
+                                        .onTapGesture(perform: { changeImageDialog = true })
                                 }
                                         
                                 
@@ -1431,6 +1435,14 @@ struct Optimizer: View {
                         gemLuck: $gemLuck,
                         gemComf: $gemComf,
                         gemRes: $gemRes
+                    )
+                }
+            }
+            if changeImageDialog {
+                GeometryReader { _ in
+                    AddImageDialog(
+                        show: $changeImageDialog,
+                        url: $imageUrl
                     )
                 }.onDisappear{
                     updatePoints()

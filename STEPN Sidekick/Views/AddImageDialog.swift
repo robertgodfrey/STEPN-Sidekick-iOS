@@ -17,20 +17,22 @@ struct AddImageDialog: View {
             Color(.black)
                 .opacity(0.5)
             
-            VStack(spacing: 10) {
+            VStack(spacing: 20) {
                 Text("ADD CUSTOM SHOE IMAGE")
                     .font(Font.custom(fontTitles, size: 20))
                     .foregroundColor(Color("Almost Black"))
         
-                Text("Paste the URL to an image of your shoe:")
+                Text("Paste the URL of an image of your shoe:")
                     .font(Font.custom(fontRegText, size: 16))
                     .foregroundColor(Color("Almost Black"))
+                    .padding(.horizontal, 10)
                 
                 TextField("Image URL", text: $url)
-                    .font(Font.custom(fontHeaders, size: 20))
+                    .font(Font.custom(fontRegText, size: 15))
                     .multilineTextAlignment(.center)
+                    .keyboardType(.webSearch)
                     .foregroundColor(Color("Almost Black"))
-                    .frame(width: 95)
+                    .padding(.horizontal, 10)
 
                                     
                 ZStack {
@@ -52,15 +54,16 @@ struct AddImageDialog: View {
                         ))
                         .font(Font.custom(fontButtons, size: 20))
                     
-                }.padding(.top, 10)
+                }.padding(.bottom, 5)
                 
                 Text("Note: For best results, use a PNG file with a transparent background. To use your actual shoe image, log in to the STEPN marketplace in a web browser, go to your inventory, right click the image of your shoe, and select 'Copy Image Link'.")
-                    .font(Font.custom(fontRegText, size: 16))
+                    .font(Font.custom(fontRegText, size: 15))
                     .foregroundColor(Color("Almost Black"))
+                    .padding(.horizontal, 10)
                 
             }   .padding(.vertical, 24)
                 .padding(.horizontal, 16)
-                .frame(maxWidth: 340)
+                .frame(maxWidth: 350)
                 .background(Color.white)
                 .cornerRadius(15)
 
