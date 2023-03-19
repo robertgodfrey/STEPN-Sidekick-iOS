@@ -148,7 +148,11 @@ struct Optimizer: View {
                                     .foregroundColor(Color(hex: innerCircleColor(shoeRarity: shoeRarity)))
                                     .frame(width: 110)
                                     .scaleEffect(popCircles ? 1.1 : 1)
-                                    .onTapGesture(perform: { changeImageDialog = true })
+                                    .onTapGesture(perform: {
+                                        clearFocus()
+                                        changeImageDialog = true
+                                        hideTab = true
+                                    })
 
                                 if imageUrl.isEmpty {
                                     Image(shoeImageResource(shoeType: shoeType))
@@ -156,7 +160,11 @@ struct Optimizer: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
-                                        .onTapGesture(perform: { changeImageDialog = true })
+                                        .onTapGesture(perform: {
+                                            clearFocus()
+                                            changeImageDialog = true
+                                            hideTab = true
+                                        })
                                 } else {
                                     KFImage(URL(string: imageUrl)!)
                                         .fade(duration: 0.25)
@@ -164,7 +172,11 @@ struct Optimizer: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
-                                        .onTapGesture(perform: { changeImageDialog = true })
+                                        .onTapGesture(perform: {
+                                            clearFocus()
+                                            changeImageDialog = true
+                                            hideTab = true
+                                        })
                                 }
                                         
                                 
