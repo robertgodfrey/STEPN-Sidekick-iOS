@@ -149,9 +149,11 @@ struct Optimizer: View {
                                     .frame(width: 110)
                                     .scaleEffect(popCircles ? 1.1 : 1)
                                     .onTapGesture(perform: {
-                                        clearFocus()
-                                        changeImageDialog = true
-                                        hideTab = true
+                                        withAnimation(.easeOut .speed(3)) {
+                                            clearFocus()
+                                            changeImageDialog = true
+                                            hideTab = true
+                                        }
                                     })
 
                                 if imageUrl.isEmpty {
@@ -161,9 +163,11 @@ struct Optimizer: View {
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
                                         .onTapGesture(perform: {
-                                            clearFocus()
-                                            changeImageDialog = true
-                                            hideTab = true
+                                            withAnimation(.easeOut .speed(3)) {
+                                                clearFocus()
+                                                changeImageDialog = true
+                                                hideTab = true
+                                            }
                                         })
                                 } else {
                                     KFImage(URL(string: imageUrl)!)
@@ -173,9 +177,11 @@ struct Optimizer: View {
                                         .frame(width: 180)
                                         .scaleEffect(popShoe ? 1.1 : 1)
                                         .onTapGesture(perform: {
-                                            clearFocus()
-                                            changeImageDialog = true
-                                            hideTab = true
+                                            withAnimation(.easeOut .speed(3)) {
+                                                clearFocus()
+                                                changeImageDialog = true
+                                                hideTab = true
+                                            }
                                         })
                                 }
                                         

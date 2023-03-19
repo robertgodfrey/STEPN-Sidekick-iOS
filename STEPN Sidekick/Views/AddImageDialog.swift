@@ -16,6 +16,11 @@ struct AddImageDialog: View {
         ZStack {
             Color(.black)
                 .opacity(0.5)
+                .onTapGesture(perform: {
+                    withAnimation(.easeOut .speed(3)) {
+                        show = false
+                    }
+                })
             
             VStack(spacing: 20) {
                 Text("ADD CUSTOM SHOE IMAGE")
@@ -49,23 +54,26 @@ struct AddImageDialog: View {
                             .frame(minWidth: 100, maxWidth: 110, minHeight: 38, maxHeight: 38)
                     })
                         .buttonStyle(StartButton(tapAction: {
-                            show = false
-                        }
-                        ))
+                            withAnimation(.easeOut .speed(3)) {
+                                show = false
+                            }
+                        }))
                         .font(Font.custom(fontButtons, size: 20))
                     
-                }.padding(.bottom, 5)
+                }
                 
                 Text("Note: For best results, use a PNG file with a transparent background. To use your actual shoe image, log in to the STEPN marketplace in a web browser, go to your inventory, right click the image of your shoe, and select 'Copy Image Link'.")
                     .font(Font.custom(fontRegText, size: 15))
                     .foregroundColor(Color("Almost Black"))
                     .padding(.horizontal, 10)
+                    .padding(.bottom, 10)
                 
             }   .padding(.vertical, 24)
                 .padding(.horizontal, 16)
                 .frame(maxWidth: 350)
                 .background(Color.white)
                 .cornerRadius(15)
+                .onTapGesture(perform: { UIApplication.shared.hideKeyboard() })
 
         }.ignoresSafeArea()
     }
