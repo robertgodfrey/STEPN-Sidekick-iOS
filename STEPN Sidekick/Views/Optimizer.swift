@@ -18,6 +18,7 @@ struct Optimizer: View {
     @AppStorage("comfGemLvl") private var comfGemLvlForRestore: Int = 1
     
     @EnvironmentObject var shoes: OptimizerShoes
+    @EnvironmentObject var imageUrls: ShoeImages
     
     @Binding var hideTab: Bool
     @Binding var showAds: Bool
@@ -40,6 +41,7 @@ struct Optimizer: View {
     @State private var shoeType: Int = walker
     @State private var blockchain: Int = sol
     @State private var comfGemPrice: String = ""
+    @State private var imageUrl = ""
     
     @State private var shoeName: String = ""
     @State private var energy: String = ""
@@ -145,11 +147,26 @@ struct Optimizer: View {
                                     .frame(width: 110)
                                     .scaleEffect(popCircles ? 1.1 : 1)
 
-                                Image(shoeImageResource(shoeType: shoeType))
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 180)
-                                    .scaleEffect(popShoe ? 1.1 : 1)
+                                if imageUrl.isEmpty {
+                                    Image(shoeImageResource(shoeType: shoeType))
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 180)
+                                        .scaleEffect(popShoe ? 1.1 : 1)
+                                } else {
+                                    RemoteImageView(
+                                        url: URL(string: imageUrl)!,
+                                        placeholder: {
+                                            Text("Loading...")
+                                        },
+                                        image: {
+                                            $0.resizable().aspectRatio(contentMode: .fit)
+                                        }
+                                    )
+                                        .frame(width: 180)
+                                        .scaleEffect(popShoe ? 1.1 : 1)
+                                }
+                                        
                                 
                             }.padding(.vertical, 30)
                                 .padding(.top, 15)
@@ -1445,6 +1462,9 @@ struct Optimizer: View {
                 gemRes = shoes.getShoe(shoeNum - 1).gemRes
                 gems = shoes.getShoe(shoeNum - 1).gems
                 
+                imageUrl = imageUrls.getUrl(shoeNum - 1)
+                print(imageUrl)
+                
                 tokenApiCall()
                 gemApiCall()
                 updatePoints()
@@ -1474,6 +1494,7 @@ struct Optimizer: View {
                     gems: gems)
                 
                 shoes.update(shoe: currentShoe, i: shoeNum - 1)
+                imageUrls.update(url: imageUrl, i: shoeNum - 1)
             }
     }
     
@@ -2685,6 +2706,7 @@ struct Optimizer: View {
             gems: gems)
         
         shoes.update(shoe: currentShoe, i: shoeNum - 1)
+        imageUrls.update(url: imageUrl, i: shoeNum - 1)
         
         // load em
         gmtToggleOn = shoes.getShoe(shoeToLoad - 1).gmtToggle
@@ -2708,6 +2730,8 @@ struct Optimizer: View {
         gemComf = shoes.getShoe(shoeToLoad - 1).gemComf
         gemRes = shoes.getShoe(shoeToLoad - 1).gemRes
         gems = shoes.getShoe(shoeToLoad - 1).gems
+        
+        imageUrl = imageUrls.getUrl(shoeToLoad - 1)
         
         updatePoints()
     }
@@ -2926,6 +2950,7 @@ struct Optimizer_Previews: PreviewProvider {
     static var previews: some View {
         Optimizer(hideTab: .constant(false), showAds: .constant(false))
             .environmentObject(OptimizerShoes())
+            .environmentObject(ShoeImages())
     }
 }
                                    

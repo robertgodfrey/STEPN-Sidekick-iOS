@@ -15,6 +15,7 @@ struct MainView: View {
     @State var hideTab = false
     @State var showAds = true
     @StateObject var shoes = OptimizerShoes()
+    @StateObject var imageUrls = ShoeImages()
     @StateObject var storeManager = StoreManager()
     var bottomEdge: CGFloat
     
@@ -44,6 +45,7 @@ struct MainView: View {
                     })
             }.environmentObject(shoes)
                 .environmentObject(storeManager)
+                .environmentObject(imageUrls)
             .overlay(
                 VStack {
                     CustomTabBar(currentTab: $currentTab, bottomEdge: bottomEdge)
