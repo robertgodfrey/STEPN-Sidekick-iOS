@@ -22,6 +22,8 @@ struct GemDialog: View {
     @Binding var gemComf: Double
     @Binding var gemRes: Double
     
+    let dismissAction: (()->())
+    
     @State private var showGemMoreDeets: Bool = false
 
     var body: some View {
@@ -457,6 +459,7 @@ struct GemDialog: View {
                     })
                         .buttonStyle(StartButton(tapAction: {
                             show = false
+                            dismissAction()
                         }
                         ))
                         .font(Font.custom(fontButtons, size: 20))
@@ -796,7 +799,8 @@ struct GemDialog_Previews: PreviewProvider {
             gemEff: .constant(0),
             gemLuck: .constant(0),
             gemComf: .constant(0),
-            gemRes: .constant(0)
+            gemRes: .constant(0),
+            dismissAction: {print("dismissed")}
         )
     }
 }

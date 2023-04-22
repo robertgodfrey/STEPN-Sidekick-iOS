@@ -1448,7 +1448,8 @@ struct Optimizer: View {
                         gemEff: $gemEff,
                         gemLuck: $gemLuck,
                         gemComf: $gemComf,
-                        gemRes: $gemRes
+                        gemRes: $gemRes,
+                        dismissAction: { updatePoints() }
                     )
                 }
             }
