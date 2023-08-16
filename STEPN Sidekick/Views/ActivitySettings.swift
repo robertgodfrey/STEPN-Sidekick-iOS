@@ -96,14 +96,13 @@ struct ActivitySettings: View {
             } else {
                 ZStack(alignment: .top) {
                     Color("Background Almost White")
+                    Rectangle()
+                        .foregroundColor(Color("Light Green"))
+                        .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
                     
                     if showAds {
-                        Rectangle()
-                            .foregroundColor(Color("Light Green"))
-                            .frame(width: UIScreen.main.bounds.width, height: (UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0) + 1)
-                        
                         SwiftUIBannerAd().padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
-                    }
+                    } 
                     ScrollView {
                         VStack {
                             ZStack {

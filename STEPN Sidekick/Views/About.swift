@@ -14,6 +14,12 @@ import SwiftUI
 struct About: View {
     @Binding var hideTab: Bool
     @Binding var showAds: Bool
+    
+    @State private var showAlert: Bool = false
+    @State private var loadingRestore: Bool = false
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
+    
     @EnvironmentObject var storeManager: StoreManager
     
     @State var offset: CGFloat = 0
@@ -112,32 +118,61 @@ struct About: View {
                             }
                             
                             if showAds {
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 25, style: .continuous)
-                                        .foregroundColor(Color("Almost Black"))
-                                        .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
-                                        .padding(.top, 6)
-                                        .padding(.leading, 6)
-                                    
-                                    Button(action: {
-                                        // in tapAction
-                                    }, label: {
-                                        Text("REMOVE ADS")
-                                            .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
-                                    })
-                                        .buttonStyle(StartButton(tapAction: {
-                                            showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
-                                            if showAds {
-                                                storeManager.purchaseProduct(product: storeManager.myProducts[0])
-                                            }                                            
-                                        })).font(Font.custom(fontButtons, size: 20))
-                                        .onLongPressGesture {
-                                            storeManager.restoreProducts()
-                                            print("long pressin")
+                                if storeManager.transactionState == .purchasing || loadingRestore {
+                                    ProgressView()
+                                        .padding(.top, 16)
+                                        .padding(.bottom, 8)
+                                } else {
+                                    VStack {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                                                .foregroundColor(Color("Almost Black"))
+                                                .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
+                                                .padding(.top, 6)
+                                                .padding(.leading, 6)
+                                            
+                                            Button(action: {
+                                                // in tapAction
+                                            }, label: {
+                                                Text("REMOVE ADS")
+                                                    .frame(minWidth: 175, maxWidth: 180, minHeight: 45, maxHeight: 45)
+                                            })
+                                            .buttonStyle(StartButton(tapAction: {
+                                                showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
+                                                if showAds {
+                                                    storeManager.purchaseProduct(product: storeManager.myProducts[0])
+                                                }
+                                            })).font(Font.custom(fontButtons, size: 20))
+                                            
                                         }
-                                    
-                                }.padding(.top, 16)
-                                    .padding(.bottom, 8)
+                                        Text("Restore purchase")
+                                            .font(Font.custom("Roboto-Regular", size: 13))
+                                            .foregroundColor(Color("Link Blue"))
+                                            .onTapGesture(perform: {
+                                                showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
+                                                if showAds {
+                                                    loadingRestore = true
+                                                    storeManager.restoreProducts()
+                                                    DispatchQueue.global(qos: .background).async {
+                                                        sleep(3)
+                                                        showAds = !UserDefaults.standard.bool(forKey: "remove_ads")
+                                                        if showAds {
+                                                            alertTitle = "Unable to Restore Purchase"
+                                                            alertMessage = "No previous purchase found. If you believe this is an error, please try restoring again."
+                                                        } else {
+                                                            alertTitle = "Purchase Restored"
+                                                            alertMessage = "Purchase successfully restored. Thank you!"
+                                                        }
+                                                        showAlert = true
+                                                        loadingRestore = false
+                                                    }
+                                                    
+                                                }
+                                            })
+                                        
+                                    }.padding(.top, 16)
+                                        .padding(.bottom, 8)
+                                }
                             } else {
                                 Text("Thank you for removing ads! ❤")
                                     .font(Font.custom("Roboto-Regular", size: 15))
@@ -207,9 +242,11 @@ struct About: View {
                                     .foregroundColor(Color("Almost Black"))
                                     .padding(20)
                                 
-                                Text("sidekickfeedback@gmail.com")
-                                    .font(Font.custom("Roboto-Medium", size: 15))
-                                    .foregroundColor(Color("Link Blue"))
+                                Link(destination: URL(string: "mailto:sidekickfeedback@gmail.com")!) {
+                                    Text("sidekickfeedback@gmail.com")
+                                        .font(Font.custom("Roboto-Medium", size: 15))
+                                        .foregroundColor(Color("Link Blue"))
+                                }
                                 
                                 Text("v 1.4.4")
                                     .font(Font.custom(fontHeaders, size: 13))
@@ -421,6 +458,11 @@ struct About: View {
                 })
         }   .ignoresSafeArea()
             .preferredColorScheme(.light)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text(alertTitle),
+                      message: Text(alertMessage),
+                      dismissButton: .default(Text("Okay")))
+            }
     }
 }
 
