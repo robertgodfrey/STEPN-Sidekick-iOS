@@ -17,6 +17,9 @@ struct Optimizer: View {
     
     @AppStorage("shoeNum") private var shoeNum: Int = 1
     @AppStorage("comfGemLvl") private var comfGemLvlForRestore: Int = 1
+    @AppStorage("gmtNumA") private var gmtNumA: Double = 0.0696
+    @AppStorage("gmtNumB") private var gmtNumB: Double = 0.4821
+    @AppStorage("gmtNumC") private var gmtNumC: Double = 0.25
     
     @EnvironmentObject var shoes: OptimizerShoes
     @EnvironmentObject var imageUrls: ShoeImages
@@ -1488,9 +1491,7 @@ struct Optimizer: View {
                 gemComf = shoes.getShoe(shoeNum - 1).gemComf
                 gemRes = shoes.getShoe(shoeNum - 1).gemRes
                 gems = shoes.getShoe(shoeNum - 1).gems
-                
                 imageUrl = imageUrls.getUrl(shoeNum - 1)
-                print(imageUrl)
                 
                 tokenApiCall()
                 gemApiCall()
@@ -1530,7 +1531,7 @@ struct Optimizer: View {
         if !gmtToggleOn {
             return 0
         }
-        var gmtBaseline: Double = 0.0696 * pow(comf, 0.4821) - 0.25
+        var gmtBaseline: Double = gmtNumA * pow(comf, gmtNumB) - gmtNumC
         
         switch (shoeType) {
         case walker:
@@ -2179,7 +2180,6 @@ struct Optimizer: View {
                         if comfGemLvlForRestore == 1 {
                             comfGemPrice = String(gemPrices[0])
                         }
-                        print("Comf Gem Lvl 1 Price: \(gemPrices[0])")
                     }
                 } catch let jsonError as NSError {
                     print("JSON decode failed: \(jsonError.localizedDescription)")
@@ -2205,7 +2205,6 @@ struct Optimizer: View {
                         if comfGemLvlForRestore == 2 {
                             comfGemPrice = String(gemPrices[1])
                         }
-                        print("Comf Gem Lvl 2 Price: \(gemPrices[1])")
                     }
                 } catch let jsonError as NSError {
                     print("JSON decode failed: \(jsonError.localizedDescription)")
@@ -2229,7 +2228,6 @@ struct Optimizer: View {
                         if comfGemLvlForRestore == 3 {
                             comfGemPrice = String(gemPrices[2])
                         }
-                        print("Comf Gem Lvl 3 Price: \(gemPrices[2])")
                     }
                 } catch let jsonError as NSError {
                     print("JSON decode failed: \(jsonError.localizedDescription)")
@@ -2250,15 +2248,6 @@ struct Optimizer: View {
                 if let response = try? JSONDecoder().decode(Coins.self, from: data) {
                     DispatchQueue.main.async {
                         coinPrices = response
-                        print("\n========== Current Prices ==========")
-                        print("             GMT  $\(coinPrices.stepn.usd)")
-                        print("             SOL  $\(coinPrices.solana.usd)")
-                        print("         GST-SOL  $\(coinPrices.greenSatoshiToken.usd)")
-                        print("             BSC  $\(coinPrices.binancecoin.usd)")
-                        print("         GST-BSC  $\(coinPrices.greenSatoshiTokenBsc.usd)")
-                        print("             ETH  $\(coinPrices.ethereum.usd)")
-                        print("         GST-ETH  $\(coinPrices.greenSatoshiTokenOnEth.usd)")
-                        print("====================================\n")
                     }
                     return
                 }

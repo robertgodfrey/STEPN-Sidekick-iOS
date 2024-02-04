@@ -125,3 +125,24 @@ struct NestedGemPrice: Codable {
         self.sellPrice = sellPrice
     }
 }
+
+/*
+ --- API call for GMT numbers ---
+ https://stepn-sidekick.vercel.app/gmt
+ {
+    "a": 1.0,
+    "b": 2.0,
+    "c": 3.0
+ }
+ */
+struct GmtMagicNumbers: Codable {
+    let a: Double
+    let b: Double
+    let c: Double
+    
+    init(a: Double, b: Double, c: Double) {
+        self.a = a
+        self.b = b
+        self.c = c
+    }
+}
