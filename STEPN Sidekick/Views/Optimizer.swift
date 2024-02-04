@@ -1251,116 +1251,8 @@ struct Optimizer: View {
                                 }
                     
                             // MARK: Mystery box chances
-                            VStack {
-                                Text("Mystery Box Chance")
-                                    .font(Font.custom(fontTitles, size: 20))
-                                    .foregroundColor(Color("Almost Black"))
-                                
-                                HStack {
-                                    Image("mb1")
-                                        .resizable()
-                                        .renderingMode(mb1Chance == 0 && bestMbMatch != 1 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb1Chance > 1 || bestMbMatch == 1 ? 1 : 0.5)
-                                    
-                                    Spacer()
-                                    
-                                    Image("mb2")
-                                        .resizable()
-                                        .renderingMode(mb2Chance == 0 && bestMbMatch != 2 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb2Chance > 1 || bestMbMatch == 2 ? 1 : 0.5)
-                                    
-                                    Spacer()
-
-                                    Image("mb3")
-                                        .resizable()
-                                        .renderingMode(mb3Chance == 0 && bestMbMatch != 3 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb3Chance > 1 || bestMbMatch == 3 ? 1 : 0.5)
-
-                                    Spacer()
-
-                                    Image("mb4")
-                                        .resizable()
-                                        .renderingMode(mb4Chance == 0 && bestMbMatch != 4 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb4Chance > 1 || bestMbMatch == 4 ? 1 : 0.5)
-                                    
-                                    Spacer()
-
-                                    Image("mb5")
-                                        .resizable()
-                                        .renderingMode(mb5Chance == 0 && bestMbMatch != 5 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb5Chance > 1 || bestMbMatch == 5 ? 1 : 0.5)
-
-                                    
-                                }.padding(.horizontal, 40)
-                                    .padding(.top, 5)
-                                    .frame(maxWidth: 400)
-                                
-                                HStack {
-                                    Image("mb6")
-                                        .resizable()
-                                        .renderingMode(mb6Chance == 0 && bestMbMatch != 6 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb6Chance > 1 || bestMbMatch == 6 ? 1 : 0.5)
-                                    
-                                    Spacer()
-                                    
-                                    Image("mb7")
-                                        .resizable()
-                                        .renderingMode(mb7Chance == 0 && bestMbMatch != 7 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb7Chance > 1 || bestMbMatch == 7 ? 1 : 0.5)
-                                    
-                                    Spacer()
-
-                                    Image("mb8")
-                                        .resizable()
-                                        .renderingMode(mb8Chance == 0 && bestMbMatch != 8 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb8Chance > 1 || bestMbMatch == 8 ? 1 : 0.5)
-
-                                    Spacer()
-
-                                    Image("mb9")
-                                        .resizable()
-                                        .renderingMode(mb9Chance == 0 && bestMbMatch != 9 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb9Chance > 1 || bestMbMatch == 9 ? 1 : 0.5)
-                                    
-                                    Spacer()
-                                    
-                                    Image("mb10")
-                                        .resizable()
-                                        .renderingMode(mb10Chance == 0 && bestMbMatch != 10 ? .template : .none)
-                                        .foregroundColor(Color("Gandalf"))
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 54, height: 54)
-                                        .opacity(mb10Chance > 1 || bestMbMatch == 10 ? 1 : 0.5)
-
-                                }.padding(.horizontal, 40)
-                                    .frame(maxWidth: 400)
+                            VStack(spacing: 0) {
+                                MysteryBoxChances()
                                     
                                 Button(action: {
                                     withAnimation(.easeOut .speed(1.5)) {
@@ -1383,7 +1275,7 @@ struct Optimizer: View {
                                     )
                                 }
                                 
-                            }.padding(.top, 22)
+                            }.padding(.top, 26)
                            
                         }
                     }
@@ -3387,5 +3279,184 @@ struct CalcedTotals: View {
         usdProf -= comfGemMultiplier * comfGemPrice.doubleValue * coinPrices.stepn.usd
          
         return String(format: "%.2f", round(usdProf * 100) / 100)
+    }
+}
+
+struct MysteryBoxChances: View {
+    let mb1Chance: Float = 0
+    let mb2Chance: Float = 0
+    let mb3Chance: Float = 1
+    let mb4Chance: Float = 2
+    let mb5Chance: Float = 2
+    let mb6Chance: Float = 1
+    let mb7Chance: Float = 0
+    let mb8Chance: Float = 0
+    let mb9Chance: Float = 0
+    let mb10Chance: Float = 0
+    let bestMbMatch: Int = 4
+    
+    var body: some View {
+        VStack(spacing: 4) {
+            Text("Mystery Box Chance")
+                .font(Font.custom(fontTitles, size: 20))
+                .foregroundColor(Color("Almost Black"))
+                .padding(.bottom, 15)
+            
+            HStack {
+                VStack(spacing: 0) {
+                    Image("mb1")
+                        .resizable()
+                        .renderingMode(mb1Chance == 0 && bestMbMatch != 1 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb1Chance > 1 || bestMbMatch == 1 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+                
+                Spacer()
+                
+                VStack(spacing: 0) {
+                    Image("mb2")
+                        .resizable()
+                        .renderingMode(mb2Chance == 0 && bestMbMatch != 2 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb2Chance > 1 || bestMbMatch == 2 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+                    
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Image("mb3")
+                        .resizable()
+                        .renderingMode(mb3Chance == 0 && bestMbMatch != 3 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb3Chance > 1 || bestMbMatch == 3 ? 1 : 0.5)
+                    Text("10%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("Gandalf"))
+                }
+
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Image("mb4")
+                        .resizable()
+                        .renderingMode(mb4Chance == 0 && bestMbMatch != 4 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb4Chance > 1 || bestMbMatch == 4 ? 1 : 0.5)
+                    Text("55%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("Almost Black"))
+                }
+                
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Image("mb5")
+                        .resizable()
+                        .renderingMode(mb5Chance == 0 && bestMbMatch != 5 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb5Chance > 1 || bestMbMatch == 5 ? 1 : 0.5)
+                    Text("30%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("Almost Black"))
+                }
+
+                
+            }.padding(.horizontal, 40)
+                .padding(.top, 5)
+                .frame(maxWidth: 400)
+            
+            HStack {
+                VStack(spacing: 0) {
+                    Image("mb6")
+                        .resizable()
+                        .renderingMode(mb6Chance == 0 && bestMbMatch != 6 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb6Chance > 1 || bestMbMatch == 6 ? 1 : 0.5)
+                    Text("5%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("Gandalf"))
+                }
+                
+                Spacer()
+                
+                VStack(spacing: 0) {
+                    Image("mb7")
+                        .resizable()
+                        .renderingMode(mb7Chance == 0 && bestMbMatch != 7 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb7Chance > 1 || bestMbMatch == 7 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+                
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Image("mb8")
+                        .resizable()
+                        .renderingMode(mb8Chance == 0 && bestMbMatch != 8 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb8Chance > 1 || bestMbMatch == 8 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+                
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Image("mb9")
+                        .resizable()
+                        .renderingMode(mb9Chance == 0 && bestMbMatch != 9 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb9Chance > 1 || bestMbMatch == 9 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+                
+                Spacer()
+                
+                VStack(spacing: 0) {
+                    Image("mb10")
+                        .resizable()
+                        .renderingMode(mb10Chance == 0 && bestMbMatch != 10 ? .template : .none)
+                        .foregroundColor(Color("Gandalf"))
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 54, height: 54)
+                        .opacity(mb10Chance > 1 || bestMbMatch == 10 ? 1 : 0.5)
+                    Text("0%")
+                        .font(Font.custom(fontTitles, size: 16))
+                        .foregroundColor(Color("White"))
+                }
+
+            }.padding(.horizontal, 40)
+                .frame(maxWidth: 400)
+        }
     }
 }
