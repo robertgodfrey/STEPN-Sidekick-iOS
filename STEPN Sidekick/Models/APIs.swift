@@ -146,3 +146,18 @@ struct GmtMagicNumbers: Codable {
         self.c = c
     }
 }
+
+/*
+ --- API call for MB predictions ---
+ https://stepn-sidekick.vercel.app/mb
+ {
+    "predictions": [90,10,0,0,0,0,0,0,0,0]
+ }
+ */
+struct MbPredictions: Codable {
+    let predictions: [Int]
+    
+    init(predictions: [Int]) {
+        self.predictions = predictions
+    }
+}

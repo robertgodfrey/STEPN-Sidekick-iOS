@@ -79,7 +79,6 @@ struct MainView: View {
             request.setValue(apiKey, forHTTPHeaderField: "API-Key")
         } else {
             print("API key not found")
-            // set default GMT values
         }
 
         URLSession.shared.dataTask(with: request) { data, response, error in

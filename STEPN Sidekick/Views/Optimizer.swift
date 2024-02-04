@@ -7,7 +7,7 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 26 Feb 23
+//  Last updated 4 Feb 24
 //
 
 import SwiftUI
@@ -37,6 +37,7 @@ struct Optimizer: View {
         stepn: Coin(usd: 0))
     
     @State var gemPrices: [Double] = [0,0,0]
+    @State var mbChances: [Int] = [0,0,0,0,0,0,0,0,0,0]
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
@@ -1252,7 +1253,7 @@ struct Optimizer: View {
                     
                             // MARK: Mystery box chances
                             VStack(spacing: 0) {
-                                MysteryBoxChances()
+                                MysteryBoxChances(mbChances: mbChances)
                                     
                                 Button(action: {
                                     withAnimation(.easeOut .speed(1.5)) {
@@ -1833,199 +1834,6 @@ struct Optimizer: View {
         }
         return gstEarned(totalEff: totalEff, energyCo: energyCo, energy: energy) - repairCostGst - restoreHpCostGst
     }
-
-    // MARK: Mystery box calcs
-    // 0 = very low/no chance, 1 = low chance, 2 = high chance
-    var mb1Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelOneLine = totalLuck < 1000 ? -0.6 * log(totalLuck + 15) + 4.1 : -99
-        
-        if localEnergy >= levelOneLine - 1.2 && localEnergy <= levelOneLine + 1.2 {
-            return 2
-        }
-        if localEnergy >= levelOneLine - 1.8 && localEnergy <= levelOneLine + 2.6 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb2Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelTwoLine = totalLuck < 1500 ? -1.2 * log(totalLuck + 5) + 8.2 : -99
-        
-        if localEnergy >= levelTwoLine - 1.6 && localEnergy <= levelTwoLine + 1.6 {
-            return 2
-        }
-        if localEnergy >= levelTwoLine - 2.2 && localEnergy <= levelTwoLine + 2.6 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb3Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelThreeLine = totalLuck < 2000 ? -2.1 * log(totalLuck + 10) + 14.9 : -99
-        
-        if localEnergy >= levelThreeLine - 2.6 && localEnergy <= levelThreeLine + 2.4 {
-            return 2
-        }
-        if localEnergy >= levelThreeLine - 3.6 && localEnergy <= levelThreeLine + 4.6 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb4Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelFourLine = totalLuck < 4000 ? -2.8 * log(totalLuck + 5) + 22.1 : -99
-        
-        if localEnergy >= levelFourLine - 3 && localEnergy <= levelFourLine + 3.1 {
-            return 2
-        }
-        if localEnergy >= levelFourLine - 5 && localEnergy <= levelFourLine + 6.6 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb5Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelFiveLine = -2.9 * log(totalLuck + 10) + 27.7
-        
-        if localEnergy >= levelFiveLine - 2.6 && localEnergy <= levelFiveLine + 2.7 {
-            return 2
-        }
-        if localEnergy >= levelFiveLine - 5.5 && localEnergy <= levelFiveLine + 7 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb6Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelSixLine = -3 * log(totalLuck + 10) + 35
-
-        if localEnergy >= levelSixLine - 3.9 && localEnergy <= levelSixLine + 4.7 {
-            return 2
-        }
-        if localEnergy >= levelSixLine - 6 && localEnergy <= levelSixLine + 7 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb7Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelSevenLine = -4 * log(totalLuck - 100) + 47
-        
-        if localEnergy >= levelSevenLine - 3.8 && localEnergy <= levelSevenLine + 3.4 {
-            return 2
-        }
-        if localEnergy >= levelSevenLine - 6 && localEnergy <= levelSevenLine + 8 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb8Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelEightLine = -5 * log(totalLuck - 650) + 58
-        
-        if localEnergy >= levelEightLine - 2.6 && localEnergy <= levelEightLine + 2.1 {
-            return 2
-        }
-        if localEnergy >= levelEightLine - 6 && localEnergy <= levelEightLine + 8 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb9Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelNineLine = -6 * log(totalLuck - 1000) + 68.5
-        
-        if localEnergy >= levelNineLine - 2.6 && localEnergy <= levelNineLine + 2.1 {
-            return 2
-        }
-        if localEnergy >= levelNineLine - 7 && localEnergy <= levelNineLine + 7 {
-            return 1
-        }
-        return 0
-    }
-    
-    var mb10Chance: Int {
-        let localEnergy = energy.doubleValue
-        let levelTenLine = -6 * log(totalLuck - 2000) + 70.5
-        
-        if localEnergy >= levelTenLine - 1.4 {
-            return 2
-        }
-        if localEnergy >= levelTenLine - 4 {
-            return 1
-        }
-        return 0
-    }
-    
-    // not efficient but don't care
-    var bestMbMatch: Int {
-        let localEnergy = energy.doubleValue
-
-        if localEnergy < 2 {
-            return 0
-        }
-        
-        let levelOneLine = totalLuck < 1000 ? -0.6 * log(totalLuck + 15) + 4.1 : -99
-        let levelTwoLine = totalLuck < 1500 ? -1.2 * log(totalLuck + 5) + 8.2 : -99
-        let levelThreeLine = totalLuck < 2000 ? -2.1 * log(totalLuck + 10) + 14.9 : -99
-        let levelFourLine = totalLuck < 4000 ? -2.8 * log(totalLuck + 5) + 22.1 : -99
-        let levelFiveLine = -2.9 * log(totalLuck + 10) + 27.7
-        let levelSixLine = -3 * log(totalLuck + 10) + 35
-        let levelSevenLine = -4 * log(totalLuck - 100) + 47
-        let levelEightLine = -5 * log(totalLuck - 650) + 58
-        let levelNineLine = -6 * log(totalLuck - 1000) + 68.5
-        let levelTenLine = -6 * log(totalLuck - 2000) + 70.5
-        
-        var best = 1
-        
-        var minVal = abs(localEnergy - abs(levelOneLine))
-        
-        if abs(localEnergy - abs(levelTwoLine)) < minVal {
-            minVal = abs(localEnergy - abs(levelTwoLine))
-            best = 2
-        }
-        if (abs(localEnergy - abs(levelThreeLine)) < minVal) {
-            minVal = abs(localEnergy - abs(levelThreeLine))
-            best = 3
-        }
-        if (abs(localEnergy - abs(levelFourLine)) < minVal) {
-            minVal = abs(localEnergy - abs(levelFourLine))
-            best = 4
-        }
-        if (abs(localEnergy - abs(levelFiveLine)) < minVal) {
-            minVal = abs(localEnergy - abs(levelFiveLine))
-            best = 5
-        }
-        if (abs(localEnergy - abs(levelSixLine)) < minVal) {
-            minVal = abs(localEnergy - abs(levelSixLine))
-            best = 6
-        }
-        if (abs(localEnergy - abs(levelSevenLine)) < minVal) {
-            minVal = abs(localEnergy - abs(levelSevenLine))
-            best = 7
-        }
-        if (abs(localEnergy - levelEightLine) < minVal) {
-            minVal = abs(localEnergy - levelEightLine)
-            best = 8
-        }
-        if (abs(localEnergy - levelNineLine) < minVal) {
-            minVal = abs(localEnergy - levelNineLine)
-            best = 9
-        }
-        if (abs(localEnergy - levelTenLine) < minVal) {
-            best = 10
-        }
-        return best
-    }
     
     var energyCo: Double {
         switch (shoeType) {
@@ -2142,6 +1950,36 @@ struct Optimizer: View {
                         coinPrices = response
                     }
                     return
+                }
+            }
+        }.resume()
+    }
+    
+    func mbApiCall() {
+        print("https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)")
+        guard let mbUrl = URL(string: "https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)") else {
+            print("Invalid URL")
+            return
+        }
+        var request = URLRequest(url: mbUrl)
+        if let apiKey = Bundle.main.infoDictionary?["SidekickAPI"] as? String {
+            request.setValue(apiKey, forHTTPHeaderField: "API-Key")
+        } else {
+            print("API key not found")
+        }
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let response = try JSONDecoder().decode(MbPredictions.self, from: data)
+                    DispatchQueue.main.async {
+                        mbChances = response.predictions
+                        print("======== SIDEKICK API ========")
+                        print("       MB PREDICTIONS")
+                        print(mbChances)
+                    }
+                } catch let jsonError as NSError {
+                    print("JSON decode failed: \(jsonError.localizedDescription)")
                 }
             }
         }.resume()
@@ -3283,17 +3121,7 @@ struct CalcedTotals: View {
 }
 
 struct MysteryBoxChances: View {
-    let mb1Chance: Float = 0
-    let mb2Chance: Float = 0
-    let mb3Chance: Float = 1
-    let mb4Chance: Float = 2
-    let mb5Chance: Float = 2
-    let mb6Chance: Float = 1
-    let mb7Chance: Float = 0
-    let mb8Chance: Float = 0
-    let mb9Chance: Float = 0
-    let mb10Chance: Float = 0
-    let bestMbMatch: Int = 4
+    var mbChances: [Int]
     
     var body: some View {
         VStack(spacing: 4) {
@@ -3306,14 +3134,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb1")
                         .resizable()
-                        .renderingMode(mb1Chance == 0 && bestMbMatch != 1 ? .template : .none)
+                        .renderingMode(mbChances[0] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb1Chance > 1 || bestMbMatch == 1 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[0] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[0])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[0] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[0] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3321,14 +3150,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb2")
                         .resizable()
-                        .renderingMode(mb2Chance == 0 && bestMbMatch != 2 ? .template : .none)
+                        .renderingMode(mbChances[1] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb2Chance > 1 || bestMbMatch == 2 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[1] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[1])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[1] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[1] > 0 ? 1 : 0)
                 }
                     
                 Spacer()
@@ -3336,14 +3166,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb3")
                         .resizable()
-                        .renderingMode(mb3Chance == 0 && bestMbMatch != 3 ? .template : .none)
+                        .renderingMode(mbChances[2] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb3Chance > 1 || bestMbMatch == 3 ? 1 : 0.5)
-                    Text("10%")
+                        .opacity(mbChances[2] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[2])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("Gandalf"))
+                        .foregroundColor(mbChances[2] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[2] > 0 ? 1 : 0)
                 }
 
                 Spacer()
@@ -3351,14 +3182,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb4")
                         .resizable()
-                        .renderingMode(mb4Chance == 0 && bestMbMatch != 4 ? .template : .none)
+                        .renderingMode(mbChances[3] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb4Chance > 1 || bestMbMatch == 4 ? 1 : 0.5)
-                    Text("55%")
+                        .opacity(mbChances[3] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[3])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("Almost Black"))
+                        .foregroundColor(mbChances[3] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[3] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3366,14 +3198,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb5")
                         .resizable()
-                        .renderingMode(mb5Chance == 0 && bestMbMatch != 5 ? .template : .none)
+                        .renderingMode(mbChances[4] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb5Chance > 1 || bestMbMatch == 5 ? 1 : 0.5)
-                    Text("30%")
+                        .opacity(mbChances[4] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[4])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("Almost Black"))
+                        .foregroundColor(mbChances[4] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[4] > 0 ? 1 : 0)
                 }
 
                 
@@ -3385,14 +3218,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb6")
                         .resizable()
-                        .renderingMode(mb6Chance == 0 && bestMbMatch != 6 ? .template : .none)
+                        .renderingMode(mbChances[5] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb6Chance > 1 || bestMbMatch == 6 ? 1 : 0.5)
-                    Text("5%")
+                        .opacity(mbChances[5] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[5])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("Gandalf"))
+                        .foregroundColor(mbChances[5] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[5] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3400,14 +3234,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb7")
                         .resizable()
-                        .renderingMode(mb7Chance == 0 && bestMbMatch != 7 ? .template : .none)
+                        .renderingMode(mbChances[6] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb7Chance > 1 || bestMbMatch == 7 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[6] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[6])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[6] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[6] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3415,14 +3250,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb8")
                         .resizable()
-                        .renderingMode(mb8Chance == 0 && bestMbMatch != 8 ? .template : .none)
+                        .renderingMode(mbChances[7] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb8Chance > 1 || bestMbMatch == 8 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[7] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[7])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[7] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[7] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3430,14 +3266,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb9")
                         .resizable()
-                        .renderingMode(mb9Chance == 0 && bestMbMatch != 9 ? .template : .none)
+                        .renderingMode(mbChances[8] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb9Chance > 1 || bestMbMatch == 9 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[8] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[8])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[8] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[8] > 0 ? 1 : 0)
                 }
                 
                 Spacer()
@@ -3445,14 +3282,15 @@ struct MysteryBoxChances: View {
                 VStack(spacing: 0) {
                     Image("mb10")
                         .resizable()
-                        .renderingMode(mb10Chance == 0 && bestMbMatch != 10 ? .template : .none)
+                        .renderingMode(mbChances[9] == 0 ? .template : .none)
                         .foregroundColor(Color("Gandalf"))
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
-                        .opacity(mb10Chance > 1 || bestMbMatch == 10 ? 1 : 0.5)
-                    Text("0%")
+                        .opacity(mbChances[9] >= 30 ? 1 : 0.5)
+                    Text("\(mbChances[9])%")
                         .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(Color("White"))
+                        .foregroundColor(mbChances[9] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                        .opacity(mbChances[9] > 0 ? 1 : 0)
                 }
 
             }.padding(.horizontal, 40)
