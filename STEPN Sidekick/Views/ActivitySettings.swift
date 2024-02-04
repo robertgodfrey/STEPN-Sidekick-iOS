@@ -647,7 +647,7 @@ struct ActivitySettings: View {
                   dismissButton: .default(Text("Okay")))
         }
         .onAppear {
-            let currentAppVersion: Double = 1.4
+            let currentAppVersion: Double = 1.5
             if firstTime {
                 savedAppVersion = currentAppVersion
             } else if savedAppVersion < currentAppVersion {

@@ -27,7 +27,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Comfort gem prices in the optimizer are now filled automagically with current floor prices from the marketplace (gem levels 1-3)")
+                        Text("Mystery box chances are now displayed as percentages to give a better idea of what kind of mystery box to expect")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -40,20 +40,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("These prices are updated every 15 minutes, so they might be slightly off of what you see in the markeplace")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                        
-                        Spacer()
-
-                    }
-                    
-                    HStack(alignment: .top) {
-                        Text("•")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                    
-                        Text("You still have the ability to edit these prices by selecting the red box and entering a number")
+                        Text("GMT earning predications have been updated and the calculation has been modified so it will be more easy to keep up to date in the future")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
