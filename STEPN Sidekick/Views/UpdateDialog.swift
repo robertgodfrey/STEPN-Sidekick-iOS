@@ -27,20 +27,33 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Mystery box chances are now displayed as percentages to give a better idea of what kind of mystery box to expect")
+                        Text("Mystery box chances are now displayed as percentages to give a better idea of what kind of mystery box to expect.")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
 
                     }
-                    
+
                     HStack(alignment: .top) {
                         Text("•")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("GMT earning predications have been updated and the calculation has been modified so it will be more easy to keep up to date in the future")
+                        Text("These percentages are based on a prediction model that uses community data gathered by the gam3.fi team. The predictions will improve as more data is gathered.")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Spacer()
+
+                    }
+
+                    HStack(alignment: .top) {
+                        Text("•")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                    
+                        Text("GMT earning predications have been updated and the calculation has been modified so it will be easier to keep up to date in the future.")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         

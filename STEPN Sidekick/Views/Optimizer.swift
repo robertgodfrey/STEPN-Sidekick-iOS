@@ -1417,6 +1417,12 @@ struct Optimizer: View {
                 shoes.update(shoe: currentShoe, i: shoeNum - 1)
                 imageUrls.update(url: imageUrl, i: shoeNum - 1)
             }
+            .onChange(of: energy) { _ in
+                mbApiCall()
+            }
+            .onChange(of: totalLuck) { _ in
+                mbApiCall()
+            }
     }
     
     // MARK: Gmt calcs
@@ -1956,7 +1962,6 @@ struct Optimizer: View {
     }
     
     func mbApiCall() {
-        print("https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)")
         guard let mbUrl = URL(string: "https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)") else {
             print("Invalid URL")
             return
@@ -1974,9 +1979,6 @@ struct Optimizer: View {
                     let response = try JSONDecoder().decode(MbPredictions.self, from: data)
                     DispatchQueue.main.async {
                         mbChances = response.predictions
-                        print("======== SIDEKICK API ========")
-                        print("       MB PREDICTIONS")
-                        print(mbChances)
                     }
                 } catch let jsonError as NSError {
                     print("JSON decode failed: \(jsonError.localizedDescription)")
