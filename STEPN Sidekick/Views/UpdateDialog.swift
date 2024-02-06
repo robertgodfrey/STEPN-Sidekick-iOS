@@ -27,7 +27,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("Mystery box chances are now displayed as percentages to give a better idea of what kind of mystery box to expect.")
+                        Text("Mystery box probabilities are now displayed to give a better idea of what level of box you can expect")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
@@ -40,12 +40,25 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("These percentages are based on a prediction model that uses community data gathered by the gam3.fi team. The predictions will improve as more data is gathered.")
+                        Text("Probabilities are based on a prediction model that uses community data gathered by the gam3.fi team")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
                         Spacer()
 
+                    }
+                    
+                    HStack(alignment: .top) {
+                        Text("•")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Text("Theses predictions are not perfect and will continue to improve as more data is analyzed")
+                            .font(Font.custom(fontRegText, size: 17))
+                            .foregroundColor(Color("Almost Black"))
+                        
+                        Spacer()
+                        
                     }
 
                     HStack(alignment: .top) {
@@ -53,7 +66,7 @@ struct UpdateDialog: View {
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                     
-                        Text("GMT earning predications have been updated and the calculation has been modified so it will be easier to keep up to date in the future.")
+                        Text("GMT earning estimates have been updated (and will be updated more often in the future)")
                             .font(Font.custom(fontRegText, size: 17))
                             .foregroundColor(Color("Almost Black"))
                         
