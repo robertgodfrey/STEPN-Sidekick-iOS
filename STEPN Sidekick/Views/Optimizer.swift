@@ -38,6 +38,7 @@ struct Optimizer: View {
     
     @State var gemPrices: [Double] = [0,0,0]
     @State var mbChances: [Int] = [0,0,0,0,0,0,0,0,0,0]
+    @State var mbApiCallLoading: Bool = false
     
     @State private var offset: CGFloat = 0
     @State private var lastOffset: CGFloat = 0
@@ -1253,7 +1254,7 @@ struct Optimizer: View {
                     
                             // MARK: Mystery box chances
                             VStack(spacing: 0) {
-                                MysteryBoxChances(mbChances: mbChances)
+                                MysteryBoxChances(mbChances: mbChances, mbApiCallLoading: mbApiCallLoading)
                                     
                                 Button(action: {
                                     withAnimation(.easeOut .speed(1.5)) {
@@ -1966,6 +1967,7 @@ struct Optimizer: View {
         if energy.doubleValue == 0 || totalLuck == 0 {
             return
         }
+        mbApiCallLoading = true
         guard let mbUrl = URL(string: "https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)") else {
             print("Invalid URL")
             return
@@ -1983,9 +1985,11 @@ struct Optimizer: View {
                     let response = try JSONDecoder().decode(MbPredictions.self, from: data)
                     DispatchQueue.main.async {
                         mbChances = response.predictions
+                        mbApiCallLoading = false
                     }
                 } catch let jsonError as NSError {
                     print("JSON decode failed: \(jsonError.localizedDescription)")
+                    mbApiCallLoading = false
                 }
             }
         }.resume()
@@ -3127,7 +3131,8 @@ struct CalcedTotals: View {
 }
 
 struct MysteryBoxChances: View {
-    var mbChances: [Int]
+    let mbChances: [Int]
+    let mbApiCallLoading: Bool
     
     var body: some View {
         VStack(spacing: 4) {
@@ -3177,10 +3182,15 @@ struct MysteryBoxChances: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 54, height: 54)
                         .opacity(mbChances[2] >= 30 ? 1 : 0.5)
-                    Text("\(mbChances[2])%")
-                        .font(Font.custom(fontTitles, size: 16))
-                        .foregroundColor(mbChances[2] >= 30 ? Color("Almost Black") : Color("Gandalf"))
-                        .opacity(mbChances[2] > 0 ? 1 : 0)
+                    ZStack {
+                        Text("\(mbChances[2])%")
+                            .font(Font.custom(fontTitles, size: 16))
+                            .foregroundColor(mbChances[2] >= 30 ? Color("Almost Black") : Color("Gandalf"))
+                            .opacity(mbChances[2] > 0 ? 1 : 0)
+                        ProgressView()
+                            .padding(.top, 5)
+                            .opacity(mbApiCallLoading ? 1 : 0)
+                    }
                 }
 
                 Spacer()
