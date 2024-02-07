@@ -47,19 +47,6 @@ struct UpdateDialog: View {
                         Spacer()
 
                     }
-                    
-                    HStack(alignment: .top) {
-                        Text("•")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                        
-                        Text("Theses predictions are not perfect and will continue to improve as more data is analyzed")
-                            .font(Font.custom(fontRegText, size: 17))
-                            .foregroundColor(Color("Almost Black"))
-                        
-                        Spacer()
-                        
-                    }
 
                     HStack(alignment: .top) {
                         Text("•")

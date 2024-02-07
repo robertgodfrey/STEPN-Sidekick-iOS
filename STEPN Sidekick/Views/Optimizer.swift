@@ -1962,6 +1962,10 @@ struct Optimizer: View {
     }
     
     func mbApiCall() {
+        mbChances = [0,0,0,0,0,0,0,0,0,0]
+        if energy.doubleValue == 0 || totalLuck == 0 {
+            return
+        }
         guard let mbUrl = URL(string: "https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)") else {
             print("Invalid URL")
             return
