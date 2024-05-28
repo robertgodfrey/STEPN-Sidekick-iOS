@@ -128,7 +128,7 @@ struct NestedGemPrice: Codable {
 
 /*
  --- API call for GMT numbers ---
- https://stepn-sidekick.vercel.app/gmt
+ http://api.stepnsidekick.com/gmt/numbers
  {
     "a": 1.0,
     "b": 2.0,
@@ -149,15 +149,18 @@ struct GmtMagicNumbers: Codable {
 
 /*
  --- API call for MB predictions ---
- https://stepn-sidekick.vercel.app/mb
+ http://api.stepnsidekick.com/mb/{energy}
  {
-    "predictions": [90,10,0,0,0,0,0,0,0,0]
+    "luck": {"1": 0, "11": 0, "21": 1, ... },
+    "probabilities": [[0,0,0,0,0,0,0,0,0,0], ...]
  }
  */
 struct MbPredictions: Codable {
-    let predictions: [Int]
+    let probabilities: [[Int]]
+    let luck: [String: Int]
     
-    init(predictions: [Int]) {
-        self.predictions = predictions
+    init(probabilities: [[Int]], luck: [String: Int]) {
+        self.probabilities = probabilities
+        self.luck = luck
     }
 }

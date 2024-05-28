@@ -70,16 +70,11 @@ struct MainView: View {
     }
     
     func gmtNumsApiCall() {
-        guard let url = URL(string: "https://stepn-sidekick.vercel.app/gmt") else {
+        guard let url = URL(string: "http://api.stepnsidekick.com/gmt/numbers") else {
             print("Invalid URL")
             return
         }
-        var request = URLRequest(url: url)
-        if let apiKey = Bundle.main.infoDictionary?["SidekickAPI"] as? String {
-            request.setValue(apiKey, forHTTPHeaderField: "API-Key")
-        } else {
-            print("API key not found")
-        }
+        let request = URLRequest(url: url)
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {

@@ -1968,23 +1968,25 @@ struct Optimizer: View {
             return
         }
         mbApiCallLoading = true
-        guard let mbUrl = URL(string: "https://stepn-sidekick.vercel.app/mb?energy=\(energy)&luck=\(totalLuck)") else {
+        guard let mbUrl = URL(string: "http://api.stepnsidekick.com/mb/\(energy.doubleValue)") else {
             print("Invalid URL")
             return
         }
-        var request = URLRequest(url: mbUrl)
-        if let apiKey = Bundle.main.infoDictionary?["SidekickAPI"] as? String {
-            request.setValue(apiKey, forHTTPHeaderField: "API-Key")
-        } else {
-            print("API key not found")
-        }
-
+        let request = URLRequest(url: mbUrl)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(MbPredictions.self, from: data)
                     DispatchQueue.main.async {
-                        mbChances = response.predictions
+                        let gap = Int((totalLuck - 1).rounded()) % 10
+                        var roundedLuck = Int((totalLuck).rounded()) - gap;
+                        if gap > 5 {
+                            roundedLuck += 10
+                        }
+                        if roundedLuck > 11261 {
+                            roundedLuck = 11261
+                        }
+                        mbChances = response.probabilities[response.luck[String(roundedLuck)] ?? 0]
                         mbApiCallLoading = false
                     }
                 } catch let jsonError as NSError {
