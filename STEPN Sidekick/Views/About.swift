@@ -194,7 +194,7 @@ struct About: View {
                                         .foregroundColor(Color("Almost Black"))
                                         .fixedSize(horizontal: false, vertical: true)
                                     HStack {
-                                        Link(destination: URL(string: "https://twitter.com/KuritoSensei")!) {
+                                        Link(destination: URL(string: "https://x.com/KuritoSensei")!) {
                                             Text("@KuritoSensei")
                                                 .font(Font.custom("Roboto-Medium", size: 15))
                                                 .foregroundColor(Color("Link Blue"))
@@ -209,7 +209,7 @@ struct About: View {
                                         .foregroundColor(Color("Almost Black"))
                                         .fixedSize(horizontal: false, vertical: true)
                                     HStack {
-                                        Link(destination: URL(string: "https://twitter.com/Karl_Khader")!) {
+                                        Link(destination: URL(string: "https://x.com/Karl_Khader")!) {
                                             Text("@Karl_Khader")
                                                 .font(Font.custom("Roboto-Medium", size: 15))
                                                 .foregroundColor(Color("Link Blue"))
@@ -224,7 +224,7 @@ struct About: View {
                                         .foregroundColor(Color("Almost Black"))
                                         .fixedSize(horizontal: false, vertical: true)
                                     HStack {
-                                        Link(destination: URL(string: "https://twitter.com/otik_x")!) {
+                                        Link(destination: URL(string: "https://x.com/otik_x")!) {
                                             Text("@otik_x")
                                                 .font(Font.custom("Roboto-Medium", size: 15))
                                                 .foregroundColor(Color("Link Blue"))
@@ -297,7 +297,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 13))
                                     .foregroundColor(Color("Almost Black"))
                                 
-                                Link(destination: URL(string: "https://twitter.com/t2_stepn")!) {
+                                Link(destination: URL(string: "https://x.com/t2_stepn")!) {
                                     Text("@t2_stepn")
                                         .font(Font.custom("Roboto-Medium", size: 13))
                                         .foregroundColor(Color("Link Blue"))
@@ -305,8 +305,8 @@ struct About: View {
                             }.padding(.top, 5)
                          
                             VStack {
-                                Link(destination: URL(string: "https://www.gam3.fi/stepn/mb-chart/")!) {
-                                    Image("gamefi")
+                                Link(destination: URL(string: "https://www.forgeblast.com/stepn/mb-chart/")!) {
+                                    Image("forgeblast")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 210)
@@ -316,8 +316,8 @@ struct About: View {
                                         .font(Font.custom("Roboto-Regular", size: 13))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Link(destination: URL(string: "https://twitter.com/gam3_fi")!) {
-                                        Text("@gam3_fi")
+                                    Link(destination: URL(string: "https://x.com/ForgeBlast_")!) {
+                                        Text("@ForgeBlast_")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
                                     }
@@ -340,7 +340,7 @@ struct About: View {
                                     .font(Font.custom("Roboto-Regular", size: 13))
                                     .foregroundColor(Color("Almost Black"))
                                 
-                                Link(destination: URL(string: "https://twitter.com/StepnFP")!) {
+                                Link(destination: URL(string: "https://x.com/StepnFP")!) {
                                     Text("@StepnFP")
                                         .font(Font.custom("Roboto-Medium", size: 13))
                                         .foregroundColor(Color("Link Blue"))
@@ -361,7 +361,7 @@ struct About: View {
                                         .font(Font.custom("Roboto-Regular", size: 13))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Link(destination: URL(string: "https://twitter.com/STEPNwiki")!) {
+                                    Link(destination: URL(string: "https://x.com/STEPNwiki")!) {
                                         Text("@STEPNwiki")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
@@ -383,7 +383,7 @@ struct About: View {
                                         .font(Font.custom("Roboto-Regular", size: 13))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Link(destination: URL(string: "https://twitter.com/Vanxhh")!) {
+                                    Link(destination: URL(string: "https://x.com/Vanxhh")!) {
                                         Text("@Vanxhh")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
@@ -404,7 +404,7 @@ struct About: View {
                                         .font(Font.custom("Roboto-Regular", size: 13))
                                         .foregroundColor(Color("Almost Black"))
                                     
-                                    Link(destination: URL(string: "https://twitter.com/Stepappturkey")!) {
+                                    Link(destination: URL(string: "https://x.com/Stepappturkey")!) {
                                         Text("@Stepappturkey")
                                             .font(Font.custom("Roboto-Medium", size: 13))
                                             .foregroundColor(Color("Link Blue"))
