@@ -37,6 +37,8 @@ struct Optimizer: View {
         stepn: Coin(usd: 0))
     
     @State var gemPrices: [Double] = [0,0,0]
+    @State var mbLuckIndices: [Int] = []
+    @State var mbProbabilites: [[Int]] = [[]]
     @State var mbChances: [Int] = [0,0,0,0,0,0,0,0,0,0]
     @State var mbApiCallLoading: Bool = false
     
@@ -50,6 +52,7 @@ struct Optimizer: View {
     @State private var imageUrl = ""
     
     @State private var shoeName: String = ""
+    @State private var currentEnergyInput: String = ""
     @State private var energy: String = ""
     @State private var shoeLevel: Double = 1
     @State private var pointsAvailable: Int = 0
@@ -509,7 +512,7 @@ struct Optimizer: View {
                                             .padding(.trailing, 14)
                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
                                         
-                                        TextField("0.0", text: $energy, onEditingChanged: { (editingChanged) in
+                                        TextField("0.0", text: $currentEnergyInput, onEditingChanged: { (editingChanged) in
                                             if editingChanged {
                                                 energySelected = true
                                                 withAnimation(.easeOut .speed(1.5)) {
@@ -517,6 +520,11 @@ struct Optimizer: View {
                                                 }
                                             } else {
                                                 energySelected = false
+                                                var newEnergy = currentEnergyInput
+                                                if newEnergy.doubleValue > 25 {
+                                                    newEnergy = "25"
+                                                }
+                                                self.energy = String(newEnergy.prefix(4))
                                             }})
                                             .padding(.trailing, 6)
                                             .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
@@ -524,12 +532,6 @@ struct Optimizer: View {
                                             .multilineTextAlignment(.center)
                                             .foregroundColor(Color("Almost Black"))
                                             .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
-                                            .onReceive(energy.publisher.collect()) {
-                                                self.energy = String($0.prefix(4))
-                                                if energy.doubleValue > 25 {
-                                                    energy = "25"
-                                                }
-                                            }
                                     }
                                 }
                             }.padding(.horizontal, 40)
@@ -1370,6 +1372,7 @@ struct Optimizer: View {
                 shoeType = shoes.getShoe(shoeNum - 1).shoeType
                 shoeName = shoes.getShoe(shoeNum - 1).shoeName
                 energy = shoes.getShoe(shoeNum - 1).energy
+                currentEnergyInput = shoes.getShoe(shoeNum - 1).energy
                 shoeLevel = shoes.getShoe(shoeNum - 1).shoeLevel
                 pointsAvailable = shoes.getShoe(shoeNum - 1).pointsAvailable
                 baseEffString = shoes.getShoe(shoeNum - 1).baseEffString
@@ -1422,7 +1425,7 @@ struct Optimizer: View {
                 mbApiCall()
             }
             .onChange(of: totalLuck) { _ in
-                mbApiCall()
+                findMbProbs()
             }
     }
     
@@ -1964,6 +1967,7 @@ struct Optimizer: View {
     
     func mbApiCall() {
         mbChances = [0,0,0,0,0,0,0,0,0,0]
+        mbLuckIndices = []
         if energy.doubleValue == 0 || totalLuck == 0 {
             return
         }
@@ -1978,23 +1982,35 @@ struct Optimizer: View {
                 do {
                     let response = try JSONDecoder().decode(MbPredictions.self, from: data)
                     DispatchQueue.main.async {
-                        let gap = Int((totalLuck - 1).rounded()) % 10
-                        var roundedLuck = Int((totalLuck).rounded()) - gap;
-                        if gap > 5 {
-                            roundedLuck += 10
-                        }
-                        if roundedLuck > 11261 {
-                            roundedLuck = 11261
-                        }
-                        mbChances = response.probabilities[response.luck[String(roundedLuck)] ?? 0]
+                        mbProbabilites = response.probabilities
+                        mbLuckIndices = response.luck
+                        findMbProbs()
                         mbApiCallLoading = false
                     }
                 } catch let jsonError as NSError {
-                    print("JSON decode failed: \(jsonError.localizedDescription)")
+                    print(String(data: data, encoding: .utf8))
+                    print("MB JSON decode failed: \(jsonError.localizedDescription)")
+                    print(String(describing: jsonError))
                     mbApiCallLoading = false
                 }
             }
         }.resume()
+    }
+    
+    func findMbProbs() {
+        if mbLuckIndices.count < 1 {
+            return
+        }
+        let gap = Int((totalLuck - 1).rounded()) % 10
+        var roundedLuck = Int((totalLuck).rounded()) - gap;
+        if gap > 5 {
+            roundedLuck += 10
+        }
+        if roundedLuck > 11261 {
+            roundedLuck = 11261
+        }
+        let index = (roundedLuck - 1) / 10
+        mbChances = mbProbabilites[mbLuckIndices[index]]
     }
     
     func getGemInputWidth(length: Int) -> CGFloat {
@@ -2473,6 +2489,7 @@ struct Optimizer: View {
         shoeType = shoes.getShoe(shoeToLoad - 1).shoeType
         shoeName = shoes.getShoe(shoeToLoad - 1).shoeName
         energy = shoes.getShoe(shoeToLoad - 1).energy
+        currentEnergyInput = shoes.getShoe(shoeToLoad - 1).energy
         shoeLevel = shoes.getShoe(shoeToLoad - 1).shoeLevel
         pointsAvailable = shoes.getShoe(shoeToLoad - 1).pointsAvailable
         baseEffString = shoes.getShoe(shoeToLoad - 1).baseEffString
@@ -2501,6 +2518,7 @@ struct Optimizer: View {
         shoeRarity = common
         shoeLevel = 1
         energy = "0"
+        currentEnergyInput = "0"
         baseEffString = "0"
         addedEff = 0
         baseLuckString = "0"

@@ -151,15 +151,15 @@ struct GmtMagicNumbers: Codable {
  --- API call for MB predictions ---
  http://api.stepnsidekick.com/mb/{energy}
  {
-    "luck": {"1": 0, "11": 0, "21": 1, ... },
+    "luck": [0, 0, 1, ... ],
     "probabilities": [[0,0,0,0,0,0,0,0,0,0], ...]
  }
  */
 struct MbPredictions: Codable {
     let probabilities: [[Int]]
-    let luck: [String: Int]
+    let luck: [Int]
     
-    init(probabilities: [[Int]], luck: [String: Int]) {
+    init(probabilities: [[Int]], luck: [Int]) {
         self.probabilities = probabilities
         self.luck = luck
     }
