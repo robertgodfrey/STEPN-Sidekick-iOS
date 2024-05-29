@@ -20,6 +20,7 @@ struct Optimizer: View {
     @AppStorage("gmtNumA") private var gmtNumA: Double = 0.0696
     @AppStorage("gmtNumB") private var gmtNumB: Double = 0.4821
     @AppStorage("gmtNumC") private var gmtNumC: Double = 0.25
+    @AppStorage("shoesLocked") private var shoesLockedData: Data = Data()
     
     @EnvironmentObject var shoes: OptimizerShoes
     @EnvironmentObject var imageUrls: ShoeImages
@@ -54,8 +55,10 @@ struct Optimizer: View {
     @State private var shoeName: String = ""
     @State private var currentEnergyInput: String = ""
     @State private var energy: String = ""
+    @State private var invalidEnergy: Bool = false
     @State private var shoeLevel: Double = 1
     @State private var pointsAvailable: Int = 0
+    @State private var shoesLocked: [Bool] = [false, false, false, false, false, false]
 
     @State private var baseEffString: String = ""
     @State private var baseLuckString: String = ""
@@ -315,6 +318,19 @@ struct Optimizer: View {
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
                                     
+                                    Image(shoesLocked[shoeNum - 1] ? "shoe_lock_closed" : "shoe_lock_open")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 20, height: 20)
+                                        .padding(10)
+                                        .background(Color.clear)
+                                        .contentShape(Rectangle())
+                                        .offset(x: 98, y: 0)
+                                        .onTapGesture(perform: {
+                                            clearFocus()
+                                            shoesLocked[shoeNum - 1] = !shoesLocked[shoeNum - 1]
+                                        })
+                                    
                                 }.padding(.top, -10)
                                 
                                 // MARK: Shoe selector
@@ -524,6 +540,11 @@ struct Optimizer: View {
                                                 if newEnergy.doubleValue > 25 {
                                                     newEnergy = "25"
                                                 }
+                                                if Int(round(newEnergy.doubleValue * 10)) % 2 != 0 {
+                                                    invalidEnergy = true
+                                                } else {
+                                                    invalidEnergy = false
+                                                }
                                                 self.energy = String(newEnergy.prefix(4))
                                             }})
                                             .padding(.trailing, 6)
@@ -536,6 +557,11 @@ struct Optimizer: View {
                                 }
                             }.padding(.horizontal, 40)
                                 .frame(maxWidth: 400)
+                                .alert(isPresented: $invalidEnergy) {
+                                    Alert(title: Text("Invalid Energy"),
+                                          message: Text("Energy should be a multiple of 0.2"),
+                                          dismissButton: .default(Text("Okay")))
+                                }
                             
                             // MARK: Level slider
                             ZStack {
@@ -1393,6 +1419,7 @@ struct Optimizer: View {
                 tokenApiCall()
                 gemApiCall()
                 updatePoints()
+                loadShoesLocked()
             }
             .onDisappear {
                 let currentShoe: OptimizerShoe = OptimizerShoe(
@@ -1427,6 +1454,21 @@ struct Optimizer: View {
             .onChange(of: totalLuck) { _ in
                 findMbProbs()
             }
+            .onChange(of: shoesLocked) { _ in
+                saveShoesLocked()
+            }
+    }
+    
+    func loadShoesLocked() {
+        if let decoded = try? JSONDecoder().decode([Bool].self, from: shoesLockedData) {
+            shoesLocked = decoded
+        }
+    }
+    
+    func saveShoesLocked() {
+        if let encoded = try? JSONEncoder().encode(shoesLocked) {
+            shoesLockedData = encoded
+        }
     }
     
     // MARK: Gmt calcs
