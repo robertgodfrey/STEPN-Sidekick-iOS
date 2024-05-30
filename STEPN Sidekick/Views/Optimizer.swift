@@ -96,6 +96,7 @@ struct Optimizer: View {
     @State private var gemLockedDialog: Bool = false
     @State private var gemLevelToUnlock: Int = 0
     
+    @State private var shoeLockedDialog: Bool = false
     @State private var gmtLevelDialog: Bool = false
     @State private var noComfGemDialog: Bool = false
     @State private var noEnergyDialog: Bool = false
@@ -390,172 +391,21 @@ struct Optimizer: View {
                                 }.padding(.vertical, -5)
                             }
                             
-                            HStack(spacing: 5) {
-                                // MARK: Rarity stack
-                                VStack(spacing: 1) {
-                                    Text("Rarity")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(height: 36)
-                                            .padding([.top, .leading], 2)
-                                            .padding([.bottom, .trailing], -3)
-                                    
-                                        Button(action: {
-                                            // in tap action
-                                        }, label: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
-                                                    .frame(height: 36)
-                                                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1.4))
-                                                
-                                                Text(rarityString(shoeRarity: shoeRarity))
-                                                    .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                            }
-                                        }).buttonStyle(OptimizerButtons(tapAction: {
-                                            clearFocus()
-                                            popCircles = true
-                                            withAnimation(.linear(duration: 0.8)) {
-                                                popCircles = false
-                                            }
-                                            if shoeRarity == 5 {
-                                                shoeRarity = 2
-                                            } else {
-                                                shoeRarity += 1
-                                            }
-                                            updatePoints()
-                                        }))
-                                        .font(Font.custom(fontButtons, size: 17))
-                                    }
-                                }
-                                
-                                // MARK: Type stack
-                                VStack(spacing: 1) {
-                                    Text("Type")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .frame(height: 36)
-                                            .padding([.top, .leading], 2)
-                                            .padding([.bottom, .trailing], -3)
-                                    
-                                        Button(action: {
-                                            // in tap action
-                                        }, label: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                                    .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
-                                                    .frame(height: 36)
-                                                    .overlay(RoundedRectangle(cornerRadius: 8)
-                                                        .stroke(Color("Almost Black"), lineWidth: 1.4))
-                                                
-                                                HStack(spacing: 0) {
-                                                    Image("footprint")
-                                                        .resizable()
-                                                        .renderingMode(.template)
-                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(maxWidth: shoeType == runner ? 10 : 0, maxHeight: 14)
-                                                    
-                                                    Image("footprint")
-                                                        .resizable()
-                                                        .renderingMode(.template)
-                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(maxWidth: shoeType == runner || shoeType == jogger ? 10 : 0, maxHeight: 14)
-                                                
-                                                    Image(shoeType == trainer ? "trainer_t" : "footprint")
-                                                        .resizable()
-                                                        .renderingMode(.template)
-                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                                        .aspectRatio(contentMode: .fit)
-                                                        .frame(height: 14)
-                                                        .padding(.trailing, 5)
-                                                    
-                                                    Text(shoeTypeString(shoeType: shoeType))
-                                                        .frame(height: 36)
-                                                        .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
-                                                    
-                                                }.frame(minWidth: 100, maxWidth: 105)
-                                            }
-                                        }).buttonStyle(OptimizerButtons(tapAction: {
-                                            clearFocus()
-                                            popShoe = true
-                                            if shoeType == 3 {
-                                                shoeType = 0
-                                            } else {
-                                                shoeType += 1
-                                            }
-                                            withAnimation(.linear(duration: 0.8)) {
-                                                popShoe = false
-                                            }
-                                        }))
-                                        .font(Font.custom(fontButtons, size: 17))
-                                    }
-                                }
-                                
-                                // MARK: Energy stack
-                                VStack(spacing: 1) {
-                                    Text("Energy")
-                                        .font(Font.custom(fontHeaders, size: 16))
-                                        .foregroundColor(Color("Gandalf"))
-                                    
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(Color("Energy Blue Border"))
-                                            .frame(height: 36)
-                                            .padding([.top, .leading], 2)
-                                            .padding([.bottom, .trailing], -3)
-                                     
-                                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                            .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
-                                            .frame(height: 36)
-                                            .overlay(RoundedRectangle(cornerRadius: 8)
-                                                .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
-                                        
-                                        Image("energy_bolt")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .padding(.trailing, 14)
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
-                                        
-                                        TextField("0.0", text: $currentEnergyInput, onEditingChanged: { (editingChanged) in
-                                            if editingChanged {
-                                                energySelected = true
-                                                withAnimation(.easeOut .speed(1.5)) {
-                                                    hideTab = true
-                                                }
-                                            } else {
-                                                energySelected = false
-                                                var newEnergy = currentEnergyInput
-                                                if newEnergy.doubleValue > 25 {
-                                                    newEnergy = "25"
-                                                }
-                                                if Int(round(newEnergy.doubleValue * 10)) % 2 != 0 {
-                                                    invalidEnergy = true
-                                                } else {
-                                                    invalidEnergy = false
-                                                }
-                                                self.energy = String(newEnergy.prefix(4))
-                                            }})
-                                            .padding(.trailing, 6)
-                                            .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
-                                            .font(Font.custom(fontTitles, size: 20))
-                                            .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
-                                            .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
-                                    }
-                                }
-                            }.padding(.horizontal, 40)
+                            RarityTypeEnergy(
+                                shoeRarity: $shoeRarity,
+                                popCircles: $popCircles,
+                                popShoe: $popShoe,
+                                shoeType: $shoeType,
+                                shoeLockedDialog: $shoeLockedDialog,
+                                energySelected: $energySelected,
+                                currentEnergyInput: $currentEnergyInput,
+                                energy: $energy,
+                                invalidEnergy: $invalidEnergy,
+                                hideTab: $hideTab,
+                                shoeNum: shoeNum,
+                                shoesLocked: shoesLocked,
+                                updatePoints: updatePoints
+                            ).padding(.horizontal, 40)
                                 .frame(maxWidth: 400)
                                 .alert(isPresented: $invalidEnergy) {
                                     Alert(title: Text("Invalid Energy"),
@@ -645,6 +495,7 @@ struct Optimizer: View {
                                             .onReceive(baseEffString.publisher.collect()) {
                                                 self.baseEffString = String($0.prefix(5))
                                             }
+                                            .disabled(shoesLocked[shoeNum - 1])
                                         
                                         Text(String(totalEff))
                                             .font(Font.custom(fontTitles, size: 23))
@@ -666,6 +517,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedEff > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if addedEff > 0 {
                                                         addedEff -= 1
                                                         pointsAvailable += 1
@@ -674,6 +529,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     pointsAvailable += addedEff
                                                     addedEff = 0
                                                     updatePoints()
@@ -690,6 +549,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if pointsAvailable > 0 {
                                                         addedEff += 1
                                                         pointsAvailable -= 1
@@ -698,6 +561,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     addedEff += pointsAvailable
                                                     pointsAvailable = 0
                                                     updatePoints()
@@ -744,6 +611,7 @@ struct Optimizer: View {
                                             .onReceive(baseLuckString.publisher.collect()) {
                                                 self.baseLuckString = String($0.prefix(5))
                                             }
+                                            .disabled(shoesLocked[shoeNum - 1])
                                         
                                         Text(String(totalLuck))
                                             .font(Font.custom(fontTitles, size: 23))
@@ -765,6 +633,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedLuck > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if addedLuck > 0 {
                                                         addedLuck -= 1
                                                         pointsAvailable += 1
@@ -773,6 +645,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     pointsAvailable += addedLuck
                                                     addedLuck = 0
                                                     updatePoints()
@@ -789,6 +665,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if pointsAvailable > 0 {
                                                         addedLuck += 1
                                                         pointsAvailable -= 1
@@ -797,6 +677,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     addedLuck += pointsAvailable
                                                     pointsAvailable = 0
                                                     updatePoints()
@@ -843,6 +727,7 @@ struct Optimizer: View {
                                             .onReceive(baseComfString.publisher.collect()) {
                                                 self.baseComfString = String($0.prefix(5))
                                             }
+                                            .disabled(shoesLocked[shoeNum - 1])
                                         
                                         Text(String(totalComf))
                                             .font(Font.custom(fontTitles, size: 23))
@@ -864,6 +749,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedComf > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if addedComf > 0 {
                                                         addedComf -= 1
                                                         pointsAvailable += 1
@@ -872,6 +761,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     pointsAvailable += addedComf
                                                     addedComf = 0
                                                     updatePoints()
@@ -888,6 +781,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if pointsAvailable > 0 {
                                                         addedComf += 1
                                                         pointsAvailable -= 1
@@ -896,6 +793,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     addedComf += pointsAvailable
                                                     pointsAvailable = 0
                                                     updatePoints()
@@ -946,6 +847,7 @@ struct Optimizer: View {
                                             .onReceive(baseResString.publisher.collect()) {
                                                 self.baseResString = String($0.prefix(5))
                                             }
+                                            .disabled(shoesLocked[shoeNum - 1])
                                         
                                         Text(String(totalRes))
                                             .font(Font.custom(fontTitles, size: 23))
@@ -967,6 +869,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedRes > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if addedRes > 0 {
                                                         addedRes -= 1
                                                         pointsAvailable += 1
@@ -975,6 +881,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     pointsAvailable += addedRes
                                                     addedRes = 0
                                                     updatePoints()
@@ -991,6 +901,10 @@ struct Optimizer: View {
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     if pointsAvailable > 0 {
                                                         addedRes += 1
                                                         pointsAvailable -= 1
@@ -999,6 +913,10 @@ struct Optimizer: View {
                                                     clearFocus()
                                                 })
                                                 .onLongPressGesture(perform: {
+                                                    if shoesLocked[shoeNum - 1] {
+                                                        shoeLockedDialog = true
+                                                        return
+                                                    }
                                                     addedRes += pointsAvailable
                                                     pointsAvailable = 0
                                                     updatePoints()
@@ -1023,6 +941,10 @@ struct Optimizer: View {
                                     
                                 }.frame(minWidth: 295, maxWidth: 310, minHeight: 20)
                                     .padding(.bottom, 10)
+                            }.alert(isPresented: $shoeLockedDialog) {
+                                Alert(title: Text("Shoe Locked"),
+                                      message: Text("Shoe attributes are locked"),
+                                      dismissButton: .default(Text("Okay")))
                             }
                             
                             // MARK: Optimize buttons
@@ -1042,6 +964,10 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
+                                            if shoesLocked[shoeNum - 1] {
+                                                shoeLockedDialog = true
+                                                return
+                                            }
                                             if energy.doubleValue != 0 {
                                                 if comfGemPrice.doubleValue <= 0 {
                                                     noComfGemDialog = true
@@ -1072,6 +998,10 @@ struct Optimizer: View {
                                     })
                                         .buttonStyle(StartButton(tapAction: {
                                             UIApplication.shared.hideKeyboard()
+                                            if shoesLocked[shoeNum - 1] {
+                                                shoeLockedDialog = true
+                                                return
+                                            }
                                             if energy.doubleValue != 0 {
                                                 if comfGemPrice.doubleValue <= 0 {
                                                     noComfGemDialog = true
@@ -2946,6 +2876,200 @@ func basePointsMax(shoeRarity: Int) -> Double {
 // MARK: gst earning calcs
 func gstEarned(totalEff: Double, energyCo: Double, energy: String) -> Double {
     return floor(energy.doubleValue * pow(totalEff, energyCo) * 10) / 10
+}
+
+struct RarityTypeEnergy: View {
+    @Binding var shoeRarity: Int
+    @Binding var popCircles: Bool
+    @Binding var popShoe: Bool
+    @Binding var shoeType: Int
+    @Binding var shoeLockedDialog: Bool
+    @Binding var energySelected: Bool
+    @Binding var currentEnergyInput: String
+    @Binding var energy: String
+    @Binding var invalidEnergy: Bool
+    @Binding var hideTab: Bool
+    
+    let shoeNum: Int
+    let shoesLocked: [Bool]
+    var updatePoints: () -> Void
+    
+    var body: some View {
+        HStack(spacing: 5) {
+            // MARK: Rarity stack
+            VStack(spacing: 1) {
+                Text("Rarity")
+                    .font(Font.custom(fontHeaders, size: 16))
+                    .foregroundColor(Color("Gandalf"))
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .foregroundColor(Color("Almost Black"))
+                        .frame(height: 36)
+                        .padding([.top, .leading], 2)
+                        .padding([.bottom, .trailing], -3)
+                
+                    Button(action: {
+                        // in tap action
+                    }, label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
+                                .frame(height: 36)
+                                .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color("Almost Black"), lineWidth: 1.4))
+                            
+                            Text(rarityString(shoeRarity: shoeRarity))
+                                .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                                .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                        }
+                    }).buttonStyle(OptimizerButtons(tapAction: {
+                        UIApplication.shared.hideKeyboard()
+                        if shoesLocked[shoeNum - 1] {
+                            shoeLockedDialog = true
+                            return
+                        }
+                        popCircles = true
+                        withAnimation(.linear(duration: 0.8)) {
+                            popCircles = false
+                        }
+                        if shoeRarity == 5 {
+                            shoeRarity = 2
+                        } else {
+                            shoeRarity += 1
+                        }
+                        updatePoints()
+                    }))
+                    .font(Font.custom(fontButtons, size: 17))
+                }
+            }
+            
+            // MARK: Type stack
+            VStack(spacing: 1) {
+                Text("Type")
+                    .font(Font.custom(fontHeaders, size: 16))
+                    .foregroundColor(Color("Gandalf"))
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .foregroundColor(Color("Almost Black"))
+                        .frame(height: 36)
+                        .padding([.top, .leading], 2)
+                        .padding([.bottom, .trailing], -3)
+                
+                    Button(action: {
+                        // in tap action
+                    }, label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .foregroundColor(Color(hex: labelHexColor(shoeRarity: shoeRarity)))
+                                .frame(height: 36)
+                                .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color("Almost Black"), lineWidth: 1.4))
+                            
+                            HStack(spacing: 0) {
+                                Image("footprint")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: shoeType == runner ? 10 : 0, maxHeight: 14)
+                                
+                                Image("footprint")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: shoeType == runner || shoeType == jogger ? 10 : 0, maxHeight: 14)
+                            
+                                Image(shoeType == trainer ? "trainer_t" : "footprint")
+                                    .resizable()
+                                    .renderingMode(.template)
+                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 14)
+                                    .padding(.trailing, 5)
+                                
+                                Text(shoeTypeString(shoeType: shoeType))
+                                    .frame(height: 36)
+                                    .foregroundColor(Color(shoeRarity == common ? "Almost Black" : "White"))
+                                
+                            }.frame(minWidth: 100, maxWidth: 105)
+                        }
+                    }).buttonStyle(OptimizerButtons(tapAction: {
+                        UIApplication.shared.hideKeyboard()
+                        if shoesLocked[shoeNum - 1] {
+                            shoeLockedDialog = true
+                            return
+                        }
+                        popShoe = true
+                        if shoeType == 3 {
+                            shoeType = 0
+                        } else {
+                            shoeType += 1
+                        }
+                        withAnimation(.linear(duration: 0.8)) {
+                            popShoe = false
+                        }
+                    }))
+                    .font(Font.custom(fontButtons, size: 17))
+                }
+            }
+            
+            // MARK: Energy stack
+            VStack(spacing: 1) {
+                Text("Energy")
+                    .font(Font.custom(fontHeaders, size: 16))
+                    .foregroundColor(Color("Gandalf"))
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .foregroundColor(Color("Energy Blue Border"))
+                        .frame(height: 36)
+                        .padding([.top, .leading], 2)
+                        .padding([.bottom, .trailing], -3)
+                 
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .foregroundColor(energySelected ? Color("Energy Blue Lighter") : Color("Energy Blue"))
+                        .frame(height: 36)
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color("Energy Blue Border"), lineWidth: 1.4))
+                    
+                    Image("energy_bolt")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(.trailing, 14)
+                        .frame(minWidth: 100, maxWidth: 105, minHeight: 20, maxHeight: 20, alignment: .trailing)
+                    
+                    TextField("0.0", text: $currentEnergyInput, onEditingChanged: { (editingChanged) in
+                        if editingChanged {
+                            energySelected = true
+                            withAnimation(.easeOut .speed(1.5)) {
+                                hideTab = true
+                            }
+                        } else {
+                            energySelected = false
+                            var newEnergy = currentEnergyInput
+                            if newEnergy.doubleValue > 25 {
+                                newEnergy = "25"
+                            }
+                            if Int(round(newEnergy.doubleValue * 10)) % 2 != 0 {
+                                invalidEnergy = true
+                            } else {
+                                invalidEnergy = false
+                            }
+                            self.energy = String(newEnergy.prefix(4))
+                        }})
+                        .padding(.trailing, 6)
+                        .frame(minWidth: 100, maxWidth: 105, minHeight: 36, maxHeight: 36)
+                        .font(Font.custom(fontTitles, size: 20))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color("Almost Black"))
+                        .keyboardType(/*@START_MENU_TOKEN@*/.decimalPad/*@END_MENU_TOKEN@*/)
+                }
+            }
+        }
+    }
 }
 
 struct CalcedTotals: View {
