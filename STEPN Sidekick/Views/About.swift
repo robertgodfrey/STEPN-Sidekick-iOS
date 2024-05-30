@@ -72,23 +72,20 @@ struct About: View {
                                 .frame(maxWidth: 400)
                                 .padding(.horizontal, 10)
                             
-                            HStack {
-                                Text("NOTES")
-                                    .font(Font.custom(fontTitles, size: 19))
-                                    .foregroundColor(Color("Almost Black"))
-                                    .padding(0.1)
-                                    .padding(.leading, 22)
-                                Spacer()
-                            }
+                            Text("NOTES")
+                                .font(Font.custom(fontTitles, size: 19))
+                                .foregroundColor(Color("Almost Black"))
+                                .padding(.top, 5)
+                                .padding(.bottom, 2)
                             
                             HStack(alignment: .top, spacing: 5) {
 
                                 Text("1.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
 
                                 Text("It is best to use this app on the same device that is running STEPN so that both apps are using the same location data.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
                             }
@@ -96,11 +93,11 @@ struct About: View {
                             HStack(alignment: .top, spacing: 5) {
 
                                 Text("2.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
 
                                 Text("STEPN adds a 30-second buffer to every activity. This app's timer accounts for this extra time, but it may not match STEPN's timer exactly.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
                             }
@@ -108,11 +105,23 @@ struct About: View {
                             HStack(alignment: .top, spacing: 5) {
 
                                 Text("3.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
 
-                                Text("GMT earnings are always changing and are difficult to predict. This app's estimate gives you an idea of the earning range to expect but is not precise.")
-                                    .font(Font.custom("Roboto-Regular", size: 17))
+                                Text("Mystery box probabilities are calculated using a machine learning model based on community data from ForgeBlast (see below). The probabilities should be fairly accurate, but they are based on patterns and trends and should not be taken as a guarantee.")
+                                    .font(Font.custom("Roboto-Regular", size: 16))
+                                    .foregroundColor(Color("Almost Black"))
+                                    .frame(width: 290)
+                            }
+                            
+                            HStack(alignment: .top, spacing: 5) {
+
+                                Text("4.")
+                                    .font(Font.custom("Roboto-Regular", size: 16))
+                                    .foregroundColor(Color("Almost Black"))
+
+                                Text("GMT earnings are constantly changing and are difficult to predict. This app's estimate will give you an idea of the earning range to expect, but is not precise (and if it's way off, feel free to shoot me an email!).")
+                                    .font(Font.custom("Roboto-Regular", size: 16))
                                     .foregroundColor(Color("Almost Black"))
                                     .frame(width: 290)
                             }
