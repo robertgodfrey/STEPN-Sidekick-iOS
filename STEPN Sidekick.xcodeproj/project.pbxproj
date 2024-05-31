@@ -1,0 +1,1108 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06D9955BF540883DB01C9AA2 /* Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1780FA8A45140A68B4A25407 /* Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework */; };
+		80A7E50AE6A480E5CECEABF1 /* Pods_STEPN_SidekickTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C999DB34FB5911A4D1CD55C8 /* Pods_STEPN_SidekickTests.framework */; };
+		D40A1CFA28E9807E00A6A65F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40A1CF928E9807E00A6A65F /* AppDelegate.swift */; };
+		D40A1CFC28E9852400A6A65F /* MainAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40A1CFB28E9852400A6A65F /* MainAd.swift */; };
+		D40A24CB28ACC25D00D3A478 /* six.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A228ACC25200D3A478 /* six.mp3 */; };
+		D40A24CC28ACC25D00D3A478 /* twenty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A328ACC25200D3A478 /* twenty.mp3 */; };
+		D40A24CD28ACC25D00D3A478 /* thirty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A428ACC25300D3A478 /* thirty.mp3 */; };
+		D40A24CE28ACC25D00D3A478 /* one_hour_end.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A528ACC25300D3A478 /* one_hour_end.mp3 */; };
+		D40A24CF28ACC25D00D3A478 /* three.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A628ACC25300D3A478 /* three.mp3 */; };
+		D40A24D028ACC25D00D3A478 /* alert_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A728ACC25400D3A478 /* alert_sound.mp3 */; };
+		D40A24D128ACC25D00D3A478 /* five.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A828ACC25400D3A478 /* five.mp3 */; };
+		D40A24D228ACC25D00D3A478 /* fourteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24A928ACC25400D3A478 /* fourteen.mp3 */; };
+		D40A24D328ACC25D00D3A478 /* one_hour.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AA28ACC25400D3A478 /* one_hour.mp3 */; };
+		D40A24D428ACC25D00D3A478 /* eighteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AB28ACC25500D3A478 /* eighteen.mp3 */; };
+		D40A24D528ACC25D00D3A478 /* fifty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AC28ACC25500D3A478 /* fifty.mp3 */; };
+		D40A24D628ACC25D00D3A478 /* one_minute_remaining.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AD28ACC25500D3A478 /* one_minute_remaining.mp3 */; };
+		D40A24D728ACC25D00D3A478 /* sevn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AE28ACC25500D3A478 /* sevn.mp3 */; };
+		D40A24D828ACC25D00D3A478 /* soft_alert_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24AF28ACC25600D3A478 /* soft_alert_sound.mp3 */; };
+		D40A24D928ACC25D00D3A478 /* start_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B028ACC25700D3A478 /* start_sound.mp3 */; };
+		D40A24DA28ACC25D00D3A478 /* ten.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B128ACC25700D3A478 /* ten.mp3 */; };
+		D40A24DB28ACC25D00D3A478 /* thirty_seconds_remaining.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B228ACC25700D3A478 /* thirty_seconds_remaining.mp3 */; };
+		D40A24DC28ACC25D00D3A478 /* two_hours_end.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B328ACC25700D3A478 /* two_hours_end.mp3 */; };
+		D40A24DD28ACC25D00D3A478 /* thirteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B428ACC25800D3A478 /* thirteen.mp3 */; };
+		D40A24DE28ACC25D00D3A478 /* point.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B528ACC25800D3A478 /* point.mp3 */; };
+		D40A24DF28ACC25D00D3A478 /* fifteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B628ACC25800D3A478 /* fifteen.mp3 */; };
+		D40A24E028ACC25D00D3A478 /* seventeen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B728ACC25800D3A478 /* seventeen.mp3 */; };
+		D40A24E128ACC25D00D3A478 /* time_remaining.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B828ACC25900D3A478 /* time_remaining.mp3 */; };
+		D40A24E228ACC25D00D3A478 /* four.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24B928ACC25900D3A478 /* four.mp3 */; };
+		D40A24E328ACC25D00D3A478 /* two_hours.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BA28ACC25A00D3A478 /* two_hours.mp3 */; };
+		D40A24E428ACC25D00D3A478 /* current_speed.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BB28ACC25A00D3A478 /* current_speed.mp3 */; };
+		D40A24E528ACC25D00D3A478 /* eleven.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BC28ACC25A00D3A478 /* eleven.mp3 */; };
+		D40A24E628ACC25D00D3A478 /* kilo_per_hour.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BD28ACC25A00D3A478 /* kilo_per_hour.mp3 */; };
+		D40A24E728ACC25D00D3A478 /* two.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BE28ACC25B00D3A478 /* two.mp3 */; };
+		D40A24E828ACC25E00D3A478 /* zero.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24BF28ACC25B00D3A478 /* zero.mp3 */; };
+		D40A24E928ACC25E00D3A478 /* avg_speed.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C028ACC25B00D3A478 /* avg_speed.mp3 */; };
+		D40A24EA28ACC25E00D3A478 /* over_twenty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C128ACC25B00D3A478 /* over_twenty.mp3 */; };
+		D40A24EB28ACC25E00D3A478 /* eight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C228ACC25B00D3A478 /* eight.mp3 */; };
+		D40A24EC28ACC25E00D3A478 /* twelve.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C328ACC25C00D3A478 /* twelve.mp3 */; };
+		D40A24ED28ACC25E00D3A478 /* forty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C428ACC25C00D3A478 /* forty.mp3 */; };
+		D40A24EE28ACC25E00D3A478 /* one.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C528ACC25C00D3A478 /* one.mp3 */; };
+		D40A24EF28ACC25E00D3A478 /* five_mid.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C628ACC25C00D3A478 /* five_mid.mp3 */; };
+		D40A24F028ACC25E00D3A478 /* sixteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C728ACC25C00D3A478 /* sixteen.mp3 */; };
+		D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C828ACC25D00D3A478 /* nine.mp3 */; };
+		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
+		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
+		D4107D3A292D9916004F17CA /* APIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4107D39292D9916004F17CA /* APIs.swift */; };
+		D419EDE22932CC04000E66DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D419EDE12932CC04000E66DD /* StoreKit.framework */; };
+		D419EDE42932CC93000E66DD /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D419EDE32932CC93000E66DD /* StoreManager.swift */; };
+		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
+		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
+		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
+		D441B53928BB77CB00D819EA /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53828BB77CB00D819EA /* About.swift */; };
+		D46BB2222C0BA87000EC8919 /* secrets.json in Resources */ = {isa = PBXBuildFile; fileRef = D46BB2212C0BA86F00EC8919 /* secrets.json */; };
+		D46BB2242C0BA88A00EC8919 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BB2232C0BA88A00EC8919 /* Secrets.swift */; };
+		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
+		D482731328DCD96700ADC0ED /* Gem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D482731228DCD96700ADC0ED /* Gem.swift */; };
+		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
+		D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293728AAF7C800B57AD9 /* LocationRequestView.swift */; };
+		D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */; };
+		D4B82C8E28D07BD3004A80EB /* Optimizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B82C8D28D07BD3004A80EB /* Optimizer.swift */; };
+		D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9828A0C9FE00141A54 /* Constants.swift */; };
+		D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C13B9A28A0D04B00141A54 /* Shoe.swift */; };
+		D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */; };
+		D4C13BB128A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */; };
+		D4C13BB228A1DCF800141A54 /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */; };
+		D4C13BB828A1E8D800141A54 /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */; };
+		D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */; };
+		D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */; };
+		D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */; };
+		D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */; };
+		D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */; };
+		D4E0541E28F251DB005D00CF /* UpdateDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E0541D28F251DB005D00CF /* UpdateDialog.swift */; };
+		D4ED2AC828EAA27300ECF27B /* Pods_STEPN_Sidekick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4A4B6FA6F512F4E93FBC83 /* Pods_STEPN_Sidekick.framework */; };
+		D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFD28928C4295A002E931E /* CountdownTimer.swift */; };
+		D4F2B72628E83C51001DD913 /* OptimizerShoe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */; };
+		D4F8B52228E1012100DDA9BE /* GemDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F8B52128E1012100DDA9BE /* GemDialog.swift */; };
+		D4F9BBBB2A7F1CBF00D7A459 /* ShoeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BBBA2A7F1CBF00D7A459 /* ShoeImage.swift */; };
+		D4F9BBBD2A7F1D3400D7A459 /* AddImageDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BBBC2A7F1D3400D7A459 /* AddImageDialog.swift */; };
+		D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */; };
+		D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */; };
+		D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C6289F04A400D7E82B /* Assets.xcassets */; };
+		D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */; };
+		D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */; };
+		D4FFE3D9289F04A400D7E82B /* STEPN_SidekickTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3D8289F04A400D7E82B /* STEPN_SidekickTests.swift */; };
+		D4FFE3E3289F04A400D7E82B /* STEPN_SidekickUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3E2289F04A400D7E82B /* STEPN_SidekickUITests.swift */; };
+		D4FFE3E5289F04A400D7E82B /* STEPN_SidekickUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFE3E4289F04A400D7E82B /* STEPN_SidekickUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D4FFE3D5289F04A400D7E82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4FFE3B7289F04A200D7E82B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4FFE3BE289F04A200D7E82B;
+			remoteInfo = "STEPN Sidekick";
+		};
+		D4FFE3DF289F04A400D7E82B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4FFE3B7289F04A200D7E82B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4FFE3BE289F04A200D7E82B;
+			remoteInfo = "STEPN Sidekick";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1780FA8A45140A68B4A25407 /* Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2F8294A1A98D741CDEBB0A8 /* Pods-STEPN Sidekick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN Sidekick.debug.xcconfig"; path = "Target Support Files/Pods-STEPN Sidekick/Pods-STEPN Sidekick.debug.xcconfig"; sourceTree = "<group>"; };
+		A32C1825ACA6EF4DBCB4D1F1 /* Pods-STEPN SidekickTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN SidekickTests.release.xcconfig"; path = "Target Support Files/Pods-STEPN SidekickTests/Pods-STEPN SidekickTests.release.xcconfig"; sourceTree = "<group>"; };
+		BB98AE4CFE51C85412729343 /* Pods-STEPN Sidekick.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN Sidekick.release.xcconfig"; path = "Target Support Files/Pods-STEPN Sidekick/Pods-STEPN Sidekick.release.xcconfig"; sourceTree = "<group>"; };
+		BD4A4B6FA6F512F4E93FBC83 /* Pods_STEPN_Sidekick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STEPN_Sidekick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C999DB34FB5911A4D1CD55C8 /* Pods_STEPN_SidekickTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_STEPN_SidekickTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1DA5407720E29E6769A8514 /* Pods-STEPN Sidekick-STEPN SidekickUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN Sidekick-STEPN SidekickUITests.release.xcconfig"; path = "Target Support Files/Pods-STEPN Sidekick-STEPN SidekickUITests/Pods-STEPN Sidekick-STEPN SidekickUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D40A1CF928E9807E00A6A65F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D40A1CFB28E9852400A6A65F /* MainAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAd.swift; sourceTree = "<group>"; };
+		D40A24A228ACC25200D3A478 /* six.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = six.mp3; sourceTree = "<group>"; };
+		D40A24A328ACC25200D3A478 /* twenty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = twenty.mp3; sourceTree = "<group>"; };
+		D40A24A428ACC25300D3A478 /* thirty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = thirty.mp3; sourceTree = "<group>"; };
+		D40A24A528ACC25300D3A478 /* one_hour_end.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = one_hour_end.mp3; sourceTree = "<group>"; };
+		D40A24A628ACC25300D3A478 /* three.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = three.mp3; sourceTree = "<group>"; };
+		D40A24A728ACC25400D3A478 /* alert_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound.mp3; sourceTree = "<group>"; };
+		D40A24A828ACC25400D3A478 /* five.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = five.mp3; sourceTree = "<group>"; };
+		D40A24A928ACC25400D3A478 /* fourteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fourteen.mp3; sourceTree = "<group>"; };
+		D40A24AA28ACC25400D3A478 /* one_hour.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = one_hour.mp3; sourceTree = "<group>"; };
+		D40A24AB28ACC25500D3A478 /* eighteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eighteen.mp3; sourceTree = "<group>"; };
+		D40A24AC28ACC25500D3A478 /* fifty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fifty.mp3; sourceTree = "<group>"; };
+		D40A24AD28ACC25500D3A478 /* one_minute_remaining.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = one_minute_remaining.mp3; sourceTree = "<group>"; };
+		D40A24AE28ACC25500D3A478 /* sevn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sevn.mp3; sourceTree = "<group>"; };
+		D40A24AF28ACC25600D3A478 /* soft_alert_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soft_alert_sound.mp3; sourceTree = "<group>"; };
+		D40A24B028ACC25700D3A478 /* start_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = start_sound.mp3; sourceTree = "<group>"; };
+		D40A24B128ACC25700D3A478 /* ten.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ten.mp3; sourceTree = "<group>"; };
+		D40A24B228ACC25700D3A478 /* thirty_seconds_remaining.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = thirty_seconds_remaining.mp3; sourceTree = "<group>"; };
+		D40A24B328ACC25700D3A478 /* two_hours_end.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = two_hours_end.mp3; sourceTree = "<group>"; };
+		D40A24B428ACC25800D3A478 /* thirteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = thirteen.mp3; sourceTree = "<group>"; };
+		D40A24B528ACC25800D3A478 /* point.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = point.mp3; sourceTree = "<group>"; };
+		D40A24B628ACC25800D3A478 /* fifteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fifteen.mp3; sourceTree = "<group>"; };
+		D40A24B728ACC25800D3A478 /* seventeen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = seventeen.mp3; sourceTree = "<group>"; };
+		D40A24B828ACC25900D3A478 /* time_remaining.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = time_remaining.mp3; sourceTree = "<group>"; };
+		D40A24B928ACC25900D3A478 /* four.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = four.mp3; sourceTree = "<group>"; };
+		D40A24BA28ACC25A00D3A478 /* two_hours.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = two_hours.mp3; sourceTree = "<group>"; };
+		D40A24BB28ACC25A00D3A478 /* current_speed.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = current_speed.mp3; sourceTree = "<group>"; };
+		D40A24BC28ACC25A00D3A478 /* eleven.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eleven.mp3; sourceTree = "<group>"; };
+		D40A24BD28ACC25A00D3A478 /* kilo_per_hour.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = kilo_per_hour.mp3; sourceTree = "<group>"; };
+		D40A24BE28ACC25B00D3A478 /* two.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = two.mp3; sourceTree = "<group>"; };
+		D40A24BF28ACC25B00D3A478 /* zero.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = zero.mp3; sourceTree = "<group>"; };
+		D40A24C028ACC25B00D3A478 /* avg_speed.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = avg_speed.mp3; sourceTree = "<group>"; };
+		D40A24C128ACC25B00D3A478 /* over_twenty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = over_twenty.mp3; sourceTree = "<group>"; };
+		D40A24C228ACC25B00D3A478 /* eight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eight.mp3; sourceTree = "<group>"; };
+		D40A24C328ACC25C00D3A478 /* twelve.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = twelve.mp3; sourceTree = "<group>"; };
+		D40A24C428ACC25C00D3A478 /* forty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = forty.mp3; sourceTree = "<group>"; };
+		D40A24C528ACC25C00D3A478 /* one.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = one.mp3; sourceTree = "<group>"; };
+		D40A24C628ACC25C00D3A478 /* five_mid.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = five_mid.mp3; sourceTree = "<group>"; };
+		D40A24C728ACC25C00D3A478 /* sixteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sixteen.mp3; sourceTree = "<group>"; };
+		D40A24C828ACC25D00D3A478 /* nine.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nine.mp3; sourceTree = "<group>"; };
+		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
+		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
+		D4107D39292D9916004F17CA /* APIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
+		D419EDE12932CC04000E66DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		D419EDE32932CC93000E66DD /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		D441B53428BB296C00D819EA /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
+		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		D450654428ECB16600A9F88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D46BB2212C0BA86F00EC8919 /* secrets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = secrets.json; sourceTree = "<group>"; };
+		D46BB2232C0BA88A00EC8919 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		D482731228DCD96700ADC0ED /* Gem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gem.swift; sourceTree = "<group>"; };
+		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D489293728AAF7C800B57AD9 /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
+		D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedTracker.swift; sourceTree = "<group>"; };
+		D4B82C8D28D07BD3004A80EB /* Optimizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optimizer.swift; sourceTree = "<group>"; };
+		D4C13B9828A0C9FE00141A54 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D4C13B9A28A0D04B00141A54 /* Shoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shoe.swift; sourceTree = "<group>"; };
+		D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoCondensed-Italic.ttf"; sourceTree = "<group>"; };
+		D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
+		D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
+		D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alert_sound_slow.mp3; sourceTree = "<group>"; };
+		D4E0541D28F251DB005D00CF /* UpdateDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDialog.swift; sourceTree = "<group>"; };
+		D4EFD28928C4295A002E931E /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
+		D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptimizerShoe.swift; sourceTree = "<group>"; };
+		D4F8B52128E1012100DDA9BE /* GemDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemDialog.swift; sourceTree = "<group>"; };
+		D4F9BBBA2A7F1CBF00D7A459 /* ShoeImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoeImage.swift; sourceTree = "<group>"; };
+		D4F9BBBC2A7F1D3400D7A459 /* AddImageDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddImageDialog.swift; sourceTree = "<group>"; };
+		D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "STEPN Sidekick.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickApp.swift; sourceTree = "<group>"; };
+		D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySettings.swift; sourceTree = "<group>"; };
+		D4FFE3C6289F04A400D7E82B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D4FFE3CE289F04A400D7E82B /* STEPN_Sidekick.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = STEPN_Sidekick.xcdatamodel; sourceTree = "<group>"; };
+		D4FFE3D4289F04A400D7E82B /* STEPN SidekickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "STEPN SidekickTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FFE3D8289F04A400D7E82B /* STEPN_SidekickTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickTests.swift; sourceTree = "<group>"; };
+		D4FFE3DE289F04A400D7E82B /* STEPN SidekickUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "STEPN SidekickUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FFE3E2289F04A400D7E82B /* STEPN_SidekickUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickUITests.swift; sourceTree = "<group>"; };
+		D4FFE3E4289F04A400D7E82B /* STEPN_SidekickUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STEPN_SidekickUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DBCA82D051A39ABE050B676C /* Pods-STEPN Sidekick-STEPN SidekickUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN Sidekick-STEPN SidekickUITests.debug.xcconfig"; path = "Target Support Files/Pods-STEPN Sidekick-STEPN SidekickUITests/Pods-STEPN Sidekick-STEPN SidekickUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		E63BB6D2DE8EFA368B917099 /* Pods-STEPN SidekickTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-STEPN SidekickTests.debug.xcconfig"; path = "Target Support Files/Pods-STEPN SidekickTests/Pods-STEPN SidekickTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D4FFE3BC289F04A200D7E82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4ED2AC828EAA27300ECF27B /* Pods_STEPN_Sidekick.framework in Frameworks */,
+				D419EDE22932CC04000E66DD /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3D1289F04A400D7E82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80A7E50AE6A480E5CECEABF1 /* Pods_STEPN_SidekickTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3DB289F04A400D7E82B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06D9955BF540883DB01C9AA2 /* Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0096F05B6AAAD0DF9CFFC0F2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2F8294A1A98D741CDEBB0A8 /* Pods-STEPN Sidekick.debug.xcconfig */,
+				BB98AE4CFE51C85412729343 /* Pods-STEPN Sidekick.release.xcconfig */,
+				DBCA82D051A39ABE050B676C /* Pods-STEPN Sidekick-STEPN SidekickUITests.debug.xcconfig */,
+				D1DA5407720E29E6769A8514 /* Pods-STEPN Sidekick-STEPN SidekickUITests.release.xcconfig */,
+				E63BB6D2DE8EFA368B917099 /* Pods-STEPN SidekickTests.debug.xcconfig */,
+				A32C1825ACA6EF4DBCB4D1F1 /* Pods-STEPN SidekickTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C7F0544B7764A5936AE7D4E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D419EDE12932CC04000E66DD /* StoreKit.framework */,
+				BD4A4B6FA6F512F4E93FBC83 /* Pods_STEPN_Sidekick.framework */,
+				1780FA8A45140A68B4A25407 /* Pods_STEPN_Sidekick_STEPN_SidekickUITests.framework */,
+				C999DB34FB5911A4D1CD55C8 /* Pods_STEPN_SidekickTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D40A24A128ACC23A00D3A478 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				D40A24A728ACC25400D3A478 /* alert_sound.mp3 */,
+				D40A24C028ACC25B00D3A478 /* avg_speed.mp3 */,
+				D40A24BB28ACC25A00D3A478 /* current_speed.mp3 */,
+				D40A24C228ACC25B00D3A478 /* eight.mp3 */,
+				D40A24AB28ACC25500D3A478 /* eighteen.mp3 */,
+				D40A24BC28ACC25A00D3A478 /* eleven.mp3 */,
+				D40A24B628ACC25800D3A478 /* fifteen.mp3 */,
+				D40A24AC28ACC25500D3A478 /* fifty.mp3 */,
+				D40A24C628ACC25C00D3A478 /* five_mid.mp3 */,
+				D4DF2EEB28AF88AE00E5F252 /* alert_sound_slow.mp3 */,
+				D40A24A828ACC25400D3A478 /* five.mp3 */,
+				D40A24C428ACC25C00D3A478 /* forty.mp3 */,
+				D40A24B928ACC25900D3A478 /* four.mp3 */,
+				D40A24A928ACC25400D3A478 /* fourteen.mp3 */,
+				D40A24BD28ACC25A00D3A478 /* kilo_per_hour.mp3 */,
+				D40A24CA28ACC25D00D3A478 /* minutes.mp3 */,
+				D40A24C828ACC25D00D3A478 /* nine.mp3 */,
+				D40A24C928ACC25D00D3A478 /* nineteen.mp3 */,
+				D40A24A528ACC25300D3A478 /* one_hour_end.mp3 */,
+				D40A24AA28ACC25400D3A478 /* one_hour.mp3 */,
+				D40A24AD28ACC25500D3A478 /* one_minute_remaining.mp3 */,
+				D40A24C528ACC25C00D3A478 /* one.mp3 */,
+				D40A24C128ACC25B00D3A478 /* over_twenty.mp3 */,
+				D40A24B528ACC25800D3A478 /* point.mp3 */,
+				D40A24B728ACC25800D3A478 /* seventeen.mp3 */,
+				D40A24AE28ACC25500D3A478 /* sevn.mp3 */,
+				D40A24A228ACC25200D3A478 /* six.mp3 */,
+				D40A24C728ACC25C00D3A478 /* sixteen.mp3 */,
+				D40A24AF28ACC25600D3A478 /* soft_alert_sound.mp3 */,
+				D40A24B028ACC25700D3A478 /* start_sound.mp3 */,
+				D40A24B128ACC25700D3A478 /* ten.mp3 */,
+				D40A24B428ACC25800D3A478 /* thirteen.mp3 */,
+				D40A24B228ACC25700D3A478 /* thirty_seconds_remaining.mp3 */,
+				D40A24A428ACC25300D3A478 /* thirty.mp3 */,
+				D40A24A628ACC25300D3A478 /* three.mp3 */,
+				D40A24B828ACC25900D3A478 /* time_remaining.mp3 */,
+				D40A24C328ACC25C00D3A478 /* twelve.mp3 */,
+				D40A24A328ACC25200D3A478 /* twenty.mp3 */,
+				D40A24B328ACC25700D3A478 /* two_hours_end.mp3 */,
+				D40A24BA28ACC25A00D3A478 /* two_hours.mp3 */,
+				D40A24BE28ACC25B00D3A478 /* two.mp3 */,
+				D40A24BF28ACC25B00D3A478 /* zero.mp3 */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
+		D441B53028BB1C6200D819EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D4F9BBBC2A7F1D3400D7A459 /* AddImageDialog.swift */,
+				D441B53628BB2F1400D819EA /* MainViewStarter.swift */,
+				D441B53228BB1D0100D819EA /* MainView.swift */,
+				D4FFE3C4289F04A200D7E82B /* ActivitySettings.swift */,
+				D489293728AAF7C800B57AD9 /* LocationRequestView.swift */,
+				D4A0149828A7AFA6009D4A4E /* SpeedTracker.swift */,
+				D441B53428BB296C00D819EA /* CustomTabBar.swift */,
+				D441B53828BB77CB00D819EA /* About.swift */,
+				D4B82C8D28D07BD3004A80EB /* Optimizer.swift */,
+				D4F8B52128E1012100DDA9BE /* GemDialog.swift */,
+				D4E0541D28F251DB005D00CF /* UpdateDialog.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D441B53128BB1C8200D819EA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D4F9BBBA2A7F1CBF00D7A459 /* ShoeImage.swift */,
+				D40A1CF928E9807E00A6A65F /* AppDelegate.swift */,
+				D4EFD28928C4295A002E931E /* CountdownTimer.swift */,
+				D4DF2EE928AEC3B100E5F252 /* GSAudio.swift */,
+				D4C13B9A28A0D04B00141A54 /* Shoe.swift */,
+				D4C13B9828A0C9FE00141A54 /* Constants.swift */,
+				D489293528AAEBFD00B57AD9 /* LocationManager.swift */,
+				D482731228DCD96700ADC0ED /* Gem.swift */,
+				D4F2B72528E83C51001DD913 /* OptimizerShoe.swift */,
+				D40A1CFB28E9852400A6A65F /* MainAd.swift */,
+				D4107D39292D9916004F17CA /* APIs.swift */,
+				D419EDE32932CC93000E66DD /* StoreManager.swift */,
+				D46BB2232C0BA88A00EC8919 /* Secrets.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D4C13B9C28A1D8A800141A54 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D472352128B34F30004B157F /* Roboto-Regular.ttf */,
+				D4C13BB528A1E8D800141A54 /* Roboto-Black.ttf */,
+				D4C13BB728A1E8D800141A54 /* Roboto-BlackItalic.ttf */,
+				D4C13BB628A1E8D800141A54 /* Roboto-BoldItalic.ttf */,
+				D4C13BB428A1E8D700141A54 /* Roboto-Medium.ttf */,
+				D4C13BAD28A1DCF800141A54 /* RobotoCondensed-Bold.ttf */,
+				D4C13BAE28A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf */,
+				D4C13BAF28A1DCF800141A54 /* RobotoCondensed-Italic.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		D4FFE3B6289F04A200D7E82B = {
+			isa = PBXGroup;
+			children = (
+				D450654428ECB16600A9F88E /* Info.plist */,
+				D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */,
+				D4FFE3D7289F04A400D7E82B /* STEPN SidekickTests */,
+				D4FFE3E1289F04A400D7E82B /* STEPN SidekickUITests */,
+				D4FFE3C0289F04A200D7E82B /* Products */,
+				0096F05B6AAAD0DF9CFFC0F2 /* Pods */,
+				C7F0544B7764A5936AE7D4E2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D4FFE3C0289F04A200D7E82B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */,
+				D4FFE3D4289F04A400D7E82B /* STEPN SidekickTests.xctest */,
+				D4FFE3DE289F04A400D7E82B /* STEPN SidekickUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */ = {
+			isa = PBXGroup;
+			children = (
+				D46BB2212C0BA86F00EC8919 /* secrets.json */,
+				D40A24A128ACC23A00D3A478 /* Sounds */,
+				D4C13B9C28A1D8A800141A54 /* Fonts */,
+				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
+				D4FFE3C6289F04A400D7E82B /* Assets.xcassets */,
+				D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */,
+				D4FFE3C8289F04A400D7E82B /* Preview Content */,
+				D441B53028BB1C6200D819EA /* Views */,
+				D441B53128BB1C8200D819EA /* Models */,
+			);
+			path = "STEPN Sidekick";
+			sourceTree = "<group>";
+		};
+		D4FFE3C8289F04A400D7E82B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				D4FFE3C9289F04A400D7E82B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D4FFE3D7289F04A400D7E82B /* STEPN SidekickTests */ = {
+			isa = PBXGroup;
+			children = (
+				D4FFE3D8289F04A400D7E82B /* STEPN_SidekickTests.swift */,
+			);
+			path = "STEPN SidekickTests";
+			sourceTree = "<group>";
+		};
+		D4FFE3E1289F04A400D7E82B /* STEPN SidekickUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D4FFE3E2289F04A400D7E82B /* STEPN_SidekickUITests.swift */,
+				D4FFE3E4289F04A400D7E82B /* STEPN_SidekickUITestsLaunchTests.swift */,
+			);
+			path = "STEPN SidekickUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D4FFE3BE289F04A200D7E82B /* STEPN Sidekick */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4FFE3E8289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN Sidekick" */;
+			buildPhases = (
+				12A6ACBB99D96721507B0C04 /* [CP] Check Pods Manifest.lock */,
+				D4FFE3BB289F04A200D7E82B /* Sources */,
+				D4FFE3BC289F04A200D7E82B /* Frameworks */,
+				D4FFE3BD289F04A200D7E82B /* Resources */,
+				C4DA37C50AF8F111D9183785 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "STEPN Sidekick";
+			productName = "STEPN Sidekick";
+			productReference = D4FFE3BF289F04A200D7E82B /* STEPN Sidekick.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D4FFE3D3289F04A400D7E82B /* STEPN SidekickTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4FFE3EB289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN SidekickTests" */;
+			buildPhases = (
+				35EB4362B6268A0707A46012 /* [CP] Check Pods Manifest.lock */,
+				D4FFE3D0289F04A400D7E82B /* Sources */,
+				D4FFE3D1289F04A400D7E82B /* Frameworks */,
+				D4FFE3D2289F04A400D7E82B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4FFE3D6289F04A400D7E82B /* PBXTargetDependency */,
+			);
+			name = "STEPN SidekickTests";
+			productName = "STEPN SidekickTests";
+			productReference = D4FFE3D4289F04A400D7E82B /* STEPN SidekickTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D4FFE3DD289F04A400D7E82B /* STEPN SidekickUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4FFE3EE289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN SidekickUITests" */;
+			buildPhases = (
+				DA387C0914090276BD3A63C4 /* [CP] Check Pods Manifest.lock */,
+				D4FFE3DA289F04A400D7E82B /* Sources */,
+				D4FFE3DB289F04A400D7E82B /* Frameworks */,
+				D4FFE3DC289F04A400D7E82B /* Resources */,
+				4EC357A3B677AB573E8340E3 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4FFE3E0289F04A400D7E82B /* PBXTargetDependency */,
+			);
+			name = "STEPN SidekickUITests";
+			productName = "STEPN SidekickUITests";
+			productReference = D4FFE3DE289F04A400D7E82B /* STEPN SidekickUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D4FFE3B7289F04A200D7E82B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					D4FFE3BE289F04A200D7E82B = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					D4FFE3D3289F04A400D7E82B = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = D4FFE3BE289F04A200D7E82B;
+					};
+					D4FFE3DD289F04A400D7E82B = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = D4FFE3BE289F04A200D7E82B;
+					};
+				};
+			};
+			buildConfigurationList = D4FFE3BA289F04A200D7E82B /* Build configuration list for PBXProject "STEPN Sidekick" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D4FFE3B6289F04A200D7E82B;
+			productRefGroup = D4FFE3C0289F04A200D7E82B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D4FFE3BE289F04A200D7E82B /* STEPN Sidekick */,
+				D4FFE3D3289F04A400D7E82B /* STEPN SidekickTests */,
+				D4FFE3DD289F04A400D7E82B /* STEPN SidekickUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D4FFE3BD289F04A200D7E82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D40A24DC28ACC25D00D3A478 /* two_hours_end.mp3 in Resources */,
+				D40A24E928ACC25E00D3A478 /* avg_speed.mp3 in Resources */,
+				D40A24DE28ACC25D00D3A478 /* point.mp3 in Resources */,
+				D40A24D128ACC25D00D3A478 /* five.mp3 in Resources */,
+				D40A24CD28ACC25D00D3A478 /* thirty.mp3 in Resources */,
+				D40A24EA28ACC25E00D3A478 /* over_twenty.mp3 in Resources */,
+				D40A24EE28ACC25E00D3A478 /* one.mp3 in Resources */,
+				D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */,
+				D40A24D928ACC25D00D3A478 /* start_sound.mp3 in Resources */,
+				D40A24D228ACC25D00D3A478 /* fourteen.mp3 in Resources */,
+				D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */,
+				D40A24D628ACC25D00D3A478 /* one_minute_remaining.mp3 in Resources */,
+				D40A24CB28ACC25D00D3A478 /* six.mp3 in Resources */,
+				D40A24D728ACC25D00D3A478 /* sevn.mp3 in Resources */,
+				D40A24E628ACC25D00D3A478 /* kilo_per_hour.mp3 in Resources */,
+				D40A24D328ACC25D00D3A478 /* one_hour.mp3 in Resources */,
+				D4FFE3CA289F04A400D7E82B /* Preview Assets.xcassets in Resources */,
+				D40A24E428ACC25D00D3A478 /* current_speed.mp3 in Resources */,
+				D40A24D428ACC25D00D3A478 /* eighteen.mp3 in Resources */,
+				D4DF2EEC28AF88AE00E5F252 /* alert_sound_slow.mp3 in Resources */,
+				D4C13BBA28A1E8D800141A54 /* Roboto-BoldItalic.ttf in Resources */,
+				D40A24D528ACC25D00D3A478 /* fifty.mp3 in Resources */,
+				D4C13BB828A1E8D800141A54 /* Roboto-Medium.ttf in Resources */,
+				D40A24EF28ACC25E00D3A478 /* five_mid.mp3 in Resources */,
+				D40A24EB28ACC25E00D3A478 /* eight.mp3 in Resources */,
+				D40A24EC28ACC25E00D3A478 /* twelve.mp3 in Resources */,
+				D4C13BBB28A1E8D800141A54 /* Roboto-BlackItalic.ttf in Resources */,
+				D40A24DA28ACC25D00D3A478 /* ten.mp3 in Resources */,
+				D40A24F028ACC25E00D3A478 /* sixteen.mp3 in Resources */,
+				D40A24DD28ACC25D00D3A478 /* thirteen.mp3 in Resources */,
+				D4C13BB128A1DCF800141A54 /* RobotoCondensed-BoldItalic.ttf in Resources */,
+				D40A24E028ACC25D00D3A478 /* seventeen.mp3 in Resources */,
+				D40A24DF28ACC25D00D3A478 /* fifteen.mp3 in Resources */,
+				D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */,
+				D40A24DB28ACC25D00D3A478 /* thirty_seconds_remaining.mp3 in Resources */,
+				D40A24F128ACC25E00D3A478 /* nine.mp3 in Resources */,
+				D4C13BB928A1E8D800141A54 /* Roboto-Black.ttf in Resources */,
+				D40A24E128ACC25D00D3A478 /* time_remaining.mp3 in Resources */,
+				D40A24E328ACC25D00D3A478 /* two_hours.mp3 in Resources */,
+				D4FFE3C7289F04A400D7E82B /* Assets.xcassets in Resources */,
+				D40A24E728ACC25D00D3A478 /* two.mp3 in Resources */,
+				D4C13BB228A1DCF800141A54 /* RobotoCondensed-Italic.ttf in Resources */,
+				D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */,
+				D40A24ED28ACC25E00D3A478 /* forty.mp3 in Resources */,
+				D40A24D828ACC25D00D3A478 /* soft_alert_sound.mp3 in Resources */,
+				D40A24CE28ACC25D00D3A478 /* one_hour_end.mp3 in Resources */,
+				D40A24E528ACC25D00D3A478 /* eleven.mp3 in Resources */,
+				D40A24CC28ACC25D00D3A478 /* twenty.mp3 in Resources */,
+				D40A24D028ACC25D00D3A478 /* alert_sound.mp3 in Resources */,
+				D46BB2222C0BA87000EC8919 /* secrets.json in Resources */,
+				D40A24CF28ACC25D00D3A478 /* three.mp3 in Resources */,
+				D40A24E228ACC25D00D3A478 /* four.mp3 in Resources */,
+				D40A24E828ACC25E00D3A478 /* zero.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3D2289F04A400D7E82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3DC289F04A400D7E82B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		12A6ACBB99D96721507B0C04 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-STEPN Sidekick-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		35EB4362B6268A0707A46012 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-STEPN SidekickTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4EC357A3B677AB573E8340E3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick-STEPN SidekickUITests/Pods-STEPN Sidekick-STEPN SidekickUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick-STEPN SidekickUITests/Pods-STEPN Sidekick-STEPN SidekickUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick-STEPN SidekickUITests/Pods-STEPN Sidekick-STEPN SidekickUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C4DA37C50AF8F111D9183785 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick/Pods-STEPN Sidekick-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick/Pods-STEPN Sidekick-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-STEPN Sidekick/Pods-STEPN Sidekick-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA387C0914090276BD3A63C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-STEPN Sidekick-STEPN SidekickUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D4FFE3BB289F04A200D7E82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4C13B9B28A0D04B00141A54 /* Shoe.swift in Sources */,
+				D419EDE42932CC93000E66DD /* StoreManager.swift in Sources */,
+				D4107D3A292D9916004F17CA /* APIs.swift in Sources */,
+				D4B82C8E28D07BD3004A80EB /* Optimizer.swift in Sources */,
+				D4F2B72628E83C51001DD913 /* OptimizerShoe.swift in Sources */,
+				D4C13B9928A0C9FE00141A54 /* Constants.swift in Sources */,
+				D4DF2EEA28AEC3B100E5F252 /* GSAudio.swift in Sources */,
+				D4F8B52228E1012100DDA9BE /* GemDialog.swift in Sources */,
+				D40A1CFC28E9852400A6A65F /* MainAd.swift in Sources */,
+				D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */,
+				D441B53928BB77CB00D819EA /* About.swift in Sources */,
+				D46BB2242C0BA88A00EC8919 /* Secrets.swift in Sources */,
+				D40A1CFA28E9807E00A6A65F /* AppDelegate.swift in Sources */,
+				D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */,
+				D441B53328BB1D0100D819EA /* MainView.swift in Sources */,
+				D489293828AAF7C800B57AD9 /* LocationRequestView.swift in Sources */,
+				D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */,
+				D4FFE3C5289F04A200D7E82B /* ActivitySettings.swift in Sources */,
+				D4FFE3C3289F04A200D7E82B /* STEPN_SidekickApp.swift in Sources */,
+				D4FFE3CF289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld in Sources */,
+				D4E0541E28F251DB005D00CF /* UpdateDialog.swift in Sources */,
+				D4F9BBBB2A7F1CBF00D7A459 /* ShoeImage.swift in Sources */,
+				D4F9BBBD2A7F1D3400D7A459 /* AddImageDialog.swift in Sources */,
+				D482731328DCD96700ADC0ED /* Gem.swift in Sources */,
+				D4A0149928A7AFA6009D4A4E /* SpeedTracker.swift in Sources */,
+				D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3D0289F04A400D7E82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4FFE3D9289F04A400D7E82B /* STEPN_SidekickTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4FFE3DA289F04A400D7E82B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4FFE3E5289F04A400D7E82B /* STEPN_SidekickUITestsLaunchTests.swift in Sources */,
+				D4FFE3E3289F04A400D7E82B /* STEPN_SidekickUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D4FFE3D6289F04A400D7E82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4FFE3BE289F04A200D7E82B /* STEPN Sidekick */;
+			targetProxy = D4FFE3D5289F04A400D7E82B /* PBXContainerItemProxy */;
+		};
+		D4FFE3E0289F04A400D7E82B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4FFE3BE289F04A200D7E82B /* STEPN Sidekick */;
+			targetProxy = D4FFE3DF289F04A400D7E82B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D4FFE3E6289F04A400D7E82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D4FFE3E7289F04A400D7E82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D4FFE3E9289F04A400D7E82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2F8294A1A98D741CDEBB0A8 /* Pods-STEPN Sidekick.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "/Users/rob/Documents/Github/STEPN-Sidekick-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.1;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-Sidekick";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D4FFE3EA289F04A400D7E82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB98AE4CFE51C85412729343 /* Pods-STEPN Sidekick.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 26;
+				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "/Users/rob/Documents/Github/STEPN-Sidekick-iOS/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.5.1;
+				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "--generate-entitlement-der";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-Sidekick";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D4FFE3EC289F04A400D7E82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E63BB6D2DE8EFA368B917099 /* Pods-STEPN SidekickTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-SidekickTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/STEPN Sidekick.app/STEPN Sidekick";
+			};
+			name = Debug;
+		};
+		D4FFE3ED289F04A400D7E82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A32C1825ACA6EF4DBCB4D1F1 /* Pods-STEPN SidekickTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-SidekickTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/STEPN Sidekick.app/STEPN Sidekick";
+			};
+			name = Release;
+		};
+		D4FFE3EF289F04A400D7E82B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBCA82D051A39ABE050B676C /* Pods-STEPN Sidekick-STEPN SidekickUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-SidekickUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "STEPN Sidekick";
+			};
+			name = Debug;
+		};
+		D4FFE3F0289F04A400D7E82B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D1DA5407720E29E6769A8514 /* Pods-STEPN Sidekick-STEPN SidekickUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FFZ33H3Q;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stepnsidekick.STEPN-SidekickUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "STEPN Sidekick";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D4FFE3BA289F04A200D7E82B /* Build configuration list for PBXProject "STEPN Sidekick" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4FFE3E6289F04A400D7E82B /* Debug */,
+				D4FFE3E7289F04A400D7E82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4FFE3E8289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN Sidekick" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4FFE3E9289F04A400D7E82B /* Debug */,
+				D4FFE3EA289F04A400D7E82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4FFE3EB289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN SidekickTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4FFE3EC289F04A400D7E82B /* Debug */,
+				D4FFE3ED289F04A400D7E82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D4FFE3EE289F04A400D7E82B /* Build configuration list for PBXNativeTarget "STEPN SidekickUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4FFE3EF289F04A400D7E82B /* Debug */,
+				D4FFE3F0289F04A400D7E82B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D4FFE3CD289F04A400D7E82B /* STEPN_Sidekick.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D4FFE3CE289F04A400D7E82B /* STEPN_Sidekick.xcdatamodel */,
+			);
+			currentVersion = D4FFE3CE289F04A400D7E82B /* STEPN_Sidekick.xcdatamodel */;
+			path = STEPN_Sidekick.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D4FFE3B7289F04A200D7E82B /* Project object */;
+}

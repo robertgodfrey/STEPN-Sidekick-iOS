@@ -3,25 +3,29 @@
 ## User settings
 xcuserdata/
 
+## Obj-C/Swift specific
+*.hmap
+
 ## App packaging
 *.ipa
 *.dSYM.zip
 *.dSYM
 
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
 .build/
 
-# Tests/Workspace
+# Tests
 STEPN SidekickTests
 STEPN SidekickUITests
-STEPN Sidekick.xcodeproj
-STEPN Sidekick.xcworkspace
 
 # Pods
-Pods
-Podfile
-Podfile.lock
+Pods/
 
 # Ad stuff
 MainAd.swift
-STEPN-Sidekick-Info.plist
-Info.plist
+
+secrets.json
+.env

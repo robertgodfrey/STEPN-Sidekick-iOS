@@ -11,11 +11,13 @@ import AppLovinSDK
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Please make sure to set the mediation provider value to "max" to ensure proper functionality
-        ALSdk.shared()!.mediationProvider = "max"
-        
-        ALSdk.shared()!.initializeSdk { (configuration: ALSdkConfiguration) in
-            // Start loading ads
+        let secrets = loadJSON(filename: "secrets")
+        let initConfig = ALSdkInitializationConfiguration(sdkKey: secrets?.APP_LOVIN_SDK_KEY ?? "") { builder in
+            builder.mediationProvider = ALMediationProviderMAX
+          }
+        // Initialize the SDK with the configuration
+        ALSdk.shared().initialize(with: initConfig) { sdkConfig in
+          // Start loading ads
         }
         return true
     }
