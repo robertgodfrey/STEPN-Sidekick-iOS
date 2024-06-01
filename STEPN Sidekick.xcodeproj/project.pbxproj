@@ -910,7 +910,7 @@
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "/Users/rob/Documents/Github/STEPN-Sidekick-iOS/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -946,7 +946,7 @@
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "/Users/rob/Documents/Github/STEPN-Sidekick-iOS/Info.plist";
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Please allow precise location permissions (needed to accurately track speed).";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
