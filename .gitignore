@@ -24,8 +24,5 @@ STEPN SidekickUITests
 # Pods
 Pods/
 
-# Ad stuff
-MainAd.swift
-
 secrets.json
 .env
