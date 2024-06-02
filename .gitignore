@@ -24,5 +24,4 @@ STEPN SidekickUITests
 # Pods
 Pods/
 
-secrets.json
 .env

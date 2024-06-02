@@ -4,12 +4,6 @@ set -e
 set -x
 
 cd ..
-ls -la
-touch STEPN\ Sidekick/secrets.json
-printf "{\"APP_LOVIN_SDK_KEY\":\%s\",\"MAIN_AD_ID\":\"%s\"}" "$APP_LOVIN_SDK_KEY", "$MAIN_AD_ID" >> STEPN\ Sidekick/secrets.json
-echo "created secrets.json"
-
-cat STEPN\ Sidekick/secrets.json
 
 # install homebrew if not already installed
 if ! command -v brew &> /dev/null

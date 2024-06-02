@@ -60,7 +60,6 @@
 		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
 		D441B53928BB77CB00D819EA /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53828BB77CB00D819EA /* About.swift */; };
 		D46BB2222C0BA87000EC8919 /* secrets.json in Resources */ = {isa = PBXBuildFile; fileRef = D46BB2212C0BA86F00EC8919 /* secrets.json */; };
-		D46BB2242C0BA88A00EC8919 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46BB2232C0BA88A00EC8919 /* Secrets.swift */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D482731328DCD96700ADC0ED /* Gem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D482731228DCD96700ADC0ED /* Gem.swift */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
@@ -172,7 +171,6 @@
 		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		D450654428ECB16600A9F88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D46BB2212C0BA86F00EC8919 /* secrets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = secrets.json; sourceTree = "<group>"; };
-		D46BB2232C0BA88A00EC8919 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D482731228DCD96700ADC0ED /* Gem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gem.swift; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -346,7 +344,6 @@
 				D40A1CFB28E9852400A6A65F /* MainAd.swift */,
 				D4107D39292D9916004F17CA /* APIs.swift */,
 				D419EDE32932CC93000E66DD /* StoreManager.swift */,
-				D46BB2232C0BA88A00EC8919 /* Secrets.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -730,7 +727,6 @@
 				D40A1CFC28E9852400A6A65F /* MainAd.swift in Sources */,
 				D4EFD28A28C4295A002E931E /* CountdownTimer.swift in Sources */,
 				D441B53928BB77CB00D819EA /* About.swift in Sources */,
-				D46BB2242C0BA88A00EC8919 /* Secrets.swift in Sources */,
 				D40A1CFA28E9807E00A6A65F /* AppDelegate.swift in Sources */,
 				D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */,
 				D441B53328BB1D0100D819EA /* MainView.swift in Sources */,
@@ -905,7 +901,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;
@@ -941,7 +937,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_ASSET_PATHS = "\"STEPN Sidekick/Preview Content\"";
 				DEVELOPMENT_TEAM = 73FFZ33H3Q;
 				ENABLE_PREVIEWS = YES;

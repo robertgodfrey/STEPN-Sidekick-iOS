@@ -12,11 +12,10 @@ import SwiftUI
 class MainAd: UIViewController, MAAdViewAdDelegate
 {
     var adView: MAAdView!
-    let secrets = loadJSON(filename: "secrets")
 
     func createBannerAd() {
         FBAdSettings.setDataProcessingOptions([])
-        adView = MAAdView(adUnitIdentifier: secrets?.MAIN_AD_ID ?? "")
+        adView = MAAdView(adUnitIdentifier: ProcessInfo.processInfo.environment["MAIN_AD_ID"] ?? "")
         adView.delegate = self
 
         // Calculate dimensions
