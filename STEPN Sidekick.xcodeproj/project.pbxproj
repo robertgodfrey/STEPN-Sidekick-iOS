@@ -59,7 +59,6 @@
 		D441B53528BB296C00D819EA /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53428BB296C00D819EA /* CustomTabBar.swift */; };
 		D441B53728BB2F1400D819EA /* MainViewStarter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53628BB2F1400D819EA /* MainViewStarter.swift */; };
 		D441B53928BB77CB00D819EA /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53828BB77CB00D819EA /* About.swift */; };
-		D46BB2222C0BA87000EC8919 /* secrets.json in Resources */ = {isa = PBXBuildFile; fileRef = D46BB2212C0BA86F00EC8919 /* secrets.json */; };
 		D472352228B34F30004B157F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D472352128B34F30004B157F /* Roboto-Regular.ttf */; };
 		D482731328DCD96700ADC0ED /* Gem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D482731228DCD96700ADC0ED /* Gem.swift */; };
 		D489293628AAEBFD00B57AD9 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D489293528AAEBFD00B57AD9 /* LocationManager.swift */; };
@@ -170,7 +169,6 @@
 		D441B53628BB2F1400D819EA /* MainViewStarter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewStarter.swift; sourceTree = "<group>"; };
 		D441B53828BB77CB00D819EA /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		D450654428ECB16600A9F88E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D46BB2212C0BA86F00EC8919 /* secrets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = secrets.json; sourceTree = "<group>"; };
 		D472352128B34F30004B157F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		D482731228DCD96700ADC0ED /* Gem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gem.swift; sourceTree = "<group>"; };
 		D489293528AAEBFD00B57AD9 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -389,7 +387,6 @@
 		D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */ = {
 			isa = PBXGroup;
 			children = (
-				D46BB2212C0BA86F00EC8919 /* secrets.json */,
 				D40A24A128ACC23A00D3A478 /* Sounds */,
 				D4C13B9C28A1D8A800141A54 /* Fonts */,
 				D4FFE3C2289F04A200D7E82B /* STEPN_SidekickApp.swift */,
@@ -585,7 +582,6 @@
 				D40A24E528ACC25D00D3A478 /* eleven.mp3 in Resources */,
 				D40A24CC28ACC25D00D3A478 /* twenty.mp3 in Resources */,
 				D40A24D028ACC25D00D3A478 /* alert_sound.mp3 in Resources */,
-				D46BB2222C0BA87000EC8919 /* secrets.json in Resources */,
 				D40A24CF28ACC25D00D3A478 /* three.mp3 in Resources */,
 				D40A24E228ACC25D00D3A478 /* four.mp3 in Resources */,
 				D40A24E828ACC25E00D3A478 /* zero.mp3 in Resources */,
