@@ -24,4 +24,4 @@ STEPN SidekickUITests
 # Pods
 Pods/
 
-.env
+Environment.xcconfig

@@ -9,6 +9,10 @@
 	</dict>
 	<key>GADApplicationIdentifier</key>
 	<string>$(GAD_APP_ID)</string>
+	<key>AppLovinKey</key>
+	<string>$(APP_LOVIN_SDK_KEY)</string>
+	<key>MainAdId</key>
+	<string>$(MAIN_AD_ID)</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>UILaunchStoryboardName</key>

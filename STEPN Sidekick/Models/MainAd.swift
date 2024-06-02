@@ -15,7 +15,9 @@ class MainAd: UIViewController, MAAdViewAdDelegate
 
     func createBannerAd() {
         FBAdSettings.setDataProcessingOptions([])
-        adView = MAAdView(adUnitIdentifier: ProcessInfo.processInfo.environment["MAIN_AD_ID"] ?? "")
+        guard let infoDict: [String: Any] = Bundle.main.infoDictionary else { return }
+        guard let mainAdId: String = infoDict["MainAdId"] as? String else { return }
+        adView = MAAdView(adUnitIdentifier: mainAdId)
         adView.delegate = self
 
         // Calculate dimensions

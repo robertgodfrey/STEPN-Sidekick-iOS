@@ -11,7 +11,9 @@ import AppLovinSDK
 class AppDelegate: UIResponder, UIApplicationDelegate
 {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let initConfig = ALSdkInitializationConfiguration(sdkKey: ProcessInfo.processInfo.environment["APP_LOVIN_SDK_KEY"] ?? "") { builder in
+        guard let infoDict: [String: Any] = Bundle.main.infoDictionary else { return false }
+        guard let appLovinSdkKey: String = infoDict["AppLovinKey"] as? String else { return false }
+        let initConfig = ALSdkInitializationConfiguration(sdkKey: appLovinSdkKey) { builder in
             builder.mediationProvider = ALMediationProviderMAX
           }
         // Initialize the SDK with the configuration

@@ -53,6 +53,7 @@
 		D40A24F228ACC25E00D3A478 /* nineteen.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24C928ACC25D00D3A478 /* nineteen.mp3 */; };
 		D40A24F328ACC25E00D3A478 /* minutes.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D40A24CA28ACC25D00D3A478 /* minutes.mp3 */; };
 		D4107D3A292D9916004F17CA /* APIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4107D39292D9916004F17CA /* APIs.swift */; };
+		D41236862C0C2B2F00572C82 /* Environment.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = D41236852C0C2B2F00572C82 /* Environment.xcconfig */; };
 		D419EDE22932CC04000E66DD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D419EDE12932CC04000E66DD /* StoreKit.framework */; };
 		D419EDE42932CC93000E66DD /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D419EDE32932CC93000E66DD /* StoreManager.swift */; };
 		D441B53328BB1D0100D819EA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D441B53228BB1D0100D819EA /* MainView.swift */; };
@@ -162,6 +163,7 @@
 		D40A24C928ACC25D00D3A478 /* nineteen.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nineteen.mp3; sourceTree = "<group>"; };
 		D40A24CA28ACC25D00D3A478 /* minutes.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = minutes.mp3; sourceTree = "<group>"; };
 		D4107D39292D9916004F17CA /* APIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIs.swift; sourceTree = "<group>"; };
+		D41236852C0C2B2F00572C82 /* Environment.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Environment.xcconfig; sourceTree = "<group>"; };
 		D419EDE12932CC04000E66DD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		D419EDE32932CC93000E66DD /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		D441B53228BB1D0100D819EA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 		D4FFE3B6289F04A200D7E82B = {
 			isa = PBXGroup;
 			children = (
+				D41236852C0C2B2F00572C82 /* Environment.xcconfig */,
 				D450654428ECB16600A9F88E /* Info.plist */,
 				D4FFE3C1289F04A200D7E82B /* STEPN Sidekick */,
 				D4FFE3D7289F04A400D7E82B /* STEPN SidekickTests */,
@@ -540,6 +543,7 @@
 				D40A24CD28ACC25D00D3A478 /* thirty.mp3 in Resources */,
 				D40A24EA28ACC25E00D3A478 /* over_twenty.mp3 in Resources */,
 				D40A24EE28ACC25E00D3A478 /* one.mp3 in Resources */,
+				D41236862C0C2B2F00572C82 /* Environment.xcconfig in Resources */,
 				D4C13BB028A1DCF800141A54 /* RobotoCondensed-Bold.ttf in Resources */,
 				D40A24D928ACC25D00D3A478 /* start_sound.mp3 in Resources */,
 				D40A24D228ACC25D00D3A478 /* fourteen.mp3 in Resources */,
@@ -775,6 +779,7 @@
 /* Begin XCBuildConfiguration section */
 		D4FFE3E6289F04A400D7E82B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D41236852C0C2B2F00572C82 /* Environment.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -836,6 +841,7 @@
 		};
 		D4FFE3E7289F04A400D7E82B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D41236852C0C2B2F00572C82 /* Environment.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
