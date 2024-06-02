@@ -5,8 +5,7 @@ set -x
 
 cd ..
 
-printf "APP_LOVIN_SDK_KEY = %s\nMAIN_AD_ID = %s" "$APP_LOVIN_SDK_KEY", "$MAIN_AD_ID" >> Environment.xcconfig
-cat Environment.xcconfig
+printf "APP_LOVIN_SDK_KEY = %s\nMAIN_AD_ID = %s" "$APP_LOVIN_SDK_KEY" "$MAIN_AD_ID" >> Environment.xcconfig
 
 # install homebrew if not already installed
 if ! command -v brew &> /dev/null
