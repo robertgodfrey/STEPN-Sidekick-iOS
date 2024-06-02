@@ -330,6 +330,7 @@ struct Optimizer: View {
                                         .onTapGesture(perform: {
                                             clearFocus()
                                             shoesLocked[shoeNum - 1] = !shoesLocked[shoeNum - 1]
+                                            shoeLockedDialog = true
                                         })
                                     
                                 }.padding(.top, -10)
@@ -415,9 +416,15 @@ struct Optimizer: View {
                             
                             // MARK: Level slider
                             ZStack {
-                                CustomSlider(value: $shoeLevel, sliderAction: {
-                                    updatePoints()
-                                })
+                                CustomSlider(
+                                    value: $shoeLevel,
+                                    shoeLockedDialog: $shoeLockedDialog,
+                                    sliderAction: {
+                                        updatePoints()
+                                    },
+                                    shoeLocked: shoesLocked[shoeNum - 1]
+                                    
+                                )
                                     .padding(.horizontal, 40)
                                     .frame(maxWidth: 400, maxHeight: 30)
                                 
@@ -489,7 +496,7 @@ struct Optimizer: View {
                                             }})
                                             .font(Font.custom(fontHeaders, size: 20))
                                             .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
+                                            .foregroundColor(shoesLocked[shoeNum - 1] ? Color("Gandalf") : Color("Almost Black"))
                                             .keyboardType(.decimalPad)
                                             .frame(width: 95)
                                             .onReceive(baseEffString.publisher.collect()) {
@@ -513,7 +520,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("-")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                .foregroundColor(Color(addedEff > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(addedEff > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedEff > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -545,7 +552,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("+")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(pointsAvailable > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -605,7 +612,7 @@ struct Optimizer: View {
                                             }})
                                             .font(Font.custom(fontHeaders, size: 20))
                                             .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
+                                            .foregroundColor(shoesLocked[shoeNum - 1] ? Color("Gandalf") : Color("Almost Black"))
                                             .keyboardType(.decimalPad)
                                             .frame(width: 95)
                                             .onReceive(baseLuckString.publisher.collect()) {
@@ -629,7 +636,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("-")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                .foregroundColor(Color(addedLuck > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(addedLuck > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedLuck > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -661,7 +668,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("+")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(pointsAvailable > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -721,7 +728,7 @@ struct Optimizer: View {
                                             }})
                                             .font(Font.custom(fontHeaders, size: 20))
                                             .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
+                                            .foregroundColor(shoesLocked[shoeNum - 1] ? Color("Gandalf") : Color("Almost Black"))
                                             .keyboardType(.decimalPad)
                                             .frame(width: 95)
                                             .onReceive(baseComfString.publisher.collect()) {
@@ -745,7 +752,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("-")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                .foregroundColor(Color(addedComf > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(addedComf > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedComf > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -777,7 +784,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("+")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(pointsAvailable > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -841,7 +848,7 @@ struct Optimizer: View {
                                             }})
                                             .font(Font.custom(fontHeaders, size: 20))
                                             .multilineTextAlignment(.center)
-                                            .foregroundColor(Color("Almost Black"))
+                                            .foregroundColor(shoesLocked[shoeNum - 1] ? Color("Gandalf") : Color("Almost Black"))
                                             .keyboardType(.decimalPad)
                                             .frame(width: 95)
                                             .onReceive(baseResString.publisher.collect()) {
@@ -865,7 +872,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("-")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 32))
-                                                .foregroundColor(Color(addedRes > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(addedRes > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(addedRes > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -897,7 +904,7 @@ struct Optimizer: View {
                                         }, label: {
                                             Text("+")
                                                 .font(Font.custom("RobotoCondensed-Bold", size: 26))
-                                                .foregroundColor(Color(pointsAvailable > 0 ? "Almost Black" : "Gem Socket Shadow"))
+                                                .foregroundColor(Color(pointsAvailable > 0 && !shoesLocked[shoeNum - 1] ? "Almost Black" : "Gem Socket Shadow"))
                                                 .frame(width: 50, height: 40)
                                                 .disabled(pointsAvailable > 0 ? false : true)
                                                 .onTapGesture(perform: {
@@ -942,8 +949,8 @@ struct Optimizer: View {
                                 }.frame(minWidth: 295, maxWidth: 310, minHeight: 20)
                                     .padding(.bottom, 10)
                             }.alert(isPresented: $shoeLockedDialog) {
-                                Alert(title: Text("Shoe Locked"),
-                                      message: Text("Shoe attributes are locked"),
+                                Alert(title: Text("Shoe " + (shoesLocked[shoeNum - 1] ? "Locked" : "Unlocked")),
+                                      message: Text("Shoe attributes " + (shoesLocked[shoeNum - 1] ? "locked" : "unlocked")),
                                       dismissButton: .default(Text("Okay")))
                             }
                             
@@ -2523,7 +2530,9 @@ struct Optimizer: View {
 // dope-ass custom slider struct (courtesy of https://swdevnotes.com/swift/2021/how-to-customise-the-slider-in-swiftui/)
 struct CustomSlider: View {
     @Binding var value: Double
+    @Binding var shoeLockedDialog: Bool
     let sliderAction: (()->())
+    let shoeLocked: Bool
     
     @State var lastCoordinateValue: CGFloat = 0.0
     var sliderRange: ClosedRange<Double> = 1...30
@@ -2570,17 +2579,21 @@ struct CustomSlider: View {
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { v in
-                                    if (abs(v.translation.width) < 0.1) {
-                                        self.lastCoordinateValue = sliderVal
-                                    }
-                                    if v.translation.width > 0 {
-                                        let nextCoordinateValue = min(maxValue, self.lastCoordinateValue + v.translation.width)
-                                        self.value = ((nextCoordinateValue - minValue) / scaleFactor)  + lower
+                                    if (!shoeLocked) {
+                                        if (abs(v.translation.width) < 0.1) {
+                                            self.lastCoordinateValue = sliderVal
+                                        }
+                                        if v.translation.width > 0 {
+                                            let nextCoordinateValue = min(maxValue, self.lastCoordinateValue + v.translation.width)
+                                            self.value = ((nextCoordinateValue - minValue) / scaleFactor)  + lower
+                                        } else {
+                                            let nextCoordinateValue = max(minValue, self.lastCoordinateValue + v.translation.width)
+                                            self.value = ((nextCoordinateValue - minValue) / scaleFactor) + lower
+                                        }
+                                        sliderAction()
                                     } else {
-                                        let nextCoordinateValue = max(minValue, self.lastCoordinateValue + v.translation.width)
-                                        self.value = ((nextCoordinateValue - minValue) / scaleFactor) + lower
+                                        shoeLockedDialog = true
                                     }
-                                    sliderAction()
                                 }
                         )
                     Spacer()
