@@ -13,6 +13,8 @@
 	<string>$(APP_LOVIN_SDK_KEY)</string>
 	<key>MainAdId</key>
 	<string>$(MAIN_AD_ID)</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>UILaunchStoryboardName</key>
@@ -666,6 +668,6 @@
 		</dict>
 	</array>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>This only uses device info for more interesting and relevant ads.</string>
+	<string>This uses device info for more personalized ads and content.</string>
 </dict>
 </plist>
