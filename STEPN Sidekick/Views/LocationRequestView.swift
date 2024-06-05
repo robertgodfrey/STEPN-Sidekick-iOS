@@ -36,30 +36,29 @@ struct LocationRequestView: View {
                         .scaledToFit()
                         .frame(width: 100, height: 150)
                                     
-                    Text(requestedPerms ? "Precise location permissions are required to accurately track speed. Please turn on location permissions in your phone's settings.\n(Settings -> Privacy -> Location Services -> STEPN Sidekick" :
+                    Text(requestedPerms ? "Precise location permissions are required to accurately track speed. Please turn on location permissions in your phone's settings.\n\n(Settings > Privacy > Location Services > Satoshi Sidekick" :
                             "This app requires precise location permissions to accurately track speed.")
                         .multilineTextAlignment(.center)
                         .font(Font.custom("Roboto-Regular", size: 17))
                         .padding(.horizontal, 30)
                         .padding(.bottom, 20)
                     
-                    Text("Turn on now?")
-                        .font(Font.custom("Roboto-Medium", size: 17))
-                        .padding(.bottom, 30)
-                    
                     HStack(spacing: 20) {
-                        Button(action: {
-                            print("no location permissions")
-                            returnToSettings = true
-                        }) {
-                            Text ("Cancel")
-                                .font(Font.custom("Roboto-Medium", size: 19))
-                                .foregroundColor(Color.white)
+                        
+                        if requestedPerms {
+                            Button(action: {
+                                print("no location permissions")
+                                returnToSettings = true
+                            }) {
+                                Text ("Cancel")
+                                    .font(Font.custom("Roboto-Medium", size: 19))
+                                    .foregroundColor(Color.white)
+                            }
+                            .frame(minWidth: 60, maxWidth: 80, minHeight: 42)
+                            .padding(.horizontal, 20)
+                            .background(Color.red)
+                            .clipShape(Capsule())
                         }
-                        .frame(minWidth: 60, maxWidth: 80, minHeight: 42)
-                        .padding(.horizontal, 20)
-                        .background(Color.red)
-                        .clipShape(Capsule())
                         
                         Button(action: {
                             if !requestedPerms {
@@ -79,7 +78,7 @@ struct LocationRequestView: View {
                                 requestedPerms = true
                             }
                         }) {
-                            Text (requestedPerms ? "Settings" : "Okay")
+                            Text (requestedPerms ? "Settings" : "Continue")
                                 .font(Font.custom("Roboto-Medium", size: 19))
                                 .foregroundColor(Color(.systemBlue))
                         }
