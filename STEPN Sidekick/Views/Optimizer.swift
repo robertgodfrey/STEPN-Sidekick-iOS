@@ -7,8 +7,6 @@
 //
 //  Created by Rob Godfrey
 //
-//  Last updated 4 Feb 24
-//
 
 import SwiftUI
 import Kingfisher
@@ -103,6 +101,7 @@ struct Optimizer: View {
     @State private var resetPageDialog: Bool = false
     @State private var noBreakEvenDialog: Bool = false
     @State private var changeImageDialog: Bool = false
+    @State private var noGemsFoundDialog: Bool = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -1243,6 +1242,11 @@ struct Optimizer: View {
                                 }
                                 
                             }.padding(.top, 26)
+                                .alert(isPresented: $noGemsFoundDialog) {
+                                    Alert(title: Text("No gems found"),
+                                          message: Text("No gems found for sale in this realm."),
+                                          dismissButton: .default(Text("Okay")))
+                                }
                            
                         }
                     }
@@ -1864,7 +1868,12 @@ struct Optimizer: View {
                 do {
                     let response = try JSONDecoder().decode(GemPrices.self, from: data)
                     DispatchQueue.main.async {
-                        gemPrices[0] = Double(response.data[2].sellPrice) / 100
+                        if response.data.count > 1 {
+                            gemPrices[0] = Double(response.data[2].sellPrice) / 100
+                        } else {
+                            gemPrices[0] = 0
+                            noGemsFoundDialog = true
+                        }
                         
                         if comfGemLvlForRestore == 1 {
                             comfGemPrice = String(gemPrices[0])
@@ -1889,7 +1898,12 @@ struct Optimizer: View {
                 do {
                     let response = try JSONDecoder().decode(GemPrices.self, from: data)
                     DispatchQueue.main.async {
-                        gemPrices[1] = Double(response.data[2].sellPrice) / 100
+                        if response.data.count > 1 {
+                            gemPrices[1] = Double(response.data[2].sellPrice) / 100
+                        } else {
+                            gemPrices[1] = 0
+                            noGemsFoundDialog = true
+                        }
                         
                         if comfGemLvlForRestore == 2 {
                             comfGemPrice = String(gemPrices[1])
@@ -1912,7 +1926,12 @@ struct Optimizer: View {
                 do {
                     let response = try JSONDecoder().decode(GemPrices.self, from: data)
                     DispatchQueue.main.async {
-                        gemPrices[2] = Double(response.data[2].sellPrice) / 100
+                        if response.data.count > 1 {
+                            gemPrices[2] = Double(response.data[2].sellPrice) / 100
+                        } else {
+                            gemPrices[2] = 0
+                            noGemsFoundDialog = true
+                        }
                         
                         if comfGemLvlForRestore == 3 {
                             comfGemPrice = String(gemPrices[2])
