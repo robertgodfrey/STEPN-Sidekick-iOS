@@ -257,7 +257,7 @@ struct About: View {
                                         .foregroundColor(Color("Link Blue"))
                                 }
                                 
-                                Text("v 1.5.1")
+                                Text("v 1.5.2")
                                     .font(Font.custom(fontHeaders, size: 13))
                                     .foregroundColor(Color("Gandalf"))
                                     .padding(.vertical, 20)
