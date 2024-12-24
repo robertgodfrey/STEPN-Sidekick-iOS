@@ -29,9 +29,8 @@ struct Optimizer: View {
     @State var coinPrices: Coins = Coins(
         greenSatoshiToken: Coin(usd: 0),
         solana: Coin(usd: 0),
-        ethereum: Coin(usd: 0),
+        polygon: Coin(usd: 0),
         binancecoin: Coin(usd: 0),
-        greenSatoshiTokenOnEth: Coin(usd: 0),
         greenSatoshiTokenBsc: Coin(usd: 0),
         stepn: Coin(usd: 0))
     
@@ -102,6 +101,7 @@ struct Optimizer: View {
     @State private var noBreakEvenDialog: Bool = false
     @State private var changeImageDialog: Bool = false
     @State private var noGemsFoundDialog: Bool = false
+    @State private var priceNotAvailableDialog: Bool = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -1103,6 +1103,10 @@ struct Optimizer: View {
                                                 blockchain = 0
                                             } else {
                                                 blockchain += 1
+                                                if blockchain == pol {
+                                                    priceNotAvailableDialog = true
+                                                    print("NOT AVAILABLE")
+                                                }
                                             }
                                             gemApiCall()
                                         }))
@@ -1397,6 +1401,11 @@ struct Optimizer: View {
             }
             .onChange(of: shoesLocked) { _ in
                 saveShoesLocked()
+            }
+            .alert(isPresented: $priceNotAvailableDialog) {
+                Alert(title: Text("POL GST price not available"),
+                      message: Text("Unable to estimate total income USD - POL GST price data is not available. Optimize GST & optimize luck will not be functional for POL realm until price data becomes available."),
+                      dismissButton: .default(Text("Okay")))
             }
     }
     
@@ -1850,8 +1859,8 @@ struct Optimizer: View {
         switch (blockchain) {
         case bsc:
             chainCode = "104"
-        case eth:
-            chainCode = "101"
+        case pol:
+            chainCode = "106"
         default:
             chainCode = "103"
         }
@@ -1945,7 +1954,7 @@ struct Optimizer: View {
     }
     
     func tokenApiCall() {
-        guard let url = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cethereum%2Cgreen-satoshi-token-on-eth&vs_currencies=usd") else {
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cpolygon-ecosystem-token%2Cgreen-satoshi-token-on-pol&vs_currencies=usd") else {
             print("Invalid URL")
             return
         }
@@ -2122,8 +2131,8 @@ struct Optimizer: View {
         switch (blockchain) {
         case bsc:
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
-        case eth:
-            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        case pol:
+            chainGstPrice = 0
         default:
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
@@ -2184,8 +2193,8 @@ struct Optimizer: View {
         switch (blockchain) {
         case bsc:
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
-        case eth:
-            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        case pol:
+            chainGstPrice = 0
         default:
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
@@ -2408,8 +2417,8 @@ struct Optimizer: View {
         switch (blockchain) {
         case bsc:
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
-        case eth:
-            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        case pol:
+            chainGstPrice = 0
         default:
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
@@ -2435,8 +2444,8 @@ struct Optimizer: View {
         switch (blockchain) {
         case bsc:
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
-        case eth:
-            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        case pol:
+            chainGstPrice = 0
         default:
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }
@@ -2809,8 +2818,8 @@ func labelChainHexColor(blockchain: Int) -> String {
     switch (blockchain) {
     case bsc:
         return "f3ba2c"
-    case eth:
-        return "8a93b2"
+    case pol:
+        return "8247e5"
     default:
         return "11edaa"
     }
@@ -2820,8 +2829,8 @@ func chainString(blockchain: Int) -> String {
     switch (blockchain) {
     case bsc:
         return "BSC"
-    case eth:
-        return "ETH"
+    case pol:
+        return "POL"
     default:
         return "SOL"
     }
@@ -3331,8 +3340,9 @@ struct CalcedTotals: View {
         switch (blockchain) {
         case bsc:
             chainGstPrice = coinPrices.greenSatoshiTokenBsc.usd
-        case eth:
-            chainGstPrice = coinPrices.greenSatoshiTokenOnEth.usd
+        case pol:
+            chainGstPrice = 0
+            return "?"
         default:
             chainGstPrice = coinPrices.greenSatoshiToken.usd
         }

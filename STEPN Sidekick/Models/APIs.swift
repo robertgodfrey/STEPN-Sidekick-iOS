@@ -9,13 +9,10 @@ import Foundation
 
 /*
  --- API call for tokens ---
- https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cethereum%2Cgreen-satoshi-token-on-eth&vs_currencies=usd
+ https://api.coingecko.com/api/v3/simple/price?ids=stepn%2Csolana%2Cgreen-satoshi-token%2Cbinancecoin%2Cgreen-satoshi-token-bsc%2Cpolygon-ecosystem-token%2Cgreen-satoshi-token-on-pol&vs_currencies=usd
  
  --- Raw Data Example ---
  {
-     "ethereum": {
-         "usd": 1138.43
-     },
      "green-satoshi-token": {
          "usd": 0.0222279
      },
@@ -23,9 +20,12 @@ import Foundation
          "usd": 266.73
      },
      "solana": {
-         "usd": 12.48
+         "usd": 12.48 // lol
      },
-     "green-satoshi-token-on-eth": {
+     "polygon-ecosystem-token": {
+         "usd": 0.531615
+     },
+     "green-satoshi-token-on-pol": {  // TODO: add when available
          "usd": 0.076078
      },
      "green-satoshi-token-bsc": {
@@ -38,22 +38,23 @@ import Foundation
 */
 
 struct Coins: Codable {
-    let greenSatoshiToken, solana, ethereum, binancecoin, greenSatoshiTokenOnEth, greenSatoshiTokenBsc, stepn: Coin
+    let greenSatoshiToken, solana, polygon, binancecoin, greenSatoshiTokenBsc, stepn: Coin
 
     enum CodingKeys: String, CodingKey {
+        case polygon = "polygon-ecosystem-token"
         case greenSatoshiToken = "green-satoshi-token"
-        case solana, ethereum, binancecoin
-        case greenSatoshiTokenOnEth = "green-satoshi-token-on-eth"
+        case solana, binancecoin
+        // case greenSatoshiTokenOnPol = "green-satoshi-token-on-pol" TODO: add
         case greenSatoshiTokenBsc = "green-satoshi-token-bsc"
         case stepn
     }
     
-    init(greenSatoshiToken: Coin, solana: Coin, ethereum: Coin, binancecoin: Coin, greenSatoshiTokenOnEth: Coin, greenSatoshiTokenBsc: Coin, stepn: Coin) {
+    init(greenSatoshiToken: Coin, solana: Coin, polygon: Coin, binancecoin: Coin, greenSatoshiTokenBsc: Coin, stepn: Coin) {
         self.greenSatoshiToken = greenSatoshiToken
         self.solana = solana
-        self.ethereum = ethereum
+        self.polygon = polygon
         self.binancecoin = binancecoin
-        self.greenSatoshiTokenOnEth = greenSatoshiTokenOnEth
+//        self.greenSatoshiTokenOnPol = greenSatoshiTokenOnPol
         self.greenSatoshiTokenBsc = greenSatoshiTokenBsc
         self.stepn = stepn
     }
@@ -75,7 +76,7 @@ struct Coin: Codable {
 
  chainNums: SOL: 103
             BSC: 104
-            ETH: 101
+            POL: 106
  gemLevels: 1:  2010
             2:  3010
             3:  4010
